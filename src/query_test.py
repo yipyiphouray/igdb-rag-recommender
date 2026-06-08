@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+"""Run this script to test querying the 
+IGDB API for games with more than 50 ratings, 
+sorted by rating count, and print their names."""
+
 client_id = os.getenv("IGDB_CLIENT_ID")
 client_secret = os.getenv("IGDB_CLIENT_SECRET") 
 

@@ -3,7 +3,8 @@ import requests
 from dotenv import load_dotenv
 from pathlib import Path
 
-"""Run this script to test the connection to the IGDB API and retrieve an access token."""
+"""Run this script to test the connection to 
+the IGDB API and retrieve an access token."""
 
 
 load_dotenv()

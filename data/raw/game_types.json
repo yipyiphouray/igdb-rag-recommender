@@ -1,0 +1,34 @@
+[
+  {
+    "id": 3,
+    "type": "Bundle"
+  },
+  {
+    "id": 4,
+    "type": "Standalone Expansion"
+  },
+  {
+    "id": 8,
+    "type": "Remake"
+  },
+  {
+    "id": 11,
+    "type": "Port"
+  },
+  {
+    "id": 10,
+    "type": "Expanded Game"
+  },
+  {
+    "id": 9,
+    "type": "Remaster"
+  },
+  {
+    "id": 2,
+    "type": "Expansion"
+  },
+  {
+    "id": 0,
+    "type": "Main Game"
+  }
+]

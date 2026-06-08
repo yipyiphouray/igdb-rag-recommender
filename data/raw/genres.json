@@ -75,16 +75,6 @@
     "slug": "hack-and-slash-beat-em-up"
   },
   {
-    "id": 26,
-    "name": "Quiz/Trivia",
-    "slug": "quiz-trivia"
-  },
-  {
-    "id": 30,
-    "name": "Pinball",
-    "slug": "pinball"
-  },
-  {
     "id": 31,
     "name": "Adventure",
     "slug": "adventure"

@@ -1,24 +1,12 @@
 [
   {
-    "id": 376,
-    "generation": 3,
-    "name": "Epoch Super Cassette Vision",
-    "slug": "epoch-super-cassette-vision"
-  },
-  {
-    "id": 510,
-    "generation": 6,
-    "name": "e-Reader / Card-e Reader",
-    "platform_family": 5,
-    "slug": "e-reader-slash-card-e-reader"
-  },
-  {
     "id": 12,
     "abbreviation": "X360",
     "generation": 7,
     "name": "Xbox 360",
     "platform_family": 2,
-    "slug": "xbox360"
+    "slug": "xbox360",
+    "platform_type": 1
   },
   {
     "id": 32,
@@ -26,61 +14,23 @@
     "generation": 5,
     "name": "Sega Saturn",
     "platform_family": 3,
-    "slug": "saturn"
-  },
-  {
-    "id": 62,
-    "abbreviation": "Jaguar",
-    "generation": 5,
-    "name": "Atari Jaguar",
-    "slug": "jaguar"
-  },
-  {
-    "id": 148,
-    "name": "AY-3-8607",
-    "slug": "ay-3-8607"
-  },
-  {
-    "id": 150,
-    "name": "Turbografx-16/PC Engine CD",
-    "slug": "turbografx-16-slash-pc-engine-cd"
-  },
-  {
-    "id": 156,
-    "name": "Thomson MO5",
-    "slug": "thomson-mo5"
+    "slug": "saturn",
+    "platform_type": 1
   },
   {
     "id": 306,
     "generation": 4,
     "name": "Satellaview",
     "platform_family": 5,
-    "slug": "satellaview"
-  },
-  {
-    "id": 339,
-    "generation": 4,
-    "name": "Sega Pico",
-    "platform_family": 3,
-    "slug": "sega-pico"
-  },
-  {
-    "id": 389,
-    "name": "AirConsole",
-    "slug": "airconsole"
+    "slug": "satellaview",
+    "platform_type": 1
   },
   {
     "id": 13,
     "abbreviation": "DOS",
     "name": "DOS",
-    "slug": "dos"
-  },
-  {
-    "id": 60,
-    "abbreviation": "Atari7800",
-    "generation": 3,
-    "name": "Atari 7800",
-    "slug": "atari7800"
+    "slug": "dos",
+    "platform_type": 4
   },
   {
     "id": 41,
@@ -88,99 +38,15 @@
     "generation": 8,
     "name": "Wii U",
     "platform_family": 5,
-    "slug": "wiiu"
-  },
-  {
-    "id": 309,
-    "abbreviation": "Evercade",
-    "generation": 8,
-    "name": "Evercade",
-    "slug": "evercade"
-  },
-  {
-    "id": 506,
-    "abbreviation": "GX4000",
-    "generation": 3,
-    "name": "Amstrad GX4000",
-    "slug": "gx4000"
-  },
-  {
-    "id": 112,
-    "abbreviation": "microcomputer",
-    "name": "Microcomputer",
-    "slug": "microcomputer--1"
-  },
-  {
-    "id": 410,
-    "generation": 5,
-    "name": "Atari Jaguar CD",
-    "slug": "atari-jaguar-cd"
-  },
-  {
-    "id": 30,
-    "abbreviation": "Sega32",
-    "generation": 4,
-    "name": "Sega 32X",
-    "platform_family": 3,
-    "slug": "sega32"
-  },
-  {
-    "id": 53,
-    "abbreviation": "MSX2",
-    "name": "MSX2",
-    "slug": "msx2"
-  },
-  {
-    "id": 61,
-    "abbreviation": "Lynx",
-    "generation": 4,
-    "name": "Atari Lynx",
-    "slug": "lynx"
-  },
-  {
-    "id": 77,
-    "abbreviation": "x1",
-    "name": "Sharp X1",
-    "slug": "x1"
-  },
-  {
-    "id": 120,
-    "generation": 5,
-    "name": "Neo Geo Pocket Color",
-    "slug": "neo-geo-pocket-color"
-  },
-  {
-    "id": 127,
-    "generation": 2,
-    "name": "Fairchild Channel F",
-    "slug": "fairchild-channel-f"
+    "slug": "wiiu",
+    "platform_type": 1
   },
   {
     "id": 132,
     "abbreviation": "FireTV",
     "name": "Amazon Fire TV",
-    "slug": "firetv"
-  },
-  {
-    "id": 413,
-    "generation": 7,
-    "name": "Leapster Explorer/LeadPad Explorer",
-    "slug": "leapster-explorer-slash-leadpad-explorer"
-  },
-  {
-    "id": 140,
-    "name": "AY-3-8500",
-    "slug": "ay-3-8500"
-  },
-  {
-    "id": 143,
-    "name": "AY-3-8760",
-    "slug": "ay-3-8760"
-  },
-  {
-    "id": 153,
-    "name": "Dragon 32/64",
-    "slug": "dragon-32-slash-64"
+    "slug": "firetv",
+    "platform_type": 3
   },
   {
     "id": 167,
@@ -188,39 +54,15 @@
     "generation": 9,
     "name": "PlayStation 5",
     "platform_family": 1,
-    "slug": "ps5"
-  },
-  {
-    "id": 154,
-    "abbreviation": "APCW",
-    "name": "Amstrad PCW",
-    "slug": "apcw"
-  },
-  {
-    "id": 70,
-    "abbreviation": "vectrex",
-    "generation": 2,
-    "name": "Vectrex",
-    "slug": "vectrex"
-  },
-  {
-    "id": 87,
-    "abbreviation": "virtualboy",
-    "generation": 5,
-    "name": "Virtual Boy",
-    "platform_family": 5,
-    "slug": "virtualboy"
-  },
-  {
-    "id": 145,
-    "name": "AY-3-8603",
-    "slug": "ay-3-8603"
+    "slug": "ps5",
+    "platform_type": 1
   },
   {
     "id": 386,
     "abbreviation": "Meta Quest 2",
     "name": "Meta Quest 2",
-    "slug": "meta-quest-2"
+    "slug": "meta-quest-2",
+    "platform_type": 1
   },
   {
     "id": 390,
@@ -228,24 +70,8 @@
     "generation": 9,
     "name": "PlayStation VR2",
     "platform_family": 1,
-    "slug": "psvr2"
-  },
-  {
-    "id": 477,
-    "generation": 8,
-    "name": "Panasonic Jungle",
-    "slug": "panasonic-jungle"
-  },
-  {
-    "id": 65,
-    "abbreviation": "Atari8bit",
-    "name": "Atari 8-bit",
-    "slug": "atari8bit"
-  },
-  {
-    "id": 158,
-    "name": "Commodore CDTV",
-    "slug": "commodore-cdtv"
+    "slug": "psvr2",
+    "platform_type": 1
   },
   {
     "id": 165,
@@ -253,30 +79,8 @@
     "generation": 8,
     "name": "PlayStation VR",
     "platform_family": 1,
-    "slug": "psvr"
-  },
-  {
-    "id": 504,
-    "name": "Uzebox",
-    "slug": "uzebox"
-  },
-  {
-    "id": 440,
-    "generation": 6,
-    "name": "Visual Memory Unit / Visual Memory System",
-    "platform_family": 3,
-    "slug": "visual-memory-unit-slash-visual-memory-system"
-  },
-  {
-    "id": 473,
-    "name": "Arcadia 2001",
-    "slug": "arcadia-2001"
-  },
-  {
-    "id": 474,
-    "generation": 7,
-    "name": "Gizmondo",
-    "slug": "gizmondo"
+    "slug": "psvr",
+    "platform_type": 1
   },
   {
     "id": 48,
@@ -284,7 +88,8 @@
     "generation": 8,
     "name": "PlayStation 4",
     "platform_family": 1,
-    "slug": "ps4--1"
+    "slug": "ps4--1",
+    "platform_type": 1
   },
   {
     "id": 51,
@@ -292,53 +97,16 @@
     "generation": 3,
     "name": "Family Computer Disk System",
     "platform_family": 5,
-    "slug": "fds"
-  },
-  {
-    "id": 89,
-    "abbreviation": "microvision",
-    "generation": 2,
-    "name": "Microvision",
-    "slug": "microvision--1"
-  },
-  {
-    "id": 94,
-    "abbreviation": "C+4",
-    "name": "Commodore Plus/4",
-    "slug": "c-plus-4"
-  },
-  {
-    "id": 123,
-    "generation": 5,
-    "name": "WonderSwan Color",
-    "slug": "wonderswan-color"
-  },
-  {
-    "id": 128,
-    "abbreviation": "supergrafx",
-    "generation": 4,
-    "name": "PC Engine SuperGrafx",
-    "slug": "supergrafx"
-  },
-  {
-    "id": 129,
-    "abbreviation": "ti-99",
-    "name": "Texas Instruments TI-99",
-    "slug": "ti-99"
-  },
-  {
-    "id": 482,
-    "generation": 4,
-    "name": "Sega CD 32X",
-    "platform_family": 3,
-    "slug": "sega-cd-32x"
+    "slug": "fds",
+    "platform_type": 1
   },
   {
     "id": 3,
     "abbreviation": "Linux",
     "name": "Linux",
     "platform_family": 4,
-    "slug": "linux"
+    "slug": "linux",
+    "platform_type": 4
   },
   {
     "id": 8,
@@ -346,20 +114,8 @@
     "generation": 6,
     "name": "PlayStation 2",
     "platform_family": 1,
-    "slug": "ps2"
-  },
-  {
-    "id": 88,
-    "abbreviation": "odyssey",
-    "generation": 1,
-    "name": "Odyssey",
-    "slug": "odyssey--1"
-  },
-  {
-    "id": 97,
-    "abbreviation": "pdp-8",
-    "name": "PDP-8",
-    "slug": "pdp-8--1"
+    "slug": "ps2",
+    "platform_type": 1
   },
   {
     "id": 23,
@@ -367,45 +123,29 @@
     "generation": 6,
     "name": "Dreamcast",
     "platform_family": 3,
-    "slug": "dc"
-  },
-  {
-    "id": 136,
-    "generation": 4,
-    "name": "Neo Geo CD",
-    "slug": "neo-geo-cd"
-  },
-  {
-    "id": 134,
-    "abbreviation": "Acorn Electron",
-    "name": "Acorn Electron",
-    "slug": "acorn-electron"
-  },
-  {
-    "id": 35,
-    "abbreviation": "Game Gear",
-    "generation": 4,
-    "name": "Sega Game Gear",
-    "platform_family": 3,
-    "slug": "gamegear"
+    "slug": "dc",
+    "platform_type": 1
   },
   {
     "id": 39,
     "abbreviation": "iOS",
     "name": "iOS",
-    "slug": "ios"
+    "slug": "ios",
+    "platform_type": 4
   },
   {
     "id": 44,
     "abbreviation": "zod",
     "name": "Tapwave Zodiac",
-    "slug": "zod"
+    "slug": "zod",
+    "platform_type": 5
   },
   {
     "id": 6,
     "abbreviation": "PC",
     "name": "PC (Microsoft Windows)",
-    "slug": "win"
+    "slug": "win",
+    "platform_type": 4
   },
   {
     "id": 78,
@@ -413,17 +153,8 @@
     "generation": 4,
     "name": "Sega CD",
     "platform_family": 3,
-    "slug": "sega-cd"
-  },
-  {
-    "id": 144,
-    "name": "AY-3-8710",
-    "slug": "ay-3-8710"
-  },
-  {
-    "id": 146,
-    "name": "AY-3-8605",
-    "slug": "ay-3-8605"
+    "slug": "sega-cd",
+    "platform_type": 1
   },
   {
     "id": 163,
@@ -432,29 +163,10 @@
     "slug": "steam-vr"
   },
   {
-    "id": 373,
-    "name": "Sinclair ZX81",
-    "slug": "sinclair-zx81"
-  },
-  {
-    "id": 147,
-    "name": "AY-3-8606",
-    "slug": "ay-3-8606"
-  },
-  {
     "id": 149,
     "name": "PC-9800 Series",
-    "slug": "pc-9800-series"
-  },
-  {
-    "id": 237,
-    "name": "Sol-20",
-    "slug": "sol-20"
-  },
-  {
-    "id": 505,
-    "name": "Elektor TV Games Computer",
-    "slug": "elektor-tv-games-computer"
+    "slug": "pc-9800-series",
+    "platform_type": 6
   },
   {
     "id": 24,
@@ -462,52 +174,16 @@
     "generation": 6,
     "name": "Game Boy Advance",
     "platform_family": 5,
-    "slug": "gba"
+    "slug": "gba",
+    "platform_type": 5
   },
   {
     "id": 72,
     "abbreviation": "Ouya",
     "generation": 8,
     "name": "Ouya",
-    "slug": "ouya"
-  },
-  {
-    "id": 85,
-    "abbreviation": "donner30",
-    "name": "Donner Model 30",
-    "slug": "donner30"
-  },
-  {
-    "id": 115,
-    "name": "Apple IIGS",
-    "slug": "apple-iigs"
-  },
-  {
-    "id": 119,
-    "generation": 5,
-    "name": "Neo Geo Pocket",
-    "slug": "neo-geo-pocket"
-  },
-  {
-    "id": 125,
-    "name": "PC-8800 Series",
-    "slug": "pc-8800-series"
-  },
-  {
-    "id": 133,
-    "name": "Odyssey 2 / Videopac G7000",
-    "slug": "odyssey-2-slash-videopac-g7000"
-  },
-  {
-    "id": 135,
-    "name": "Hyper Neo Geo 64",
-    "slug": "hyper-neo-geo-64"
-  },
-  {
-    "id": 142,
-    "generation": 1,
-    "name": "PC-50X Family",
-    "slug": "pc-50x-family"
+    "slug": "ouya",
+    "platform_type": 1
   },
   {
     "id": 9,
@@ -515,13 +191,8 @@
     "generation": 7,
     "name": "PlayStation 3",
     "platform_family": 1,
-    "slug": "ps3"
-  },
-  {
-    "id": 98,
-    "abbreviation": "gt40",
-    "name": "DEC GT40",
-    "slug": "gt40"
+    "slug": "ps3",
+    "platform_type": 1
   },
   {
     "id": 11,
@@ -529,19 +200,8 @@
     "generation": 6,
     "name": "Xbox",
     "platform_family": 2,
-    "slug": "xbox"
-  },
-  {
-    "id": 111,
-    "abbreviation": "imlac-pds1",
-    "name": "Imlac PDS-1",
-    "slug": "imlac-pds1"
-  },
-  {
-    "id": 162,
-    "abbreviation": "Oculus VR",
-    "name": "Oculus VR",
-    "slug": "oculus-vr"
+    "slug": "xbox",
+    "platform_type": 1
   },
   {
     "id": 20,
@@ -549,7 +209,8 @@
     "generation": 7,
     "name": "Nintendo DS",
     "platform_family": 5,
-    "slug": "nds"
+    "slug": "nds",
+    "platform_type": 5
   },
   {
     "id": 18,
@@ -557,7 +218,8 @@
     "generation": 3,
     "name": "Nintendo Entertainment System",
     "platform_family": 5,
-    "slug": "nes"
+    "slug": "nes",
+    "platform_type": 1
   },
   {
     "id": 46,
@@ -565,25 +227,8 @@
     "generation": 8,
     "name": "PlayStation Vita",
     "platform_family": 1,
-    "slug": "psvita"
-  },
-  {
-    "id": 308,
-    "generation": 5,
-    "name": "Playdia",
-    "slug": "playdia"
-  },
-  {
-    "id": 116,
-    "abbreviation": "Acorn Archimedes",
-    "name": "Acorn Archimedes",
-    "slug": "acorn-archimedes"
-  },
-  {
-    "id": 117,
-    "abbreviation": "Philips CDI",
-    "name": "Philips CD-i",
-    "slug": "philips-cdi"
+    "slug": "psvita",
+    "platform_type": 5
   },
   {
     "id": 22,
@@ -591,193 +236,27 @@
     "generation": 5,
     "name": "Game Boy Color",
     "platform_family": 5,
-    "slug": "gbc"
-  },
-  {
-    "id": 15,
-    "abbreviation": "C64",
-    "name": "Commodore C64/128/MAX",
-    "slug": "c64"
-  },
-  {
-    "id": 101,
-    "abbreviation": "nimrod",
-    "name": "Ferranti Nimrod Computer",
-    "slug": "nimrod"
-  },
-  {
-    "id": 67,
-    "abbreviation": "intellivision",
-    "generation": 2,
-    "name": "Intellivision",
-    "slug": "intellivision"
-  },
-  {
-    "id": 73,
-    "abbreviation": "blackberry",
-    "name": "BlackBerry OS",
-    "slug": "blackberry"
-  },
-  {
-    "id": 86,
-    "abbreviation": "turbografx16",
-    "generation": 4,
-    "name": "TurboGrafx-16/PC Engine",
-    "slug": "turbografx16--1"
-  },
-  {
-    "id": 66,
-    "abbreviation": "Atari5200",
-    "generation": 2,
-    "name": "Atari 5200",
-    "slug": "atari5200"
-  },
-  {
-    "id": 108,
-    "abbreviation": "pdp11",
-    "name": "PDP-11",
-    "slug": "pdp11"
-  },
-  {
-    "id": 109,
-    "abbreviation": "cdccyber70",
-    "name": "CDC Cyber 70",
-    "slug": "cdccyber70"
+    "slug": "gbc",
+    "platform_type": 5
   },
   {
     "id": 113,
     "abbreviation": "OnLive",
     "name": "OnLive Game System",
-    "slug": "onlive"
+    "slug": "onlive",
+    "platform_type": 3
   },
   {
     "id": 118,
     "name": "FM Towns",
-    "slug": "fm-towns"
-  },
-  {
-    "id": 121,
-    "name": "Sharp X68000",
-    "slug": "sharp-x68000"
-  },
-  {
-    "id": 124,
-    "name": "SwanCrystal",
-    "slug": "swancrystal"
-  },
-  {
-    "id": 131,
-    "generation": 4,
-    "name": "Super NES CD-ROM System",
-    "platform_family": 5,
-    "slug": "super-nes-cd-rom-system"
-  },
-  {
-    "id": 138,
-    "generation": 2,
-    "name": "VC 4000",
-    "slug": "vc-4000"
-  },
-  {
-    "id": 139,
-    "generation": 2,
-    "name": "1292 Advanced Programmable Video System",
-    "slug": "1292-advanced-programmable-video-system"
-  },
-  {
-    "id": 152,
-    "name": "FM-7",
-    "slug": "fm-7"
-  },
-  {
-    "id": 155,
-    "name": "Tatung Einstein",
-    "slug": "tatung-einstein"
-  },
-  {
-    "id": 157,
-    "name": "NEC PC-6000 Series",
-    "slug": "nec-pc-6000-series"
-  },
-  {
-    "id": 307,
-    "abbreviation": "G&W",
-    "generation": 2,
-    "name": "Game & Watch",
-    "platform_family": 5,
-    "slug": "g-and-w"
-  },
-  {
-    "id": 114,
-    "abbreviation": "Amiga CD32",
-    "generation": 5,
-    "name": "Amiga CD32",
-    "slug": "amiga-cd32"
-  },
-  {
-    "id": 161,
-    "name": "Windows Mixed Reality",
-    "slug": "windows-mixed-reality"
-  },
-  {
-    "id": 374,
-    "name": "Sharp MZ-2200",
-    "slug": "sharp-mz-2200"
-  },
-  {
-    "id": 375,
-    "generation": 2,
-    "name": "Epoch Cassette Vision",
-    "slug": "epoch-cassette-vision"
-  },
-  {
-    "id": 377,
-    "name": "Plug & Play",
-    "slug": "plug-and-play"
-  },
-  {
-    "id": 379,
-    "generation": 5,
-    "name": "Game.com",
-    "slug": "game-dot-com"
-  },
-  {
-    "id": 103,
-    "abbreviation": "pdp-7",
-    "name": "PDP-7",
-    "slug": "pdp-7--1"
-  },
-  {
-    "id": 382,
-    "name": "Intellivision Amico",
-    "slug": "intellivision-amico"
-  },
-  {
-    "id": 384,
-    "name": "Oculus Quest",
-    "slug": "oculus-quest"
+    "slug": "fm-towns",
+    "platform_type": 6
   },
   {
     "id": 385,
     "name": "Oculus Rift",
-    "slug": "oculus-rift"
-  },
-  {
-    "id": 387,
-    "name": "Oculus Go",
-    "slug": "oculus-go"
-  },
-  {
-    "id": 479,
-    "name": "Terebikko / See 'n Say Video Phone",
-    "slug": "terebikko-slash-see-n-say-video-phone"
-  },
-  {
-    "id": 507,
-    "generation": 6,
-    "name": "Advanced Pico Beena",
-    "platform_family": 3,
-    "slug": "advanced-pico-beena"
+    "slug": "oculus-rift",
+    "platform_type": 1
   },
   {
     "id": 508,
@@ -785,7 +264,8 @@
     "generation": 9,
     "name": "Nintendo Switch 2",
     "platform_family": 5,
-    "slug": "switch-2"
+    "slug": "switch-2",
+    "platform_type": 1
   },
   {
     "id": 21,
@@ -793,7 +273,8 @@
     "generation": 6,
     "name": "Nintendo GameCube",
     "platform_family": 5,
-    "slug": "ngc"
+    "slug": "ngc",
+    "platform_type": 1
   },
   {
     "id": 33,
@@ -801,7 +282,8 @@
     "generation": 4,
     "name": "Game Boy",
     "platform_family": 5,
-    "slug": "gb"
+    "slug": "gb",
+    "platform_type": 5
   },
   {
     "id": 137,
@@ -809,21 +291,16 @@
     "generation": 8,
     "name": "New Nintendo 3DS",
     "platform_family": 5,
-    "slug": "new-3ds"
+    "slug": "new-3ds",
+    "platform_type": 5
   },
   {
     "id": 42,
     "abbreviation": "NGage",
     "generation": 6,
     "name": "N-Gage",
-    "slug": "ngage"
-  },
-  {
-    "id": 57,
-    "abbreviation": "WonderSwan",
-    "generation": 5,
-    "name": "WonderSwan",
-    "slug": "wonderswan"
+    "slug": "ngage",
+    "platform_type": 5
   },
   {
     "id": 38,
@@ -831,163 +308,30 @@
     "generation": 7,
     "name": "PlayStation Portable",
     "platform_family": 1,
-    "slug": "psp"
-  },
-  {
-    "id": 69,
-    "abbreviation": "bbcmicro",
-    "name": "BBC Microcomputer System",
-    "slug": "bbcmicro"
-  },
-  {
-    "id": 71,
-    "abbreviation": "vic-20",
-    "name": "Commodore VIC-20",
-    "slug": "vic-20"
+    "slug": "psp",
+    "platform_type": 5
   },
   {
     "id": 74,
     "abbreviation": "Win Phone",
     "name": "Windows Phone",
-    "slug": "winphone"
-  },
-  {
-    "id": 79,
-    "abbreviation": "neogeomvs",
-    "name": "Neo Geo MVS",
-    "slug": "neogeomvs"
-  },
-  {
-    "id": 80,
-    "abbreviation": "neogeoaes",
-    "generation": 4,
-    "name": "Neo Geo AES",
-    "slug": "neogeoaes"
-  },
-  {
-    "id": 84,
-    "abbreviation": "sg1000",
-    "generation": 3,
-    "name": "SG-1000",
-    "platform_family": 3,
-    "slug": "sg1000"
-  },
-  {
-    "id": 91,
-    "abbreviation": "astrocade",
-    "generation": 2,
-    "name": "Bally Astrocade",
-    "slug": "astrocade"
-  },
-  {
-    "id": 93,
-    "abbreviation": "C16",
-    "name": "Commodore 16",
-    "slug": "c16"
-  },
-  {
-    "id": 96,
-    "abbreviation": "pdp10",
-    "name": "PDP-10",
-    "slug": "pdp10"
-  },
-  {
-    "id": 122,
-    "name": "Nuon",
-    "slug": "nuon"
-  },
-  {
-    "id": 141,
-    "name": "AY-3-8610",
-    "slug": "ay-3-8610"
+    "slug": "winphone",
+    "platform_type": 4
   },
   {
     "id": 170,
     "abbreviation": "Stadia",
     "name": "Google Stadia",
     "platform_family": 4,
-    "slug": "stadia"
+    "slug": "stadia",
+    "platform_type": 3
   },
   {
     "id": 388,
     "abbreviation": "Gear VR",
     "name": "Gear VR",
-    "slug": "gear-vr"
-  },
-  {
-    "id": 372,
-    "name": "OOParts",
-    "slug": "ooparts"
-  },
-  {
-    "id": 203,
-    "name": "DUPLICATE Stadia",
-    "slug": "duplicate-stadia"
-  },
-  {
-    "id": 164,
-    "name": "Daydream",
-    "slug": "daydream"
-  },
-  {
-    "id": 380,
-    "name": "Casio Loopy",
-    "slug": "casio-loopy"
-  },
-  {
-    "id": 100,
-    "abbreviation": "analogueelectronics",
-    "name": "Analogue electronics",
-    "slug": "analogueelectronics"
-  },
-  {
-    "id": 415,
-    "generation": 4,
-    "name": "Watara/QuickShot Supervision",
-    "slug": "watara-slash-quickshot-supervision"
-  },
-  {
-    "id": 478,
-    "generation": 6,
-    "name": "Panasonic M2",
-    "slug": "panasonic-m2"
-  },
-  {
-    "id": 486,
-    "generation": 7,
-    "name": "Digiblast",
-    "slug": "digiblast"
-  },
-  {
-    "id": 381,
-    "abbreviation": "Playdate",
-    "generation": 9,
-    "name": "Playdate",
-    "slug": "playdate"
-  },
-  {
-    "id": 509,
-    "name": "Polymega",
-    "slug": "polymega"
-  },
-  {
-    "id": 26,
-    "abbreviation": "ZXS",
-    "name": "ZX Spectrum",
-    "slug": "zxs"
-  },
-  {
-    "id": 378,
-    "abbreviation": "Gamate",
-    "generation": 4,
-    "name": "Gamate",
-    "slug": "gamate"
-  },
-  {
-    "id": 27,
-    "abbreviation": "MSX",
-    "name": "MSX",
-    "slug": "msx"
+    "slug": "gear-vr",
+    "platform_type": 1
   },
   {
     "id": 37,
@@ -995,7 +339,8 @@
     "generation": 8,
     "name": "Nintendo 3DS",
     "platform_family": 5,
-    "slug": "3ds"
+    "slug": "3ds",
+    "platform_type": 5
   },
   {
     "id": 169,
@@ -1003,21 +348,8 @@
     "generation": 9,
     "name": "Xbox Series X|S",
     "platform_family": 2,
-    "slug": "series-x-s"
-  },
-  {
-    "id": 64,
-    "abbreviation": "SMS",
-    "generation": 3,
-    "name": "Sega Master System/Mark III",
-    "platform_family": 3,
-    "slug": "sms"
-  },
-  {
-    "id": 95,
-    "abbreviation": "pdp1",
-    "name": "PDP-1",
-    "slug": "pdp1"
+    "slug": "series-x-s",
+    "platform_type": 1
   },
   {
     "id": 99,
@@ -1025,218 +357,51 @@
     "generation": 3,
     "name": "Family Computer",
     "platform_family": 5,
-    "slug": "famicom"
-  },
-  {
-    "id": 102,
-    "abbreviation": "edsac",
-    "name": "EDSAC",
-    "slug": "edsac--1"
-  },
-  {
-    "id": 104,
-    "abbreviation": "hp2100",
-    "name": "HP 2100",
-    "slug": "hp2100"
-  },
-  {
-    "id": 105,
-    "abbreviation": "hp3000",
-    "name": "HP 3000",
-    "slug": "hp3000"
-  },
-  {
-    "id": 106,
-    "abbreviation": "sdssigma7",
-    "name": "SDS Sigma 7",
-    "slug": "sdssigma7"
-  },
-  {
-    "id": 107,
-    "abbreviation": "call-a-computer",
-    "name": "Call-A-Computer time-shared mainframe computer system",
-    "slug": "call-a-computer"
-  },
-  {
-    "id": 110,
-    "abbreviation": "plato",
-    "name": "PLATO",
-    "slug": "plato--1"
-  },
-  {
-    "id": 151,
-    "name": "TRS-80 Color Computer",
-    "slug": "trs-80-color-computer"
-  },
-  {
-    "id": 166,
-    "name": "Pokémon mini",
-    "platform_family": 5,
-    "slug": "pokemon-mini"
-  },
-  {
-    "id": 50,
-    "abbreviation": "3DO",
-    "generation": 5,
-    "name": "3DO Interactive Multiplayer",
-    "slug": "3do"
-  },
-  {
-    "id": 238,
-    "name": "DVD Player",
-    "slug": "dvd-player"
-  },
-  {
-    "id": 239,
-    "name": "Blu-ray Player",
-    "slug": "blu-ray-player"
+    "slug": "famicom",
+    "platform_type": 1
   },
   {
     "id": 240,
     "generation": 7,
     "name": "Zeebo",
-    "slug": "zeebo"
-  },
-  {
-    "id": 274,
-    "generation": 5,
-    "name": "PC-FX",
-    "slug": "pc-fx"
-  },
-  {
-    "id": 411,
-    "abbreviation": "Handheld",
-    "name": "Handheld Electronic LCD",
-    "slug": "handheld"
-  },
-  {
-    "id": 236,
-    "name": "Exidy Sorcerer",
-    "slug": "exidy-sorcerer"
+    "slug": "zeebo",
+    "platform_type": 1
   },
   {
     "id": 405,
     "name": "Windows Mobile",
-    "slug": "windows-mobile"
-  },
-  {
-    "id": 406,
-    "name": "Sinclair QL",
-    "slug": "sinclair-ql"
-  },
-  {
-    "id": 407,
-    "generation": 7,
-    "name": "HyperScan",
-    "slug": "hyperscan"
-  },
-  {
-    "id": 408,
-    "generation": 4,
-    "name": "Mega Duck/Cougar Boy",
-    "slug": "mega-duck-slash-cougar-boy"
-  },
-  {
-    "id": 409,
-    "name": "Legacy Computer",
-    "slug": "legacy-computer"
-  },
-  {
-    "id": 412,
-    "generation": 6,
-    "name": "Leapster",
-    "slug": "leapster"
-  },
-  {
-    "id": 414,
-    "generation": 8,
-    "name": "LeapTV",
-    "slug": "leaptv"
-  },
-  {
-    "id": 417,
-    "name": "Palm OS",
-    "slug": "palm-os"
-  },
-  {
-    "id": 439,
-    "generation": 6,
-    "name": "V.Smile",
-    "slug": "vsmile"
-  },
-  {
-    "id": 441,
-    "generation": 5,
-    "name": "PocketStation",
-    "platform_family": 1,
-    "slug": "pocketstation"
+    "slug": "windows-mobile",
+    "platform_type": 4
   },
   {
     "id": 471,
     "abbreviation": "Meta Quest 3",
     "generation": 9,
     "name": "Meta Quest 3",
-    "slug": "meta-quest-3"
-  },
-  {
-    "id": 472,
-    "name": "visionOS",
-    "slug": "visionos"
-  },
-  {
-    "id": 475,
-    "generation": 5,
-    "name": "R-Zone",
-    "slug": "r-zone"
-  },
-  {
-    "id": 476,
-    "generation": 5,
-    "name": "Apple Pippin",
-    "slug": "apple-pippin"
-  },
-  {
-    "id": 480,
-    "generation": 4,
-    "name": "Super A'Can",
-    "slug": "super-acan"
-  },
-  {
-    "id": 481,
-    "name": "Tomy Tutor / Pyuta / Grandstand Tutor",
-    "slug": "tomy-tutor-slash-pyuta-slash-grandstand-tutor"
+    "slug": "meta-quest-3",
+    "platform_type": 1
   },
   {
     "id": 34,
     "abbreviation": "Android",
     "name": "Android",
     "platform_family": 4,
-    "slug": "android"
+    "slug": "android",
+    "platform_type": 4
   },
   {
     "id": 16,
     "abbreviation": "Amiga",
     "name": "Amiga",
-    "slug": "amiga"
-  },
-  {
-    "id": 68,
-    "abbreviation": "colecovision",
-    "generation": 2,
-    "name": "ColecoVision",
-    "slug": "colecovision"
-  },
-  {
-    "id": 25,
-    "abbreviation": "ACPC",
-    "name": "Amstrad CPC",
-    "slug": "acpc"
+    "slug": "amiga",
+    "platform_type": 6
   },
   {
     "id": 52,
     "abbreviation": "Arcade",
     "name": "Arcade",
-    "slug": "arcade"
+    "slug": "arcade",
+    "platform_type": 2
   },
   {
     "id": 29,
@@ -1244,14 +409,8 @@
     "generation": 4,
     "name": "Sega Mega Drive/Genesis",
     "platform_family": 3,
-    "slug": "genesis-slash-megadrive"
-  },
-  {
-    "id": 47,
-    "abbreviation": "VC",
-    "name": "Virtual Console",
-    "platform_family": 5,
-    "slug": "vc"
+    "slug": "genesis-slash-megadrive",
+    "platform_type": 1
   },
   {
     "id": 7,
@@ -1259,7 +418,8 @@
     "generation": 5,
     "name": "PlayStation",
     "platform_family": 1,
-    "slug": "ps"
+    "slug": "ps",
+    "platform_type": 1
   },
   {
     "id": 416,
@@ -1267,51 +427,23 @@
     "generation": 5,
     "name": "64DD",
     "platform_family": 5,
-    "slug": "64dd"
-  },
-  {
-    "id": 438,
-    "abbreviation": "Arduboy",
-    "generation": 8,
-    "name": "Arduboy",
-    "slug": "arduboy"
-  },
-  {
-    "id": 59,
-    "abbreviation": "Atari2600",
-    "generation": 2,
-    "name": "Atari 2600",
-    "slug": "atari2600"
+    "slug": "64dd",
+    "platform_type": 1
   },
   {
     "id": 55,
     "abbreviation": "Mobile",
     "name": "Legacy Mobile Device",
-    "slug": "mobile"
+    "slug": "mobile",
+    "platform_type": 5
   },
   {
     "id": 159,
     "generation": 7,
     "name": "Nintendo DSi",
     "platform_family": 5,
-    "slug": "nintendo-dsi"
-  },
-  {
-    "id": 90,
-    "abbreviation": "cpet",
-    "name": "Commodore PET",
-    "slug": "cpet"
-  },
-  {
-    "id": 126,
-    "name": "TRS-80",
-    "slug": "trs-80"
-  },
-  {
-    "id": 487,
-    "generation": 4,
-    "name": "LaserActive",
-    "slug": "laseractive"
+    "slug": "nintendo-dsi",
+    "platform_type": 5
   },
   {
     "id": 4,
@@ -1319,7 +451,8 @@
     "generation": 5,
     "name": "Nintendo 64",
     "platform_family": 5,
-    "slug": "n64"
+    "slug": "n64",
+    "platform_type": 1
   },
   {
     "id": 5,
@@ -1327,7 +460,8 @@
     "generation": 7,
     "name": "Wii",
     "platform_family": 5,
-    "slug": "wii"
+    "slug": "wii",
+    "platform_type": 1
   },
   {
     "id": 19,
@@ -1335,7 +469,8 @@
     "generation": 4,
     "name": "Super Nintendo Entertainment System",
     "platform_family": 5,
-    "slug": "snes"
+    "slug": "snes",
+    "platform_type": 1
   },
   {
     "id": 49,
@@ -1343,7 +478,8 @@
     "generation": 8,
     "name": "Xbox One",
     "platform_family": 2,
-    "slug": "xboxone"
+    "slug": "xboxone",
+    "platform_type": 1
   },
   {
     "id": 58,
@@ -1351,31 +487,22 @@
     "generation": 4,
     "name": "Super Famicom",
     "platform_family": 5,
-    "slug": "sfam"
+    "slug": "sfam",
+    "platform_type": 1
   },
   {
     "id": 63,
     "abbreviation": "Atari-ST",
     "name": "Atari ST/STE",
-    "slug": "atari-st"
-  },
-  {
-    "id": 75,
-    "abbreviation": "Apple][",
-    "name": "Apple II",
-    "slug": "appleii"
+    "slug": "atari-st",
+    "platform_type": 6
   },
   {
     "id": 14,
     "abbreviation": "Mac",
     "name": "Mac",
-    "slug": "mac"
-  },
-  {
-    "id": 82,
-    "abbreviation": "browser",
-    "name": "Web browser",
-    "slug": "browser"
+    "slug": "mac",
+    "platform_type": 4
   },
   {
     "id": 130,
@@ -1383,6 +510,7 @@
     "generation": 8,
     "name": "Nintendo Switch",
     "platform_family": 5,
-    "slug": "switch"
+    "slug": "switch",
+    "platform_type": 1
   }
 ]

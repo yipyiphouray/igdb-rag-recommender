@@ -1,0 +1,2502 @@
+[
+  {
+    "id": 38675,
+    "name": "wario land ii",
+    "slug": "wario-land-ii"
+  },
+  {
+    "id": 4613,
+    "name": "non-player character",
+    "slug": "non-player-character"
+  },
+  {
+    "id": 38038,
+    "name": "drawing",
+    "slug": "drawing"
+  },
+  {
+    "id": 66,
+    "name": "simulated reality",
+    "slug": "simulated-reality"
+  },
+  {
+    "id": 38674,
+    "name": "yoshi's story",
+    "slug": "yoshis-story"
+  },
+  {
+    "id": 37825,
+    "name": "balloon world",
+    "slug": "balloon-world"
+  },
+  {
+    "id": 39692,
+    "name": "xavix port",
+    "slug": "xavix-port"
+  },
+  {
+    "id": 705,
+    "name": "swordplay",
+    "slug": "swordplay"
+  },
+  {
+    "id": 313,
+    "name": "rugby",
+    "slug": "rugby"
+  },
+  {
+    "id": 38902,
+    "name": "cartoon",
+    "slug": "cartoon"
+  },
+  {
+    "id": 44092,
+    "name": "astronomy",
+    "slug": "astronomy"
+  },
+  {
+    "id": 11763,
+    "name": "linear overworld",
+    "slug": "linear-overworld"
+  },
+  {
+    "id": 38851,
+    "name": "amiga style",
+    "slug": "amiga-style"
+  },
+  {
+    "id": 38903,
+    "name": "splatoon",
+    "slug": "splatoon"
+  },
+  {
+    "id": 51,
+    "name": "space strategy",
+    "slug": "space-strategy"
+  },
+  {
+    "id": 37805,
+    "name": "sunrise",
+    "slug": "sunrise"
+  },
+  {
+    "id": 8779,
+    "name": "flip screen",
+    "slug": "flip-screen"
+  },
+  {
+    "id": 37806,
+    "name": "roadtrip",
+    "slug": "roadtrip"
+  },
+  {
+    "id": 37807,
+    "name": "angle",
+    "slug": "angle"
+  },
+  {
+    "id": 37810,
+    "name": "tales of vogar",
+    "slug": "tales-of-vogar"
+  },
+  {
+    "id": 2814,
+    "name": "hand-drawn",
+    "slug": "hand-drawn"
+  },
+  {
+    "id": 37816,
+    "name": "vt09",
+    "slug": "vt09"
+  },
+  {
+    "id": 37824,
+    "name": "spot the difference",
+    "slug": "spot-the-difference"
+  },
+  {
+    "id": 37923,
+    "name": "retro arcade shooter",
+    "slug": "retro-arcade-shooter"
+  },
+  {
+    "id": 37826,
+    "name": "level mod",
+    "slug": "level-mod"
+  },
+  {
+    "id": 1937,
+    "name": "otome",
+    "slug": "otome"
+  },
+  {
+    "id": 37872,
+    "name": "vt03",
+    "slug": "vt03"
+  },
+  {
+    "id": 37873,
+    "name": "vt02",
+    "slug": "vt02"
+  },
+  {
+    "id": 8900,
+    "name": "yandere",
+    "slug": "yandere"
+  },
+  {
+    "id": 37943,
+    "name": "bloons",
+    "slug": "bloons"
+  },
+  {
+    "id": 3918,
+    "name": "ogres",
+    "slug": "ogres"
+  },
+  {
+    "id": 37800,
+    "name": "minecraft datapack",
+    "slug": "minecraft-datapack"
+  },
+  {
+    "id": 1971,
+    "name": "over the shoulder",
+    "slug": "over-the-shoulder"
+  },
+  {
+    "id": 37944,
+    "name": "spacetime",
+    "slug": "spacetime"
+  },
+  {
+    "id": 44,
+    "name": "ice hockey",
+    "slug": "ice-hockey"
+  },
+  {
+    "id": 44869,
+    "name": "pang",
+    "slug": "pang"
+  },
+  {
+    "id": 1280,
+    "name": "reviewed by avgn",
+    "slug": "reviewed-by-avgn"
+  },
+  {
+    "id": 7379,
+    "name": "goose",
+    "slug": "goose"
+  },
+  {
+    "id": 38015,
+    "name": "graphite lab",
+    "slug": "graphite-lab"
+  },
+  {
+    "id": 37815,
+    "name": "vtxx",
+    "slug": "vtxx"
+  },
+  {
+    "id": 39292,
+    "name": "launching game",
+    "slug": "launching-game"
+  },
+  {
+    "id": 1370,
+    "name": "prehistoric",
+    "slug": "prehistoric"
+  },
+  {
+    "id": 4410,
+    "name": "game reference",
+    "slug": "game-reference"
+  },
+  {
+    "id": 497,
+    "name": "summoning support",
+    "slug": "summoning-support"
+  },
+  {
+    "id": 869,
+    "name": "wrestlemania",
+    "slug": "wrestlemania"
+  },
+  {
+    "id": 42063,
+    "name": "neon",
+    "slug": "neon"
+  },
+  {
+    "id": 37871,
+    "name": "zuma clone",
+    "slug": "zuma-clone"
+  },
+  {
+    "id": 1888,
+    "name": "controversial",
+    "slug": "controversial"
+  },
+  {
+    "id": 48057,
+    "name": "family guy fangame",
+    "slug": "family-guy-fangame"
+  },
+  {
+    "id": 12105,
+    "name": "best performance: winner - 2017 (the game awards)",
+    "slug": "best-performance-winner-2017-the-game-awards"
+  },
+  {
+    "id": 9159,
+    "name": "crucifix",
+    "slug": "crucifix"
+  },
+  {
+    "id": 1193,
+    "name": "parallel worlds",
+    "slug": "parallel-worlds"
+  },
+  {
+    "id": 12225,
+    "name": "region locked",
+    "slug": "region-locked"
+  },
+  {
+    "id": 38235,
+    "name": "1970s",
+    "slug": "1970s"
+  },
+  {
+    "id": 43999,
+    "name": "nintendo 64 transfer pak",
+    "slug": "nintendo-64-transfer-pak"
+  },
+  {
+    "id": 669,
+    "name": "frog",
+    "slug": "frog"
+  },
+  {
+    "id": 6105,
+    "name": "psn play",
+    "slug": "psn-play"
+  },
+  {
+    "id": 38682,
+    "name": "brick game",
+    "slug": "brick-game"
+  },
+  {
+    "id": 8853,
+    "name": "roman numerals",
+    "slug": "roman-numerals"
+  },
+  {
+    "id": 37823,
+    "name": "steamed hams",
+    "slug": "steamed-hams"
+  },
+  {
+    "id": 47258,
+    "name": "lsdjam 2020",
+    "slug": "lsdjam-2020"
+  },
+  {
+    "id": 37876,
+    "name": "tom and jerry",
+    "slug": "tom-and-jerry"
+  },
+  {
+    "id": 38684,
+    "name": "synergies",
+    "slug": "synergies"
+  },
+  {
+    "id": 1181,
+    "name": "fairy",
+    "slug": "fairy"
+  },
+  {
+    "id": 42064,
+    "name": "bees",
+    "slug": "bees"
+  },
+  {
+    "id": 38905,
+    "name": "blockchain version exists",
+    "slug": "blockchain-version-exists"
+  },
+  {
+    "id": 47259,
+    "name": "lsdjam 2024",
+    "slug": "lsdjam-2024"
+  },
+  {
+    "id": 38907,
+    "name": "rumble support",
+    "slug": "rumble-support"
+  },
+  {
+    "id": 38908,
+    "name": "hard",
+    "slug": "hard"
+  },
+  {
+    "id": 9841,
+    "name": "pay-to-play",
+    "slug": "pay-to-play"
+  },
+  {
+    "id": 37811,
+    "name": "lost descendants",
+    "slug": "lost-descendants"
+  },
+  {
+    "id": 2069,
+    "name": "pizza",
+    "slug": "pizza"
+  },
+  {
+    "id": 170,
+    "name": "time travel",
+    "slug": "time-travel"
+  },
+  {
+    "id": 37946,
+    "name": "tenno",
+    "slug": "tenno"
+  },
+  {
+    "id": 9731,
+    "name": "classless mmo",
+    "slug": "classless-mmo"
+  },
+  {
+    "id": 37812,
+    "name": "super mario odyssey mod",
+    "slug": "super-mario-odyssey-mod"
+  },
+  {
+    "id": 37814,
+    "name": "gta mod",
+    "slug": "gta-mod"
+  },
+  {
+    "id": 37821,
+    "name": "vt3xx",
+    "slug": "vt3xx"
+  },
+  {
+    "id": 37822,
+    "name": "unofficial sequel",
+    "slug": "unofficial-sequel"
+  },
+  {
+    "id": 42065,
+    "name": "hotel",
+    "slug": "hotel"
+  },
+  {
+    "id": 2834,
+    "name": "arcade shooter",
+    "slug": "arcade-shooter"
+  },
+  {
+    "id": 37929,
+    "name": "suvivorslike",
+    "slug": "suvivorslike"
+  },
+  {
+    "id": 37930,
+    "name": "idle shooter",
+    "slug": "idle-shooter"
+  },
+  {
+    "id": 3087,
+    "name": "one-man army",
+    "slug": "one-man-army"
+  },
+  {
+    "id": 37948,
+    "name": "void",
+    "slug": "void"
+  },
+  {
+    "id": 11987,
+    "name": "synaesthesia",
+    "slug": "synaesthesia"
+  },
+  {
+    "id": 42207,
+    "name": "lava",
+    "slug": "lava"
+  },
+  {
+    "id": 42237,
+    "name": "grail",
+    "slug": "grail"
+  },
+  {
+    "id": 37928,
+    "name": "ibm",
+    "slug": "ibm"
+  },
+  {
+    "id": 37875,
+    "name": "earthworm jim",
+    "slug": "earthworm-jim"
+  },
+  {
+    "id": 39707,
+    "name": "seoul",
+    "slug": "seoul"
+  },
+  {
+    "id": 44093,
+    "name": "astrology",
+    "slug": "astrology"
+  },
+  {
+    "id": 166,
+    "name": "shoot 'em up",
+    "slug": "shoot-em-up"
+  },
+  {
+    "id": 2802,
+    "name": "jousting",
+    "slug": "jousting"
+  },
+  {
+    "id": 42104,
+    "name": "monastery",
+    "slug": "monastery"
+  },
+  {
+    "id": 40203,
+    "name": "habblet",
+    "slug": "habblet"
+  },
+  {
+    "id": 7304,
+    "name": "airship",
+    "slug": "airship"
+  },
+  {
+    "id": 4804,
+    "name": "tag teaming",
+    "slug": "tag-teaming"
+  },
+  {
+    "id": 249,
+    "name": "pikachu",
+    "slug": "pikachu"
+  },
+  {
+    "id": 15499,
+    "name": "nosferatu",
+    "slug": "nosferatu"
+  },
+  {
+    "id": 9544,
+    "name": "milkshake",
+    "slug": "milkshake"
+  },
+  {
+    "id": 16840,
+    "name": "xbox live local multiplayer",
+    "slug": "xbox-live-local-multiplayer"
+  },
+  {
+    "id": 12853,
+    "name": "dance mat",
+    "slug": "dance-mat"
+  },
+  {
+    "id": 13544,
+    "name": "soft reset",
+    "slug": "soft-reset"
+  },
+  {
+    "id": 2590,
+    "name": "tactical rpg ( trpg )",
+    "slug": "tactical-rpg-trpg"
+  },
+  {
+    "id": 1849,
+    "name": "business simulation",
+    "slug": "business-simulation"
+  },
+  {
+    "id": 44171,
+    "name": "hoverboard",
+    "slug": "hoverboard"
+  },
+  {
+    "id": 3017,
+    "name": "transformation",
+    "slug": "transformation"
+  },
+  {
+    "id": 8146,
+    "name": "naval warfare",
+    "slug": "naval-warfare"
+  },
+  {
+    "id": 4188,
+    "name": "balloon",
+    "slug": "balloon"
+  },
+  {
+    "id": 609,
+    "name": "sea battles",
+    "slug": "sea-battles"
+  },
+  {
+    "id": 4249,
+    "name": "attributes",
+    "slug": "attributes"
+  },
+  {
+    "id": 2165,
+    "name": "yoshi",
+    "slug": "yoshi"
+  },
+  {
+    "id": 8270,
+    "name": "dual-monitor arcade games",
+    "slug": "dual-monitor-arcade-games"
+  },
+  {
+    "id": 38048,
+    "name": "color by number",
+    "slug": "color-by-number"
+  },
+  {
+    "id": 37836,
+    "name": "multiplayer fps",
+    "slug": "multiplayer-fps"
+  },
+  {
+    "id": 7115,
+    "name": "united states army",
+    "slug": "united-states-army"
+  },
+  {
+    "id": 7335,
+    "name": "anarchism",
+    "slug": "anarchism"
+  },
+  {
+    "id": 9344,
+    "name": "pre-rendered backgrounds",
+    "slug": "pre-rendered-backgrounds"
+  },
+  {
+    "id": 37880,
+    "name": "jump game",
+    "slug": "jump-game"
+  },
+  {
+    "id": 42126,
+    "name": "janitor",
+    "slug": "janitor"
+  },
+  {
+    "id": 5450,
+    "name": "digital rights management",
+    "slug": "digital-rights-management"
+  },
+  {
+    "id": 38148,
+    "name": "ai-generated artwork",
+    "slug": "ai-generated-artwork"
+  },
+  {
+    "id": 5890,
+    "name": "face mapping",
+    "slug": "face-mapping"
+  },
+  {
+    "id": 38045,
+    "name": "metropolis",
+    "slug": "metropolis"
+  },
+  {
+    "id": 37934,
+    "name": "shinobi",
+    "slug": "shinobi"
+  },
+  {
+    "id": 37949,
+    "name": "china exclusive",
+    "slug": "china-exclusive"
+  },
+  {
+    "id": 2628,
+    "name": "easy",
+    "slug": "easy"
+  },
+  {
+    "id": 37834,
+    "name": "game of fortune",
+    "slug": "game-of-fortune"
+  },
+  {
+    "id": 39711,
+    "name": "clouds",
+    "slug": "clouds"
+  },
+  {
+    "id": 39712,
+    "name": "cloud strife",
+    "slug": "cloud-strife"
+  },
+  {
+    "id": 6752,
+    "name": "character models based on actual people",
+    "slug": "character-models-based-on-actual-people"
+  },
+  {
+    "id": 4990,
+    "name": "instant kill",
+    "slug": "instant-kill"
+  },
+  {
+    "id": 10626,
+    "name": "hunters",
+    "slug": "hunters"
+  },
+  {
+    "id": 10516,
+    "name": "jester",
+    "slug": "jester"
+  },
+  {
+    "id": 38683,
+    "name": "extraction",
+    "slug": "extraction"
+  },
+  {
+    "id": 39709,
+    "name": "cloud gaming",
+    "slug": "cloud-gaming"
+  },
+  {
+    "id": 37881,
+    "name": "game for cat",
+    "slug": "game-for-cat"
+  },
+  {
+    "id": 9083,
+    "name": "super soldier",
+    "slug": "super-soldier"
+  },
+  {
+    "id": 3577,
+    "name": "off-roading",
+    "slug": "off-roading"
+  },
+  {
+    "id": 6656,
+    "name": "paladins",
+    "slug": "paladins"
+  },
+  {
+    "id": 6657,
+    "name": "blacksmith",
+    "slug": "blacksmith"
+  },
+  {
+    "id": 37877,
+    "name": "nft racing",
+    "slug": "nft-racing"
+  },
+  {
+    "id": 12377,
+    "name": ".45 defender",
+    "slug": "dot-45-defender"
+  },
+  {
+    "id": 6385,
+    "name": "fan service",
+    "slug": "fan-service"
+  },
+  {
+    "id": 43309,
+    "name": "source movement",
+    "slug": "source-movement"
+  },
+  {
+    "id": 3607,
+    "name": "artistic",
+    "slug": "artistic"
+  },
+  {
+    "id": 5669,
+    "name": "youtube integration",
+    "slug": "youtube-integration"
+  },
+  {
+    "id": 706,
+    "name": "shooting",
+    "slug": "shooting"
+  },
+  {
+    "id": 7389,
+    "name": "alien protagonist",
+    "slug": "alien-protagonist"
+  },
+  {
+    "id": 6460,
+    "name": "cancelled episodic game series",
+    "slug": "cancelled-episodic-game-series"
+  },
+  {
+    "id": 30472,
+    "name": "nintendo vs. system",
+    "slug": "nintendo-vs-system"
+  },
+  {
+    "id": 3502,
+    "name": "trainer",
+    "slug": "trainer"
+  },
+  {
+    "id": 5545,
+    "name": "dart",
+    "slug": "dart"
+  },
+  {
+    "id": 10554,
+    "name": "wave attack",
+    "slug": "wave-attack"
+  },
+  {
+    "id": 680,
+    "name": "college",
+    "slug": "college"
+  },
+  {
+    "id": 10804,
+    "name": "ancient curse",
+    "slug": "ancient-curse"
+  },
+  {
+    "id": 37833,
+    "name": "turma da monica",
+    "slug": "turma-da-monica"
+  },
+  {
+    "id": 41913,
+    "name": "pop station",
+    "slug": "pop-station"
+  },
+  {
+    "id": 42103,
+    "name": "asylum",
+    "slug": "asylum"
+  },
+  {
+    "id": 7195,
+    "name": "hidden character",
+    "slug": "hidden-character"
+  },
+  {
+    "id": 47493,
+    "name": "nokia 3310 jam 6",
+    "slug": "nokia-3310-jam-6"
+  },
+  {
+    "id": 46528,
+    "name": "diecast",
+    "slug": "diecast"
+  },
+  {
+    "id": 7112,
+    "name": "dream sequence",
+    "slug": "dream-sequence"
+  },
+  {
+    "id": 4147,
+    "name": "rail track",
+    "slug": "rail-track"
+  },
+  {
+    "id": 38050,
+    "name": "talking pet",
+    "slug": "talking-pet"
+  },
+  {
+    "id": 23494,
+    "name": "match 3 game",
+    "slug": "match-3-game"
+  },
+  {
+    "id": 3701,
+    "name": "monopoly",
+    "slug": "monopoly"
+  },
+  {
+    "id": 4623,
+    "name": "fake in-game advertising",
+    "slug": "fake-in-game-advertising"
+  },
+  {
+    "id": 13574,
+    "name": "tokyo game show 2008",
+    "slug": "tokyo-game-show-2008"
+  },
+  {
+    "id": 37838,
+    "name": "ayane",
+    "slug": "ayane"
+  },
+  {
+    "id": 6055,
+    "name": "beetle",
+    "slug": "beetle"
+  },
+  {
+    "id": 43167,
+    "name": "haiku",
+    "slug": "haiku"
+  },
+  {
+    "id": 38693,
+    "name": "game jaaj 6",
+    "slug": "game-jaaj-6"
+  },
+  {
+    "id": 9181,
+    "name": "friendship",
+    "slug": "friendship"
+  },
+  {
+    "id": 37857,
+    "name": "will",
+    "slug": "will"
+  },
+  {
+    "id": 39105,
+    "name": "variable refresh rate",
+    "slug": "variable-refresh-rate"
+  },
+  {
+    "id": 4241,
+    "name": "students",
+    "slug": "students"
+  },
+  {
+    "id": 38694,
+    "name": "language learning - spanish",
+    "slug": "language-learning-spanish"
+  },
+  {
+    "id": 38346,
+    "name": "fuhrer in los angele",
+    "slug": "fuhrer-in-los-angele"
+  },
+  {
+    "id": 10433,
+    "name": "jungle warfare",
+    "slug": "jungle-warfare"
+  },
+  {
+    "id": 35195,
+    "name": "vtech vreader",
+    "slug": "vtech-vreader"
+  },
+  {
+    "id": 4253,
+    "name": "pax east 2017",
+    "slug": "pax-east-2017"
+  },
+  {
+    "id": 38695,
+    "name": "historical japan",
+    "slug": "historical-japan"
+  },
+  {
+    "id": 39715,
+    "name": "hot dog",
+    "slug": "hot-dog"
+  },
+  {
+    "id": 6732,
+    "name": "zombie protagonist",
+    "slug": "zombie-protagonist"
+  },
+  {
+    "id": 4641,
+    "name": "tape recorder",
+    "slug": "tape-recorder"
+  },
+  {
+    "id": 38163,
+    "name": "wreck-it ralph",
+    "slug": "wreck-it-ralph"
+  },
+  {
+    "id": 4261,
+    "name": "pre-release public testing",
+    "slug": "pre-release-public-testing"
+  },
+  {
+    "id": 38288,
+    "name": "old mobile games",
+    "slug": "old-mobile-games"
+  },
+  {
+    "id": 7357,
+    "name": "playable boss",
+    "slug": "playable-boss"
+  },
+  {
+    "id": 39714,
+    "name": "cloud computing",
+    "slug": "cloud-computing"
+  },
+  {
+    "id": 713,
+    "name": "amusement park",
+    "slug": "amusement-park"
+  },
+  {
+    "id": 4170,
+    "name": "monkey",
+    "slug": "monkey"
+  },
+  {
+    "id": 24295,
+    "name": "kissing scene",
+    "slug": "kissing-scene"
+  },
+  {
+    "id": 7341,
+    "name": "camouflage",
+    "slug": "camouflage"
+  },
+  {
+    "id": 38345,
+    "name": "fuhrer in la",
+    "slug": "fuhrer-in-la"
+  },
+  {
+    "id": 38692,
+    "name": "game jaaj 3",
+    "slug": "game-jaaj-3"
+  },
+  {
+    "id": 9374,
+    "name": "reluctant hero",
+    "slug": "reluctant-hero"
+  },
+  {
+    "id": 23385,
+    "name": "preschool",
+    "slug": "preschool"
+  },
+  {
+    "id": 4388,
+    "name": "shopping",
+    "slug": "shopping"
+  },
+  {
+    "id": 420,
+    "name": "artifacts",
+    "slug": "artifacts"
+  },
+  {
+    "id": 10446,
+    "name": "bangsian fantasy",
+    "slug": "bangsian-fantasy"
+  },
+  {
+    "id": 7458,
+    "name": "battle.net",
+    "slug": "battle-dot-net"
+  },
+  {
+    "id": 4475,
+    "name": "eyetoy support",
+    "slug": "eyetoy-support"
+  },
+  {
+    "id": 4544,
+    "name": "unlockables",
+    "slug": "unlockables"
+  },
+  {
+    "id": 660,
+    "name": "run and gun",
+    "slug": "run-and-gun"
+  },
+  {
+    "id": 37837,
+    "name": "kasumi",
+    "slug": "kasumi"
+  },
+  {
+    "id": 10971,
+    "name": "spyro",
+    "slug": "spyro"
+  },
+  {
+    "id": 44232,
+    "name": "choices",
+    "slug": "choices"
+  },
+  {
+    "id": 38032,
+    "name": "global warming",
+    "slug": "global-warming"
+  },
+  {
+    "id": 23115,
+    "name": "crowdfunding - modian",
+    "slug": "crowdfunding-modian"
+  },
+  {
+    "id": 8156,
+    "name": "contextual controller rumble",
+    "slug": "contextual-controller-rumble"
+  },
+  {
+    "id": 38161,
+    "name": "337",
+    "slug": "337"
+  },
+  {
+    "id": 42236,
+    "name": "merlin",
+    "slug": "merlin"
+  },
+  {
+    "id": 44743,
+    "name": "ai-generated sound effects",
+    "slug": "ai-generated-sound-effects"
+  },
+  {
+    "id": 4615,
+    "name": "profanity",
+    "slug": "profanity"
+  },
+  {
+    "id": 52866,
+    "name": "flash game",
+    "slug": "flash-game"
+  },
+  {
+    "id": 48791,
+    "name": "imp",
+    "slug": "imp"
+  },
+  {
+    "id": 3116,
+    "name": "tag",
+    "slug": "tag"
+  },
+  {
+    "id": 2706,
+    "name": "persia",
+    "slug": "persia"
+  },
+  {
+    "id": 1567,
+    "name": "japan",
+    "slug": "japan"
+  },
+  {
+    "id": 3079,
+    "name": "8-bit",
+    "slug": "8-bit"
+  },
+  {
+    "id": 38697,
+    "name": "monster train",
+    "slug": "monster-train"
+  },
+  {
+    "id": 4074,
+    "name": "battle",
+    "slug": "battle"
+  },
+  {
+    "id": 38165,
+    "name": "prelude",
+    "slug": "prelude"
+  },
+  {
+    "id": 38698,
+    "name": "hearthstone",
+    "slug": "hearthstone"
+  },
+  {
+    "id": 38701,
+    "name": "cottagecore",
+    "slug": "cottagecore"
+  },
+  {
+    "id": 37842,
+    "name": "udraw gametablet",
+    "slug": "udraw-gametablet"
+  },
+  {
+    "id": 37843,
+    "name": "udraw gametablet - wii",
+    "slug": "udraw-gametablet-wii"
+  },
+  {
+    "id": 37840,
+    "name": "nhl rom hack",
+    "slug": "nhl-rom-hack"
+  },
+  {
+    "id": 10089,
+    "name": "geoscape",
+    "slug": "geoscape"
+  },
+  {
+    "id": 38703,
+    "name": "idler",
+    "slug": "idler"
+  },
+  {
+    "id": 1289,
+    "name": "backtracking",
+    "slug": "backtracking"
+  },
+  {
+    "id": 11214,
+    "name": "yoga",
+    "slug": "yoga"
+  },
+  {
+    "id": 13941,
+    "name": "interactive achievement awards 2009",
+    "slug": "interactive-achievement-awards-2009"
+  },
+  {
+    "id": 12119,
+    "name": "outside of time and space",
+    "slug": "outside-of-time-and-space"
+  },
+  {
+    "id": 37844,
+    "name": "udraw gametablet required",
+    "slug": "udraw-gametablet-required"
+  },
+  {
+    "id": 5860,
+    "name": "british grand prix",
+    "slug": "british-grand-prix"
+  },
+  {
+    "id": 12868,
+    "name": "stanley cup",
+    "slug": "stanley-cup"
+  },
+  {
+    "id": 38919,
+    "name": "dadaism",
+    "slug": "dadaism"
+  },
+  {
+    "id": 925,
+    "name": "bruce lee",
+    "slug": "bruce-lee"
+  },
+  {
+    "id": 41975,
+    "name": "loki",
+    "slug": "loki"
+  },
+  {
+    "id": 7334,
+    "name": "detective mode",
+    "slug": "detective-mode"
+  },
+  {
+    "id": 41976,
+    "name": "odin",
+    "slug": "odin"
+  },
+  {
+    "id": 45451,
+    "name": "c128 enhanced",
+    "slug": "c128-enhanced"
+  },
+  {
+    "id": 9343,
+    "name": "extinction",
+    "slug": "extinction"
+  },
+  {
+    "id": 7355,
+    "name": "anti-villain",
+    "slug": "anti-villain"
+  },
+  {
+    "id": 5533,
+    "name": "no hud",
+    "slug": "no-hud"
+  },
+  {
+    "id": 8356,
+    "name": "clefable",
+    "slug": "clefable"
+  },
+  {
+    "id": 14574,
+    "name": "symbology",
+    "slug": "symbology"
+  },
+  {
+    "id": 9360,
+    "name": "ranked match",
+    "slug": "ranked-match"
+  },
+  {
+    "id": 1958,
+    "name": "15th century",
+    "slug": "15th-century"
+  },
+  {
+    "id": 7530,
+    "name": "phoenix",
+    "slug": "phoenix"
+  },
+  {
+    "id": 11538,
+    "name": "cinematic jump",
+    "slug": "cinematic-jump"
+  },
+  {
+    "id": 2544,
+    "name": "italy",
+    "slug": "italy"
+  },
+  {
+    "id": 5560,
+    "name": "multiplayer scoreboard",
+    "slug": "multiplayer-scoreboard"
+  },
+  {
+    "id": 2620,
+    "name": "google cardboard",
+    "slug": "google-cardboard"
+  },
+  {
+    "id": 5639,
+    "name": "invisible wall",
+    "slug": "invisible-wall"
+  },
+  {
+    "id": 38696,
+    "name": "slay the spire",
+    "slug": "slay-the-spire"
+  },
+  {
+    "id": 4787,
+    "name": "treasure chest",
+    "slug": "treasure-chest"
+  },
+  {
+    "id": 37889,
+    "name": "the flintstones",
+    "slug": "the-flintstones"
+  },
+  {
+    "id": 1952,
+    "name": "pixels",
+    "slug": "pixels"
+  },
+  {
+    "id": 5963,
+    "name": "plot twist",
+    "slug": "plot-twist"
+  },
+  {
+    "id": 38055,
+    "name": "kaizo",
+    "slug": "kaizo"
+  },
+  {
+    "id": 42105,
+    "name": "shield",
+    "slug": "shield"
+  },
+  {
+    "id": 38164,
+    "name": "prologue",
+    "slug": "prologue"
+  },
+  {
+    "id": 4578,
+    "name": "motion blur",
+    "slug": "motion-blur"
+  },
+  {
+    "id": 29622,
+    "name": "playable character - luigi",
+    "slug": "playable-character-luigi"
+  },
+  {
+    "id": 45850,
+    "name": "amiga ocs",
+    "slug": "amiga-ocs"
+  },
+  {
+    "id": 37961,
+    "name": "hotline-miami",
+    "slug": "hotline-miami"
+  },
+  {
+    "id": 5633,
+    "name": "xbox one backwards compatibility",
+    "slug": "xbox-one-backwards-compatibility"
+  },
+  {
+    "id": 48701,
+    "name": "visual storytelling",
+    "slug": "visual-storytelling"
+  },
+  {
+    "id": 2730,
+    "name": "3v3",
+    "slug": "3v3"
+  },
+  {
+    "id": 42106,
+    "name": "irish",
+    "slug": "irish"
+  },
+  {
+    "id": 51412,
+    "name": "duality",
+    "slug": "duality"
+  },
+  {
+    "id": 5671,
+    "name": "hotkey",
+    "slug": "hotkey"
+  },
+  {
+    "id": 5377,
+    "name": "robbery",
+    "slug": "robbery"
+  },
+  {
+    "id": 46122,
+    "name": "game off 2024",
+    "slug": "game-off-2024"
+  },
+  {
+    "id": 38705,
+    "name": "a nightmare on elm street",
+    "slug": "a-nightmare-on-elm-street"
+  },
+  {
+    "id": 32395,
+    "name": "ukraine",
+    "slug": "ukraine"
+  },
+  {
+    "id": 41977,
+    "name": "jotun",
+    "slug": "jotun"
+  },
+  {
+    "id": 37841,
+    "name": "unofficial update",
+    "slug": "unofficial-update"
+  },
+  {
+    "id": 4680,
+    "name": "homage box art",
+    "slug": "homage-box-art"
+  },
+  {
+    "id": 49710,
+    "name": "outbreak sim",
+    "slug": "outbreak-sim"
+  },
+  {
+    "id": 38706,
+    "name": "candyman",
+    "slug": "candyman"
+  },
+  {
+    "id": 38707,
+    "name": "jason voorhees",
+    "slug": "jason-voorhees"
+  },
+  {
+    "id": 38708,
+    "name": "michael myers",
+    "slug": "michael-myers"
+  },
+  {
+    "id": 2793,
+    "name": "base defense",
+    "slug": "base-defense"
+  },
+  {
+    "id": 38710,
+    "name": "mice",
+    "slug": "mice"
+  },
+  {
+    "id": 41980,
+    "name": "hiking",
+    "slug": "hiking"
+  },
+  {
+    "id": 38704,
+    "name": "friday the 13th",
+    "slug": "friday-the-13th"
+  },
+  {
+    "id": 38709,
+    "name": "freddy krueger",
+    "slug": "freddy-krueger"
+  },
+  {
+    "id": 7117,
+    "name": "interrogation",
+    "slug": "interrogation"
+  },
+  {
+    "id": 43816,
+    "name": "ai-generated music",
+    "slug": "ai-generated-music"
+  },
+  {
+    "id": 12268,
+    "name": "disc golf",
+    "slug": "disc-golf"
+  },
+  {
+    "id": 40223,
+    "name": "fan translation - french",
+    "slug": "fan-translation-french"
+  },
+  {
+    "id": 7224,
+    "name": "play coin support",
+    "slug": "play-coin-support"
+  },
+  {
+    "id": 12242,
+    "name": "interactive battle system",
+    "slug": "interactive-battle-system"
+  },
+  {
+    "id": 42066,
+    "name": "sushi",
+    "slug": "sushi"
+  },
+  {
+    "id": 6214,
+    "name": "day one patch",
+    "slug": "day-one-patch"
+  },
+  {
+    "id": 43846,
+    "name": "dirt",
+    "slug": "dirt"
+  },
+  {
+    "id": 38355,
+    "name": "3539",
+    "slug": "3539"
+  },
+  {
+    "id": 38711,
+    "name": "puns",
+    "slug": "puns"
+  },
+  {
+    "id": 4477,
+    "name": "cameo appearance",
+    "slug": "cameo-appearance"
+  },
+  {
+    "id": 6736,
+    "name": "burning",
+    "slug": "burning"
+  },
+  {
+    "id": 6457,
+    "name": "environmental kill",
+    "slug": "environmental-kill"
+  },
+  {
+    "id": 7739,
+    "name": "seadra",
+    "slug": "seadra"
+  },
+  {
+    "id": 7464,
+    "name": "off-road racing",
+    "slug": "off-road-racing"
+  },
+  {
+    "id": 7540,
+    "name": "archangel",
+    "slug": "archangel"
+  },
+  {
+    "id": 24576,
+    "name": "energetic heroine",
+    "slug": "energetic-heroine"
+  },
+  {
+    "id": 18595,
+    "name": "pac-man",
+    "slug": "pac-man"
+  },
+  {
+    "id": 6863,
+    "name": "guided by radio",
+    "slug": "guided-by-radio"
+  },
+  {
+    "id": 37896,
+    "name": "contract",
+    "slug": "contract"
+  },
+  {
+    "id": 997,
+    "name": "based on - tv show",
+    "slug": "based-on-tv-show"
+  },
+  {
+    "id": 6048,
+    "name": "one-handed gameplay",
+    "slug": "one-handed-gameplay"
+  },
+  {
+    "id": 6184,
+    "name": "donut block",
+    "slug": "donut-block"
+  },
+  {
+    "id": 4192,
+    "name": "robot dog",
+    "slug": "robot-dog"
+  },
+  {
+    "id": 38197,
+    "name": "knowledge",
+    "slug": "knowledge"
+  },
+  {
+    "id": 40222,
+    "name": "elementary school",
+    "slug": "elementary-school"
+  },
+  {
+    "id": 42238,
+    "name": "thailand",
+    "slug": "thailand"
+  },
+  {
+    "id": 43658,
+    "name": "randnet",
+    "slug": "randnet"
+  },
+  {
+    "id": 38360,
+    "name": "winnie the pooh",
+    "slug": "winnie-the-pooh"
+  },
+  {
+    "id": 37852,
+    "name": "reverse engineering",
+    "slug": "reverse-engineering"
+  },
+  {
+    "id": 7742,
+    "name": "rhyhorn",
+    "slug": "rhyhorn"
+  },
+  {
+    "id": 5114,
+    "name": "in-game achievements",
+    "slug": "in-game-achievements"
+  },
+  {
+    "id": 1373,
+    "name": "hostages",
+    "slug": "hostages"
+  },
+  {
+    "id": 37853,
+    "name": "mit license",
+    "slug": "mit-license"
+  },
+  {
+    "id": 43785,
+    "name": "prototype",
+    "slug": "prototype"
+  },
+  {
+    "id": 37855,
+    "name": "bocchi the rock",
+    "slug": "bocchi-the-rock"
+  },
+  {
+    "id": 5458,
+    "name": "daily content",
+    "slug": "daily-content"
+  },
+  {
+    "id": 11396,
+    "name": "re-numbered franchise",
+    "slug": "re-numbered-franchise"
+  },
+  {
+    "id": 6671,
+    "name": "portal",
+    "slug": "portal"
+  },
+  {
+    "id": 477,
+    "name": "metroidvania",
+    "slug": "metroidvania"
+  },
+  {
+    "id": 38713,
+    "name": "major league baseball",
+    "slug": "major-league-baseball"
+  },
+  {
+    "id": 39740,
+    "name": "elon musk",
+    "slug": "elon-musk"
+  },
+  {
+    "id": 4861,
+    "name": "sabotage",
+    "slug": "sabotage"
+  },
+  {
+    "id": 23130,
+    "name": "j2me",
+    "slug": "j2me"
+  },
+  {
+    "id": 4933,
+    "name": "wii nunchuk support on wii u",
+    "slug": "wii-nunchuk-support-on-wii-u"
+  },
+  {
+    "id": 9536,
+    "name": "demolition derby",
+    "slug": "demolition-derby"
+  },
+  {
+    "id": 37908,
+    "name": "challenge mod",
+    "slug": "challenge-mod"
+  },
+  {
+    "id": 915,
+    "name": "trains",
+    "slug": "trains"
+  },
+  {
+    "id": 12311,
+    "name": "spike video game awards 2011",
+    "slug": "spike-video-game-awards-2011"
+  },
+  {
+    "id": 38935,
+    "name": "cidades habitaveis",
+    "slug": "cidades-habitaveis"
+  },
+  {
+    "id": 38936,
+    "name": "gmtk game jam 2019",
+    "slug": "gmtk-game-jam-2019"
+  },
+  {
+    "id": 42067,
+    "name": "radar",
+    "slug": "radar"
+  },
+  {
+    "id": 1212,
+    "name": "psychic abilities",
+    "slug": "psychic-abilities"
+  },
+  {
+    "id": 42108,
+    "name": "logistics",
+    "slug": "logistics"
+  },
+  {
+    "id": 9691,
+    "name": "combo breaker",
+    "slug": "combo-breaker"
+  },
+  {
+    "id": 38356,
+    "name": "microphone use",
+    "slug": "microphone-use"
+  },
+  {
+    "id": 41380,
+    "name": "sharp mz-700",
+    "slug": "sharp-mz-700"
+  },
+  {
+    "id": 38716,
+    "name": "season summer",
+    "slug": "season-summer"
+  },
+  {
+    "id": 5389,
+    "name": "based on - tabletop rpg",
+    "slug": "based-on-tabletop-rpg"
+  },
+  {
+    "id": 23406,
+    "name": "american history",
+    "slug": "american-history"
+  },
+  {
+    "id": 7417,
+    "name": "indie royale",
+    "slug": "indie-royale"
+  },
+  {
+    "id": 23428,
+    "name": "promotional tie in",
+    "slug": "promotional-tie-in"
+  },
+  {
+    "id": 38712,
+    "name": "greed",
+    "slug": "greed"
+  },
+  {
+    "id": 2820,
+    "name": "spider solitaire",
+    "slug": "spider-solitaire"
+  },
+  {
+    "id": 5844,
+    "name": "western games based on japanese ips",
+    "slug": "western-games-based-on-japanese-ips"
+  },
+  {
+    "id": 8849,
+    "name": "nobilitease",
+    "slug": "nobilitease"
+  },
+  {
+    "id": 37851,
+    "name": "decompilation",
+    "slug": "decompilation"
+  },
+  {
+    "id": 9853,
+    "name": "professional gaming",
+    "slug": "professional-gaming"
+  },
+  {
+    "id": 5865,
+    "name": "japanese grand prix",
+    "slug": "japanese-grand-prix"
+  },
+  {
+    "id": 37907,
+    "name": "2d mario",
+    "slug": "2d-mario"
+  },
+  {
+    "id": 38934,
+    "name": "geleiabilidade",
+    "slug": "geleiabilidade"
+  },
+  {
+    "id": 5123,
+    "name": "profanity in the title",
+    "slug": "profanity-in-the-title"
+  },
+  {
+    "id": 23125,
+    "name": "rayman",
+    "slug": "rayman"
+  },
+  {
+    "id": 42127,
+    "name": "research facility",
+    "slug": "research-facility"
+  },
+  {
+    "id": 38205,
+    "name": "sponsored by a magazine",
+    "slug": "sponsored-by-a-magazine"
+  },
+  {
+    "id": 31242,
+    "name": "gamecube - game boy advance link cable",
+    "slug": "gamecube-game-boy-advance-link-cable"
+  },
+  {
+    "id": 31253,
+    "name": "foddian",
+    "slug": "foddian"
+  },
+  {
+    "id": 45452,
+    "name": "ega graphics",
+    "slug": "ega-graphics"
+  },
+  {
+    "id": 51414,
+    "name": "guilt",
+    "slug": "guilt"
+  },
+  {
+    "id": 9253,
+    "name": "bus simulation",
+    "slug": "bus-simulation"
+  },
+  {
+    "id": 7152,
+    "name": "crow",
+    "slug": "crow"
+  },
+  {
+    "id": 3257,
+    "name": "violent",
+    "slug": "violent"
+  },
+  {
+    "id": 25311,
+    "name": "crowdfunding - indiegogo",
+    "slug": "crowdfunding-indiegogo"
+  },
+  {
+    "id": 45995,
+    "name": "meme",
+    "slug": "meme"
+  },
+  {
+    "id": 39746,
+    "name": "troll hack",
+    "slug": "troll-hack"
+  },
+  {
+    "id": 6653,
+    "name": "fire manipulation",
+    "slug": "fire-manipulation"
+  },
+  {
+    "id": 11281,
+    "name": "tragic villain",
+    "slug": "tragic-villain"
+  },
+  {
+    "id": 39745,
+    "name": "danganronpa fangame",
+    "slug": "danganronpa-fangame"
+  },
+  {
+    "id": 37861,
+    "name": "steam deck",
+    "slug": "steam-deck"
+  },
+  {
+    "id": 38215,
+    "name": "rage room",
+    "slug": "rage-room"
+  },
+  {
+    "id": 37858,
+    "name": "wisps",
+    "slug": "wisps"
+  },
+  {
+    "id": 11680,
+    "name": "phantom",
+    "slug": "phantom"
+  },
+  {
+    "id": 38942,
+    "name": "twitter",
+    "slug": "twitter"
+  },
+  {
+    "id": 12681,
+    "name": "music exportation",
+    "slug": "music-exportation"
+  },
+  {
+    "id": 40233,
+    "name": "atarisoft",
+    "slug": "atarisoft"
+  },
+  {
+    "id": 1699,
+    "name": "dancing",
+    "slug": "dancing"
+  },
+  {
+    "id": 41905,
+    "name": "vehicle dlc",
+    "slug": "vehicle-dlc"
+  },
+  {
+    "id": 923,
+    "name": "futuristic",
+    "slug": "futuristic"
+  },
+  {
+    "id": 11704,
+    "name": "journey",
+    "slug": "journey"
+  },
+  {
+    "id": 5941,
+    "name": "weapons swap",
+    "slug": "weapons-swap"
+  },
+  {
+    "id": 38943,
+    "name": "research project",
+    "slug": "research-project"
+  },
+  {
+    "id": 4963,
+    "name": "abstract art style",
+    "slug": "abstract-art-style"
+  },
+  {
+    "id": 955,
+    "name": "london",
+    "slug": "london"
+  },
+  {
+    "id": 10167,
+    "name": "framing",
+    "slug": "framing"
+  },
+  {
+    "id": 40243,
+    "name": "catan",
+    "slug": "catan"
+  },
+  {
+    "id": 16891,
+    "name": "definitive edition",
+    "slug": "definitive-edition"
+  },
+  {
+    "id": 10897,
+    "name": "kinect required",
+    "slug": "kinect-required"
+  },
+  {
+    "id": 41904,
+    "name": "hovercraft",
+    "slug": "hovercraft"
+  },
+  {
+    "id": 43786,
+    "name": "chatsim",
+    "slug": "chatsim"
+  },
+  {
+    "id": 4960,
+    "name": "octopus",
+    "slug": "octopus"
+  },
+  {
+    "id": 38944,
+    "name": "super fx",
+    "slug": "super-fx"
+  },
+  {
+    "id": 2048,
+    "name": "disability",
+    "slug": "disability"
+  },
+  {
+    "id": 5380,
+    "name": "declarative title",
+    "slug": "declarative-title"
+  },
+  {
+    "id": 16716,
+    "name": "rc vehicle",
+    "slug": "rc-vehicle"
+  },
+  {
+    "id": 1290,
+    "name": "cryptic",
+    "slug": "cryptic"
+  },
+  {
+    "id": 7313,
+    "name": "monster capturing",
+    "slug": "monster-capturing"
+  },
+  {
+    "id": 6188,
+    "name": "club nintendo",
+    "slug": "club-nintendo"
+  },
+  {
+    "id": 46124,
+    "name": "megahits",
+    "slug": "megahits"
+  },
+  {
+    "id": 45008,
+    "name": "bag",
+    "slug": "bag"
+  },
+  {
+    "id": 38722,
+    "name": "hex grid",
+    "slug": "hex-grid"
+  },
+  {
+    "id": 13967,
+    "name": "reideen",
+    "slug": "reideen"
+  },
+  {
+    "id": 41978,
+    "name": "ragnarok",
+    "slug": "ragnarok"
+  },
+  {
+    "id": 45453,
+    "name": "tandy graphics",
+    "slug": "tandy-graphics"
+  },
+  {
+    "id": 7595,
+    "name": "connectivity",
+    "slug": "connectivity"
+  },
+  {
+    "id": 11596,
+    "name": "futuristic game show",
+    "slug": "futuristic-game-show"
+  },
+  {
+    "id": 13066,
+    "name": "memorial",
+    "slug": "memorial"
+  },
+  {
+    "id": 15070,
+    "name": "game developers choice awards 2001",
+    "slug": "game-developers-choice-awards-2001"
+  },
+  {
+    "id": 49654,
+    "name": "play-by-mail",
+    "slug": "play-by-mail"
+  },
+  {
+    "id": 5174,
+    "name": "scary children",
+    "slug": "scary-children"
+  },
+  {
+    "id": 5175,
+    "name": "female antagonist",
+    "slug": "female-antagonist"
+  },
+  {
+    "id": 38208,
+    "name": "18780",
+    "slug": "18780"
+  },
+  {
+    "id": 6487,
+    "name": "grind",
+    "slug": "grind"
+  },
+  {
+    "id": 45535,
+    "name": "loot",
+    "slug": "loot"
+  },
+  {
+    "id": 17271,
+    "name": "norse",
+    "slug": "norse"
+  },
+  {
+    "id": 37865,
+    "name": "drag",
+    "slug": "drag"
+  },
+  {
+    "id": 45205,
+    "name": "saami mythology",
+    "slug": "saami-mythology"
+  },
+  {
+    "id": 37866,
+    "name": "chi bi",
+    "slug": "chi-bi"
+  },
+  {
+    "id": 11212,
+    "name": "virtual boy",
+    "slug": "virtual-boy"
+  },
+  {
+    "id": 9996,
+    "name": "wall building",
+    "slug": "wall-building"
+  },
+  {
+    "id": 44875,
+    "name": "relationship",
+    "slug": "relationship"
+  },
+  {
+    "id": 38088,
+    "name": "spinoff",
+    "slug": "spinoff"
+  },
+  {
+    "id": 38085,
+    "name": "underground",
+    "slug": "underground"
+  },
+  {
+    "id": 37981,
+    "name": "petanque",
+    "slug": "petanque"
+  },
+  {
+    "id": 48704,
+    "name": "improve my game jam 31",
+    "slug": "improve-my-game-jam-31"
+  },
+  {
+    "id": 37867,
+    "name": "gb-studio",
+    "slug": "gb-studio"
+  },
+  {
+    "id": 37868,
+    "name": "enemy rush",
+    "slug": "enemy-rush"
+  },
+  {
+    "id": 9273,
+    "name": "running gag",
+    "slug": "running-gag"
+  },
+  {
+    "id": 1961,
+    "name": "nudity",
+    "slug": "nudity"
+  },
+  {
+    "id": 42107,
+    "name": "trucks",
+    "slug": "trucks"
+  },
+  {
+    "id": 11414,
+    "name": "dolphin diving",
+    "slug": "dolphin-diving"
+  },
+  {
+    "id": 38725,
+    "name": "prose",
+    "slug": "prose"
+  },
+  {
+    "id": 38274,
+    "name": "level creation",
+    "slug": "level-creation"
+  },
+  {
+    "id": 38726,
+    "name": "codes",
+    "slug": "codes"
+  },
+  {
+    "id": 38729,
+    "name": "josei",
+    "slug": "josei"
+  },
+  {
+    "id": 40875,
+    "name": "asperger",
+    "slug": "asperger"
+  },
+  {
+    "id": 8906,
+    "name": "boar",
+    "slug": "boar"
+  },
+  {
+    "id": 1935,
+    "name": "dog",
+    "slug": "dog"
+  },
+  {
+    "id": 38275,
+    "name": "sonic fangame",
+    "slug": "sonic-fangame"
+  },
+  {
+    "id": 38279,
+    "name": "chico bento",
+    "slug": "chico-bento"
+  },
+  {
+    "id": 38280,
+    "name": "orkut games",
+    "slug": "orkut-games"
+  },
+  {
+    "id": 4313,
+    "name": "boxer",
+    "slug": "boxer"
+  },
+  {
+    "id": 9321,
+    "name": "nuclear war",
+    "slug": "nuclear-war"
+  },
+  {
+    "id": 39339,
+    "name": "magnets",
+    "slug": "magnets"
+  },
+  {
+    "id": 46123,
+    "name": "singstar",
+    "slug": "singstar"
+  },
+  {
+    "id": 7454,
+    "name": "slideshow cutscene",
+    "slug": "slideshow-cutscene"
+  },
+  {
+    "id": 5908,
+    "name": "versus screen",
+    "slug": "versus-screen"
+  },
+  {
+    "id": 10868,
+    "name": "free game",
+    "slug": "free-game"
+  },
+  {
+    "id": 5355,
+    "name": "combat dialogue",
+    "slug": "combat-dialogue"
+  },
+  {
+    "id": 380,
+    "name": "chess",
+    "slug": "chess"
+  },
+  {
+    "id": 32424,
+    "name": "games released for unsupported platforms",
+    "slug": "games-released-for-unsupported-platforms"
+  },
+  {
+    "id": 11434,
+    "name": "sega forever",
+    "slug": "sega-forever"
+  },
+  {
+    "id": 5451,
+    "name": "cover system",
+    "slug": "cover-system"
+  },
+  {
+    "id": 5460,
+    "name": "game developers choice awards 2016",
+    "slug": "game-developers-choice-awards-2016"
+  },
+  {
+    "id": 10740,
+    "name": "gamecube",
+    "slug": "gamecube"
+  },
+  {
+    "id": 11479,
+    "name": "summer of arcade 2012",
+    "slug": "summer-of-arcade-2012"
+  },
+  {
+    "id": 6498,
+    "name": "reset button",
+    "slug": "reset-button"
+  },
+  {
+    "id": 18537,
+    "name": "sword fighting",
+    "slug": "sword-fighting"
+  },
+  {
+    "id": 11549,
+    "name": "games for windows - live",
+    "slug": "games-for-windows-live"
+  },
+  {
+    "id": 5640,
+    "name": "achievement attempt detection",
+    "slug": "achievement-attempt-detection"
+  },
+  {
+    "id": 6645,
+    "name": "colony",
+    "slug": "colony"
+  },
+  {
+    "id": 38724,
+    "name": "cryptograms",
+    "slug": "cryptograms"
+  },
+  {
+    "id": 37918,
+    "name": "deep web",
+    "slug": "deep-web"
+  },
+  {
+    "id": 13030,
+    "name": "starfleet",
+    "slug": "starfleet"
+  },
+  {
+    "id": 9076,
+    "name": "sega naomi",
+    "slug": "sega-naomi"
+  },
+  {
+    "id": 38081,
+    "name": "pengo",
+    "slug": "pengo"
+  },
+  {
+    "id": 38221,
+    "name": "naruto",
+    "slug": "naruto"
+  },
+  {
+    "id": 5864,
+    "name": "italian grand prix",
+    "slug": "italian-grand-prix"
+  },
+  {
+    "id": 48705,
+    "name": "once upon a time vn jam",
+    "slug": "once-upon-a-time-vn-jam"
+  },
+  {
+    "id": 1447,
+    "name": "dos",
+    "slug": "dos"
+  },
+  {
+    "id": 44876,
+    "name": "trijam",
+    "slug": "trijam"
+  },
+  {
+    "id": 13036,
+    "name": "tokyo game show 2009",
+    "slug": "tokyo-game-show-2009"
+  },
+  {
+    "id": 38097,
+    "name": "tile merger",
+    "slug": "tile-merger"
+  },
+  {
+    "id": 42111,
+    "name": "mansion",
+    "slug": "mansion"
+  },
+  {
+    "id": 5116,
+    "name": "laser",
+    "slug": "laser"
+  },
+  {
+    "id": 10114,
+    "name": "foraging",
+    "slug": "foraging"
+  },
+  {
+    "id": 4801,
+    "name": "character growth",
+    "slug": "character-growth"
+  },
+  {
+    "id": 42240,
+    "name": "couch gaming",
+    "slug": "couch-gaming"
+  },
+  {
+    "id": 5709,
+    "name": "cauldron",
+    "slug": "cauldron"
+  },
+  {
+    "id": 4580,
+    "name": "wasd movement",
+    "slug": "wasd-movement"
+  },
+  {
+    "id": 39357,
+    "name": "jamaica",
+    "slug": "jamaica"
+  },
+  {
+    "id": 38290,
+    "name": "undertale mod",
+    "slug": "undertale-mod"
+  },
+  {
+    "id": 38291,
+    "name": "desert bus",
+    "slug": "desert-bus"
+  },
+  {
+    "id": 1431,
+    "name": "wildlife",
+    "slug": "wildlife"
+  },
+  {
+    "id": 1722,
+    "name": "spaceship customization",
+    "slug": "spaceship-customization"
+  },
+  {
+    "id": 38739,
+    "name": "ctrl alt jam",
+    "slug": "ctrl-alt-jam"
+  },
+  {
+    "id": 47494,
+    "name": "nokia 3310 jam 7",
+    "slug": "nokia-3310-jam-7"
+  }
+]

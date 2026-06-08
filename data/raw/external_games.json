@@ -1,0 +1,3557 @@
+[
+  {
+    "id": 2735192,
+    "game": 201020,
+    "name": "Mini Royale",
+    "uid": "9efde363a6c9497da6888b47ae0c837b",
+    "url": "https://store.epicgames.com/en-US/p/mini-royale-ad1dca"
+  },
+  {
+    "id": 2939936,
+    "game": 323035,
+    "name": "Post Apocalypse Courier Service - Delivery Driving Simulator",
+    "uid": "3079190",
+    "url": "https://store.steampowered.com/app/3079190"
+  },
+  {
+    "id": 2173717,
+    "game": 36714,
+    "name": "Stunt Kite Masters VR",
+    "uid": "228848",
+    "url": "https://store.playstation.com/en-us/concept/228848"
+  },
+  {
+    "id": 2174440,
+    "game": 51460,
+    "name": "Reborn:A Samurai Awakens",
+    "uid": "230576",
+    "url": "https://store.playstation.com/en-us/concept/230576"
+  },
+  {
+    "id": 2176708,
+    "category": 14,
+    "game": 184095,
+    "name": "Xiào Ào Jiānghú 2 Wàizhuàn: Dōngfāng Zàiqǐ",
+    "uid": "1430610684",
+    "url": "https://www.twitch.tv/directory/game/Xi%C3%A0o%20%C3%80o%20Ji%C4%81ngh%C3%BA%202%20W%C3%A0izhu%C3%A0n:%20D%C5%8Dngf%C4%81ng%20Z%C3%A0iq%C7%90"
+  },
+  {
+    "id": 2137112,
+    "category": 30,
+    "game": 177262,
+    "name": "🙟 Krimson 🙝",
+    "uid": "675125",
+    "url": "https://cryingpsycho.itch.io/crimson"
+  },
+  {
+    "id": 254163,
+    "game": 20894,
+    "name": "We Are Doomed",
+    "uid": "460001",
+    "url": "https://www.twitch.tv/directory/game/We Are Doomed"
+  },
+  {
+    "id": 2140717,
+    "game": 175939,
+    "name": "Potion Prodigy",
+    "uid": "1056926",
+    "url": "https://bbkate.itch.io/potionprodigy"
+  },
+  {
+    "id": 3102878,
+    "game": 366631,
+    "name": "Chameleon Twist",
+    "uid": "845817573",
+    "url": "https://www.twitch.tv/directory/game/Chameleon%20Twist"
+  },
+  {
+    "id": 3164671,
+    "game": 373558,
+    "name": "Donut Hockey",
+    "uid": "1883536757",
+    "url": "https://www.twitch.tv/directory/game/Donut%20Hockey"
+  },
+  {
+    "id": 2637979,
+    "category": 29,
+    "game": 134058,
+    "name": "Travel Mosaics 3: Tokyo Animated",
+    "uid": "2635",
+    "url": "https://api.utomik.com/v1/applications/2635"
+  },
+  {
+    "id": 2141788,
+    "category": 30,
+    "game": 183235,
+    "name": "Crunchy Lunch",
+    "uid": "240181",
+    "url": "https://yossarianiii.itch.io/crunchy-lunch"
+  },
+  {
+    "id": 2140112,
+    "game": 35296,
+    "name": "Jigoku Kisetsukan: Sense of the Seasons",
+    "uid": "17503",
+    "url": "https://emad.itch.io/jigoku-kisetsukan"
+  },
+  {
+    "id": 2176563,
+    "game": 183863,
+    "name": "Space Survival",
+    "uid": "1530410631",
+    "url": "https://www.twitch.tv/directory/game/Space%20Survival"
+  },
+  {
+    "id": 2140151,
+    "game": 136847,
+    "name": "To Dawn And Back",
+    "uid": "732187",
+    "url": "https://bad-durandal.itch.io/to-dawn-and-back"
+  },
+  {
+    "id": 2141717,
+    "category": 30,
+    "game": 142778,
+    "name": "Lost in Firefly Forest",
+    "uid": "847594",
+    "url": "https://ferociter.itch.io/lost-in-firefly-forest"
+  },
+  {
+    "id": 2172305,
+    "game": 81604,
+    "name": "Ganbare! Super Strikers",
+    "uid": "235045",
+    "url": "https://store.playstation.com/en-us/concept/235045"
+  },
+  {
+    "id": 2143112,
+    "game": 184043,
+    "name": "A Night in Nowhere",
+    "uid": "209549",
+    "url": "https://colestia.itch.io/a-night-in-nowhere"
+  },
+  {
+    "id": 1838331,
+    "game": 127501,
+    "name": "The Christmas Spirit: Grimm Tales Collector's Edition",
+    "uid": "1198070",
+    "url": "https://store.steampowered.com/app/1198070"
+  },
+  {
+    "id": 1309824,
+    "game": 50176,
+    "name": "Strong Bad Episode 2: Strong Badia the Free",
+    "uid": "8350",
+    "url": "https://store.steampowered.com/app/8350"
+  },
+  {
+    "id": 2175440,
+    "game": 27043,
+    "name": "FlatOut 4: Total Insanity",
+    "uid": "227117",
+    "url": "https://store.playstation.com/en-us/concept/227117"
+  },
+  {
+    "id": 2172112,
+    "game": 10528,
+    "name": "fault - milestone one",
+    "uid": "233039",
+    "url": "https://store.playstation.com/en-us/concept/233039"
+  },
+  {
+    "id": 2143304,
+    "game": 184337,
+    "name": "Morphling",
+    "uid": "95346",
+    "url": "https://seconddimension.itch.io/morphling"
+  },
+  {
+    "id": 2143609,
+    "game": 184628,
+    "name": "Planetes",
+    "uid": "102646",
+    "url": "https://austineast.itch.io/planetes"
+  },
+  {
+    "id": 2185398,
+    "game": 27134,
+    "name": "Deep Rock Galactic",
+    "uid": "233449",
+    "url": "https://store.playstation.com/en-us/concept/233449"
+  },
+  {
+    "id": 2172440,
+    "game": 129923,
+    "name": "Caves and Castles: Underworld",
+    "uid": "10002140",
+    "url": "https://store.playstation.com/en-us/concept/10002140"
+  },
+  {
+    "id": 2175398,
+    "game": 82376,
+    "name": "ARCADE GAME SERIES: GALAGA",
+    "uid": "218739",
+    "url": "https://store.playstation.com/en-us/concept/218739"
+  },
+  {
+    "id": 2133717,
+    "game": 176530,
+    "name": "Grand Fix",
+    "uid": "559764",
+    "url": "https://lonebot.itch.io/grand-fix"
+  },
+  {
+    "id": 2175112,
+    "game": 82377,
+    "name": "ARCADE GAME SERIES: DIG DUG",
+    "uid": "216042",
+    "url": "https://store.playstation.com/en-us/concept/216042"
+  },
+  {
+    "id": 2172717,
+    "game": 114775,
+    "name": "Autumn's Journey",
+    "uid": "10001001",
+    "url": "https://store.playstation.com/en-us/concept/10001001"
+  },
+  {
+    "id": 3124956,
+    "game": 379181,
+    "name": "CHUNITHM X-VERSE-X",
+    "uid": "1935322343",
+    "url": "https://www.twitch.tv/directory/game/CHUNITHM%20X-VERSE-X"
+  },
+  {
+    "id": 2171398,
+    "game": 38988,
+    "name": "Alphadia Genesis 2",
+    "uid": "10002832",
+    "url": "https://store.playstation.com/en-us/concept/10002832"
+  },
+  {
+    "id": 2138609,
+    "game": 179634,
+    "name": "Dancing For Cats",
+    "uid": "1182905",
+    "url": "https://jwhop.itch.io/dancing-for-cats"
+  },
+  {
+    "id": 1778500,
+    "game": 115018,
+    "name": "Cardfight!! Vanguard EX",
+    "uid": "75282",
+    "url": "https://www.giantbomb.com/games/3030-75282/"
+  },
+  {
+    "id": 2138717,
+    "game": 82485,
+    "name": "Paramedium:",
+    "uid": "89061",
+    "url": "https://dinmoney.itch.io/paramedium"
+  },
+  {
+    "id": 2162788,
+    "game": 6978,
+    "name": "DW: GUNDAM 2",
+    "uid": "66acd000-77fe-1000-9115-d8024e4d0800",
+    "url": "https://marketplace.xbox.com//en-US/Product/DW-GUNDAM-2/66acd000-77fe-1000-9115-d8024e4d0800"
+  },
+  {
+    "id": 2148788,
+    "game": 179037,
+    "name": "Polinizamor",
+    "uid": "1052394",
+    "url": "https://clareiradosjogos.itch.io/polinizamor"
+  },
+  {
+    "id": 2931391,
+    "game": 307437,
+    "name": "Clank!",
+    "uid": "1156876593",
+    "url": "https://www.twitch.tv/directory/game/Clank%21"
+  },
+  {
+    "id": 2936130,
+    "game": 311967,
+    "name": "Spectre Divide",
+    "uid": "1451084268",
+    "url": "https://www.twitch.tv/directory/game/Spectre%20Divide"
+  },
+  {
+    "id": 2136788,
+    "game": 133312,
+    "name": "hi no homo",
+    "uid": "183165",
+    "url": "https://zephyo.itch.io/hi-no-homo"
+  },
+  {
+    "id": 2527178,
+    "game": 211405,
+    "name": "Among Stars",
+    "uid": "113045141",
+    "url": "https://www.twitch.tv/directory/game/Among%20Stars"
+  },
+  {
+    "id": 1164399,
+    "game": 2763,
+    "name": "SpongeBob SquarePants: Employee of the Month",
+    "uid": "8460",
+    "url": "https://www.twitch.tv/directory/game/SpongeBob%20SquarePants:%20Employee%20of%20the%20Month"
+  },
+  {
+    "id": 3119534,
+    "game": 382169,
+    "name": "Operation: Outbreak",
+    "uid": "4169300",
+    "url": "https://store.steampowered.com/app/4169300"
+  },
+  {
+    "id": 3164673,
+    "game": 373561,
+    "name": "Veggie Eggs",
+    "uid": "1355266812",
+    "url": "https://www.twitch.tv/directory/game/Veggie%20Eggs"
+  },
+  {
+    "id": 2896766,
+    "game": 291260,
+    "name": "CBO TD",
+    "uid": "1064031017",
+    "url": "https://www.twitch.tv/directory/game/CBO%20TD"
+  },
+  {
+    "id": 2715184,
+    "game": 253595,
+    "name": "Torn",
+    "uid": "170742315",
+    "url": "https://www.twitch.tv/directory/game/Torn"
+  },
+  {
+    "id": 2161160,
+    "game": 179595,
+    "name": "Garfield",
+    "uid": "66acd000-77fe-1000-9115-d802583607d7",
+    "url": "https://marketplace.xbox.com//en-US/Product/Garfield/66acd000-77fe-1000-9115-d802583607d7"
+  },
+  {
+    "id": 2161788,
+    "category": 31,
+    "game": 20867,
+    "name": "Rekoil: Liberator",
+    "uid": "66acd000-77fe-1000-9115-d80258411420",
+    "url": "https://marketplace.xbox.com//en-US/Product/Rekoil-Liberator/66acd000-77fe-1000-9115-d80258411420"
+  },
+  {
+    "id": 2164153,
+    "game": 180030,
+    "name": "Crankies Workshop Lerpbot Assembly",
+    "uid": "300940",
+    "url": "https://www.kartridge.com/games/vtpublishing/crankies-workshop-lerpbot-assembly"
+  },
+  {
+    "id": 2140126,
+    "game": 181875,
+    "name": "Kromer Kollector",
+    "uid": "1211788",
+    "url": "https://jettlee.itch.io/kromer-kollector"
+  },
+  {
+    "id": 2164160,
+    "game": 106588,
+    "name": "Travel Riddles: Mahjong",
+    "uid": "300630",
+    "url": "https://www.kartridge.com/games/notusgames/travel-riddles-mahjong"
+  },
+  {
+    "id": 2143126,
+    "game": 184052,
+    "name": "Yesterday, the World Ended",
+    "uid": "1115287",
+    "url": "https://earlronove.itch.io/yesterday-the-world-ended"
+  },
+  {
+    "id": 2751340,
+    "game": 270823,
+    "name": "Until The Last Bullet",
+    "uid": "2564600",
+    "url": "https://store.steampowered.com/app/2564600"
+  },
+  {
+    "id": 2131126,
+    "game": 176498,
+    "name": "I AM NOT WHAT REMAINS",
+    "uid": "681226",
+    "url": "https://ompuco.itch.io/i-am-not-what-remains"
+  },
+  {
+    "id": 2172155,
+    "game": 145260,
+    "name": "Newtonian Inversion",
+    "uid": "10002663",
+    "url": "https://store.playstation.com/en-us/concept/10002663"
+  },
+  {
+    "id": 2001467,
+    "game": 144821,
+    "name": "POCOYO PARTY (PS4)",
+    "uid": "B06WW93SSX",
+    "url": "https://amazon.co.uk/dp/B06WW93SSX"
+  },
+  {
+    "id": 2141151,
+    "game": 111502,
+    "name": "I Can Gun",
+    "uid": "296191",
+    "url": "https://patrickkoenig.itch.io/i-can-gun"
+  },
+  {
+    "id": 1991684,
+    "game": 134058,
+    "name": "Travel Mosaics 3: Tokyo Animated",
+    "uid": "1905247864",
+    "url": "https://www.twitch.tv/directory/game/Travel%20Mosaics%203%3A%20Tokyo%20Animated"
+  },
+  {
+    "id": 2176153,
+    "game": 23596,
+    "name": "Duke Nukem 3D: 20th Anniversary World Tour",
+    "uid": "225095",
+    "url": "https://store.playstation.com/en-us/concept/225095"
+  },
+  {
+    "id": 2974146,
+    "game": 342028,
+    "name": "Clawed",
+    "uid": "3394840",
+    "url": "https://store.steampowered.com/app/3394840"
+  },
+  {
+    "id": 2143151,
+    "game": 184081,
+    "name": "How to Date a Non-Terrian Person",
+    "uid": "796831",
+    "url": "https://shdwrck.itch.io/htdantp"
+  },
+  {
+    "id": 2173155,
+    "game": 2346,
+    "name": "The Last Tinker",
+    "uid": "204825",
+    "url": "https://store.playstation.com/en-us/concept/204825"
+  },
+  {
+    "id": 2156788,
+    "category": 30,
+    "game": 181137,
+    "name": "Magnetic Monopole Mayhem",
+    "uid": "561203",
+    "url": "https://im-a-good-boye.itch.io/magnetic-monopole-mayhem"
+  },
+  {
+    "id": 2143160,
+    "game": 184093,
+    "name": "PHOBOS",
+    "uid": "14719",
+    "url": "https://emeraldliongames.itch.io/phobos"
+  },
+  {
+    "id": 3080254,
+    "game": 354527,
+    "name": "Associate",
+    "uid": "167863692",
+    "url": "https://www.twitch.tv/directory/game/Associate"
+  },
+  {
+    "id": 2139126,
+    "game": 180338,
+    "name": "Plague Road",
+    "uid": "571519",
+    "url": "https://ansimuz.itch.io/plage-road"
+  },
+  {
+    "id": 2157788,
+    "category": 30,
+    "game": 138779,
+    "name": "last harvest",
+    "uid": "541414",
+    "url": "https://candle.itch.io/last-harvest"
+  },
+  {
+    "id": 1602405,
+    "game": 110464,
+    "name": "Weaponry Dealer VR",
+    "uid": "951330",
+    "url": "https://store.steampowered.com/app/951330"
+  },
+  {
+    "id": 2171153,
+    "game": 133673,
+    "name": "Danger Scavenger",
+    "uid": "10002775",
+    "url": "https://store.playstation.com/en-us/concept/10002775"
+  },
+  {
+    "id": 2138151,
+    "game": 177898,
+    "name": "Brave Paradise",
+    "uid": "728150",
+    "url": "https://daizfrg.itch.io/brave-paradise"
+  },
+  {
+    "id": 2139151,
+    "game": 180346,
+    "name": "LastCall",
+    "uid": "1086434",
+    "url": "https://maryphun.itch.io/lastcall"
+  },
+  {
+    "id": 2139155,
+    "game": 180371,
+    "name": "The Secrets We Burn — Act 1",
+    "uid": "819059",
+    "url": "https://rheact.itch.io/the-secrets-we-burn"
+  },
+  {
+    "id": 2164126,
+    "game": 63740,
+    "name": "End of Days",
+    "uid": "301098",
+    "url": "https://www.kartridge.com/games/Starkium/end-of-days"
+  },
+  {
+    "id": 2175788,
+    "game": 175987,
+    "name": "Cricket 22",
+    "uid": "10003601",
+    "url": "https://store.playstation.com/en-us/concept/10003601"
+  },
+  {
+    "id": 2172160,
+    "game": 9046,
+    "name": "Chroma Squad",
+    "uid": "216962",
+    "url": "https://store.playstation.com/en-us/concept/216962"
+  },
+  {
+    "id": 2176155,
+    "game": 146250,
+    "name": "Avoid Them - Breakthrough Gaming Arcade",
+    "uid": "10002845",
+    "url": "https://store.playstation.com/en-us/concept/10002845"
+  },
+  {
+    "id": 2175160,
+    "game": 118873,
+    "name": "Baldo",
+    "uid": "234612",
+    "url": "https://store.playstation.com/en-us/concept/234612"
+  },
+  {
+    "id": 3164672,
+    "game": 373560,
+    "name": "The Eggsperts",
+    "uid": "1650701659",
+    "url": "https://www.twitch.tv/directory/game/The%20Eggsperts"
+  },
+  {
+    "id": 2134153,
+    "game": 176670,
+    "name": "Glor.IO",
+    "uid": "156672",
+    "url": "https://glorio-dev.itch.io/glorio"
+  },
+  {
+    "id": 2134155,
+    "game": 176669,
+    "name": "Soul Stealer - Online PvP",
+    "uid": "580732",
+    "url": "https://bukmand.itch.io/soul-stealer"
+  },
+  {
+    "id": 2610188,
+    "game": 221115,
+    "name": "The Land Beneath Us",
+    "uid": "2131010",
+    "url": "https://store.steampowered.com/app/2131010"
+  },
+  {
+    "id": 3102879,
+    "game": 369991,
+    "name": "Dynasty Warriors 3: Complete Edition Remastered",
+    "uid": "1196484333",
+    "url": "https://www.twitch.tv/directory/game/Dynasty%20Warriors%203:%20Complete%20Edition%20Remastered"
+  },
+  {
+    "id": 3136222,
+    "game": 380123,
+    "name": "Hotel Hideaway",
+    "uid": "34080965",
+    "url": "https://www.twitch.tv/directory/game/Hotel%20Hideaway"
+  },
+  {
+    "id": 2139266,
+    "game": 180450,
+    "name": "Woodfarer",
+    "uid": "231312",
+    "url": "https://yasamanfar.itch.io/woodfarer"
+  },
+  {
+    "id": 2530477,
+    "game": 213240,
+    "name": "Tempest Rising",
+    "uid": "B0B9HR4LD2",
+    "url": "https://amazon.fr/dp/B0B9HR4LD2"
+  },
+  {
+    "id": 2155126,
+    "category": 30,
+    "game": 185446,
+    "name": "Bunk.Town",
+    "uid": "637361",
+    "url": "https://cer0zz.itch.io/bunktown"
+  },
+  {
+    "id": 2137126,
+    "category": 30,
+    "game": 177264,
+    "name": "Loving Flesh",
+    "uid": "646821",
+    "url": "https://trisol.itch.io/loving-flesh"
+  },
+  {
+    "id": 2145126,
+    "category": 30,
+    "game": 185166,
+    "name": "Forest",
+    "uid": "788892",
+    "url": "https://kalyen.itch.io/forest"
+  },
+  {
+    "id": 2918905,
+    "game": 303949,
+    "name": "Funky Rock Hoppers",
+    "uid": "2972330",
+    "url": "https://store.steampowered.com/app/2972330"
+  },
+  {
+    "id": 2749566,
+    "game": 270555,
+    "name": "Icaria",
+    "uid": "2613890",
+    "url": "https://store.steampowered.com/app/2613890"
+  },
+  {
+    "id": 2955883,
+    "game": 341805,
+    "name": "Catjinni",
+    "uid": "2955630",
+    "url": "https://store.steampowered.com/app/2955630"
+  },
+  {
+    "id": 15939,
+    "game": 37015,
+    "name": "UNTITLED",
+    "uid": "639770",
+    "url": "https://store.steampowered.com/app/639770"
+  },
+  {
+    "id": 2174788,
+    "game": 120624,
+    "name": "Rainbow Billy: The Curse of the Leviathan",
+    "uid": "10001189",
+    "url": "https://store.playstation.com/en-us/concept/10001189"
+  },
+  {
+    "id": 2162160,
+    "game": 78446,
+    "name": "The Price Is Right",
+    "uid": "66acd000-77fe-1000-9115-d80255530880",
+    "url": "https://marketplace.xbox.com//en-US/Product/The-Price-Is-Right/66acd000-77fe-1000-9115-d80255530880"
+  },
+  {
+    "id": 2434262,
+    "game": 120056,
+    "name": "Vengeful Heart",
+    "uid": "10003501",
+    "url": "https://store.playstation.com/en-us/concept/10003501"
+  },
+  {
+    "id": 2138153,
+    "game": 177912,
+    "name": "No More Future",
+    "uid": "950965",
+    "url": "https://sedgelord.itch.io/nomorefuture"
+  },
+  {
+    "id": 2157151,
+    "category": 30,
+    "game": 180635,
+    "name": "Bunosphere",
+    "uid": "137563",
+    "url": "https://torcado.itch.io/bunosphere"
+  },
+  {
+    "id": 2138155,
+    "game": 177910,
+    "name": "Lookouts",
+    "uid": "532823",
+    "url": "https://paranoidhawk.itch.io/lookouts"
+  },
+  {
+    "id": 2143155,
+    "game": 184079,
+    "name": "Astral Green",
+    "uid": "976655",
+    "url": "https://emustard.itch.io/astral-green"
+  },
+  {
+    "id": 2623806,
+    "game": 215998,
+    "name": "Train Sim World 3: Caltrain MP36PH-3C 'Baby Bullet'",
+    "uid": "0f517de7917e4a1eb24279efbb420482",
+    "url": "https://store.epicgames.com/en-US/p/train-sim-world-3--caltrain-mp-36ph-3c-baby-bullet"
+  },
+  {
+    "id": 2138160,
+    "game": 158724,
+    "name": "Let Yourself Out, Eddie Kaspbrak!",
+    "uid": "866139",
+    "url": "https://mapurl.itch.io/let-yourself-out"
+  },
+  {
+    "id": 2146151,
+    "category": 30,
+    "game": 185408,
+    "name": "The Right Side of Town",
+    "uid": "17964",
+    "url": "https://jgwaltneiv.itch.io/the-right-side-of-town"
+  },
+  {
+    "id": 2158262,
+    "game": 177781,
+    "name": "Celtic Rumble",
+    "uid": "253474",
+    "url": "https://s4g.itch.io/celtic-rumble"
+  },
+  {
+    "id": 2138266,
+    "game": 145992,
+    "name": "Sixit",
+    "uid": "529517",
+    "url": "https://stargardengames.itch.io/sixit"
+  },
+  {
+    "id": 2142160,
+    "game": 34404,
+    "name": "Lovely Weather We're Having",
+    "uid": "32874",
+    "url": "https://glander.itch.io/lovely-weather-were-having"
+  },
+  {
+    "id": 2174160,
+    "game": 121807,
+    "name": "Pile Up! Box by Box",
+    "uid": "10000873",
+    "url": "https://store.playstation.com/en-us/concept/10000873"
+  },
+  {
+    "id": 2172788,
+    "game": 36258,
+    "name": "Order of Battle: World War II",
+    "uid": "233281",
+    "url": "https://store.playstation.com/en-us/concept/233281"
+  },
+  {
+    "id": 2173262,
+    "game": 5327,
+    "name": "Mighty No. 9",
+    "uid": "202665",
+    "url": "https://store.playstation.com/en-us/concept/202665"
+  },
+  {
+    "id": 2173266,
+    "game": 44158,
+    "name": "Minecraft: Story Mode Season 2",
+    "uid": "229436",
+    "url": "https://store.playstation.com/en-us/concept/229436"
+  },
+  {
+    "id": 2173151,
+    "game": 54788,
+    "name": "Let's Sing 2018",
+    "uid": "228784",
+    "url": "https://store.playstation.com/en-us/concept/228784"
+  },
+  {
+    "id": 2438788,
+    "game": 136993,
+    "name": "Gotham Knights",
+    "uid": "233383",
+    "url": "https://store.playstation.com/en-us/concept/233383"
+  },
+  {
+    "id": 2173160,
+    "game": 12518,
+    "name": "Fragments of Him",
+    "uid": "221888",
+    "url": "https://store.playstation.com/en-us/concept/221888"
+  },
+  {
+    "id": 2176160,
+    "game": 7351,
+    "name": "DOOM",
+    "uid": "201101",
+    "url": "https://store.playstation.com/en-us/concept/201101"
+  },
+  {
+    "id": 2171151,
+    "game": 138918,
+    "name": "Cubers: Arena",
+    "uid": "234888",
+    "url": "https://store.playstation.com/en-us/concept/234888"
+  },
+  {
+    "id": 2172153,
+    "game": 57693,
+    "name": "Dead Rising 4: Frank's Big Package",
+    "uid": "227309",
+    "url": "https://store.playstation.com/en-us/concept/227309"
+  },
+  {
+    "id": 2172151,
+    "game": 28204,
+    "name": "Call of Duty: WWII",
+    "uid": "227115",
+    "url": "https://store.playstation.com/en-us/concept/227115"
+  },
+  {
+    "id": 2171155,
+    "game": 180979,
+    "name": "Arcade Archives Libble Rabble",
+    "uid": "10003467",
+    "url": "https://store.playstation.com/en-us/concept/10003467"
+  },
+  {
+    "id": 3134226,
+    "game": 384198,
+    "name": "Last State",
+    "uid": "54922049",
+    "url": "https://www.twitch.tv/directory/game/Last%20State"
+  },
+  {
+    "id": 2996587,
+    "game": 334623,
+    "name": "Sub-Verge",
+    "uid": "1172551007",
+    "url": "https://www.twitch.tv/directory/game/Sub-Verge"
+  },
+  {
+    "id": 2134266,
+    "game": 176633,
+    "name": "PELAGIUM origins",
+    "uid": "551087",
+    "url": "https://eludi.itch.io/pelagium-origins"
+  },
+  {
+    "id": 2134286,
+    "game": 176171,
+    "name": "Far From Normal",
+    "uid": "644978",
+    "url": "https://snowfallstudio.itch.io/far-from-normal"
+  },
+  {
+    "id": 2138262,
+    "game": 177948,
+    "name": "Eyes Of Souls",
+    "uid": "901702",
+    "url": "https://riel-vn-studio.itch.io/eosvn"
+  },
+  {
+    "id": 3164674,
+    "game": 374141,
+    "name": "Swords & Slippers",
+    "uid": "555776679",
+    "url": "https://www.twitch.tv/directory/game/Swords%20&%20Slippers"
+  },
+  {
+    "id": 2933400,
+    "game": 254354,
+    "name": "ウマ娘 プリティーダービー 熱血ハチャメチャ大感謝祭！",
+    "uid": "2313020",
+    "url": "https://store.steampowered.com/app/2313020"
+  },
+  {
+    "id": 2145266,
+    "category": 30,
+    "game": 185199,
+    "name": "Deep Relics",
+    "uid": "857879",
+    "url": "https://terradev64.itch.io/deep-relics"
+  },
+  {
+    "id": 1185522,
+    "game": 2759,
+    "name": "SpongeBob SquarePants: Operation Krabby Patty",
+    "uid": "27689",
+    "url": "https://www.twitch.tv/directory/game/SpongeBob%20SquarePants:%20Operation%20Krabby%20Patty"
+  },
+  {
+    "id": 2674346,
+    "game": 204755,
+    "name": "Capcom Arcade 2nd Stadium: A.K.A Magic Sword",
+    "uid": "9NT8JHJQ4VHV",
+    "url": "https://www.microsoft.com/en-us/p/-1-/9NT8JHJQ4VHV"
+  },
+  {
+    "id": 2164155,
+    "game": 32136,
+    "name": "Along the Edge",
+    "uid": "297694",
+    "url": "https://www.kartridge.com/games/novabox/along-the-edge"
+  },
+  {
+    "id": 2412351,
+    "game": 195433,
+    "name": "Clutter 12: It's About Time - Collector's Edition",
+    "uid": "1649866134",
+    "url": "https://www.twitch.tv/directory/game/Clutter%2012:%20It%27s%20About%20Time%20-%20Collector%27s%20Edition"
+  },
+  {
+    "id": 2139160,
+    "game": 180366,
+    "name": "Umineko Redacted: Some Kind of Sunny Little Dream",
+    "uid": "740540",
+    "url": "https://renall.itch.io/umineko-sunny"
+  },
+  {
+    "id": 2143266,
+    "game": 184317,
+    "name": "We're Getting There",
+    "uid": "474462",
+    "url": "https://nblena.itch.io/were-getting-there"
+  },
+  {
+    "id": 2747587,
+    "game": 269258,
+    "name": "Frontball Planet",
+    "uid": "695039259",
+    "url": "https://www.twitch.tv/directory/game/Frontball%20Planet"
+  },
+  {
+    "id": 2139262,
+    "game": 135281,
+    "name": "bitsnake",
+    "uid": "237215",
+    "url": "https://seansleblanc.itch.io/bitsnake"
+  },
+  {
+    "id": 2143153,
+    "game": 115132,
+    "name": "Space Expand - 4X Multiplayer",
+    "uid": "674893",
+    "url": "https://fahust.itch.io/space-expand"
+  },
+  {
+    "id": 2139164,
+    "game": 180364,
+    "name": "Heroic Tale",
+    "uid": "285615",
+    "url": "https://kainworks.itch.io/heroic-tale"
+  },
+  {
+    "id": 2140155,
+    "game": 181891,
+    "name": "Kissa",
+    "uid": "861504",
+    "url": "https://kultisti.itch.io/kissa"
+  },
+  {
+    "id": 3168989,
+    "game": 399510,
+    "name": "Dvadtsat",
+    "uid": "1375084520",
+    "url": "https://www.twitch.tv/directory/game/Dvadtsat"
+  },
+  {
+    "id": 2146155,
+    "category": 30,
+    "game": 185447,
+    "name": "Moonlight Sonata",
+    "uid": "244598",
+    "url": "https://jim-lessels.itch.io/moonlight-sonata"
+  },
+  {
+    "id": 2994915,
+    "game": 336952,
+    "name": "Soulssss",
+    "uid": "403759403",
+    "url": "https://www.twitch.tv/directory/game/Soulssss"
+  },
+  {
+    "id": 139412,
+    "game": 78738,
+    "name": "Legend of Xanadu II",
+    "uid": "19383",
+    "url": "https://www.giantbomb.com/games/3030-19383/"
+  },
+  {
+    "id": 2146164,
+    "category": 30,
+    "game": 57103,
+    "name": "Daily Chthonicle",
+    "uid": "60598",
+    "url": "https://charonss.itch.io/daily-chthonicle"
+  },
+  {
+    "id": 2137155,
+    "category": 30,
+    "game": 177602,
+    "name": "Sands of Liberty",
+    "uid": "854814",
+    "url": "https://shp.itch.io/sands-of-liberty"
+  },
+  {
+    "id": 2137160,
+    "category": 30,
+    "game": 177986,
+    "name": "Wolfenstäche: The New Censorship",
+    "uid": "195261",
+    "url": "https://dancingengie.itch.io/wolfenstache"
+  },
+  {
+    "id": 2157160,
+    "category": 30,
+    "game": 180633,
+    "name": "Pet the Duck!",
+    "uid": "409470",
+    "url": "https://wolkilula.itch.io/pet-the-duck"
+  },
+  {
+    "id": 2157155,
+    "game": 180634,
+    "name": "I Will Be There",
+    "uid": "571051",
+    "url": "https://notbang.itch.io/i-will-be-there"
+  },
+  {
+    "id": 2143277,
+    "game": 178202,
+    "name": "After School-A Vocaloid RPG Experience",
+    "uid": "799129",
+    "url": "https://edlinklover.itch.io/after-school-a-vocaloid-rpg"
+  },
+  {
+    "id": 2434155,
+    "game": 117835,
+    "name": "Retro Pixel Racers",
+    "uid": "10004516",
+    "url": "https://store.playstation.com/en-us/concept/10004516"
+  },
+  {
+    "id": 2921756,
+    "game": 312692,
+    "name": "Pixel Puzzles 3: Ukiyo-e Jigsaws",
+    "uid": "1131070",
+    "url": "https://store.steampowered.com/app/1131070"
+  },
+  {
+    "id": 2138164,
+    "game": 127785,
+    "name": "Yearning: A Gay Story",
+    "uid": "276535",
+    "url": "https://bobcgames.itch.io/yags"
+  },
+  {
+    "id": 2994914,
+    "game": 336953,
+    "name": "Hans",
+    "uid": "184533303",
+    "url": "https://www.twitch.tv/directory/game/Hans"
+  },
+  {
+    "id": 2145153,
+    "game": 185175,
+    "name": "My Best Friend's Birthday",
+    "uid": "696951",
+    "url": "https://lenicon.itch.io/mbfbday"
+  },
+  {
+    "id": 2174262,
+    "game": 118289,
+    "name": "Paw Paw Paw",
+    "uid": "10001587",
+    "url": "https://store.playstation.com/en-us/concept/10001587"
+  },
+  {
+    "id": 2175285,
+    "game": 3188,
+    "name": "Murdered: Soul Suspect",
+    "uid": "202950",
+    "url": "https://store.playstation.com/en-us/concept/202950"
+  },
+  {
+    "id": 2173153,
+    "game": 24362,
+    "name": "Letter Quest Remastered",
+    "uid": "208909",
+    "url": "https://store.playstation.com/en-us/concept/208909"
+  },
+  {
+    "id": 2173277,
+    "game": 138631,
+    "name": "Handball 21",
+    "uid": "233683",
+    "url": "https://store.playstation.com/en-us/concept/233683"
+  },
+  {
+    "id": 2171262,
+    "game": 10324,
+    "name": "Flockers",
+    "uid": "201507",
+    "url": "https://store.playstation.com/en-us/concept/201507"
+  },
+  {
+    "id": 2173126,
+    "game": 82373,
+    "name": "Disgaea 1 Complete",
+    "uid": "232588",
+    "url": "https://store.playstation.com/en-us/concept/232588"
+  },
+  {
+    "id": 2172126,
+    "game": 153046,
+    "name": "Angry Alligator",
+    "uid": "10002036",
+    "url": "https://store.playstation.com/en-us/concept/10002036"
+  },
+  {
+    "id": 2939253,
+    "game": 76880,
+    "name": "Witchfire",
+    "uid": "3156770",
+    "url": "https://store.steampowered.com/app/3156770"
+  },
+  {
+    "id": 2136731,
+    "category": 30,
+    "game": 177146,
+    "name": "BULLY BILLY",
+    "uid": "693096",
+    "url": "https://tomekk06.itch.io/bully-billy"
+  },
+  {
+    "id": 3007139,
+    "game": 229081,
+    "name": "GB-Wordyl: Word game for Game Boy (& Color) / Analogue Pocket / Mega Duck",
+    "uid": "1396428",
+    "url": "https://bbbbbr.itch.io/gb-wordyl"
+  },
+  {
+    "id": 77072,
+    "game": 8207,
+    "name": "Eschalon: Book II",
+    "uid": "1207659220",
+    "url": "https://www.gog.com/en/game/eschalon_book_ii"
+  },
+  {
+    "id": 1186422,
+    "game": 79337,
+    "name": "Super Robot Wars BX",
+    "uid": "489851",
+    "url": "https://www.twitch.tv/directory/game/Super Robot Wars BX"
+  },
+  {
+    "id": 3120650,
+    "game": 379623,
+    "name": "Overtrick",
+    "uid": "4101290",
+    "url": "https://store.steampowered.com/app/4101290"
+  },
+  {
+    "id": 2140285,
+    "game": 182065,
+    "name": "Our Stormy Present",
+    "uid": "977924",
+    "url": "https://blackberry-and-holly.itch.io/our-stormy-present"
+  },
+  {
+    "id": 2527706,
+    "category": 14,
+    "game": 211860,
+    "name": "Pulsar Crash",
+    "uid": "1633729072",
+    "url": "https://www.twitch.tv/directory/game/Pulsar%20Crash"
+  },
+  {
+    "id": 3102882,
+    "game": 369997,
+    "name": "Chronoscript: The Endless End",
+    "uid": "780642622",
+    "url": "https://www.twitch.tv/directory/game/Chronoscript:%20The%20Endless%20End"
+  },
+  {
+    "id": 2955553,
+    "game": 318644,
+    "name": "Franchise Hockey Manager 11",
+    "uid": "1601557135",
+    "url": "https://www.twitch.tv/directory/game/Franchise%20Hockey%20Manager%2011"
+  },
+  {
+    "id": 2164286,
+    "game": 36724,
+    "name": "Fidel Dungeon Rescue",
+    "uid": "295561",
+    "url": "https://www.kartridge.com/games/danielben/fidel-dungeon-rescue"
+  },
+  {
+    "id": 3102881,
+    "game": 366431,
+    "name": "Find It!",
+    "uid": "1562204021",
+    "url": "https://www.twitch.tv/directory/game/Find%20It%21"
+  },
+  {
+    "id": 2141277,
+    "game": 182951,
+    "name": "Hold A to Drift",
+    "uid": "780734",
+    "url": "https://brainwash-gang.itch.io/hold-a-to-drift"
+  },
+  {
+    "id": 1458700,
+    "game": 64567,
+    "name": "Shin SD Gundam Gaiden: Knight Gundam Monogatari",
+    "uid": "68360",
+    "url": "https://www.twitch.tv/directory/game/Shin SD Gundam Gaiden: Knight Gundam Monogatari"
+  },
+  {
+    "id": 2726426,
+    "game": 258478,
+    "name": "Rival Party",
+    "uid": "521492081",
+    "url": "https://www.twitch.tv/directory/game/Rival%20Party"
+  },
+  {
+    "id": 2174286,
+    "game": 94054,
+    "name": "Pode",
+    "uid": "232873",
+    "url": "https://store.playstation.com/en-us/concept/232873"
+  },
+  {
+    "id": 2142285,
+    "game": 183432,
+    "name": "Celestia",
+    "uid": "1027533",
+    "url": "https://chouette.itch.io/celestia"
+  },
+  {
+    "id": 2134285,
+    "game": 144487,
+    "name": "Unciv",
+    "uid": "523323",
+    "url": "https://yairm210.itch.io/unciv"
+  },
+  {
+    "id": 2145277,
+    "category": 30,
+    "game": 185197,
+    "name": "T  a  k  e     y  o  u  r    t  i  m  e レースゲーム",
+    "uid": "75258",
+    "url": "https://spacebananagms.itch.io/takeyourtimeracinggame"
+  },
+  {
+    "id": 2174266,
+    "game": 154818,
+    "name": "Pets No More",
+    "uid": "10003426",
+    "url": "https://store.playstation.com/en-us/concept/10003426"
+  },
+  {
+    "id": 1872763,
+    "game": 6620,
+    "name": "Super Dodge Ball Advance",
+    "uid": "12373",
+    "url": "https://www.twitch.tv/directory/game/Super%20Dodge%20Ball%20Advance"
+  },
+  {
+    "id": 2875611,
+    "game": 27409,
+    "name": "Narita Boy (NSW)",
+    "uid": "B0CQD2BBWM",
+    "url": "https://amazon.co.uk/dp/B0CQD2BBWM"
+  },
+  {
+    "id": 2176266,
+    "game": 19462,
+    "name": "WRC 6 FIA World Rally Championship",
+    "uid": "221803",
+    "url": "https://store.playstation.com/en-us/concept/221803"
+  },
+  {
+    "id": 2143286,
+    "game": 184326,
+    "name": "Time's Race Against Time",
+    "uid": "213623",
+    "url": "https://lydianchord.itch.io/times-race-against-time"
+  },
+  {
+    "id": 2869644,
+    "game": 104503,
+    "name": "Ancient Sprits: Columbus' Legacy",
+    "uid": "2723470",
+    "url": "https://store.steampowered.com/app/2723470"
+  },
+  {
+    "id": 2139286,
+    "game": 180498,
+    "name": "BUSHFIRE",
+    "uid": "550643",
+    "url": "https://cubehamster.itch.io/bushfire"
+  },
+  {
+    "id": 3053255,
+    "game": 343737,
+    "name": "Starlight Squad",
+    "uid": "1370401743",
+    "url": "https://www.twitch.tv/directory/game/Starlight%20Squad"
+  },
+  {
+    "id": 2156286,
+    "category": 30,
+    "game": 183763,
+    "name": "Bjorn to Dance",
+    "uid": "775730",
+    "url": "https://citizendevelopers.itch.io/bjorn-to-dance"
+  },
+  {
+    "id": 2172164,
+    "game": 107215,
+    "name": "SnowRunner",
+    "uid": "234959",
+    "url": "https://store.playstation.com/en-us/concept/234959"
+  },
+  {
+    "id": 2176286,
+    "game": 28175,
+    "name": "NARUTO TO BORUTO: SHINOBI STRIKER",
+    "uid": "227447",
+    "url": "https://store.playstation.com/en-us/concept/227447"
+  },
+  {
+    "id": 2434164,
+    "game": 71263,
+    "name": "My Brother Ate My Pudding!",
+    "uid": "10004781",
+    "url": "https://store.playstation.com/en-us/concept/10004781"
+  },
+  {
+    "id": 2175164,
+    "game": 142548,
+    "name": "HIQ ACE Unlimited",
+    "uid": "10000713",
+    "url": "https://store.playstation.com/en-us/concept/10000713"
+  },
+  {
+    "id": 2176164,
+    "game": 16992,
+    "name": "Human Fall Flat",
+    "uid": "227139",
+    "url": "https://store.playstation.com/en-us/concept/227139"
+  },
+  {
+    "id": 2138277,
+    "game": 178709,
+    "name": "DED GUY",
+    "uid": "458740",
+    "url": "https://mmatt-ugh.itch.io/ded-guy"
+  },
+  {
+    "id": 2158286,
+    "game": 177775,
+    "name": "HoneyCombat",
+    "uid": "1212310",
+    "url": "https://bellybelting.itch.io/boobeeeeeees"
+  },
+  {
+    "id": 2994916,
+    "game": 336954,
+    "name": "Cuberun",
+    "uid": "529084619",
+    "url": "https://www.twitch.tv/directory/game/Cuberun"
+  },
+  {
+    "id": 1579412,
+    "game": 107554,
+    "name": "Pinball Fantastic",
+    "uid": "com.LamestarGames.PinballFantastic",
+    "url": "https://play.google.com/store/apps/details?id=com.LamestarGames.PinballFantastic"
+  },
+  {
+    "id": 2173164,
+    "game": 55678,
+    "name": "Door Kickers: Action Squad",
+    "uid": "233182",
+    "url": "https://store.playstation.com/en-us/concept/233182"
+  },
+  {
+    "id": 2171277,
+    "game": 55532,
+    "name": "Damascus Gear: Operation Tokyo HDEdition",
+    "uid": "228208",
+    "url": "https://store.playstation.com/en-us/concept/228208"
+  },
+  {
+    "id": 2222164,
+    "game": 125671,
+    "name": "Cannibal Cuisine",
+    "uid": "10001457",
+    "url": "https://store.playstation.com/en-us/concept/10001457"
+  },
+  {
+    "id": 2434266,
+    "game": 106856,
+    "name": "A Memoir Blue",
+    "uid": "10003796",
+    "url": "https://store.playstation.com/en-us/concept/10003796"
+  },
+  {
+    "id": 2523493,
+    "game": 206432,
+    "name": "Virtua Unlimited Project",
+    "uid": "1934030",
+    "url": "https://store.steampowered.com/app/1934030"
+  },
+  {
+    "id": 2678021,
+    "game": 22089,
+    "name": "The Chronicles of Emerland Solitaire",
+    "uid": "2858",
+    "url": "https://api.utomik.com/v1/applications/2858"
+  },
+  {
+    "id": 3126000,
+    "game": 382473,
+    "name": "Crypto Grinder",
+    "uid": "3936270",
+    "url": "https://store.steampowered.com/app/3936270"
+  },
+  {
+    "id": 247462,
+    "game": 251,
+    "name": "Where in the World is Carmen Sandiego?",
+    "uid": "607",
+    "url": "https://www.twitch.tv/directory/game/Where in the World is Carmen Sandiego?"
+  },
+  {
+    "id": 2172285,
+    "game": 17828,
+    "name": "20XX",
+    "uid": "231183",
+    "url": "https://store.playstation.com/en-us/concept/231183"
+  },
+  {
+    "id": 3122419,
+    "game": 365352,
+    "name": "Dragon Ball Fierce Fighting",
+    "uid": "480020188",
+    "url": "https://www.twitch.tv/directory/game/Dragon%20Ball%20Fierce%20Fighting"
+  },
+  {
+    "id": 2675408,
+    "game": 238601,
+    "name": "RAGMONTON",
+    "uid": "2253110",
+    "url": "https://store.steampowered.com/app/2253110"
+  },
+  {
+    "id": 2143285,
+    "game": 184327,
+    "name": "Silver Nights - Browser edition (FNaF Fan game)",
+    "uid": "642946",
+    "url": "https://ball56.itch.io/silver-nights-browser-edition"
+  },
+  {
+    "id": 3102884,
+    "game": 369995,
+    "name": "PUYO PUYO FEVER RPG",
+    "uid": "1007612929",
+    "url": "https://www.twitch.tv/directory/game/PUYO%20PUYO%20FEVER%20RPG"
+  },
+  {
+    "id": 2605031,
+    "game": 218943,
+    "name": "Stroke the Snake",
+    "uid": "898623044",
+    "url": "https://www.twitch.tv/directory/game/Stroke%20the%20Snake"
+  },
+  {
+    "id": 2139114,
+    "game": 120069,
+    "name": "Heaven Dust",
+    "uid": "432913",
+    "url": "https://indienova.itch.io/heaven-dust"
+  },
+  {
+    "id": 3101375,
+    "game": 395102,
+    "name": "The Prince of Tennis Doki Doki Survival eternal passion",
+    "uid": "3907380",
+    "url": "https://store.steampowered.com/app/3907380"
+  },
+  {
+    "id": 2139130,
+    "game": 134767,
+    "name": "Bunny Hill Horror",
+    "uid": "501922",
+    "url": "https://krunchyfriedgames.itch.io/bunny-hill-horror"
+  },
+  {
+    "id": 2161286,
+    "game": 24332,
+    "name": "Inferno Pool",
+    "uid": "66acd000-77fe-1000-9115-d802584109cf",
+    "url": "https://marketplace.xbox.com//en-US/Product/Inferno-Pool/66acd000-77fe-1000-9115-d802584109cf"
+  },
+  {
+    "id": 2139287,
+    "game": 180497,
+    "name": "Save the Fish",
+    "uid": "617559",
+    "url": "https://labelpastek.itch.io/save-the-fish"
+  },
+  {
+    "id": 2174119,
+    "game": 118044,
+    "name": "TOHU",
+    "uid": "10000842",
+    "url": "https://store.playstation.com/en-us/concept/10000842"
+  },
+  {
+    "id": 2930150,
+    "game": 72812,
+    "name": "INAZUMA ELEVEN: Victory Road",
+    "uid": "2799860",
+    "url": "https://store.steampowered.com/app/2799860"
+  },
+  {
+    "id": 2140130,
+    "game": 181885,
+    "name": "NIGHTMARE BURGER HELL",
+    "uid": "281742",
+    "url": "https://ebeth.itch.io/nightmare-burger-hell"
+  },
+  {
+    "id": 3124957,
+    "game": 379187,
+    "name": "Cards, the Universe and Everything",
+    "uid": "854921136",
+    "url": "https://www.twitch.tv/directory/game/Cards%2C%20the%20Universe%20and%20Everything"
+  },
+  {
+    "id": 2140287,
+    "game": 182064,
+    "name": "Cutieheart",
+    "uid": "1062299",
+    "url": "https://magicabie.itch.io/cutieheart"
+  },
+  {
+    "id": 2141287,
+    "game": 182944,
+    "name": "Skele Magic",
+    "uid": "1175016",
+    "url": "https://kultisti.itch.io/skele-magic"
+  },
+  {
+    "id": 2137119,
+    "category": 30,
+    "game": 177266,
+    "name": "Photobomb",
+    "uid": "13804",
+    "url": "https://milkbaggames.itch.io/photobomb"
+  },
+  {
+    "id": 2155285,
+    "category": 30,
+    "game": 101782,
+    "name": "Place of Power",
+    "uid": "82631",
+    "url": "https://flazm.itch.io/place-of-power"
+  },
+  {
+    "id": 2146287,
+    "category": 30,
+    "game": 185623,
+    "name": "Ovus Nova",
+    "uid": "226249",
+    "url": "https://jonas-tyroller.itch.io/ovus-nova"
+  },
+  {
+    "id": 2164114,
+    "game": 104960,
+    "name": "Retro Racers 2",
+    "uid": "300797",
+    "url": "https://www.kartridge.com/games/LoadUpGames/retro-racers-2"
+  },
+  {
+    "id": 2156287,
+    "category": 30,
+    "game": 183762,
+    "name": "City Soarers",
+    "uid": "986335",
+    "url": "https://charles-the-bucket.itch.io/city-soarers"
+  },
+  {
+    "id": 2601746,
+    "game": 206807,
+    "name": "SUPER BOMBERMAN R 2",
+    "uid": "1913740",
+    "url": "https://store.steampowered.com/app/1913740"
+  },
+  {
+    "id": 2434286,
+    "game": 196629,
+    "name": "Rainbow",
+    "uid": "10004523",
+    "url": "https://store.playstation.com/en-us/concept/10004523"
+  },
+  {
+    "id": 2131130,
+    "game": 115926,
+    "name": "CHROMATOSE",
+    "uid": "315306",
+    "url": "https://akabaka.itch.io/chromatose"
+  },
+  {
+    "id": 2173286,
+    "game": 117957,
+    "name": "Not Not - A Brain Buster",
+    "uid": "10002008",
+    "url": "https://store.playstation.com/en-us/concept/10002008"
+  },
+  {
+    "id": 2158285,
+    "game": 178426,
+    "name": "Wiktor TD",
+    "uid": "182451",
+    "url": "https://grywiktora.itch.io/wiktor-td"
+  },
+  {
+    "id": 2138285,
+    "game": 116051,
+    "name": "Magnibox",
+    "uid": "344215",
+    "url": "https://josephgribbin.itch.io/magnibox"
+  },
+  {
+    "id": 2627309,
+    "game": 27910,
+    "name": "Everything",
+    "uid": "11c4b859bfd143d798bf84b8cfe1964f",
+    "url": "https://store.epicgames.com/en-US/p/everything"
+  },
+  {
+    "id": 2175290,
+    "game": 18812,
+    "name": "Tales of Berseria",
+    "uid": "219818",
+    "url": "https://store.playstation.com/en-us/concept/219818"
+  },
+  {
+    "id": 2175119,
+    "game": 55468,
+    "name": "Yet Another Zombie Defense HD",
+    "uid": "235411",
+    "url": "https://store.playstation.com/en-us/concept/235411"
+  },
+  {
+    "id": 2435164,
+    "game": 188540,
+    "name": "Matchpoint - Tennis Championships",
+    "uid": "10001408",
+    "url": "https://store.playstation.com/en-us/concept/10001408"
+  },
+  {
+    "id": 2173285,
+    "game": 136091,
+    "name": "King of Seas",
+    "uid": "10002658",
+    "url": "https://store.playstation.com/en-us/concept/10002658"
+  },
+  {
+    "id": 2173114,
+    "game": 146841,
+    "name": "Infestor",
+    "uid": "10000997",
+    "url": "https://store.playstation.com/en-us/concept/10000997"
+  },
+  {
+    "id": 2172114,
+    "game": 1991,
+    "name": "FEZ",
+    "uid": "201435",
+    "url": "https://store.playstation.com/en-us/concept/201435"
+  },
+  {
+    "id": 2222223,
+    "game": 55147,
+    "name": "ELEX II",
+    "uid": "10002952",
+    "url": "https://store.playstation.com/en-us/concept/10002952"
+  },
+  {
+    "id": 3003189,
+    "game": 267306,
+    "name": "The Elder Scrolls IV: Oblivion Remastered",
+    "uid": "2623190",
+    "url": "https://store.steampowered.com/app/2623190"
+  },
+  {
+    "id": 2999916,
+    "game": 339619,
+    "name": "IKUMA - The Frozen Compass",
+    "uid": "1728620",
+    "url": "https://store.steampowered.com/app/1728620"
+  },
+  {
+    "id": 78030,
+    "game": 11562,
+    "name": "SKYHILL",
+    "uid": "1458729425",
+    "url": "https://www.gog.com/en/game/skyhill"
+  },
+  {
+    "id": 1145445,
+    "game": 104311,
+    "name": "Battlelands Royale",
+    "uid": "1296181302",
+    "url": "https://itunes.apple.com/us/app/battlelands-royale/id1296181302?mt=8&uo=4"
+  },
+  {
+    "id": 2885500,
+    "category": 14,
+    "game": 285658,
+    "name": "The Lord of Darkness: The Awakening of the Light",
+    "uid": "1197910652",
+    "url": "https://www.twitch.tv/directory/game/The%20Lord%20of%20Darkness:%20The%20Awakening%20of%20the%20Light"
+  },
+  {
+    "id": 2173287,
+    "game": 111033,
+    "name": "Project Winter",
+    "uid": "235020",
+    "url": "https://store.playstation.com/en-us/concept/235020"
+  },
+  {
+    "id": 3136224,
+    "game": 380188,
+    "name": "KickNSlap",
+    "uid": "1400513268",
+    "url": "https://www.twitch.tv/directory/game/KickNSlap"
+  },
+  {
+    "id": 2173119,
+    "game": 28733,
+    "name": "Iron Snout",
+    "uid": "233379",
+    "url": "https://store.playstation.com/en-us/concept/233379"
+  },
+  {
+    "id": 2172130,
+    "game": 29047,
+    "name": "Fort Triumph",
+    "uid": "10002184",
+    "url": "https://store.playstation.com/en-us/concept/10002184"
+  },
+  {
+    "id": 2164119,
+    "game": 27444,
+    "name": "Open Sorcery",
+    "uid": "300390",
+    "url": "https://www.kartridge.com/games/acorfman/open-sorcery"
+  },
+  {
+    "id": 2145048,
+    "game": 185129,
+    "name": "Anise Flowers",
+    "uid": "1107584",
+    "url": "https://sashaines127.itch.io/anise-flowers"
+  },
+  {
+    "id": 2175405,
+    "game": 125021,
+    "name": "The Jackbox Party Pack 6",
+    "uid": "234226",
+    "url": "https://store.playstation.com/en-us/concept/234226"
+  },
+  {
+    "id": 2175287,
+    "game": 31302,
+    "name": "Drunkn Barfight",
+    "uid": "229931",
+    "url": "https://store.playstation.com/en-us/concept/229931"
+  },
+  {
+    "id": 2143130,
+    "game": 184068,
+    "name": "Pico Pirates",
+    "uid": "484981",
+    "url": "https://ctinney94.itch.io/pico-pirates"
+  },
+  {
+    "id": 2931885,
+    "game": 307701,
+    "name": "Super Real Mahjong VS",
+    "uid": "399207067",
+    "url": "https://www.twitch.tv/directory/game/Super%20Real%20Mahjong%20VS"
+  },
+  {
+    "id": 2164130,
+    "game": 113883,
+    "name": "Dis Pontibus",
+    "uid": "300545",
+    "url": "https://www.kartridge.com/games/marcosdonnan/dis-pontibus"
+  },
+  {
+    "id": 3164675,
+    "game": 374112,
+    "name": "Golden Freddy's Debauchery Simulator",
+    "uid": "1246253519",
+    "url": "https://www.twitch.tv/directory/game/Golden%20Freddy%27s%20Debauchery%20Simulator"
+  },
+  {
+    "id": 2145119,
+    "category": 30,
+    "game": 185165,
+    "name": "Lady Pac",
+    "uid": "1104280",
+    "url": "https://lowcarb.itch.io/lady-pac"
+  },
+  {
+    "id": 2145130,
+    "category": 30,
+    "game": 185162,
+    "name": "Quynh",
+    "uid": "1174407",
+    "url": "https://bun-bo-soup-team.itch.io/quynh"
+  },
+  {
+    "id": 2139048,
+    "game": 179896,
+    "name": "The Second Floor",
+    "uid": "161084",
+    "url": "https://litrouke.itch.io/the-second-floor"
+  },
+  {
+    "id": 2171287,
+    "game": 75192,
+    "name": "Deadly Days",
+    "uid": "10002677",
+    "url": "https://store.playstation.com/en-us/concept/10002677"
+  },
+  {
+    "id": 2156130,
+    "category": 30,
+    "game": 183828,
+    "name": "The Diplomat",
+    "uid": "332527",
+    "url": "https://akshaygoel.itch.io/the-diplomat"
+  },
+  {
+    "id": 2140223,
+    "game": 181931,
+    "name": "Pico Monsters",
+    "uid": "79824",
+    "url": "https://spelltop.itch.io/pico-monsters"
+  },
+  {
+    "id": 3080268,
+    "game": 348062,
+    "name": "Wénzì Dà Wánjiā",
+    "uid": "934736277",
+    "url": "https://www.twitch.tv/directory/game/W%C3%A9nz%C3%AC%20D%C3%A0%20W%C3%A1nji%C4%81"
+  },
+  {
+    "id": 2172287,
+    "game": 123954,
+    "name": "6Souls",
+    "uid": "10004110",
+    "url": "https://store.playstation.com/en-us/concept/10004110"
+  },
+  {
+    "id": 2161119,
+    "game": 6415,
+    "name": "GRID Autosport",
+    "uid": "66acd000-77fe-1000-9115-d802434d0851",
+    "url": "https://marketplace.xbox.com//en-US/Product/GRID-Autosport/66acd000-77fe-1000-9115-d802434d0851"
+  },
+  {
+    "id": 2139119,
+    "game": 180330,
+    "name": "3D Dark-Stalker Destruction Simulator Webgl",
+    "uid": "919103",
+    "url": "https://smart545.itch.io/3d-dark-stalker-destruction-simulator"
+  },
+  {
+    "id": 2994917,
+    "game": 336957,
+    "name": "Cube Space",
+    "uid": "1623628296",
+    "url": "https://www.twitch.tv/directory/game/Cube%20Space"
+  },
+  {
+    "id": 2163287,
+    "game": 126207,
+    "name": "Nira",
+    "uid": "323972",
+    "url": "https://www.kartridge.com/games/GraffitiGames/nira"
+  },
+  {
+    "id": 2161048,
+    "category": 31,
+    "game": 20163,
+    "name": "Hulk Hogan's Main Event ",
+    "uid": "66acd000-77fe-1000-9115-d8024d4a07dd",
+    "url": "https://marketplace.xbox.com//en-US/Product/Hulk-Hogans-Main-Event/66acd000-77fe-1000-9115-d8024d4a07dd"
+  },
+  {
+    "id": 2158048,
+    "category": 30,
+    "game": 178856,
+    "name": "Cursor Custodian",
+    "uid": "700333",
+    "url": "https://polymars.itch.io/cursor-custodian"
+  },
+  {
+    "id": 2686296,
+    "game": 85064,
+    "name": "Dangerous Road",
+    "uid": "2296960",
+    "url": "https://store.steampowered.com/app/2296960"
+  },
+  {
+    "id": 2229992,
+    "game": 192650,
+    "name": "Would you like to run an idol café? 3",
+    "uid": "1850790",
+    "url": "https://store.steampowered.com/app/1850790"
+  },
+  {
+    "id": 2161596,
+    "game": 5317,
+    "name": "NINJA GAIDEN 3: RE",
+    "uid": "66acd000-77fe-1000-9115-d8024b5607e4",
+    "url": "https://marketplace.xbox.com//en-US/Product/NINJA-GAIDEN-3-RE/66acd000-77fe-1000-9115-d8024b5607e4"
+  },
+  {
+    "id": 2172119,
+    "game": 20042,
+    "name": "BADLAND: Game of the Year Edition",
+    "uid": "200469",
+    "url": "https://store.playstation.com/en-us/concept/200469"
+  },
+  {
+    "id": 2185364,
+    "game": 185986,
+    "name": "Arcade Archives XEXEX",
+    "uid": "10003890",
+    "url": "https://store.playstation.com/en-us/concept/10003890"
+  },
+  {
+    "id": 2931276,
+    "game": 307541,
+    "name": ".45 PARABELLUM BLOODHOUND - Cyberpunk Active Time Action",
+    "uid": "3014650",
+    "url": "https://store.steampowered.com/app/3014650"
+  },
+  {
+    "id": 2935195,
+    "game": 311485,
+    "name": "Improbability",
+    "uid": "1582662635",
+    "url": "https://www.twitch.tv/directory/game/Improbability"
+  },
+  {
+    "id": 2071949,
+    "game": 154713,
+    "name": "さかあがりハリケーン Portable 完全生産限定版 - PS4 (【特典】凛とゆかりのビーチでキラリン☆タペストリー(B2サイズ)、さかハリPイラストアルバム、OST「SOUND OF HURRICANE」、LYCEE OVERTURE PRカード 同梱)",
+    "uid": "B098B6BPCH",
+    "url": "https://amazon.jp/dp/B098B6BPCH"
+  },
+  {
+    "id": 2131048,
+    "category": 30,
+    "game": 123188,
+    "name": "(Don't) Open Your Eyes",
+    "uid": "397955",
+    "url": "https://via01.itch.io/dont-open-your-eyes"
+  },
+  {
+    "id": 3101374,
+    "game": 395097,
+    "name": "The Prince of Tennis Sweet School Festival 0-40 and more...",
+    "uid": "3907350",
+    "url": "https://store.steampowered.com/app/3907350"
+  },
+  {
+    "id": 2144596,
+    "game": 185008,
+    "name": "sina",
+    "uid": "1142701",
+    "url": "https://eanim.itch.io/sina"
+  },
+  {
+    "id": 2271043,
+    "game": 191404,
+    "name": "CHRONO CROSS: THE RADICAL DREAMERS EDITION Standard - Nintendo Switch [Digital Code]",
+    "uid": "B09TGJGDQD",
+    "url": "https://amazon.com/dp/B09TGJGDQD"
+  },
+  {
+    "id": 2185130,
+    "category": 32,
+    "game": 186547,
+    "name": "OUTBUDDIES",
+    "uid": "316672",
+    "url": "https://www.kartridge.com/games/Headup/outbuddies"
+  },
+  {
+    "id": 2161007,
+    "game": 7658,
+    "name": "Fable Anniversary",
+    "uid": "66acd000-77fe-1000-9115-d8024d530a87",
+    "url": "https://marketplace.xbox.com//en-US/Product/Fable-Anniversary/66acd000-77fe-1000-9115-d8024d530a87"
+  },
+  {
+    "id": 3123403,
+    "game": 381458,
+    "name": "Sengodai",
+    "uid": "4090730",
+    "url": "https://store.steampowered.com/app/4090730"
+  },
+  {
+    "id": 2155223,
+    "category": 30,
+    "game": 165273,
+    "name": "Fireside",
+    "uid": "597718",
+    "url": "https://linusgaertig.itch.io/fireside"
+  },
+  {
+    "id": 2145223,
+    "category": 30,
+    "game": 185202,
+    "name": "Sargasso",
+    "uid": "165534",
+    "url": "https://smokeyocity.itch.io/sargasso"
+  },
+  {
+    "id": 2155290,
+    "category": 30,
+    "game": 184552,
+    "name": "No Excavation Needed (Ludum Dare #36)",
+    "uid": "82422",
+    "url": "https://petterbergmar.itch.io/no-excavation-needed-ludum-dare-36"
+  },
+  {
+    "id": 2176288,
+    "category": 36,
+    "game": 120445,
+    "name": "Spider-Man: Far From Home VR",
+    "uid": "233211",
+    "url": "https://store.playstation.com/en-us/concept/233211"
+  },
+  {
+    "id": 1879412,
+    "game": 137716,
+    "name": "Deadheads",
+    "uid": "496208",
+    "url": "https://www.twitch.tv/directory/game/Deadheads"
+  },
+  {
+    "id": 2271290,
+    "game": 193671,
+    "name": "azerion",
+    "uid": "324065",
+    "url": "https://www.kartridge.com/games/arcanstudios/azerion"
+  },
+  {
+    "id": 2146290,
+    "category": 30,
+    "game": 185621,
+    "name": "An aware guy in the past",
+    "uid": "507403",
+    "url": "https://ardos12.itch.io/an-aware-guy-in-the-past"
+  },
+  {
+    "id": 2225048,
+    "game": 5892,
+    "name": "The Swapper",
+    "uid": "204609",
+    "url": "https://store.playstation.com/en-us/concept/204609"
+  },
+  {
+    "id": 2138048,
+    "category": 30,
+    "game": 177884,
+    "name": "Magical Witch Bell and Her Non-Magical Friends",
+    "uid": "183238",
+    "url": "https://npckc.itch.io/magicalwitchbell"
+  },
+  {
+    "id": 2134048,
+    "game": 176735,
+    "name": "yearly",
+    "uid": "108361",
+    "url": "https://vaidap.itch.io/yearly"
+  },
+  {
+    "id": 2689949,
+    "game": 244460,
+    "name": "Elaria: The Corrupted Throne",
+    "uid": "2280970",
+    "url": "https://store.steampowered.com/app/2280970"
+  },
+  {
+    "id": 2939326,
+    "game": 385574,
+    "name": "Eschalism",
+    "uid": "3147850",
+    "url": "https://store.steampowered.com/app/3147850"
+  },
+  {
+    "id": 2173290,
+    "game": 11212,
+    "name": "Star Ocean: Till The End Of Time",
+    "uid": "210465",
+    "url": "https://store.playstation.com/en-us/concept/210465"
+  },
+  {
+    "id": 2174130,
+    "game": 74130,
+    "name": "Orbital Racer",
+    "uid": "10002690",
+    "url": "https://store.playstation.com/en-us/concept/10002690"
+  },
+  {
+    "id": 2175048,
+    "game": 89560,
+    "name": "Mutant Year Zero: Road to Eden",
+    "uid": "232411",
+    "url": "https://store.playstation.com/en-us/concept/232411"
+  },
+  {
+    "id": 2173048,
+    "game": 106807,
+    "name": "√Letter Root Letter　Last Answer",
+    "uid": "232857",
+    "url": "https://store.playstation.com/en-us/concept/232857"
+  },
+  {
+    "id": 2434130,
+    "game": 199161,
+    "name": "Ice Hockey - Breakthrough Gaming Arcade",
+    "uid": "10004369",
+    "url": "https://store.playstation.com/en-us/concept/10004369"
+  },
+  {
+    "id": 2172223,
+    "game": 33864,
+    "name": "FullBlast",
+    "uid": "232260",
+    "url": "https://store.playstation.com/en-us/concept/232260"
+  },
+  {
+    "id": 384234,
+    "game": 95595,
+    "name": "The Eerie Inn",
+    "uid": "com.vdimension.theeerieinndd",
+    "url": "https://play.google.com/store/apps/details?id=com.vdimension.theeerieinndd"
+  },
+  {
+    "id": 2172048,
+    "game": 134579,
+    "name": "FORECLOSED",
+    "uid": "10001120",
+    "url": "https://store.playstation.com/en-us/concept/10001120"
+  },
+  {
+    "id": 2142048,
+    "game": 138876,
+    "name": "Kohate",
+    "uid": "779088",
+    "url": "https://darkstonedigital.itch.io/kohate"
+  },
+  {
+    "id": 2172290,
+    "game": 147093,
+    "name": "ACA NEOGEO BIG TOURNAMENT GOLF",
+    "uid": "227072",
+    "url": "https://store.playstation.com/en-us/concept/227072"
+  },
+  {
+    "id": 2175288,
+    "game": 103168,
+    "name": "Warhammer: Chaosbane",
+    "uid": "233226",
+    "url": "https://store.playstation.com/en-us/concept/233226"
+  },
+  {
+    "id": 2856491,
+    "game": 274372,
+    "name": "Well World: Blood of Caro",
+    "uid": "2648900",
+    "url": "https://store.steampowered.com/app/2648900"
+  },
+  {
+    "id": 2994918,
+    "game": 336956,
+    "name": "The Hotel",
+    "uid": "517824737",
+    "url": "https://www.twitch.tv/directory/game/The%20Hotel"
+  },
+  {
+    "id": 2171290,
+    "game": 26624,
+    "name": "Death Mark",
+    "uid": "232511",
+    "url": "https://store.playstation.com/en-us/concept/232511"
+  },
+  {
+    "id": 2175130,
+    "game": 127862,
+    "name": "Crisis VRigade 2",
+    "uid": "10000366",
+    "url": "https://store.playstation.com/en-us/concept/10000366"
+  },
+  {
+    "id": 2171288,
+    "game": 105058,
+    "name": "DEAD OR SCHOOL",
+    "uid": "233506",
+    "url": "https://store.playstation.com/en-us/concept/233506"
+  },
+  {
+    "id": 2171223,
+    "game": 20751,
+    "name": "Daydreamer: Awakened Edition",
+    "uid": "216994",
+    "url": "https://store.playstation.com/en-us/concept/216994"
+  },
+  {
+    "id": 2176287,
+    "game": 135254,
+    "name": "Crash Bandicoot 4: It’s About Time",
+    "uid": "10000264",
+    "url": "https://store.playstation.com/en-us/concept/10000264"
+  },
+  {
+    "id": 2164407,
+    "game": 72519,
+    "name": "Pipe Push Paradise",
+    "uid": "292709",
+    "url": "https://www.kartridge.com/games/coreymartin/pipe-push-paradise"
+  },
+  {
+    "id": 2143226,
+    "game": 184298,
+    "name": "The Black Pyramid",
+    "uid": "747128",
+    "url": "https://skulldixon.itch.io/the-black-pyramid"
+  },
+  {
+    "id": 3124967,
+    "game": 379623,
+    "name": "Overtrick",
+    "uid": "445945248",
+    "url": "https://www.twitch.tv/directory/game/Overtrick"
+  },
+  {
+    "id": 2945358,
+    "game": 314743,
+    "name": "SM64 GBA",
+    "uid": "1198750368",
+    "url": "https://www.twitch.tv/directory/game/SM64%20GBA"
+  },
+  {
+    "id": 1185595,
+    "game": 1737,
+    "name": "MEGA MAN V",
+    "uid": "14165",
+    "url": "https://www.twitch.tv/directory/game/MEGA%20MAN%20V"
+  },
+  {
+    "id": 2141407,
+    "game": 102095,
+    "name": "Sagebrush",
+    "uid": "78634",
+    "url": "https://boniae.itch.io/sagebrush"
+  },
+  {
+    "id": 3102408,
+    "game": 370005,
+    "name": "Paradoxical",
+    "uid": "4040750",
+    "url": "https://store.steampowered.com/app/4040750"
+  },
+  {
+    "id": 726814,
+    "category": 15,
+    "game": 101373,
+    "name": "Drake - Gods Plan Piano Tiles 2",
+    "uid": "com.piano.tiles.drake.godsplan",
+    "url": "https://play.google.com/store/apps/details?id=com.piano.tiles.drake.godsplan"
+  },
+  {
+    "id": 2413591,
+    "game": 191404,
+    "name": "CHRONO CROSS: THE RADICAL DREAMERS EDITION",
+    "uid": "9NQKVGD706DQ",
+    "url": "https://www.xbox.com/en-us/games/store/chrono-cross-the-radical-dreamers-edition/9NQKVGD706DQ"
+  },
+  {
+    "id": 2176339,
+    "game": 116156,
+    "name": "Solar Ash",
+    "uid": "10001115",
+    "url": "https://store.playstation.com/en-us/concept/10001115"
+  },
+  {
+    "id": 3102883,
+    "game": 368777,
+    "name": "SpaceCab",
+    "uid": "1112853308",
+    "url": "https://www.twitch.tv/directory/game/SpaceCab"
+  },
+  {
+    "id": 2140296,
+    "game": 111093,
+    "name": "Smith and Winston",
+    "uid": "209288",
+    "url": "https://executionunit.itch.io/smith-and-winston"
+  },
+  {
+    "id": 2155296,
+    "category": 30,
+    "game": 184545,
+    "name": "Defagra",
+    "uid": "550723",
+    "url": "https://pikachuxxx.itch.io/defagra"
+  },
+  {
+    "id": 2754488,
+    "game": 272204,
+    "name": "PortalSnake",
+    "uid": "1147854477",
+    "url": "https://www.twitch.tv/directory/game/PortalSnake"
+  },
+  {
+    "id": 2134296,
+    "game": 176168,
+    "name": "Myriads: Renaissance",
+    "uid": "369263",
+    "url": "https://sleepingeightstudio.itch.io/myriads-renaissance"
+  },
+  {
+    "id": 2174407,
+    "game": 83848,
+    "name": "Those Who Remain",
+    "uid": "234844",
+    "url": "https://store.playstation.com/en-us/concept/234844"
+  },
+  {
+    "id": 2164339,
+    "game": 76497,
+    "name": "Battle High 2 A+",
+    "uid": "295521",
+    "url": "https://www.kartridge.com/games/mattrified/battle-high-2-a"
+  },
+  {
+    "id": 2137296,
+    "category": 30,
+    "game": 178436,
+    "name": "Sweeper",
+    "uid": "33824",
+    "url": "https://emad.itch.io/sweeper"
+  },
+  {
+    "id": 2137407,
+    "category": 30,
+    "game": 178463,
+    "name": "Fatum Metamorphosis: VO1D D1V3R5",
+    "uid": "677946",
+    "url": "https://cloverfirefly.itch.io/fatum-metamorphosis"
+  },
+  {
+    "id": 2141226,
+    "game": 142987,
+    "name": "Rogue Sentry",
+    "uid": "898251",
+    "url": "https://mdev.itch.io/rogue-sentry"
+  },
+  {
+    "id": 2173339,
+    "game": 22182,
+    "name": "Momonga Pinball Adventures",
+    "uid": "222871",
+    "url": "https://store.playstation.com/en-us/concept/222871"
+  },
+  {
+    "id": 2941347,
+    "game": 318358,
+    "name": "Quantum Sleeper",
+    "uid": "3147380",
+    "url": "https://store.steampowered.com/app/3147380"
+  },
+  {
+    "id": 2663808,
+    "game": 225770,
+    "name": "Raiden III x MIKADO MANIAX",
+    "uid": "2002860",
+    "url": "https://store.steampowered.com/app/2002860"
+  },
+  {
+    "id": 2176223,
+    "game": 2552,
+    "name": "Mad Max",
+    "uid": "202765",
+    "url": "https://store.playstation.com/en-us/concept/202765"
+  },
+  {
+    "id": 2175339,
+    "game": 9919,
+    "name": "The Technomancer",
+    "uid": "217462",
+    "url": "https://store.playstation.com/en-us/concept/217462"
+  },
+  {
+    "id": 2663927,
+    "game": 237172,
+    "name": "Sakura Gym Girls",
+    "uid": "2017640",
+    "url": "https://store.steampowered.com/app/2017640"
+  },
+  {
+    "id": 2175407,
+    "game": 76939,
+    "name": "Lost Grimoires 3: The Forgotten Well",
+    "uid": "10003220",
+    "url": "https://store.playstation.com/en-us/concept/10003220"
+  },
+  {
+    "id": 2435339,
+    "game": 199159,
+    "name": "Layer Section & Galactic Attack S-Tribute",
+    "uid": "10003482",
+    "url": "https://store.playstation.com/en-us/concept/10003482"
+  },
+  {
+    "id": 2222226,
+    "game": 152689,
+    "name": "Kinduo",
+    "uid": "10004315",
+    "url": "https://store.playstation.com/en-us/concept/10004315"
+  },
+  {
+    "id": 2434223,
+    "game": 146682,
+    "name": "Glam's Incredible Run: Escape from Dukha",
+    "uid": "10004442",
+    "url": "https://store.playstation.com/en-us/concept/10004442"
+  },
+  {
+    "id": 2176226,
+    "game": 44074,
+    "name": "Evil Genius 2: World Domination",
+    "uid": "10003128",
+    "url": "https://store.playstation.com/en-us/concept/10003128"
+  },
+  {
+    "id": 2223339,
+    "game": 132657,
+    "name": "BRUTAL RAGE",
+    "uid": "10003039",
+    "url": "https://store.playstation.com/en-us/concept/10003039"
+  },
+  {
+    "id": 2037345,
+    "game": 141547,
+    "name": "Evil West",
+    "uid": "1065310",
+    "url": "https://store.steampowered.com/app/1065310"
+  },
+  {
+    "id": 3015319,
+    "game": 341622,
+    "name": "Melvor Idle 2",
+    "uid": "3218350",
+    "url": "https://store.steampowered.com/app/3218350"
+  },
+  {
+    "id": 2706966,
+    "game": 250734,
+    "name": "Project Asteroids",
+    "uid": "1011608499",
+    "url": "https://www.twitch.tv/directory/game/Project%20Asteroids"
+  },
+  {
+    "id": 2138226,
+    "game": 178680,
+    "name": "SWAPLATFORMER",
+    "uid": "1165269",
+    "url": "https://allalonegamez.itch.io/swaplatformer"
+  },
+  {
+    "id": 2994919,
+    "game": 336959,
+    "name": "Help Me!",
+    "uid": "1152214259",
+    "url": "https://www.twitch.tv/directory/game/Help%20Me%21"
+  },
+  {
+    "id": 2138407,
+    "game": 178774,
+    "name": "A Cottage Story",
+    "uid": "711776",
+    "url": "https://ladymeowsith.itch.io/a-cottage-story"
+  },
+  {
+    "id": 2164223,
+    "game": 96434,
+    "name": "Royal Adventure",
+    "uid": "300505",
+    "url": "https://www.kartridge.com/games/QUMARON/royal-adventure"
+  },
+  {
+    "id": 2172407,
+    "game": 27407,
+    "name": "Bush Hockey League",
+    "uid": "225272",
+    "url": "https://store.playstation.com/en-us/concept/225272"
+  },
+  {
+    "id": 2171226,
+    "game": 121161,
+    "name": "Arcade Archives ROAD FIGHTER",
+    "uid": "234512",
+    "url": "https://store.playstation.com/en-us/concept/234512"
+  },
+  {
+    "id": 2710473,
+    "game": 251998,
+    "name": "Crystal Tower Defense",
+    "uid": "1842273316",
+    "url": "https://www.twitch.tv/directory/game/Crystal%20Tower%20Defense"
+  },
+  {
+    "id": 2116815,
+    "category": 14,
+    "game": 167609,
+    "name": "Hadrian's Villa Reborn: Stadium Garden",
+    "uid": "715870567",
+    "url": "https://www.twitch.tv/directory/game/Hadrian's%20Villa%20Reborn:%20Stadium%20Garden"
+  },
+  {
+    "id": 3125509,
+    "game": 380099,
+    "name": "Cube Fight",
+    "uid": "1002883159",
+    "url": "https://www.twitch.tv/directory/game/Cube%20Fight"
+  },
+  {
+    "id": 2161391,
+    "game": 2192,
+    "name": "MINI NINJAS",
+    "uid": "66acd000-77fe-1000-9115-d802534307e4",
+    "url": "https://marketplace.xbox.com//en-US/Product/MINI-NINJAS/66acd000-77fe-1000-9115-d802534307e4"
+  },
+  {
+    "id": 2145339,
+    "category": 30,
+    "game": 185263,
+    "name": "Canine Cravings",
+    "uid": "179233",
+    "url": "https://omarshehata.itch.io/canine-cravings"
+  },
+  {
+    "id": 3101983,
+    "game": 370010,
+    "name": "Black Cat Book Club",
+    "uid": "3972410",
+    "url": "https://store.steampowered.com/app/3972410"
+  },
+  {
+    "id": 2156226,
+    "game": 169985,
+    "name": "Hjarta",
+    "uid": "19049",
+    "url": "https://eightbitskyline.itch.io/hjarta"
+  },
+  {
+    "id": 3164676,
+    "game": 374116,
+    "name": "Golden Freddy's Debauchery Simulator 1986",
+    "uid": "175890392",
+    "url": "https://www.twitch.tv/directory/game/Golden%20Freddy%27s%20Debauchery%20Simulator%201986"
+  },
+  {
+    "id": 110868,
+    "game": 11613,
+    "name": "BlazBlue: Central Fiction",
+    "uid": "50339",
+    "url": "https://www.giantbomb.com/games/3030-50339/"
+  },
+  {
+    "id": 3136693,
+    "game": 389581,
+    "name": "Chopping Together🌲",
+    "uid": "4313610",
+    "url": "https://store.steampowered.com/app/4313610"
+  },
+  {
+    "id": 3168990,
+    "game": 397446,
+    "name": "Dragon Fire Ice Melt",
+    "uid": "722797180",
+    "url": "https://www.twitch.tv/directory/game/Dragon%20Fire%20Ice%20Melt"
+  },
+  {
+    "id": 2975691,
+    "game": 329683,
+    "name": "Sweep City",
+    "uid": "3394420",
+    "url": "https://store.steampowered.com/app/3394420"
+  },
+  {
+    "id": 2141391,
+    "game": 183017,
+    "name": "FRUITWOLF",
+    "uid": "47617",
+    "url": "https://clawmark.itch.io/fruitwolf"
+  },
+  {
+    "id": 3102596,
+    "game": 370008,
+    "name": "Project Shadowglass",
+    "uid": "3970690",
+    "url": "https://store.steampowered.com/app/3970690"
+  },
+  {
+    "id": 2413296,
+    "game": 121818,
+    "name": "Sproots",
+    "uid": "468119",
+    "url": "https://sokpop.itch.io/sproots"
+  },
+  {
+    "id": 3134228,
+    "game": 384212,
+    "name": "Void Pachinko",
+    "uid": "1784562132",
+    "url": "https://www.twitch.tv/directory/game/Void%20Pachinko"
+  },
+  {
+    "id": 2567297,
+    "game": 200903,
+    "name": "Another Crab's Treasure",
+    "uid": "1887840",
+    "url": "https://store.steampowered.com/app/1887840"
+  },
+  {
+    "id": 2174296,
+    "game": 139058,
+    "name": "Professor Rubik's Brain Fitness",
+    "uid": "10000891",
+    "url": "https://store.playstation.com/en-us/concept/10000891"
+  },
+  {
+    "id": 2722816,
+    "game": 257458,
+    "name": "One Deck Galaxy",
+    "uid": "1974300",
+    "url": "https://store.steampowered.com/app/1974300"
+  },
+  {
+    "id": 2164393,
+    "game": 76359,
+    "name": "Magibot",
+    "uid": "293649",
+    "url": "https://www.kartridge.com/games/PlugInDigital/magibot"
+  },
+  {
+    "id": 2162407,
+    "game": 24308,
+    "name": "5th Grader",
+    "uid": "66acd000-77fe-1000-9115-d80258410900",
+    "url": "https://marketplace.xbox.com//en-US/Product/5th-Grader/66acd000-77fe-1000-9115-d80258410900"
+  },
+  {
+    "id": 2137391,
+    "category": 30,
+    "game": 178462,
+    "name": "Gar's Den",
+    "uid": "128550",
+    "url": "https://trasevol-dog.itch.io/gars-den"
+  },
+  {
+    "id": 2148697,
+    "game": 179018,
+    "name": "AOPII",
+    "uid": "52184",
+    "url": "https://crystalgameworks.itch.io/aopii"
+  },
+  {
+    "id": 2141393,
+    "game": 183018,
+    "name": "Bipo's Adventure",
+    "uid": "50883",
+    "url": "https://fiuffybunny.itch.io/bipos-adventure"
+  },
+  {
+    "id": 2613023,
+    "game": 221951,
+    "name": "Tokyo Yamanote Boys Honey Milk Disc",
+    "uid": "116981593",
+    "url": "https://www.twitch.tv/directory/game/Tokyo%20Yamanote%20Boys%20Honey%20Milk%20Disc"
+  },
+  {
+    "id": 2174391,
+    "game": 99741,
+    "name": "Paddle Vs. Paddle",
+    "uid": "227441",
+    "url": "https://store.playstation.com/en-us/concept/227441"
+  },
+  {
+    "id": 2173296,
+    "game": 11052,
+    "name": "Kung Fury: Street Rage",
+    "uid": "202358",
+    "url": "https://store.playstation.com/en-us/concept/202358"
+  },
+  {
+    "id": 2173438,
+    "game": 45095,
+    "name": "Hidden Dragon Legend",
+    "uid": "228764",
+    "url": "https://store.playstation.com/en-us/concept/228764"
+  },
+  {
+    "id": 2176296,
+    "game": 18094,
+    "name": "H1Z1: Battle Royale",
+    "uid": "229077",
+    "url": "https://store.playstation.com/en-us/concept/229077"
+  },
+  {
+    "id": 2434226,
+    "game": 115711,
+    "name": "Curious Expedition 2",
+    "uid": "10003027",
+    "url": "https://store.playstation.com/en-us/concept/10003027"
+  },
+  {
+    "id": 2172438,
+    "game": 111837,
+    "name": "Cloudpunk",
+    "uid": "10000251",
+    "url": "https://store.playstation.com/en-us/concept/10000251"
+  },
+  {
+    "id": 2172393,
+    "game": 187550,
+    "name": "CATS OF WAR",
+    "uid": "10002997",
+    "url": "https://store.playstation.com/en-us/concept/10002997"
+  },
+  {
+    "id": 2172226,
+    "game": 105344,
+    "name": "BONKIES",
+    "uid": "10001209",
+    "url": "https://store.playstation.com/en-us/concept/10001209"
+  },
+  {
+    "id": 2224438,
+    "game": 175891,
+    "name": "Heliopedia",
+    "uid": "1179791",
+    "url": "https://sokpop.itch.io/heliopedia"
+  },
+  {
+    "id": 2690419,
+    "game": 244485,
+    "name": "ARC SEED",
+    "uid": "2332970",
+    "url": "https://store.steampowered.com/app/2332970"
+  },
+  {
+    "id": 2138391,
+    "game": 106986,
+    "name": "Arcade Spirits",
+    "uid": "147395",
+    "url": "https://fictionfactorygames.itch.io/arcade-spirits"
+  },
+  {
+    "id": 3106322,
+    "game": 368979,
+    "name": "Blop",
+    "uid": "150846547",
+    "url": "https://www.twitch.tv/directory/game/Blop"
+  },
+  {
+    "id": 2689597,
+    "game": 244305,
+    "name": "Metropolis 1998",
+    "uid": "2287430",
+    "url": "https://store.steampowered.com/app/2287430"
+  },
+  {
+    "id": 2158339,
+    "game": 94098,
+    "name": "Slendrina the Cellar",
+    "uid": "1056525",
+    "url": "https://web.archive.org/web/20210526170002/https://dvloperdev.itch.io/slendrina-the-cellar"
+  },
+  {
+    "id": 2567489,
+    "game": 215042,
+    "name": "Stick It to the Stickman",
+    "uid": "2085540",
+    "url": "https://store.steampowered.com/app/2085540"
+  },
+  {
+    "id": 3100826,
+    "game": 370013,
+    "name": "External",
+    "uid": "3299010",
+    "url": "https://store.steampowered.com/app/3299010"
+  },
+  {
+    "id": 3145578,
+    "game": 389581,
+    "name": "Chopping Together",
+    "uid": "1453665360",
+    "url": "https://www.twitch.tv/directory/game/Chopping%20Together"
+  },
+  {
+    "id": 2141386,
+    "game": 151919,
+    "name": "HELP - The Heroes Enhancing Lives Program",
+    "uid": "575145",
+    "url": "https://metroixer.itch.io/help-the-heroes-enhancing-lives-program"
+  },
+  {
+    "id": 2185391,
+    "game": 14378,
+    "name": "PRAEY FOR THE GODS",
+    "uid": "10001599",
+    "url": "https://store.playstation.com/en-us/concept/10001599"
+  },
+  {
+    "id": 2141405,
+    "game": 183029,
+    "name": "Rob'n Run",
+    "uid": "131214",
+    "url": "https://kayugames.itch.io/robnrun"
+  },
+  {
+    "id": 3101073,
+    "game": 370012,
+    "name": "Made in Lucifer City",
+    "uid": "3357950",
+    "url": "https://store.steampowered.com/app/3357950"
+  },
+  {
+    "id": 2174438,
+    "game": 104270,
+    "name": "RanchPlanet",
+    "uid": "229286",
+    "url": "https://store.playstation.com/en-us/concept/229286"
+  },
+  {
+    "id": 2143386,
+    "game": 184389,
+    "name": "Selene's Labyrinth",
+    "uid": "580743",
+    "url": "https://jcgyo.itch.io/selenes-labyrinth"
+  },
+  {
+    "id": 2139339,
+    "game": 14766,
+    "name": "BasketBelle",
+    "uid": "216560",
+    "url": "https://onemrbean.itch.io/basketbelle"
+  },
+  {
+    "id": 2143405,
+    "game": 77358,
+    "name": "OpenArena",
+    "uid": "265479",
+    "url": "https://sago008.itch.io/openarena"
+  },
+  {
+    "id": 2138386,
+    "game": 178745,
+    "name": "Oathbreaker: Season 2",
+    "uid": "606964",
+    "url": "https://larkylabs.itch.io/oathbreaker-season-2"
+  },
+  {
+    "id": 213693,
+    "game": 1423,
+    "name": "Kengo Legend of the 9",
+    "uid": "xbox36066acd000-77fe-1000-9115-d802474507d2",
+    "url": "http://marketplace.xbox.com/en-US/Product/Kengo-Legend-of-the-9/66acd000-77fe-1000-9115-d802474507d2"
+  },
+  {
+    "id": 2138438,
+    "game": 178801,
+    "name": "Colorful未来",
+    "uid": "874491",
+    "url": "https://honeybunny-of.itch.io/colorfulmirai"
+  },
+  {
+    "id": 2722688,
+    "game": 257389,
+    "name": "Gnome Enchanted Jigsaw Puzzles - Expansion Pack 2",
+    "uid": "2520290",
+    "url": "https://store.steampowered.com/app/2520290"
+  },
+  {
+    "id": 3125511,
+    "game": 380074,
+    "name": "Circuit Defender",
+    "uid": "1961063540",
+    "url": "https://www.twitch.tv/directory/game/Circuit%20Defender"
+  },
+  {
+    "id": 2143364,
+    "game": 184382,
+    "name": "Blockour",
+    "uid": "683709",
+    "url": "https://zevdev.itch.io/blockour"
+  },
+  {
+    "id": 2627041,
+    "game": 117889,
+    "name": "MudRunner - Valley DLC",
+    "uid": "6b808b47a647476c83ec11b90c307fec",
+    "url": "https://store.epicgames.com/en-US/p/mudrunner--the-valley"
+  },
+  {
+    "id": 2175386,
+    "game": 11004,
+    "name": "Onechanbara Z2: Chaos",
+    "uid": "203219",
+    "url": "https://store.playstation.com/en-us/concept/203219"
+  },
+  {
+    "id": 3106321,
+    "game": 368982,
+    "name": "Gloop",
+    "uid": "1326261079",
+    "url": "https://www.twitch.tv/directory/game/Gloop"
+  },
+  {
+    "id": 2175422,
+    "game": 120436,
+    "name": "ONE PIECE: PIRATE WARRIORS 4",
+    "uid": "234628",
+    "url": "https://store.playstation.com/en-us/concept/234628"
+  },
+  {
+    "id": 2139405,
+    "game": 180539,
+    "name": "Senpai Simulator",
+    "uid": "205137",
+    "url": "https://brainscraps.itch.io/senpai-simulator"
+  },
+  {
+    "id": 2141339,
+    "game": 146544,
+    "name": "Deepest Sword",
+    "uid": "1011709",
+    "url": "https://cosmicadventuresquad.itch.io/deepest-sword"
+  },
+  {
+    "id": 2140364,
+    "game": 182104,
+    "name": "Flower Quest",
+    "uid": "963987",
+    "url": "https://thejaspel.itch.io/flower-quest"
+  },
+  {
+    "id": 2516732,
+    "category": 14,
+    "game": 208459,
+    "name": "Retro Pocket Rocket",
+    "uid": "31636800",
+    "url": "https://www.twitch.tv/directory/game/Retro%20Pocket%20Rocket"
+  },
+  {
+    "id": 2140386,
+    "game": 182508,
+    "name": "Crosshollow Foundations",
+    "uid": "1078989",
+    "url": "https://crosshollow.itch.io/foundations"
+  },
+  {
+    "id": 2141438,
+    "game": 152734,
+    "name": "Silver Blue",
+    "uid": "659815",
+    "url": "https://bun-bo-soup-team.itch.io/silver-blue"
+  },
+  {
+    "id": 2173391,
+    "game": 112138,
+    "name": "Hookbots",
+    "uid": "234604",
+    "url": "https://store.playstation.com/en-us/concept/234604"
+  },
+  {
+    "id": 1937467,
+    "game": 133775,
+    "uid": "B07XGVQYXH"
+  },
+  {
+    "id": 2157386,
+    "category": 30,
+    "game": 180187,
+    "name": "Against Light",
+    "uid": "184944",
+    "url": "https://alexquevillon.itch.io/againstlight"
+  },
+  {
+    "id": 2156339,
+    "category": 30,
+    "game": 183836,
+    "name": "Fugitive Shift",
+    "uid": "62864",
+    "url": "https://mattlawr.itch.io/fugitive-shift"
+  },
+  {
+    "id": 2137438,
+    "category": 30,
+    "game": 173427,
+    "name": "You and I and the Long, Long Drive",
+    "uid": "351360",
+    "url": "https://caramel.itch.io/longdrive"
+  },
+  {
+    "id": 2680935,
+    "game": 159052,
+    "name": "Metavaxx",
+    "uid": "2316900",
+    "url": "https://store.steampowered.com/app/2316900"
+  },
+  {
+    "id": 2137393,
+    "game": 55866,
+    "name": "Aura of Worlds",
+    "uid": "186129",
+    "url": "https://cognitiveforge.itch.io/auraofworlds"
+  },
+  {
+    "id": 2185386,
+    "game": 187296,
+    "name": "Football Cup 2022",
+    "uid": "10004209",
+    "url": "https://store.playstation.com/en-us/concept/10004209"
+  },
+  {
+    "id": 2171339,
+    "game": 45884,
+    "name": "Dog Duty",
+    "uid": "10000254",
+    "url": "https://store.playstation.com/en-us/concept/10000254"
+  },
+  {
+    "id": 2172386,
+    "game": 115418,
+    "name": "Braveland Trilogy",
+    "uid": "234469",
+    "url": "https://store.playstation.com/en-us/concept/234469"
+  },
+  {
+    "id": 2171438,
+    "game": 75706,
+    "name": "Arcade Archives Shusse Ozumo",
+    "uid": "200317",
+    "url": "https://store.playstation.com/en-us/concept/200317"
+  },
+  {
+    "id": 2722533,
+    "game": 142549,
+    "name": "Viewfinder",
+    "uid": "10006160",
+    "url": "https://store.playstation.com/en-us/concept/10006160"
+  },
+  {
+    "id": 2519773,
+    "game": 2159,
+    "name": "Race Driver: GRID",
+    "uid": "1207659233",
+    "url": "https://www.gog.com/en/game/ultra_pack_deluxe_turbo_hd_remix_vol2"
+  },
+  {
+    "id": 3087631,
+    "game": 360008,
+    "name": "Forsaken Ones",
+    "uid": "281125599",
+    "url": "https://www.twitch.tv/directory/game/Forsaken%20Ones"
+  },
+  {
+    "id": 2667271,
+    "game": 235950,
+    "name": "Merchant Legends: The Founding",
+    "uid": "261577190",
+    "url": "https://www.twitch.tv/directory/game/Merchant%20Legends:%20The%20Founding"
+  },
+  {
+    "id": 2929355,
+    "game": 308034,
+    "name": "NBA 2K25",
+    "uid": "2878980",
+    "url": "https://store.steampowered.com/app/2878980"
+  },
+  {
+    "id": 2990106,
+    "game": 385152,
+    "name": "Dustland Delivery: Sheol",
+    "uid": "3559340",
+    "url": "https://store.steampowered.com/app/3559340"
+  },
+  {
+    "id": 3139569,
+    "game": 389635,
+    "name": "Grab & Run | Alpaca Party",
+    "uid": "4307440",
+    "url": "https://store.steampowered.com/app/4307440"
+  },
+  {
+    "id": 2140422,
+    "game": 182515,
+    "name": "Blake Strongflank",
+    "uid": "67923",
+    "url": "https://almostgames.itch.io/blake-strongflank"
+  },
+  {
+    "id": 2137405,
+    "category": 30,
+    "game": 74505,
+    "name": "Liyla and The Shadows Of War",
+    "uid": "1066686",
+    "url": "https://rasheedabueideh.itch.io/liyla-and-the-shadows-of-war"
+  },
+  {
+    "id": 2155391,
+    "category": 30,
+    "game": 184257,
+    "name": "Chainball!",
+    "uid": "1085213",
+    "url": "https://windmillgames.itch.io/chainball"
+  },
+  {
+    "id": 2144393,
+    "game": 103049,
+    "name": "Tempo Quest",
+    "uid": "249686",
+    "url": "https://pixel-boy.itch.io/tempo-quest"
+  },
+  {
+    "id": 2144438,
+    "game": 184952,
+    "name": "Don't Look At Me",
+    "uid": "66128",
+    "url": "https://napstack.itch.io/dont-look-at-me"
+  },
+  {
+    "id": 2138296,
+    "game": 178701,
+    "name": "Haunted Lands",
+    "uid": "507952",
+    "url": "https://alevgor.itch.io/haunted-lands"
+  },
+  {
+    "id": 2142422,
+    "game": 183473,
+    "name": "Pocket Lands",
+    "uid": "414327",
+    "url": "https://02.itch.io/pocket-lands"
+  },
+  {
+    "id": 2133422,
+    "game": 176421,
+    "name": "you have to go to work",
+    "uid": "130879",
+    "url": "https://npckc.itch.io/you-have-to-go-to-work"
+  },
+  {
+    "id": 1935397,
+    "game": 11613,
+    "uid": "B01H2S9LB6"
+  },
+  {
+    "id": 2158386,
+    "game": 177372,
+    "name": "Karlson 2D",
+    "uid": "499269",
+    "url": "https://danidev.itch.io/karlson2d"
+  },
+  {
+    "id": 2163438,
+    "game": 179325,
+    "name": "Switcheroo!",
+    "uid": "323747",
+    "url": "https://www.kartridge.com/games/ChizWiz/switcheroo"
+  },
+  {
+    "id": 2164386,
+    "game": 55242,
+    "name": "Fossil Hunters",
+    "uid": "293787",
+    "url": "https://www.kartridge.com/games/ReptoidGames/fossil-hunters"
+  },
+  {
+    "id": 2138393,
+    "game": 169272,
+    "name": "Aloners (Redux)",
+    "uid": "156482",
+    "url": "https://sonnet009games.itch.io/aloners-redux"
+  },
+  {
+    "id": 2143296,
+    "game": 136822,
+    "name": "Sonic Suggests",
+    "uid": "239354",
+    "url": "https://3di70r.itch.io/sonic-suggests"
+  },
+  {
+    "id": 2133405,
+    "game": 176417,
+    "name": "Mail Rabbit",
+    "uid": "902153",
+    "url": "https://poole-shane.itch.io/mail-rabbit"
+  },
+  {
+    "id": 2737370,
+    "game": 263977,
+    "name": "Anvil of Tristheim",
+    "uid": "640015521",
+    "url": "https://www.twitch.tv/directory/game/Anvil%20of%20Tristheim"
+  },
+  {
+    "id": 3168991,
+    "game": 397903,
+    "name": "Of Piers & Bays",
+    "uid": "905601553",
+    "url": "https://www.twitch.tv/directory/game/Of%20Piers%20&%20Bays"
+  },
+  {
+    "id": 2174393,
+    "game": 59472,
+    "name": "Ultra Hat Dimension",
+    "uid": "10000799",
+    "url": "https://store.playstation.com/en-us/concept/10000799"
+  },
+  {
+    "id": 2236339,
+    "game": 139416,
+    "name": "Ziggurat 2",
+    "uid": "10003708",
+    "url": "https://store.playstation.com/en-us/concept/10003708"
+  },
+  {
+    "id": 2138422,
+    "game": 178779,
+    "name": "Zé, Dedé e Mané",
+    "uid": "421524",
+    "url": "https://prismagamelab.itch.io/ze-dede-mane"
+  },
+  {
+    "id": 2074234,
+    "game": 157459,
+    "name": "The Vagabond Emperor",
+    "uid": "1362548677",
+    "url": "https://www.twitch.tv/directory/game/The%20Vagabond%20Emperor"
+  },
+  {
+    "id": 3136225,
+    "game": 381414,
+    "name": "Qubica",
+    "uid": "625934038",
+    "url": "https://www.twitch.tv/directory/game/Qubica"
+  },
+  {
+    "id": 2161386,
+    "game": 5016,
+    "name": "MJ Path of Destruction",
+    "uid": "66acd000-77fe-1000-9115-d8024156088c",
+    "url": "https://marketplace.xbox.com//en-US/Product/MJ-Path-of-Destruction/66acd000-77fe-1000-9115-d8024156088c"
+  },
+  {
+    "id": 2139391,
+    "game": 60585,
+    "name": "Office Management 101",
+    "uid": "94755",
+    "url": "https://tulevikeu.itch.io/office-management-101"
+  },
+  {
+    "id": 2133438,
+    "game": 86590,
+    "name": "Go Morse Go! Arcade Edition",
+    "uid": "224477",
+    "url": "https://kyatt7.itch.io/go-morse-go-arcade-edition"
+  },
+  {
+    "id": 1999485,
+    "game": 144752,
+    "name": "And the Band Begins to Play",
+    "uid": "866376947",
+    "url": "https://www.twitch.tv/directory/game/And%20the%20Band%20Begins%20to%20Play"
+  },
+  {
+    "id": 2146296,
+    "category": 30,
+    "game": 27950,
+    "name": "Path of Mage",
+    "uid": "114553",
+    "url": "https://gw1p.itch.io/path-of-mage"
+  },
+  {
+    "id": 2136438,
+    "category": 30,
+    "game": 176909,
+    "name": "Your Best Nightmare",
+    "uid": "124962",
+    "url": "https://barkscript.itch.io/your-best-nightmare"
+  },
+  {
+    "id": 2157438,
+    "category": 30,
+    "game": 180178,
+    "name": "Relax, mow some grass.",
+    "uid": "588941",
+    "url": "https://cwisbg.itch.io/relax-mow-some-grass"
+  },
+  {
+    "id": 2185393,
+    "game": 187709,
+    "name": "Space KaBAAM",
+    "uid": "10003599",
+    "url": "https://store.playstation.com/en-us/concept/10003599"
+  },
+  {
+    "id": 2175393,
+    "game": 134591,
+    "name": "JETT: The Far Shore",
+    "uid": "10001026",
+    "url": "https://store.playstation.com/en-us/concept/10001026"
+  },
+  {
+    "id": 2185339,
+    "game": 164293,
+    "name": "Escape Sequence",
+    "uid": "10003689",
+    "url": "https://store.playstation.com/en-us/concept/10003689"
+  },
+  {
+    "id": 2171386,
+    "game": 106624,
+    "name": "Defenders of Ekron - Definitive Edition",
+    "uid": "224818",
+    "url": "https://store.playstation.com/en-us/concept/224818"
+  },
+  {
+    "id": 2172391,
+    "game": 96477,
+    "name": "Casey Powell Lacrosse 18",
+    "uid": "231246",
+    "url": "https://store.playstation.com/en-us/concept/231246"
+  },
+  {
+    "id": 2176386,
+    "game": 71455,
+    "name": "Ben 10",
+    "uid": "229756",
+    "url": "https://store.playstation.com/en-us/concept/229756"
+  },
+  {
+    "id": 2940846,
+    "game": 329326,
+    "name": "Train Sim World 5: S-Bahn Vorarlberg: Lindau - Bludenz Route Add-On",
+    "uid": "2970440",
+    "url": "https://store.steampowered.com/app/2970440"
+  },
+  {
+    "id": 2925760,
+    "game": 307220,
+    "name": "To Kill a God",
+    "uid": "3015820",
+    "url": "https://store.steampowered.com/app/3015820"
+  },
+  {
+    "id": 3145579,
+    "game": 389635,
+    "name": "Alpaca Party: Grab & Run",
+    "uid": "1092953689",
+    "url": "https://www.twitch.tv/directory/game/Alpaca%20Party:%20Grab%20&%20Run"
+  },
+  {
+    "id": 3102886,
+    "game": 369997,
+    "name": "Chronoscript: The Endless End",
+    "uid": "4018380",
+    "url": "https://store.steampowered.com/app/4018380"
+  },
+  {
+    "id": 2172405,
+    "game": 153831,
+    "name": "Aery - Calm Mind",
+    "uid": "10003105",
+    "url": "https://store.playstation.com/en-us/concept/10003105"
+  },
+  {
+    "id": 2975000,
+    "category": 14,
+    "game": 328096,
+    "name": "Cash Guardian: Collector Operation \"Capital Defense\"",
+    "uid": "1698333786",
+    "url": "https://www.twitch.tv/directory/game/Cash%20Guardian:%20Collector%20Operation%20%22Capital%20Defense%22"
+  },
+  {
+    "id": 250017,
+    "game": 19072,
+    "name": "Fullmetal Alchemist 2: Curse of the Crimson Elixir",
+    "uid": "13858",
+    "url": "https://www.twitch.tv/directory/game/Fullmetal Alchemist 2: Curse of the Crimson Elixir"
+  },
+  {
+    "id": 2163479,
+    "game": 179344,
+    "name": "Pixel Mage Quest ",
+    "uid": "323215",
+    "url": "https://www.kartridge.com/games/mmztech/pixel-mage-quest"
+  },
+  {
+    "id": 3164689,
+    "game": 382855,
+    "name": "SACRED: Last Pixel of Ancaria",
+    "uid": "4092130",
+    "url": "https://store.steampowered.com/app/4092130"
+  },
+  {
+    "id": 1913831,
+    "game": 34915,
+    "name": "Swords & Crossbones: An Epic Pirate Story",
+    "uid": "512252",
+    "url": "https://www.twitch.tv/directory/game/Swords%20%26%20Crossbones%3A%20An%20Epic%20Pirate%20Story"
+  },
+  {
+    "id": 3136185,
+    "game": 385625,
+    "name": "Whisker Cowboy",
+    "uid": "4304020",
+    "url": "https://store.steampowered.com/app/4304020"
+  },
+  {
+    "id": 2137697,
+    "game": 133370,
+    "name": "RogueJack: Roguelike Blackjack",
+    "uid": "467061",
+    "url": "https://ponywolf.itch.io/roguejack"
+  },
+  {
+    "id": 2171364,
+    "game": 19465,
+    "name": "AKIBA'S BEAT",
+    "uid": "222828",
+    "url": "https://store.playstation.com/en-us/concept/222828"
+  },
+  {
+    "id": 3128886,
+    "game": 381458,
+    "name": "Sengodai",
+    "uid": "1943164319",
+    "url": "https://www.twitch.tv/directory/game/Sengodai"
+  },
+  {
+    "id": 2161422,
+    "game": 50945,
+    "name": "Merv Griffin's Xwords",
+    "uid": "66acd000-77fe-1000-9115-d8025841092b",
+    "url": "https://marketplace.xbox.com//en-US/Product/Merv-Griffins-Xwords/66acd000-77fe-1000-9115-d8025841092b"
+  },
+  {
+    "id": 3130999,
+    "game": 382473,
+    "name": "It's Fine",
+    "uid": "916712348",
+    "url": "https://www.twitch.tv/directory/game/It%27s%20Fine"
+  },
+  {
+    "id": 2155422,
+    "category": 30,
+    "game": 184250,
+    "name": "Descendants of the Hellbeast",
+    "uid": "583007",
+    "url": "https://shp.itch.io/doth"
+  },
+  {
+    "id": 2170882,
+    "game": 65498,
+    "name": "Venture Towns",
+    "uid": "10000352",
+    "url": "https://store.playstation.com/en-us/concept/10000352"
+  },
+  {
+    "id": 2141479,
+    "game": 183060,
+    "name": "The Right Turn",
+    "uid": "581238",
+    "url": "https://prox276.itch.io/the-right-turn"
+  },
+  {
+    "id": 2137596,
+    "game": 178485,
+    "name": "ShanShui 山水",
+    "uid": "427843",
+    "url": "https://giomee.itch.io/shanshui"
+  },
+  {
+    "id": 2139479,
+    "game": 180808,
+    "name": "II-III-V",
+    "uid": "1219920",
+    "url": "https://nartier.itch.io/ii-iii-v"
+  },
+  {
+    "id": 2940752,
+    "game": 329324,
+    "name": "Train Sim World 5: Northeast Corridor: Boston - Providence Route Add-On",
+    "uid": "2969940",
+    "url": "https://store.steampowered.com/app/2969940"
+  },
+  {
+    "id": 2155474,
+    "category": 30,
+    "game": 134274,
+    "name": "Tower Noire",
+    "uid": "232792",
+    "url": "https://cow.itch.io/tower-noire"
+  },
+  {
+    "id": 1928979,
+    "game": 136193,
+    "uid": "B071HF7Y4Z",
+    "url": "https://amazon.com/dp/B071HF7Y4Z"
+  },
+  {
+    "id": 2139596,
+    "game": 180883,
+    "name": "Sea Breeze",
+    "uid": "1099559",
+    "url": "https://prospect-terrace.itch.io/sea-breeze"
+  }
+]

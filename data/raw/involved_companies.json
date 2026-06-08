@@ -1,0 +1,4502 @@
+[
+  {
+    "id": 95000,
+    "company": 14486,
+    "developer": true,
+    "game": 131992,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 78799,
+    "company": 1250,
+    "developer": true,
+    "game": 20689,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 36564,
+    "company": 10142,
+    "developer": true,
+    "game": 19671,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66470,
+    "company": 2888,
+    "developer": true,
+    "game": 105048,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69749,
+    "company": 16347,
+    "developer": true,
+    "game": 98770,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23391,
+    "company": 2166,
+    "developer": true,
+    "game": 9863,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 23392,
+    "company": 445,
+    "developer": false,
+    "game": 9863,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 9757,
+    "company": 709,
+    "developer": true,
+    "game": 3771,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 9728,
+    "company": 1899,
+    "developer": true,
+    "game": 3761,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 23390,
+    "company": 445,
+    "developer": false,
+    "game": 9863,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69743,
+    "company": 5675,
+    "developer": true,
+    "game": 43969,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 16713,
+    "company": 1633,
+    "developer": false,
+    "game": 7070,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66381,
+    "company": 1,
+    "developer": false,
+    "game": 14803,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67042,
+    "company": 12576,
+    "developer": true,
+    "game": 29389,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 8,
+    "company": 7,
+    "developer": true,
+    "game": 38,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 36015,
+    "company": 10063,
+    "developer": false,
+    "game": 15241,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66873,
+    "company": 11203,
+    "developer": true,
+    "game": 91315,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 926,
+    "company": 115,
+    "developer": false,
+    "game": 48,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16897,
+    "company": 1117,
+    "developer": false,
+    "game": 7147,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16840,
+    "company": 129,
+    "developer": true,
+    "game": 1685,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 71339,
+    "company": 7984,
+    "developer": false,
+    "game": 111747,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 15284,
+    "company": 2800,
+    "developer": true,
+    "game": 6417,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 15285,
+    "company": 355,
+    "developer": false,
+    "game": 6418,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67257,
+    "company": 16018,
+    "developer": false,
+    "game": 87403,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 65249,
+    "company": 126,
+    "developer": true,
+    "game": 103020,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 5229,
+    "company": 115,
+    "developer": false,
+    "game": 44,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67208,
+    "company": 16010,
+    "developer": false,
+    "game": 105349,
+    "porting": false,
+    "publisher": false,
+    "supporting": true
+  },
+  {
+    "id": 275636,
+    "company": 23108,
+    "developer": true,
+    "game": 159947,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 275641,
+    "company": 1939,
+    "developer": false,
+    "game": 247491,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37121,
+    "company": 5324,
+    "developer": true,
+    "game": 19801,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66090,
+    "company": 845,
+    "developer": true,
+    "game": 92613,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 16084,
+    "company": 769,
+    "developer": true,
+    "game": 6782,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67057,
+    "company": 12286,
+    "developer": true,
+    "game": 29464,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 71365,
+    "company": 15161,
+    "developer": false,
+    "game": 111758,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6775,
+    "company": 189,
+    "developer": false,
+    "game": 2822,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 65560,
+    "company": 5257,
+    "developer": false,
+    "game": 14580,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 65516,
+    "company": 10832,
+    "developer": true,
+    "game": 11120,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 36495,
+    "company": 10121,
+    "developer": false,
+    "game": 19605,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36488,
+    "company": 617,
+    "developer": false,
+    "game": 19595,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 53491,
+    "company": 13333,
+    "developer": true,
+    "game": 55054,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 71483,
+    "company": 15388,
+    "developer": true,
+    "game": 111601,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37175,
+    "company": 10223,
+    "developer": true,
+    "game": 19827,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67172,
+    "company": 16006,
+    "developer": true,
+    "game": 103801,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37168,
+    "company": 10223,
+    "developer": true,
+    "game": 19824,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66161,
+    "company": 12569,
+    "developer": false,
+    "game": 58194,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67153,
+    "company": 13358,
+    "developer": true,
+    "game": 31292,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66149,
+    "company": 2488,
+    "developer": false,
+    "game": 21891,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68136,
+    "company": 14313,
+    "developer": true,
+    "game": 74234,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37137,
+    "company": 454,
+    "developer": false,
+    "game": 19807,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67138,
+    "company": 14351,
+    "developer": true,
+    "game": 30890,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67139,
+    "company": 13179,
+    "developer": true,
+    "game": 96550,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16772,
+    "company": 248,
+    "developer": false,
+    "game": 7097,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22716,
+    "company": 517,
+    "developer": false,
+    "game": 9375,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 40582,
+    "company": 1466,
+    "developer": false,
+    "game": 24887,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 49950,
+    "company": 4094,
+    "developer": false,
+    "game": 35456,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11575,
+    "company": 426,
+    "developer": false,
+    "game": 4806,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 9748,
+    "company": 1318,
+    "developer": true,
+    "game": 3767,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 17661,
+    "company": 630,
+    "developer": true,
+    "game": 7484,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 17655,
+    "company": 837,
+    "developer": true,
+    "game": 7482,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 279160,
+    "company": 11405,
+    "developer": false,
+    "game": 273976,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22700,
+    "company": 5078,
+    "developer": false,
+    "game": 9358,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 9701,
+    "company": 485,
+    "developer": false,
+    "game": 3276,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44658,
+    "company": 2727,
+    "developer": true,
+    "game": 24745,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 348452,
+    "company": 46230,
+    "developer": true,
+    "game": 175803,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36600,
+    "company": 1218,
+    "developer": true,
+    "game": 9148,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 36598,
+    "company": 10148,
+    "developer": true,
+    "game": 13330,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66597,
+    "company": 13267,
+    "developer": true,
+    "game": 105427,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 273696,
+    "company": 19292,
+    "developer": true,
+    "game": 303651,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66594,
+    "company": 148,
+    "developer": true,
+    "game": 75690,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44665,
+    "company": 517,
+    "developer": false,
+    "game": 26426,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11679,
+    "company": 1244,
+    "developer": true,
+    "game": 4853,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 98076,
+    "company": 1893,
+    "developer": true,
+    "game": 15712,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16985,
+    "company": 2046,
+    "developer": true,
+    "game": 7176,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 273698,
+    "company": 19292,
+    "developer": true,
+    "game": 293065,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37632,
+    "company": 1,
+    "developer": false,
+    "game": 17465,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67990,
+    "company": 2263,
+    "developer": true,
+    "game": 76480,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37607,
+    "company": 1406,
+    "developer": true,
+    "game": 3004,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 5939,
+    "company": 224,
+    "developer": false,
+    "game": 2532,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11581,
+    "company": 95,
+    "developer": false,
+    "game": 4809,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170029,
+    "company": 9768,
+    "developer": true,
+    "game": 199137,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170040,
+    "company": 9768,
+    "developer": true,
+    "game": 199155,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170044,
+    "company": 9768,
+    "developer": true,
+    "game": 199192,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 257070,
+    "company": 356,
+    "developer": true,
+    "game": 162310,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 332582,
+    "company": 8299,
+    "developer": false,
+    "game": 216162,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 328367,
+    "company": 1047,
+    "developer": true,
+    "game": 79081,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 881,
+    "company": 250,
+    "developer": true,
+    "game": 417,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23881,
+    "company": 355,
+    "developer": false,
+    "game": 10738,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 8863,
+    "company": 1769,
+    "developer": true,
+    "game": 3392,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36869,
+    "company": 2488,
+    "developer": false,
+    "game": 19738,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11701,
+    "company": 2179,
+    "developer": false,
+    "game": 4862,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36856,
+    "company": 229,
+    "developer": false,
+    "game": 19736,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68009,
+    "company": 14350,
+    "developer": true,
+    "game": 76262,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68008,
+    "company": 9174,
+    "developer": true,
+    "game": 80977,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 7,
+    "company": 4,
+    "developer": false,
+    "game": 2,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68036,
+    "company": 8486,
+    "developer": true,
+    "game": 86341,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68035,
+    "company": 13860,
+    "developer": true,
+    "game": 75765,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16984,
+    "company": 129,
+    "developer": false,
+    "game": 7176,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66930,
+    "company": 7048,
+    "developer": true,
+    "game": 40858,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38932,
+    "company": 9539,
+    "developer": true,
+    "game": 23201,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36910,
+    "company": 66,
+    "developer": false,
+    "game": 19745,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 8868,
+    "company": 716,
+    "developer": false,
+    "game": 3393,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6335,
+    "company": 70,
+    "developer": false,
+    "game": 2655,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23331,
+    "company": 1363,
+    "developer": true,
+    "game": 9824,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 72310,
+    "company": 950,
+    "developer": false,
+    "game": 113434,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6298,
+    "company": 445,
+    "developer": false,
+    "game": 2633,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 332581,
+    "company": 13489,
+    "developer": true,
+    "game": 216162,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 24291,
+    "company": 5896,
+    "developer": true,
+    "game": 11124,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6283,
+    "company": 90,
+    "developer": true,
+    "game": 2629,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67254,
+    "company": 16017,
+    "developer": true,
+    "game": 81756,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67234,
+    "company": 16013,
+    "developer": false,
+    "game": 96108,
+    "porting": false,
+    "publisher": false,
+    "supporting": true
+  },
+  {
+    "id": 67229,
+    "company": 10527,
+    "developer": true,
+    "game": 82094,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6048,
+    "company": 528,
+    "developer": false,
+    "game": 2418,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69123,
+    "company": 15188,
+    "developer": true,
+    "game": 96370,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69098,
+    "company": 6059,
+    "developer": true,
+    "game": 41819,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 36834,
+    "company": 229,
+    "developer": false,
+    "game": 19731,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16450,
+    "company": 129,
+    "developer": true,
+    "game": 6957,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16446,
+    "company": 129,
+    "developer": true,
+    "game": 6953,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16439,
+    "company": 818,
+    "developer": false,
+    "game": 6950,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 435,
+    "company": 4,
+    "developer": false,
+    "game": 243,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68351,
+    "company": 800,
+    "developer": true,
+    "game": 49305,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 6342,
+    "company": 1253,
+    "developer": true,
+    "game": 2657,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67345,
+    "company": 15398,
+    "developer": true,
+    "game": 34867,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 72344,
+    "company": 17128,
+    "developer": true,
+    "game": 56485,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37542,
+    "company": 10362,
+    "developer": false,
+    "game": 20383,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 53499,
+    "company": 1876,
+    "developer": true,
+    "game": 55060,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 21157,
+    "company": 4525,
+    "developer": true,
+    "game": 8553,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 21135,
+    "company": 1488,
+    "developer": false,
+    "game": 8542,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68134,
+    "company": 9301,
+    "developer": true,
+    "game": 74455,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 747,
+    "company": 203,
+    "developer": true,
+    "game": 39,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 143858,
+    "company": 35457,
+    "developer": true,
+    "game": 162199,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67959,
+    "company": 16046,
+    "developer": true,
+    "game": 64815,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 5952,
+    "company": 53,
+    "developer": false,
+    "game": 2540,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38946,
+    "company": 82,
+    "developer": true,
+    "game": 12306,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38945,
+    "company": 1352,
+    "developer": true,
+    "game": 23205,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36820,
+    "company": 8589,
+    "developer": true,
+    "game": 19721,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 6781,
+    "company": 1327,
+    "developer": false,
+    "game": 2825,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23590,
+    "company": 4501,
+    "developer": false,
+    "game": 8859,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 36842,
+    "company": 6168,
+    "developer": false,
+    "game": 1546,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 65696,
+    "company": 899,
+    "developer": true,
+    "game": 103317,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 8657,
+    "company": 1733,
+    "developer": true,
+    "game": 3310,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37646,
+    "company": 1044,
+    "developer": true,
+    "game": 20474,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 17576,
+    "company": 2430,
+    "developer": true,
+    "game": 7438,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 5990,
+    "company": 617,
+    "developer": false,
+    "game": 2548,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66721,
+    "company": 13144,
+    "developer": true,
+    "game": 55285,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67713,
+    "company": 8798,
+    "developer": true,
+    "game": 93842,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67965,
+    "company": 16047,
+    "developer": false,
+    "game": 59811,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 8874,
+    "company": 1019,
+    "developer": true,
+    "game": 3396,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69853,
+    "company": 16382,
+    "developer": true,
+    "game": 109454,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 17574,
+    "company": 700,
+    "developer": false,
+    "game": 7437,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67443,
+    "company": 16033,
+    "developer": true,
+    "game": 88116,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 10408,
+    "company": 428,
+    "developer": true,
+    "game": 4012,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 60410,
+    "company": 14510,
+    "developer": false,
+    "game": 83868,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66715,
+    "company": 7966,
+    "developer": true,
+    "game": 55607,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23662,
+    "company": 5449,
+    "developer": true,
+    "game": 10090,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66722,
+    "company": 14966,
+    "developer": true,
+    "game": 55292,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18039,
+    "company": 3455,
+    "developer": true,
+    "game": 7724,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 9018,
+    "company": 70,
+    "developer": false,
+    "game": 3462,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 24981,
+    "company": 3032,
+    "developer": false,
+    "game": 11538,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38971,
+    "company": 2262,
+    "developer": false,
+    "game": 13558,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67972,
+    "company": 9343,
+    "developer": true,
+    "game": 84580,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44934,
+    "company": 213,
+    "developer": false,
+    "game": 27110,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44921,
+    "company": 12270,
+    "developer": true,
+    "game": 27670,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44902,
+    "company": 94,
+    "developer": true,
+    "game": 27654,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 60899,
+    "company": 70,
+    "developer": false,
+    "game": 85146,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44892,
+    "company": 12265,
+    "developer": false,
+    "game": 588,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169831,
+    "company": 34064,
+    "developer": true,
+    "game": 198971,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169833,
+    "company": 34064,
+    "developer": true,
+    "game": 198973,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169834,
+    "company": 34064,
+    "developer": true,
+    "game": 198974,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169835,
+    "company": 34064,
+    "developer": true,
+    "game": 198975,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169836,
+    "company": 34064,
+    "developer": true,
+    "game": 198976,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170048,
+    "company": 566,
+    "developer": true,
+    "game": 46856,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 300630,
+    "company": 55777,
+    "developer": true,
+    "game": 326807,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23837,
+    "company": 3694,
+    "developer": true,
+    "game": 4035,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 18336,
+    "company": 771,
+    "developer": true,
+    "game": 7854,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 21298,
+    "company": 1022,
+    "developer": true,
+    "game": 3072,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 21267,
+    "company": 252,
+    "developer": false,
+    "game": 1346,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25261,
+    "company": 1699,
+    "developer": false,
+    "game": 10382,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25260,
+    "company": 6147,
+    "developer": true,
+    "game": 10382,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 25254,
+    "company": 208,
+    "developer": true,
+    "game": 2953,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 70245,
+    "company": 14055,
+    "developer": false,
+    "game": 75563,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 221197,
+    "company": 195,
+    "developer": false,
+    "game": 254862,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69226,
+    "company": 13541,
+    "developer": false,
+    "game": 75926,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6215,
+    "company": 176,
+    "developer": false,
+    "game": 2595,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 42188,
+    "company": 184,
+    "developer": false,
+    "game": 680,
+    "porting": true,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6111,
+    "company": 1215,
+    "developer": true,
+    "game": 2560,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37103,
+    "company": 10214,
+    "developer": true,
+    "game": 19794,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67084,
+    "company": 7409,
+    "developer": true,
+    "game": 11032,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 12072,
+    "company": 833,
+    "developer": false,
+    "game": 5003,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18065,
+    "company": 3593,
+    "developer": true,
+    "game": 7730,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 6386,
+    "company": 66,
+    "developer": false,
+    "game": 2676,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6370,
+    "company": 90,
+    "developer": true,
+    "game": 2671,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 41544,
+    "company": 11521,
+    "developer": true,
+    "game": 25751,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 1533,
+    "company": 5,
+    "developer": false,
+    "game": 655,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66529,
+    "company": 2121,
+    "developer": true,
+    "game": 85473,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 10513,
+    "company": 223,
+    "developer": true,
+    "game": 4059,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69175,
+    "company": 16271,
+    "developer": true,
+    "game": 93708,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69180,
+    "company": 16231,
+    "developer": true,
+    "game": 30173,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69177,
+    "company": 16272,
+    "developer": true,
+    "game": 98753,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 21137,
+    "company": 4518,
+    "developer": false,
+    "game": 8543,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11686,
+    "company": 70,
+    "developer": false,
+    "game": 1442,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44714,
+    "company": 12227,
+    "developer": true,
+    "game": 27522,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44807,
+    "company": 2585,
+    "developer": false,
+    "game": 27563,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 256349,
+    "company": 53192,
+    "developer": true,
+    "game": 288185,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44781,
+    "company": 1217,
+    "developer": true,
+    "game": 27547,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 17569,
+    "company": 277,
+    "developer": true,
+    "game": 7433,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 9637,
+    "company": 1889,
+    "developer": true,
+    "game": 3730,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 11702,
+    "company": 1847,
+    "developer": true,
+    "game": 4862,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 11708,
+    "company": 2181,
+    "developer": true,
+    "game": 4865,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 71695,
+    "company": 2452,
+    "developer": false,
+    "game": 54146,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37672,
+    "company": 10380,
+    "developer": true,
+    "game": 20753,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37673,
+    "company": 100,
+    "developer": true,
+    "game": 11407,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37597,
+    "company": 256,
+    "developer": false,
+    "game": 20458,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67731,
+    "company": 15663,
+    "developer": true,
+    "game": 99018,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 37670,
+    "company": 5278,
+    "developer": true,
+    "game": 17206,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 13678,
+    "company": 2524,
+    "developer": false,
+    "game": 5675,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 13755,
+    "company": 667,
+    "developer": false,
+    "game": 5723,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 74793,
+    "company": 18134,
+    "developer": false,
+    "game": 94727,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 8938,
+    "company": 1783,
+    "developer": false,
+    "game": 3426,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 12576,
+    "company": 832,
+    "developer": false,
+    "game": 5203,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66941,
+    "company": 9424,
+    "developer": true,
+    "game": 68170,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66749,
+    "company": 13864,
+    "developer": true,
+    "game": 51732,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1559,
+    "company": 1,
+    "developer": false,
+    "game": 670,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37451,
+    "company": 4065,
+    "developer": true,
+    "game": 17959,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66743,
+    "company": 9482,
+    "developer": true,
+    "game": 76358,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 60446,
+    "company": 14524,
+    "developer": true,
+    "game": 83916,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66728,
+    "company": 14270,
+    "developer": true,
+    "game": 55358,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25437,
+    "company": 817,
+    "developer": true,
+    "game": 11729,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 13715,
+    "company": 2519,
+    "developer": false,
+    "game": 5700,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22711,
+    "company": 144,
+    "developer": true,
+    "game": 9362,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 24650,
+    "company": 837,
+    "developer": true,
+    "game": 11326,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66754,
+    "company": 4181,
+    "developer": true,
+    "game": 95122,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25401,
+    "company": 6189,
+    "developer": true,
+    "game": 11716,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39017,
+    "company": 10100,
+    "developer": false,
+    "game": 14363,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 10013,
+    "company": 65,
+    "developer": true,
+    "game": 3333,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 24645,
+    "company": 146,
+    "developer": false,
+    "game": 11271,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66940,
+    "company": 9423,
+    "developer": true,
+    "game": 68170,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66936,
+    "company": 13300,
+    "developer": true,
+    "game": 28969,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37859,
+    "company": 4981,
+    "developer": true,
+    "game": 21551,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37851,
+    "company": 2582,
+    "developer": false,
+    "game": 21530,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 23518,
+    "company": 270,
+    "developer": true,
+    "game": 9910,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 348454,
+    "company": 12126,
+    "developer": true,
+    "game": 175803,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 68324,
+    "company": 1126,
+    "developer": true,
+    "game": 106316,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68306,
+    "company": 13687,
+    "developer": true,
+    "game": 106303,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 21301,
+    "company": 4601,
+    "developer": true,
+    "game": 8627,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 45297,
+    "company": 7424,
+    "developer": false,
+    "game": 27848,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68289,
+    "company": 15891,
+    "developer": true,
+    "game": 67485,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25283,
+    "company": 564,
+    "developer": true,
+    "game": 11674,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 25282,
+    "company": 32,
+    "developer": false,
+    "game": 11229,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68274,
+    "company": 1811,
+    "developer": false,
+    "game": 92265,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 2263,
+    "company": 197,
+    "developer": false,
+    "game": 825,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45260,
+    "company": 7438,
+    "developer": false,
+    "game": 27828,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169827,
+    "company": 34064,
+    "developer": true,
+    "game": 198967,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169828,
+    "company": 34064,
+    "developer": true,
+    "game": 198968,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169829,
+    "company": 34064,
+    "developer": true,
+    "game": 198969,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169830,
+    "company": 34064,
+    "developer": true,
+    "game": 198970,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 169832,
+    "company": 34064,
+    "developer": true,
+    "game": 198972,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 99076,
+    "company": 25549,
+    "developer": true,
+    "game": 25119,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 332584,
+    "company": 33897,
+    "developer": true,
+    "game": 155882,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 348455,
+    "company": 2245,
+    "developer": false,
+    "game": 369715,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68257,
+    "company": 457,
+    "developer": true,
+    "game": 106112,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68235,
+    "company": 800,
+    "developer": true,
+    "game": 106283,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 72233,
+    "company": 1280,
+    "developer": false,
+    "game": 79811,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18226,
+    "company": 66,
+    "developer": false,
+    "game": 7807,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45228,
+    "company": 181,
+    "developer": true,
+    "game": 23769,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 25118,
+    "company": 5996,
+    "developer": true,
+    "game": 11608,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 12108,
+    "company": 66,
+    "developer": false,
+    "game": 5015,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25088,
+    "company": 710,
+    "developer": false,
+    "game": 10765,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39083,
+    "company": 366,
+    "developer": false,
+    "game": 23311,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 12073,
+    "company": 2229,
+    "developer": true,
+    "game": 5003,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 45068,
+    "company": 7466,
+    "developer": true,
+    "game": 2922,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 70394,
+    "company": 16459,
+    "developer": true,
+    "game": 106969,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 70368,
+    "company": 16448,
+    "developer": false,
+    "game": 110064,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68350,
+    "company": 11878,
+    "developer": false,
+    "game": 71606,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 44553,
+    "company": 1,
+    "developer": false,
+    "game": 22179,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69567,
+    "company": 15820,
+    "developer": false,
+    "game": 85065,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69546,
+    "company": 1330,
+    "developer": true,
+    "game": 46123,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 23512,
+    "company": 394,
+    "developer": true,
+    "game": 9908,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 23505,
+    "company": 5320,
+    "developer": true,
+    "game": 9904,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37509,
+    "company": 10357,
+    "developer": true,
+    "game": 20334,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 45170,
+    "company": 2248,
+    "developer": false,
+    "game": 26239,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68166,
+    "company": 61,
+    "developer": true,
+    "game": 75605,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67143,
+    "company": 4091,
+    "developer": false,
+    "game": 68279,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1772,
+    "company": 97,
+    "developer": true,
+    "game": 790,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 13777,
+    "company": 4,
+    "developer": false,
+    "game": 5734,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1771,
+    "company": 487,
+    "developer": false,
+    "game": 790,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22718,
+    "company": 3023,
+    "developer": false,
+    "game": 9375,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37624,
+    "company": 5527,
+    "developer": true,
+    "game": 20472,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69609,
+    "company": 4602,
+    "developer": false,
+    "game": 7768,
+    "porting": true,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 332585,
+    "company": 33773,
+    "developer": false,
+    "game": 168658,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 13768,
+    "company": 566,
+    "developer": false,
+    "game": 5729,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66755,
+    "company": 380,
+    "developer": true,
+    "game": 95122,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 87804,
+    "company": 8552,
+    "developer": true,
+    "game": 17659,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 2707,
+    "company": 785,
+    "developer": true,
+    "game": 1169,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 98052,
+    "company": 5127,
+    "developer": true,
+    "game": 9578,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66870,
+    "company": 14841,
+    "developer": true,
+    "game": 68514,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 2681,
+    "company": 781,
+    "developer": true,
+    "game": 1146,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 25573,
+    "company": 6033,
+    "developer": false,
+    "game": 11779,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 19468,
+    "company": 51,
+    "developer": false,
+    "game": 131,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 19457,
+    "company": 51,
+    "developer": true,
+    "game": 3182,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1635,
+    "company": 3,
+    "developer": true,
+    "game": 714,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 19423,
+    "company": 667,
+    "developer": false,
+    "game": 8164,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45402,
+    "company": 4092,
+    "developer": true,
+    "game": 27895,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 19398,
+    "company": 1241,
+    "developer": true,
+    "game": 8150,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 16708,
+    "company": 2988,
+    "developer": false,
+    "game": 7066,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16673,
+    "company": 1728,
+    "developer": true,
+    "game": 7051,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 24391,
+    "company": 1641,
+    "developer": true,
+    "game": 11241,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 45392,
+    "company": 10075,
+    "developer": false,
+    "game": 11272,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45378,
+    "company": 2482,
+    "developer": true,
+    "game": 11430,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39037,
+    "company": 10100,
+    "developer": false,
+    "game": 11253,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 41036,
+    "company": 2262,
+    "developer": false,
+    "game": 8607,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1026,
+    "company": 252,
+    "developer": false,
+    "game": 420,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 273680,
+    "company": 5996,
+    "developer": true,
+    "game": 237674,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1032,
+    "company": 251,
+    "developer": false,
+    "game": 403,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39031,
+    "company": 747,
+    "developer": true,
+    "game": 20705,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 70983,
+    "company": 11876,
+    "developer": true,
+    "game": 26658,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66935,
+    "company": 15398,
+    "developer": true,
+    "game": 36826,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37928,
+    "company": 10447,
+    "developer": true,
+    "game": 21601,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67933,
+    "company": 14431,
+    "developer": true,
+    "game": 102291,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 67932,
+    "company": 2104,
+    "developer": true,
+    "game": 93700,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68927,
+    "company": 16222,
+    "developer": true,
+    "game": 27192,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67919,
+    "company": 15664,
+    "developer": false,
+    "game": 81920,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68904,
+    "company": 16216,
+    "developer": true,
+    "game": 71148,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66901,
+    "company": 14270,
+    "developer": true,
+    "game": 41966,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 37891,
+    "company": 903,
+    "developer": true,
+    "game": 21584,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66891,
+    "company": 7412,
+    "developer": true,
+    "game": 39266,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66885,
+    "company": 8489,
+    "developer": true,
+    "game": 54506,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69837,
+    "company": 3151,
+    "developer": true,
+    "game": 109446,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66838,
+    "company": 146,
+    "developer": false,
+    "game": 44147,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 152197,
+    "company": 32026,
+    "developer": false,
+    "game": 175770,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 348453,
+    "company": 2245,
+    "developer": false,
+    "game": 175803,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38301,
+    "company": 10558,
+    "developer": true,
+    "game": 19269,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38285,
+    "company": 10548,
+    "developer": true,
+    "game": 22373,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38253,
+    "company": 1006,
+    "developer": true,
+    "game": 20327,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 18227,
+    "company": 1926,
+    "developer": true,
+    "game": 7808,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 18232,
+    "company": 1216,
+    "developer": true,
+    "game": 7812,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67225,
+    "company": 14493,
+    "developer": true,
+    "game": 32596,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 24049,
+    "company": 1017,
+    "developer": true,
+    "game": 10917,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38045,
+    "company": 4715,
+    "developer": true,
+    "game": 8914,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38046,
+    "company": 4716,
+    "developer": false,
+    "game": 8914,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 71127,
+    "company": 16818,
+    "developer": true,
+    "game": 64885,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38092,
+    "company": 9965,
+    "developer": false,
+    "game": 21970,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170052,
+    "company": 26323,
+    "developer": false,
+    "game": 199195,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 170060,
+    "company": 9768,
+    "developer": true,
+    "game": 199199,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 256353,
+    "company": 53284,
+    "developer": false,
+    "game": 274774,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 300600,
+    "company": 27224,
+    "developer": false,
+    "game": 326795,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 348464,
+    "company": 3118,
+    "developer": false,
+    "game": 54278,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38078,
+    "company": 10212,
+    "developer": true,
+    "game": 21949,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38065,
+    "company": 1907,
+    "developer": true,
+    "game": 21929,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 24057,
+    "company": 1327,
+    "developer": false,
+    "game": 10918,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 2365,
+    "company": 327,
+    "developer": false,
+    "game": 928,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 70501,
+    "company": 12547,
+    "developer": true,
+    "game": 110086,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 108197,
+    "company": 552,
+    "developer": true,
+    "game": 37777,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66152,
+    "company": 1053,
+    "developer": false,
+    "game": 63625,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 71147,
+    "company": 16826,
+    "developer": true,
+    "game": 111446,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 71132,
+    "company": 6485,
+    "developer": true,
+    "game": 111440,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25766,
+    "company": 5357,
+    "developer": false,
+    "game": 10832,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 53832,
+    "company": 263,
+    "developer": true,
+    "game": 15535,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25817,
+    "company": 6363,
+    "developer": false,
+    "game": 11864,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6603,
+    "company": 263,
+    "developer": true,
+    "game": 2752,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6593,
+    "company": 129,
+    "developer": false,
+    "game": 2747,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25593,
+    "company": 2428,
+    "developer": false,
+    "game": 11781,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 70583,
+    "company": 16691,
+    "developer": true,
+    "game": 110568,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 273679,
+    "company": 5996,
+    "developer": true,
+    "game": 243630,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 21646,
+    "company": 2932,
+    "developer": false,
+    "game": 8764,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38975,
+    "company": 6403,
+    "developer": true,
+    "game": 23233,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 40579,
+    "company": 528,
+    "developer": false,
+    "game": 24885,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45566,
+    "company": 10551,
+    "developer": false,
+    "game": 27977,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16743,
+    "company": 1,
+    "developer": false,
+    "game": 7083,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66909,
+    "company": 11203,
+    "developer": true,
+    "game": 38784,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38471,
+    "company": 10212,
+    "developer": true,
+    "game": 22472,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38470,
+    "company": 10212,
+    "developer": true,
+    "game": 22471,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38690,
+    "company": 10633,
+    "developer": true,
+    "game": 22746,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67472,
+    "company": 15941,
+    "developer": false,
+    "game": 105269,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 24468,
+    "company": 2992,
+    "developer": false,
+    "game": 2413,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 58665,
+    "company": 290,
+    "developer": true,
+    "game": 20749,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 24449,
+    "company": 110,
+    "developer": false,
+    "game": 6863,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39039,
+    "company": 1348,
+    "developer": false,
+    "game": 23292,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 4020,
+    "company": 929,
+    "developer": true,
+    "game": 1984,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 161859,
+    "company": 10073,
+    "developer": true,
+    "game": 187039,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38645,
+    "company": 10621,
+    "developer": false,
+    "game": 22734,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 42984,
+    "company": 8107,
+    "developer": true,
+    "game": 23061,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67973,
+    "company": 16049,
+    "developer": true,
+    "game": 105727,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25931,
+    "company": 1196,
+    "developer": true,
+    "game": 2523,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 2860,
+    "company": 280,
+    "developer": true,
+    "game": 1222,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 3980,
+    "company": 315,
+    "developer": true,
+    "game": 1973,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 9921,
+    "company": 700,
+    "developer": false,
+    "game": 3819,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 66898,
+    "company": 8906,
+    "developer": false,
+    "game": 59583,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26305,
+    "company": 183,
+    "developer": false,
+    "game": 12478,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26297,
+    "company": 560,
+    "developer": true,
+    "game": 12426,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26263,
+    "company": 1000,
+    "developer": false,
+    "game": 12344,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26240,
+    "company": 6431,
+    "developer": true,
+    "game": 11389,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66223,
+    "company": 3046,
+    "developer": true,
+    "game": 104981,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68107,
+    "company": 12240,
+    "developer": true,
+    "game": 74639,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18089,
+    "company": 2809,
+    "developer": false,
+    "game": 7748,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25085,
+    "company": 2262,
+    "developer": false,
+    "game": 11594,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68074,
+    "company": 6962,
+    "developer": true,
+    "game": 82326,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25065,
+    "company": 53,
+    "developer": false,
+    "game": 11581,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 68061,
+    "company": 10307,
+    "developer": true,
+    "game": 76036,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18054,
+    "company": 731,
+    "developer": false,
+    "game": 3831,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25058,
+    "company": 6092,
+    "developer": true,
+    "game": 11577,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 4000,
+    "company": 638,
+    "developer": true,
+    "game": 1972,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38994,
+    "company": 1217,
+    "developer": true,
+    "game": 18443,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39441,
+    "company": 4670,
+    "developer": false,
+    "game": 23932,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22419,
+    "company": 5026,
+    "developer": true,
+    "game": 9191,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 24409,
+    "company": 197,
+    "developer": false,
+    "game": 10686,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45565,
+    "company": 10550,
+    "developer": true,
+    "game": 27977,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 21528,
+    "company": 2248,
+    "developer": true,
+    "game": 5522,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38176,
+    "company": 277,
+    "developer": true,
+    "game": 22342,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38777,
+    "company": 6080,
+    "developer": true,
+    "game": 11135,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 71778,
+    "company": 16973,
+    "developer": true,
+    "game": 112599,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45758,
+    "company": 12436,
+    "developer": true,
+    "game": 26293,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6682,
+    "company": 1278,
+    "developer": true,
+    "game": 2783,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 173006,
+    "company": 66,
+    "developer": false,
+    "game": 203140,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38957,
+    "company": 10478,
+    "developer": true,
+    "game": 23054,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 332586,
+    "company": 3114,
+    "developer": false,
+    "game": 198079,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 16830,
+    "company": 2997,
+    "developer": true,
+    "game": 7123,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38807,
+    "company": 10677,
+    "developer": true,
+    "game": 22782,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 6792,
+    "company": 60,
+    "developer": true,
+    "game": 2816,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 38795,
+    "company": 7782,
+    "developer": true,
+    "game": 15490,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 66827,
+    "company": 8001,
+    "developer": true,
+    "game": 51980,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 169842,
+    "company": 34064,
+    "developer": true,
+    "game": 198982,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 348462,
+    "company": 481,
+    "developer": false,
+    "game": 54278,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172947,
+    "company": 1877,
+    "developer": true,
+    "game": 203122,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 172951,
+    "company": 449,
+    "developer": false,
+    "game": 203124,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172955,
+    "company": 2074,
+    "developer": true,
+    "game": 203126,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 348463,
+    "company": 2245,
+    "developer": false,
+    "game": 54278,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172957,
+    "company": 26338,
+    "developer": true,
+    "game": 203127,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 172961,
+    "company": 26338,
+    "developer": true,
+    "game": 203128,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 172964,
+    "company": 817,
+    "developer": true,
+    "game": 203129,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 172973,
+    "company": 449,
+    "developer": false,
+    "game": 64650,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172980,
+    "company": 24606,
+    "developer": true,
+    "game": 179717,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 373863,
+    "company": 1363,
+    "developer": false,
+    "game": 54278,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 257089,
+    "company": 25265,
+    "developer": false,
+    "game": 5033,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 45656,
+    "company": 110,
+    "developer": false,
+    "game": 10104,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 40617,
+    "company": 11261,
+    "developer": false,
+    "game": 9490,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 38685,
+    "company": 861,
+    "developer": true,
+    "game": 22745,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 40598,
+    "company": 195,
+    "developer": false,
+    "game": 24901,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 19677,
+    "company": 1267,
+    "developer": true,
+    "game": 8198,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 71793,
+    "company": 16981,
+    "developer": true,
+    "game": 112651,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 75793,
+    "company": 8224,
+    "developer": false,
+    "game": 36304,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1869,
+    "company": 267,
+    "developer": true,
+    "game": 850,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 40874,
+    "company": 129,
+    "developer": true,
+    "game": 22513,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 232859,
+    "company": 2617,
+    "developer": true,
+    "game": 222026,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39460,
+    "company": 1362,
+    "developer": true,
+    "game": 23941,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 26649,
+    "company": 6319,
+    "developer": false,
+    "game": 10095,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69425,
+    "company": 10075,
+    "developer": false,
+    "game": 1008,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1386,
+    "company": 116,
+    "developer": true,
+    "game": 572,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 26629,
+    "company": 3,
+    "developer": true,
+    "game": 12987,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67626,
+    "company": 13144,
+    "developer": true,
+    "game": 98686,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26623,
+    "company": 377,
+    "developer": true,
+    "game": 10831,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 67622,
+    "company": 9342,
+    "developer": true,
+    "game": 105449,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39029,
+    "company": 10811,
+    "developer": false,
+    "game": 23276,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6931,
+    "company": 53,
+    "developer": false,
+    "game": 2896,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 6930,
+    "company": 1358,
+    "developer": false,
+    "game": 2894,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 273656,
+    "company": 4750,
+    "developer": true,
+    "game": 11912,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 173005,
+    "company": 432,
+    "developer": true,
+    "game": 203140,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 1868,
+    "company": 579,
+    "developer": true,
+    "game": 849,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 5838,
+    "company": 204,
+    "developer": false,
+    "game": 2413,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69335,
+    "company": 16313,
+    "developer": true,
+    "game": 107316,
+    "porting": true,
+    "publisher": true,
+    "supporting": true
+  },
+  {
+    "id": 348466,
+    "company": 2245,
+    "developer": false,
+    "game": 59874,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 193197,
+    "company": 23121,
+    "developer": false,
+    "game": 224528,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 300377,
+    "company": 30821,
+    "developer": false,
+    "game": 326688,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25307,
+    "company": 6169,
+    "developer": false,
+    "game": 10058,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 25298,
+    "company": 128,
+    "developer": false,
+    "game": 11681,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 30258,
+    "company": 7952,
+    "developer": true,
+    "game": 16108,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 5233,
+    "company": 10,
+    "developer": false,
+    "game": 203,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 348467,
+    "company": 2078,
+    "developer": true,
+    "game": 59874,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39216,
+    "company": 10858,
+    "developer": true,
+    "game": 23577,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39201,
+    "company": 2523,
+    "developer": true,
+    "game": 23570,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 7122,
+    "company": 32,
+    "developer": true,
+    "game": 1926,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 7109,
+    "company": 116,
+    "developer": true,
+    "game": 1881,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 12101,
+    "company": 2234,
+    "developer": true,
+    "game": 5011,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 25086,
+    "company": 1119,
+    "developer": true,
+    "game": 9721,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 275474,
+    "company": 1389,
+    "developer": true,
+    "game": 33128,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39084,
+    "company": 10818,
+    "developer": true,
+    "game": 23311,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 20074,
+    "company": 2821,
+    "developer": true,
+    "game": 8248,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69059,
+    "company": 1006,
+    "developer": true,
+    "game": 97225,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 69052,
+    "company": 16242,
+    "developer": false,
+    "game": 16287,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18372,
+    "company": 97,
+    "developer": true,
+    "game": 7845,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 69375,
+    "company": 16325,
+    "developer": false,
+    "game": 81962,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 7354,
+    "company": 110,
+    "developer": false,
+    "game": 2978,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 18352,
+    "company": 2460,
+    "developer": false,
+    "game": 7859,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 27555,
+    "company": 4725,
+    "developer": false,
+    "game": 14249,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22538,
+    "company": 5058,
+    "developer": false,
+    "game": 9258,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 22522,
+    "company": 63,
+    "developer": true,
+    "game": 7056,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 11752,
+    "company": 630,
+    "developer": true,
+    "game": 4878,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 11682,
+    "company": 38,
+    "developer": true,
+    "game": 4854,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 58686,
+    "company": 191,
+    "developer": false,
+    "game": 55144,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 58714,
+    "company": 13985,
+    "developer": true,
+    "game": 76621,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 40829,
+    "company": 9447,
+    "developer": true,
+    "game": 25035,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 71798,
+    "company": 14313,
+    "developer": true,
+    "game": 110681,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 1789,
+    "company": 670,
+    "developer": true,
+    "game": 801,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39615,
+    "company": 66,
+    "developer": true,
+    "game": 6112,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  },
+  {
+    "id": 39617,
+    "company": 2522,
+    "developer": true,
+    "game": 24014,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172965,
+    "company": 449,
+    "developer": false,
+    "game": 203129,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26668,
+    "company": 1,
+    "developer": false,
+    "game": 13098,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 39683,
+    "company": 517,
+    "developer": false,
+    "game": 22669,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 172967,
+    "company": 449,
+    "developer": false,
+    "game": 64656,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 5588,
+    "company": 1148,
+    "developer": true,
+    "game": 2400,
+    "porting": false,
+    "publisher": true,
+    "supporting": false
+  },
+  {
+    "id": 26585,
+    "company": 6929,
+    "developer": true,
+    "game": 10048,
+    "porting": false,
+    "publisher": false,
+    "supporting": false
+  }
+]

@@ -16,13 +16,16 @@ from config import RAW_DATA_DIR
 IGDB_BASE_URL = "https://api.igdb.com/v4"
 TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token"
 
-# IGDB allows a maximum limit of 500 and documents 4 requests per second.
+# Change this one value to control how many games are fetched.
+# IGDB still returns at most 500 records per request, so larger values are
+# automatically split across multiple paginated requests.
+GAME_LIMIT = 500
+
+# IGDB allows a maximum of 500 records per request and 4 requests per second.
 IGDB_MAX_LIMIT = 500
 RELATED_GAME_CHUNK_SIZE = 100
 REQUEST_SLEEP_SECONDS = 0.30
 REQUEST_TIMEOUT_SECONDS = 30
-
-DEFAULT_GAME_LIMIT = 500
 
 
 GAME_FIELDS = """
@@ -240,8 +243,12 @@ def fetch_paginated(
     Fetch pages from an endpoint until the endpoint is exhausted or max_records is met.
     The base_query must contain fields/where/sort clauses, but no limit/offset.
     """
+    if max_records is not None and max_records <= 0:
+        raise ValueError("max_records must be greater than zero or None.")
+
     records: List[Dict[str, Any]] = []
     offset = 0
+    page_number = 1
 
     while True:
         remaining = None if max_records is None else max_records - len(records)
@@ -258,12 +265,16 @@ def fetch_paginated(
         page = query_endpoint(endpoint=endpoint, query=query, headers=headers)
         records.extend(page)
 
-        print(f"Fetched {len(page)} {endpoint} records at offset {offset}")
+        print(
+            f"Fetched page {page_number}: {len(page)} {endpoint} records "
+            f"(offset={offset}, total={len(records)})"
+        )
 
         if len(page) < page_size:
             break
 
-        offset += page_size
+        offset += len(page)
+        page_number += 1
 
     return records
 
@@ -409,25 +420,6 @@ def chunked(items: Sequence[int], chunk_size: int) -> Iterable[Sequence[int]]:
         yield items[start : start + chunk_size]
 
 
-def get_game_limit() -> int:
-    """
-    Read the requested game count from IGDB_GAME_LIMIT, defaulting to 500.
-    """
-    raw_value = os.getenv("IGDB_GAME_LIMIT")
-    if raw_value is None:
-        return DEFAULT_GAME_LIMIT
-
-    try:
-        value = int(raw_value)
-    except ValueError as exc:
-        raise ValueError("IGDB_GAME_LIMIT must be an integer.") from exc
-
-    if value <= 0:
-        raise ValueError("IGDB_GAME_LIMIT must be greater than zero.")
-
-    return value
-
-
 # -----------------------------
 # Extraction pipeline
 # -----------------------------
@@ -444,16 +436,21 @@ def fetch_selected_endpoints() -> None:
     load_dotenv()
     access_token = get_access_token()
     headers = get_headers(access_token)
-    game_limit = get_game_limit()
 
-    print(f"\nFetching games: target={game_limit}")
+    print(f"\nFetching games: target={GAME_LIMIT}")
     games = fetch_paginated(
         endpoint="games",
         base_query=BASE_GAME_QUERY,
         headers=headers,
-        max_records=game_limit,
+        max_records=GAME_LIMIT,
     )
     save_json(games, "games.json")
+
+    if len(games) < GAME_LIMIT:
+        print(
+            f"IGDB returned {len(games)} games matching the filters, "
+            f"which is fewer than the requested {GAME_LIMIT}."
+        )
 
     game_ids = collect_ids(games, "id")
 

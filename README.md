@@ -1,4 +1,4 @@
-# IGDB Game Discovery and Recommender
+# IGDB Game Discovery and Recommender (WIP)
 An advanced video game discovery and recommendation platform. This system integrates a cleaned relational database of IGDB (Internet Game Database) metadata, a four-pillar analytics pipeline, and a Retrieval-Augmented Generation (RAG) conversational chatbot to help players find games matching their unique "vibe," platform, and playstyle.
 
 ## 🚀 Key Features

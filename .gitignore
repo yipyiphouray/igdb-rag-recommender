@@ -5,3 +5,5 @@ __pycache__/
 venv/
 .vscode
 docs/session_log.md
+data/analytics/descriptive/*
+

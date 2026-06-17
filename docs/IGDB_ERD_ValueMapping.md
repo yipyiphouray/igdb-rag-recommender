@@ -112,8 +112,8 @@ Current loaded mappings:
 | 10 | Expanded Game |
 | 11 | Port |
 
-Other valid IGDB game types are absent because the lookup extraction loads only
-types referenced by the selected 500 games.
+Other valid IGDB game types may be absent because the lookup extraction loads
+only types referenced by the selected project games.
 
 Use this query to get the exact values currently loaded in your database:
 
@@ -160,13 +160,16 @@ Current loaded mappings:
 
 | ID | Status Name | Meaning |
 | --: | --- | --- |
+| 4 | Early Access | Game is explicitly marked as early access. |
 | 5 | Offline | Game or service is marked offline. |
+| 6 | Cancelled | Game is explicitly marked as cancelled. |
+| 7 | Rumored | Game is explicitly marked as rumored. |
 | 8 | Delisted | Game is marked as removed from storefront availability. |
 
-In the current database, 489 of 500 games have `game_status_id = NULL`. Do not
-interpret null as either released or unreleased. Use release dates to determine
-whether a game has already launched. Alpha, Beta, Early Access, Cancelled, and
-Full Release values belong to `release_date_statuses`.
+In the current database, 2,891 of 3,000 games have `game_status_id = NULL`. Do
+not interpret null as either released or unreleased. Use release dates to
+determine whether a game has already launched. Alpha, Beta, Advanced Access,
+and Full Release values belong to `release_date_statuses`.
 
 Use this query to get the exact values currently loaded in your database:
 
@@ -596,9 +599,9 @@ Current behavior:
 | `status_id` | IGDB company-status code. Do not display it as a label until a lookup table is added. |
 | `parent_company_id` | IGDB parent company ID. Join only when the referenced company exists locally. |
 
-Of 254 non-null parent-company references, 187 currently resolve within the
-550 extracted companies. Unresolved values are expected because company
-extraction was scoped to companies involved with the selected games.
+Of 499 non-null parent-company references, 368 currently resolve within the
+1,968 extracted companies. Unresolved values are expected because company
+extraction is scoped to companies involved with the selected games.
 
 ---
 
@@ -971,7 +974,7 @@ LEFT JOIN platforms p
 | `multiplayer_modes` | `split_screen_online` | `1` | Online split-screen is supported.      |
 | `multiplayer_modes` | `split_screen_online` | `0` | Online split-screen is not supported.  |
 
-The current extract has `split_screen_online = NULL` for all 342 multiplayer
+The current extract has `split_screen_online = NULL` for all 947 multiplayer
 records because IGDB did not return this optional field for the selected rows.
 
 Player-capacity columns:

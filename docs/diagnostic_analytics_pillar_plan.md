@@ -18,7 +18,7 @@ The diagnostic analytics pillar answers the question:
 
 > **Why do certain games, genres, themes, platforms, or companies appear to perform better or receive more visibility than others?**
 
-In this project, â€œperformanceâ€ should not only mean rating score. It should include several related signals:
+In this project, "performance" should not only mean rating score. It should include several related signals:
 
 - Rating quality
 - Rating confidence
@@ -347,7 +347,7 @@ Recommended sections:
 
 ---
 
-# 8. Section 1 â€” Imports, Configuration, and Database Connection
+# 8. Section 1 - Imports, Configuration, and Database Connection
 
 ## Purpose
 
@@ -382,7 +382,7 @@ These constants make the notebook easier to adjust later.
 
 ---
 
-# 9. Section 2 â€” Diagnostic Dataset Validation
+# 9. Section 2 - Diagnostic Dataset Validation
 
 ## Purpose
 
@@ -420,7 +420,7 @@ diagnostic_dataset_snapshot.csv
 
 ---
 
-# 10. Section 3 â€” Build Diagnostic Game Base
+# 10. Section 3 - Build Diagnostic Game Base
 
 ## Purpose
 
@@ -693,7 +693,7 @@ diagnostic_rating_reliable_base.csv
 
 ---
 
-# 11. Section 4 â€” Rating vs Visibility Analysis
+# 11. Section 4 - Rating vs Visibility Analysis
 
 ## Main Question
 
@@ -713,7 +713,7 @@ visibility_percentile_rating_reliable
 rating_band
 ```
 
-## Analysis 4.1 â€” Scatter Plot: Rating vs Rating Count
+## Analysis 4.1 - Scatter Plot: Rating vs Rating Count
 
 Chart:
 
@@ -730,7 +730,7 @@ Interpretation:
 This chart compares rating quality against rating activity. It helps show whether high ratings and high visibility are the same thing or whether some games have strong ratings despite lower rating activity.
 ```
 
-## Analysis 4.2 â€” Correlation
+## Analysis 4.2 - Correlation
 
 Calculate:
 
@@ -750,13 +750,13 @@ Interpretation guide:
 | Correlation | Interpretation |
 |---:|---|
 | Near 0 | Rating and visibility are weakly related |
-| 0.20â€“0.40 | Mild/moderate relationship |
-| 0.40â€“0.60 | Meaningful relationship |
+| 0.20-0.40 | Mild/moderate relationship |
+| 0.40-0.60 | Meaningful relationship |
 | 0.60+ | Strong relationship |
 
 Use Spearman as the main discussion metric because rating counts are usually skewed.
 
-## Analysis 4.3 â€” Rating Band Visibility Summary
+## Analysis 4.3 - Rating Band Visibility Summary
 
 Group by:
 
@@ -788,7 +788,7 @@ rating_band_visibility_summary.csv
 
 ---
 
-# 12. Section 5 â€” Hidden Gem Identification
+# 12. Section 5 - Hidden Gem Identification
 
 ## Main Question
 
@@ -947,7 +947,7 @@ hidden_gem_by_platform_family.csv
 
 ---
 
-# 13. Section 6 â€” Genre Rating Diagnostics
+# 13. Section 6 - Genre Rating Diagnostics
 
 ## Main Question
 
@@ -1036,7 +1036,7 @@ genre_rating_summary.csv
 
 ---
 
-# 14. Section 7 â€” Theme Rating Diagnostics
+# 14. Section 7 - Theme Rating Diagnostics
 
 ## Main Question
 
@@ -1086,7 +1086,7 @@ hidden_gem_by_theme.csv
 
 ---
 
-# 15. Section 8 â€” Genre-Theme Combination Diagnostics
+# 15. Section 8 - Genre-Theme Combination Diagnostics
 
 ## Main Question
 
@@ -1174,7 +1174,7 @@ genre_theme_rating_summary.csv
 
 ---
 
-# 16. Section 9 â€” Platform and Reach Diagnostics
+# 16. Section 9 - Platform and Reach Diagnostics
 
 ## Main Question
 
@@ -1182,7 +1182,7 @@ genre_theme_rating_summary.csv
 
 Platform is important because the final recommendation engine must respect platform constraints.
 
-## Analysis 9.1 â€” Number of Platforms vs Visibility
+## Analysis 9.1 - Number of Platforms vs Visibility
 
 Question:
 
@@ -1209,12 +1209,12 @@ Suggested platform reach bands:
 
 ```text
 1 platform
-2â€“3 platforms
-4â€“6 platforms
+2-3 platforms
+4-6 platforms
 7+ platforms
 ```
 
-## Analysis 9.2 â€” Number of Platforms vs Rating
+## Analysis 9.2 - Number of Platforms vs Rating
 
 Question:
 
@@ -1228,7 +1228,7 @@ Visual:
 Boxplot: total_rating by platform reach band
 ```
 
-## Analysis 9.3 â€” Platform Family Patterns
+## Analysis 9.3 - Platform Family Patterns
 
 Group by platform family:
 
@@ -1252,7 +1252,7 @@ high_rated_share
 hidden_gem_share
 ```
 
-## Analysis 9.4 â€” Platform Type Patterns
+## Analysis 9.4 - Platform Type Patterns
 
 Group by:
 
@@ -1282,7 +1282,7 @@ hidden_gem_by_platform_family.csv
 
 ---
 
-# 17. Section 10 â€” Developer and Publisher Diagnostics
+# 17. Section 10 - Developer and Publisher Diagnostics
 
 ## Main Question
 
@@ -1374,7 +1374,7 @@ publisher_rating_summary.csv
 
 ---
 
-# 18. Section 11 â€” Metadata Richness and RAG Readiness Diagnostics
+# 18. Section 11 - Metadata Richness and RAG Readiness Diagnostics
 
 ## Main Question
 
@@ -1402,7 +1402,7 @@ has_storyline
 rag_ready_flag
 ```
 
-## Analysis 11.1 â€” Metadata Richness vs Visibility
+## Analysis 11.1 - Metadata Richness vs Visibility
 
 Question:
 
@@ -1426,7 +1426,7 @@ mean_total_rating_count
 p75_total_rating_count
 ```
 
-## Analysis 11.2 â€” Metadata Richness vs Rating
+## Analysis 11.2 - Metadata Richness vs Rating
 
 Question:
 
@@ -1449,7 +1449,7 @@ high_rated_share
 hidden_gem_share
 ```
 
-## Analysis 11.3 â€” Text Richness
+## Analysis 11.3 - Text Richness
 
 Compare:
 
@@ -1468,7 +1468,7 @@ high_rated_flag
 hidden_gem_flag
 ```
 
-## Analysis 11.4 â€” RAG Readiness
+## Analysis 11.4 - RAG Readiness
 
 Suggested rule:
 
@@ -1491,7 +1491,7 @@ rag_readiness_summary.csv
 
 ---
 
-# 19. Section 12 â€” Gameplay, Player Perspective, Multiplayer, and Playtime Diagnostics
+# 19. Section 12 - Gameplay, Player Perspective, Multiplayer, and Playtime Diagnostics
 
 ## Main Question
 
@@ -1506,7 +1506,7 @@ high_rated_flag
 hidden_gem_flag
 ```
 
-## Analysis 12.1 â€” Game Mode Rating Patterns
+## Analysis 12.1 - Game Mode Rating Patterns
 
 Game modes may include:
 
@@ -1530,7 +1530,7 @@ high_rated_share
 hidden_gem_share
 ```
 
-## Analysis 12.2 â€” Player Perspective Rating Patterns
+## Analysis 12.2 - Player Perspective Rating Patterns
 
 Player perspectives may include:
 
@@ -1550,7 +1550,7 @@ Minimum group size:
 game_count >= 20
 ```
 
-## Analysis 12.3 â€” Multiplayer Support
+## Analysis 12.3 - Multiplayer Support
 
 Compare:
 
@@ -1574,20 +1574,20 @@ hidden_gem_share
 Important rule:
 
 ```markdown
-Missing multiplayer records should mean unknown, not â€œno multiplayer.â€
+Missing multiplayer records should mean unknown, not "no multiplayer."
 ```
 
-## Analysis 12.4 â€” Playtime Bands
+## Analysis 12.4 - Playtime Bands
 
 Use `game_time_to_beats.normally` as the default playtime measure and convert seconds to hours.
 
 Suggested playtime bands:
 
 ```text
-Very short: 0â€“5 hours
-Short: 5â€“15 hours
-Medium: 15â€“30 hours
-Long: 30â€“60 hours
+Very short: 0-5 hours
+Short: 5-15 hours
+Medium: 15-30 hours
+Long: 30-60 hours
 Very long: 60+ hours
 Unknown
 ```
@@ -1620,7 +1620,7 @@ playtime_rating_summary.csv
 
 ---
 
-# 20. Section 13 â€” Popularity Primitive Diagnostics
+# 20. Section 13 - Popularity Primitive Diagnostics
 
 ## Main Question
 
@@ -1659,7 +1659,7 @@ popularity_type_rating_count_correlation.csv
 
 ---
 
-# 21. Section 14 â€” Diagnostic-to-Predictive Feature Recommendations
+# 21. Section 14 - Diagnostic-to-Predictive Feature Recommendations
 
 This section bridges the diagnostic pillar to the predictive pillar.
 
@@ -1699,16 +1699,16 @@ Hidden Gems & Rating Drivers
 
 ```text
 Hidden Gems & Rating Drivers
-â”‚
-â”œâ”€â”€ KPI Cards
-â”œâ”€â”€ Rating vs Visibility
-â”œâ”€â”€ Hidden Gem Explorer
-â”œâ”€â”€ Genre and Theme Drivers
-â”œâ”€â”€ Genre-Theme Heatmap
-â”œâ”€â”€ Platform Reach Patterns
-â”œâ”€â”€ Metadata Richness and RAG Readiness
-â”œâ”€â”€ Gameplay and Playtime Patterns
-â””â”€â”€ Diagnostic Takeaways
+|
+|-- KPI Cards
+|-- Rating vs Visibility
+|-- Hidden Gem Explorer
+|-- Genre and Theme Drivers
+|-- Genre-Theme Heatmap
+|-- Platform Reach Patterns
+|-- Metadata Richness and RAG Readiness
+|-- Gameplay and Playtime Patterns
+\-- Diagnostic Takeaways
 ```
 
 ## KPI Cards
@@ -1987,7 +1987,7 @@ Developer/publisher results can be noisy because company-level samples may be sm
 
 # 27. Recommended Final Diagnostic Takeaways Format
 
-At the end of the notebook, write 5â€“8 takeaways using this format:
+At the end of the notebook, write 5-8 takeaways using this format:
 
 ```markdown
 ## Diagnostic Takeaways
@@ -2052,7 +2052,7 @@ Diagnostic findings show association, not causation.
 
 Now that the 3,000-game database works, build in this order:
 
-## Step 1 â€” Re-run short descriptive sanity check
+## Step 1 - Re-run short descriptive sanity check
 
 Update only the basic KPIs:
 
@@ -2066,31 +2066,31 @@ database integrity
 foreign key check
 ```
 
-## Step 2 â€” Build `diagnostic_game_base.csv`
+## Step 2 - Build `diagnostic_game_base.csv`
 
 This is the foundation.
 
-## Step 3 â€” Build rating vs visibility analysis
+## Step 3 - Build rating vs visibility analysis
 
 This creates the logic for hidden gems.
 
-## Step 4 â€” Build hidden gem candidates
+## Step 4 - Build hidden gem candidates
 
 This is the most important diagnostic artifact.
 
-## Step 5 â€” Build genre/theme/platform diagnostics
+## Step 5 - Build genre/theme/platform diagnostics
 
 These feed predictive and recommendation logic.
 
-## Step 6 â€” Build metadata richness and RAG readiness diagnostics
+## Step 6 - Build metadata richness and RAG readiness diagnostics
 
 This connects directly to the chatbot and vector search layer.
 
-## Step 7 â€” Add secondary diagnostics
+## Step 7 - Add secondary diagnostics
 
 Add developer/publisher, gameplay, multiplayer, playtime, and popularity primitive analysis if time allows.
 
-## Step 8 â€” Build diagnostic-to-predictive recommendations
+## Step 8 - Build diagnostic-to-predictive recommendations
 
 This closes the pillar and prepares the predictive pillar.
 
@@ -2111,3 +2111,4 @@ Why do some games appear more highly rated, more visible, or more discoverable t
 ```
 
 The cleanest MVP is a **Hidden Gems & Rating Drivers** dashboard page supported by the diagnostic notebook and exported CSVs.
+

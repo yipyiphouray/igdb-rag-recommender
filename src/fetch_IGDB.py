@@ -19,7 +19,10 @@ TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token"
 # Change this one value to control how many games are fetched.
 # IGDB still returns at most 500 records per request, so larger values are
 # automatically split across multiple paginated requests.
-GAME_LIMIT = 500
+#
+# The diagnostic pillar needs a broader sample than the descriptive 500-game
+# pull, so the default is now a larger unfiltered project sample.
+GAME_LIMIT = 3000
 
 # IGDB allows a maximum of 500 records per request and 4 requests per second.
 IGDB_MAX_LIMIT = 500
@@ -63,9 +66,7 @@ GAME_FIELDS = """
 
 BASE_GAME_QUERY = f"""
     fields {GAME_FIELDS};
-    where total_rating_count > 50
-        & summary != null;
-    sort total_rating_count desc;
+    sort id asc;
 """
 
 
@@ -241,7 +242,8 @@ def fetch_paginated(
 ) -> List[Dict[str, Any]]:
     """
     Fetch pages from an endpoint until the endpoint is exhausted or max_records is met.
-    The base_query must contain fields/where/sort clauses, but no limit/offset.
+    The base_query must contain fields and any optional where/sort clauses,
+    but no limit/offset.
     """
     if max_records is not None and max_records <= 0:
         raise ValueError("max_records must be greater than zero or None.")
@@ -437,7 +439,7 @@ def fetch_selected_endpoints() -> None:
     access_token = get_access_token()
     headers = get_headers(access_token)
 
-    print(f"\nFetching games: target={GAME_LIMIT}")
+    print(f"\nFetching games: target={GAME_LIMIT} (unfiltered base pull)")
     games = fetch_paginated(
         endpoint="games",
         base_query=BASE_GAME_QUERY,
@@ -448,7 +450,7 @@ def fetch_selected_endpoints() -> None:
 
     if len(games) < GAME_LIMIT:
         print(
-            f"IGDB returned {len(games)} games matching the filters, "
+            f"IGDB returned {len(games)} games, "
             f"which is fewer than the requested {GAME_LIMIT}."
         )
 

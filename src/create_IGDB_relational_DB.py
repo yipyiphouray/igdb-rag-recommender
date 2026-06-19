@@ -67,6 +67,14 @@ def image_url(value: str | None) -> str | None:
     return value
 
 
+def optional_fk(value: Any, valid_ids: set[int]) -> int | None:
+    if value is None:
+        return None
+
+    int_value = int(value)
+    return int_value if int_value in valid_ids else None
+
+
 def table_count(conn: sqlite3.Connection, table_name: str) -> int:
     cursor = conn.execute(f"SELECT COUNT(*) FROM {table_name}")
     return int(cursor.fetchone()[0])
@@ -672,6 +680,12 @@ def insert_bridge_tables(conn: sqlite3.Connection, games: Sequence[Dict[str, Any
 
 
 def insert_detail_tables(conn: sqlite3.Connection, raw: Dict[str, List[Dict[str, Any]]]) -> None:
+    platform_ids = {
+        int(row["id"])
+        for row in raw["platforms"]
+        if row.get("id") is not None
+    }
+
     execute_many(
         conn,
         """
@@ -756,7 +770,7 @@ def insert_detail_tables(conn: sqlite3.Connection, raw: Dict[str, List[Dict[str,
             (
                 row["id"],
                 row.get("game"),
-                row.get("platform"),
+                optional_fk(row.get("platform"), platform_ids),
                 row.get("date"),
                 unix_to_date(row.get("date")),
                 row.get("date_format"),
@@ -784,7 +798,7 @@ def insert_detail_tables(conn: sqlite3.Connection, raw: Dict[str, List[Dict[str,
             (
                 row["id"],
                 row.get("game"),
-                row.get("platform"),
+                optional_fk(row.get("platform"), platform_ids),
                 bool_to_int(row.get("campaigncoop")),
                 bool_to_int(row.get("dropin")),
                 bool_to_int(row.get("lancoop")),
@@ -817,7 +831,7 @@ def insert_detail_tables(conn: sqlite3.Connection, raw: Dict[str, List[Dict[str,
                 row.get("uid"),
                 row.get("external_game_source"),
                 row.get("game_release_format"),
-                row.get("platform"),
+                optional_fk(row.get("platform"), platform_ids),
                 row.get("url"),
                 row.get("year"),
             )

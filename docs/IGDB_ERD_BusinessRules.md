@@ -266,8 +266,9 @@ user asks for unavailable or historical titles.
 
 Important distinction:
 
-* In the current extract, `game_statuses` contains only `Offline` and
-  `Delisted`, and 489 of 500 games have `game_status_id = NULL`.
+* In the current extract, `game_statuses` contains `Early Access`, `Offline`,
+  `Cancelled`, `Rumored`, and `Delisted`, and 2,891 of 3,000 games have
+  `game_status_id = NULL`.
 * `NULL` must not automatically be interpreted as either released or
   unreleased.
 * `Alpha`, `Beta`, `Early Access`, `Cancelled`, and `Full Release` are
@@ -979,12 +980,13 @@ AND total_rating_count >= 10
 AND normalized_popularity is below the median for comparable games
 ```
 
-Current-sample limitation:
+Current-sample note:
 
-The extractor selected the 500 games with the highest `total_rating_count`
-among records meeting the base filters. This is useful for schema and pipeline
-development but is popularity-biased. Final hidden-gem analysis requires a
-larger, less popularity-biased extraction.
+The earlier descriptive pull selected the 500 games with the highest
+`total_rating_count` among records meeting the base filters. The current
+diagnostic-ready pull contains 3,000 games and removes the rating-count and
+summary filters, so hidden-gem analysis is less constrained by the previous
+popularity-biased sample.
 
 ## BR-064 — Comparable Group Rule
 
@@ -1430,7 +1432,7 @@ websites.website_type_id → website_types.website_type_id
 
 Some source reference fields are intentionally not declared as foreign keys in
 the current schema because related parent records may fall outside the selected
-500-game extraction:
+project extraction:
 
 ```text
 games.parent_game_id
@@ -1441,10 +1443,17 @@ companies.status_id
 ```
 
 Treat these as optional source references. Do not assume they can always be
-joined within the local database. `games.cover_id` currently resolves for all
-500 games, but the relationship is not enforced by SQLite.
+joined within the local database. In the current 3,000-game extract, 2,994
+games have a selected cover ID and all 2,994 selected cover IDs resolve locally,
+but the relationship is not enforced by SQLite.
 
 ## BR-094 — Orphan Record Rule
+
+Optional platform references in detail tables such as `release_dates`,
+`multiplayer_modes`, and `external_games` are validated during loading. If IGDB
+returns an optional platform ID that is not present in the loaded `platforms`
+lookup table, the loader stores `NULL` for that optional `platform_id` so the
+detail row can still be retained without violating SQLite foreign keys.
 
 No child table should contain records that point to missing parent records.
 

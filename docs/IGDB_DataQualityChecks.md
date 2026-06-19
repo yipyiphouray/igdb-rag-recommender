@@ -37,33 +37,35 @@ docs/IGDB_relational_ERD.md
 
 ## Current Validation Snapshot
 
-Validated against `data/database/igdb_games.db` on **2026-06-09**.
+Validated against `data/database/igdb_games.db` on **2026-06-17** after the broader unfiltered IGDB pull.
 
 | Result | Current Value |
 | --- | ---: |
 | SQLite tables | 34 |
-| Games | 500 |
+| Games | 3,000 |
 | Empty tables | 0 |
 | `PRAGMA integrity_check` | `ok` |
 | `PRAGMA foreign_key_check` failures | 0 |
-| Games with a platform | 500 |
-| Games with a summary | 500 |
-| Games with `total_rating` | 500 |
-| Games with a genre | 500 |
-| Games with a theme | 499 |
-| Games with a keyword | 498 |
+| Games with a platform | 2,999 |
+| Games with a summary | 2,933 |
+| Games with `total_rating` | 2,603 |
+| Games with a genre | 2,994 |
+| Games with a theme | 2,867 |
+| Games with a keyword | 2,836 |
 
 Documented exceptions:
 
-* `game_time_to_beats` contains 60 rows where the average quick, normal, and
+* `game_time_to_beats` contains 70 rows where the average quick, normal, and
   completionist estimates are not monotonically ordered. These are retained as
   source values and treated as a warning, not a relational-integrity failure.
 * Company `9254` (`Blade Games World`) has an IGDB founding timestamp outside
   Python's supported calendar range. The raw `start_date` is preserved and
   `start_date_iso` is intentionally `NULL`.
-* The extraction selected 500 games ordered by `total_rating_count` descending
-  and required a summary. Completeness and hidden-gem results therefore describe
-  this curated sample, not the full IGDB catalog.
+* The current extraction selects 3,000 games using a generic unfiltered base
+  pull sorted by IGDB game ID. Unlike the earlier descriptive 500-game sample,
+  the current raw pull does not require summaries or rating-count thresholds.
+  Completeness metrics are therefore lower but more useful for diagnostic
+  analysis.
 
 ---
 
@@ -1834,11 +1836,11 @@ sample-relative visibility threshold.
 
 **Important Note:**
 
-The current 500-game sample was sorted by `total_rating_count` descending during
-extraction. This makes it popularity-biased and unsuitable for a defensible
-final hidden-gem analysis. Before final analysis, extract a larger and less
-popularity-biased catalog. If `popularity_primitives` are used, normalize within
-each popularity type and source before combining signals.
+The earlier 500-game descriptive sample was sorted by `total_rating_count`
+descending during extraction. The current 3,000-game pull removes that
+popularity sort and rating-count filter, making it more suitable for diagnostic
+hidden-gem analysis. If `popularity_primitives` are used, normalize within each
+popularity type and source before combining signals.
 
 ---
 

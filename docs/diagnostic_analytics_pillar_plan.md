@@ -5,7 +5,7 @@
 **Team:** QUEST ACCEPTED!  
 **Course:** BUSA 649  
 **Pillar:** Diagnostic Analytics  
-**Recommended Dashboard Page:** Hidden Gems & Rating Drivers  
+**Recommended Dashboard Page:** Hidden Gems & Reception Patterns
 **Current Dataset:** 15,000-game curated yearly IGDB sample
 **Recommended Notebook:** `notebooks/02_diagnostic_analytics_exploration.ipynb`  
 **Recommended Output Folder:** `data/analytics/diagnostic/`
@@ -23,16 +23,17 @@ In this project, "performance" should not only mean rating score. It should incl
 - Rating quality
 - Rating confidence
 - Rating activity
-- Visibility / popularity
+- PopScore visibility / popularity
 - Hidden-gem potential
 - Genre-theme fit
 - Platform reach
-- Metadata richness
+- Metadata coverage and volume
 - RAG readiness
 - Developer and publisher patterns
 - Gameplay and playstyle patterns
 
-The diagnostic pillar should not claim causality. The goal is to identify **associations, patterns, segments, and candidate drivers** that can support the predictive and prescriptive pillars.
+The diagnostic pillar should not claim causality. The goal is to identify
+**associations, patterns, and segments** that may inform later pillars.
 
 Use careful wording:
 
@@ -61,7 +62,7 @@ The diagnostic pillar answers:
 | Counts games by genre | Compares ratings and hidden-gem share by genre |
 | Counts games by platform | Tests whether platform reach relates to visibility |
 | Shows rating distribution | Investigates rating vs rating-count relationship |
-| Shows metadata completeness | Tests whether metadata richness relates to rating activity |
+| Shows metadata completeness | Tests whether metadata components relate to reception or visibility |
 | Lists top developers/publishers | Compares developer/publisher rating and hidden-gem patterns |
 | Summarizes playtime bands | Tests whether playtime bands differ in ratings or visibility |
 
@@ -82,8 +83,8 @@ Diagnostic = compare, segment, explain, and identify patterns
 
 ## Supporting Questions
 
-1. Are higher-rated games also more visible?
-2. Is `total_rating_count` a reasonable visibility proxy?
+1. Are higher-rated games also more visible according to IGDB PopScore?
+2. How does rating activity differ from PopScore visibility?
 3. Which games are high-rated but relatively less visible?
 4. Which genres have stronger median ratings?
 5. Which themes have stronger median ratings?
@@ -91,7 +92,7 @@ Diagnostic = compare, segment, explain, and identify patterns
 7. Do games available on more platforms receive more rating activity?
 8. Do platform families differ in rating or visibility patterns?
 9. Are some developers or publishers overrepresented among high-rated games?
-10. Does metadata richness relate to rating activity or recommendation readiness?
+10. Do separate metadata coverage components relate to rating activity or visibility?
 11. Do game modes, player perspectives, multiplayer support, or playtime bands relate to rating patterns?
 12. Which diagnostic findings should become predictive features later?
 
@@ -196,8 +197,17 @@ release_dates
 websites
 external_games
 popularity_primitives
+popularity_types
+extraction_cohorts
 game_time_to_beats
 multiplayer_modes
+```
+
+Core analytical views include:
+
+```text
+vw_game_popscore_latest
+vw_game_popscore_igdb_interest
 ```
 
 ## 5.2 Rating-Based Analysis Rule
@@ -230,9 +240,37 @@ Create separate diagnostic datasets instead of using one filtered table for ever
 | Rating-reliable sample | `total_rating IS NOT NULL AND total_rating_count >= 25` | Main diagnostic analysis |
 | Hidden-gem eligible sample | Rating-reliable sample, optionally `game_type_name = 'Main Game'` | Hidden-gem percentile thresholds and candidate selection |
 
-Do not build `diagnostic_game_base` by filtering out unrated games. Build the base at one row per game first, then create rating-specific subsets from it. Otherwise, RAG readiness and metadata richness analysis would silently exclude games that are useful for recommendation but do not have rating data.
+Do not build `diagnostic_game_base` by filtering out unrated games. Build the
+base at one row per game first, then create rating-specific subsets. Metadata
+coverage and future-readiness summaries must retain unrated games.
 
-## 5.4 High-Rated Rule
+## 5.4 Cohort-Aware Analysis Rule
+
+The curated extraction has different inclusion mechanisms:
+
+```text
+quality
+popularity
+comparison
+```
+
+Every diagnostic game-level dataset must retain:
+
+```text
+extraction_cohort
+selection_rank
+release_year
+```
+
+Rules:
+
+- Do not interpret unadjusted full-sample rating or popularity shares as market prevalence.
+- Use the comparison cohort for population-oriented descriptive estimates.
+- Use quality-versus-comparison analyses for reception-pattern comparisons.
+- Include release year as a stratification or control variable.
+- Report cohort-stratified results when using all three cohorts.
+
+## 5.5 High-Rated Rule
 
 Use the project rule:
 
@@ -248,7 +286,41 @@ total_rating IS NOT NULL
 AND total_rating_count >= 25
 ```
 
-## 5.5 Platform Availability Rule
+## 5.6 Visibility Rule
+
+Use the project-defined IGDB interest score as the main visibility signal:
+
+```text
+0.60 * Want to Play + 0.40 * Playing
+```
+
+Use:
+
+```text
+vw_game_popscore_igdb_interest.custom_interest_score
+vw_game_popscore_igdb_interest.custom_interest_percentile
+```
+
+Interpretation:
+
+```text
+total_rating          = quality/reception
+total_rating_count    = rating evidence/confidence
+custom_interest_score = visibility/interest
+```
+
+Missing PopScore means:
+
+```text
+visibility unknown
+```
+
+It must not be recoded as zero or low visibility.
+
+`total_rating_count` may still be analyzed as rating activity, but it should no
+longer be labeled as the primary popularity measure.
+
+## 5.7 Platform Availability Rule
 
 Use `game_platforms` to determine platform availability.
 
@@ -268,7 +340,7 @@ JOIN platforms p
 
 Do not infer platform availability from `release_dates` alone. Use `release_dates` for platform-specific release timing, not availability.
 
-## 5.6 Company Role Rule
+## 5.8 Company Role Rule
 
 Only use:
 
@@ -288,7 +360,7 @@ for publisher analysis.
 
 Do not treat every involved company as a developer or publisher. A company can also have multiple roles for the same game.
 
-## 5.7 Many-to-Many Counting Rule
+## 5.9 Many-to-Many Counting Rule
 
 Games can have multiple genres, themes, keywords, platforms, modes, perspectives, companies, and release dates.
 
@@ -310,7 +382,7 @@ By the end of the diagnostic pillar, produce:
 notebooks/02_diagnostic_analytics_exploration.ipynb
 data/analytics/diagnostic/*.csv
 docs/diagnostic_analytics_pillar_plan.md
-optional Streamlit page: Hidden Gems & Rating Drivers
+optional Streamlit page: Hidden Gems & Reception Patterns
 ```
 
 Recommended exported CSVs:
@@ -319,8 +391,8 @@ Recommended exported CSVs:
 diagnostic_dataset_snapshot.csv
 diagnostic_game_base.csv
 diagnostic_rating_reliable_base.csv
-rating_visibility_correlation.csv
-rating_band_visibility_summary.csv
+quality_popscore_correlation.csv
+rating_band_popscore_summary.csv
 hidden_gem_candidates.csv
 hidden_gem_threshold_summary.csv
 hidden_gem_sensitivity_analysis.csv
@@ -335,16 +407,20 @@ platform_family_rating_summary.csv
 platform_type_rating_summary.csv
 developer_rating_summary.csv
 publisher_rating_summary.csv
-metadata_richness_rating_summary.csv
-metadata_richness_visibility_summary.csv
+metadata_volume_rating_summary.csv
+metadata_volume_visibility_summary.csv
 rag_readiness_summary.csv
+metadata_component_summary.csv
+user_critic_agreement_summary.csv
+user_critic_gap_games.csv
+cohort_adjusted_association_summary.csv
 game_mode_rating_summary.csv
 player_perspective_rating_summary.csv
 multiplayer_support_rating_summary.csv
 playtime_rating_summary.csv
 popularity_signal_coverage.csv
 popularity_type_rating_count_correlation.csv
-diagnostic_feature_recommendations.csv
+future_pillar_implications.csv
 diagnostic_takeaways.csv
 ```
 
@@ -366,19 +442,20 @@ Recommended sections:
 3. Validate diagnostic dataset
 4. Build all-game diagnostic base table
 5. Derive rating-available, rating-reliable, and hidden-gem eligible samples
-6. Rating vs visibility analysis
+6. Quality vs PopScore visibility analysis
 7. Hidden gem logic
-8. Genre rating diagnostics
-9. Theme rating diagnostics
-10. Genre-theme interaction diagnostics
-11. Platform and reach diagnostics
-12. Developer and publisher diagnostics
-13. Metadata richness and RAG readiness diagnostics
-14. Gameplay, player perspective, multiplayer, and playtime diagnostics
-15. Popularity primitive diagnostics
-16. Diagnostic-to-predictive feature recommendations
-17. Export CSV outputs
-18. Final diagnostic takeaways and limitations
+8. User-versus-critic reception diagnostics
+9. Genre rating diagnostics
+10. Theme rating diagnostics
+11. Genre-theme interaction diagnostics
+12. Platform and reach diagnostics
+13. Developer and publisher diagnostics
+14. Metadata component diagnostics
+15. Gameplay, player perspective, multiplayer, and playtime diagnostics
+16. PopScore coverage and primitive diagnostics
+17. Future-pillar implications
+18. Export CSV outputs
+19. Final diagnostic takeaways and limitations
 ```
 
 ---
@@ -412,6 +489,11 @@ QUALITY_THRESHOLD = 80
 MIN_RATING_COUNT = 25
 HIDDEN_GEM_VISIBILITY_PERCENTILE = 0.40
 MAIN_GAME_ONLY = True
+MIN_CRITIC_COUNT = 5
+MIN_GROUP_SIZE = 25
+MIN_INTERACTION_GROUP_SIZE = 20
+MIN_COMPANY_GROUP_SIZE = 10
+MULTIPLE_TEST_ALPHA = 0.05
 ```
 
 These constants make the notebook easier to adjust later.
@@ -505,6 +587,14 @@ aggregated_rating
 aggregated_rating_count
 game_type_name
 game_status_name
+extraction_cohort
+selection_rank
+adjusted_quality_score
+selection_popularity_basis
+selection_popularity_score
+custom_interest_score
+custom_interest_percentile
+popscore_available_flag
 num_genres
 num_themes
 num_keywords
@@ -517,17 +607,27 @@ num_screenshots
 has_storyline
 summary_length
 storyline_length
-relationship_count
-metadata_richness_band
+classification_count
+distribution_count
+company_coverage_count
+external_link_count
+media_count
+text_completeness_score
+metadata_volume_total
+metadata_volume_percentile
+metadata_volume_band
 rating_band
 rating_available_flag
 rating_reliable_flag
 high_rated_flag
 main_game_flag
 rag_ready_flag
+user_critic_gap
 ```
 
-`diagnostic_game_base.csv` should keep all extracted games. Add `log_total_rating_count` and hidden-gem visibility percentiles after loading this SQL result into pandas.
+`diagnostic_game_base.csv` should keep all extracted games. Add
+`log_total_rating_count`, metadata-volume percentile bands, and within-year
+PopScore percentiles after loading this SQL result into pandas.
 
 ## SQL
 
@@ -590,6 +690,18 @@ base AS (
         g.aggregated_rating_count,
         gt.type_name AS game_type_name,
         gs.status_name AS game_status_name,
+        xc.cohort AS extraction_cohort,
+        xc.selection_rank,
+        xc.adjusted_quality_score,
+        xc.popularity_basis AS selection_popularity_basis,
+        xc.popularity_score AS selection_popularity_score,
+        psi.custom_interest_score,
+        psi.custom_interest_percentile,
+
+        CASE
+            WHEN psi.game_id IS NOT NULL THEN 1
+            ELSE 0
+        END AS popscore_available_flag,
 
         COALESCE(gc.num_genres, 0) AS num_genres,
         COALESCE(tc.num_themes, 0) AS num_themes,
@@ -613,13 +725,45 @@ base AS (
             COALESCE(gc.num_genres, 0)
           + COALESCE(tc.num_themes, 0)
           + COALESCE(kc.num_keywords, 0)
-          + COALESCE(pc.num_platforms, 0)
-          + COALESCE(cc.num_companies, 0)
+        ) AS classification_count,
+
+        (
+            COALESCE(pc.num_platforms, 0)
           + COALESCE(rc.num_release_dates, 0)
+        ) AS distribution_count,
+
+        COALESCE(cc.num_companies, 0) AS company_coverage_count,
+
+        (
+            COALESCE(wc.num_websites, 0)
+          + COALESCE(ec.num_external_sources, 0)
+        ) AS external_link_count,
+
+        COALESCE(sc.num_screenshots, 0) AS media_count,
+
+        (
+            CASE WHEN g.summary IS NOT NULL AND TRIM(g.summary) <> '' THEN 1 ELSE 0 END
+          + CASE WHEN g.storyline IS NOT NULL AND TRIM(g.storyline) <> '' THEN 1 ELSE 0 END
+        ) AS text_completeness_score,
+
+        (
+            COALESCE(gc.num_genres, 0)
+          + COALESCE(tc.num_themes, 0)
+          + COALESCE(kc.num_keywords, 0)
+          + COALESCE(pc.num_platforms, 0)
+          + COALESCE(rc.num_release_dates, 0)
+          + COALESCE(cc.num_companies, 0)
           + COALESCE(wc.num_websites, 0)
           + COALESCE(ec.num_external_sources, 0)
           + COALESCE(sc.num_screenshots, 0)
-        ) AS relationship_count,
+        ) AS metadata_volume_total,
+
+        CASE
+            WHEN g.rating IS NOT NULL
+             AND g.aggregated_rating IS NOT NULL
+            THEN g.rating - g.aggregated_rating
+            ELSE NULL
+        END AS user_critic_gap,
 
         CASE
             WHEN g.total_rating IS NULL THEN 'Unrated'
@@ -667,6 +811,10 @@ base AS (
         ON g.game_type_id = gt.game_type_id
     LEFT JOIN game_statuses gs
         ON g.game_status_id = gs.game_status_id
+    JOIN extraction_cohorts xc
+        ON g.game_id = xc.game_id
+    LEFT JOIN vw_game_popscore_igdb_interest psi
+        ON g.game_id = psi.game_id
     LEFT JOIN genre_counts gc
         ON g.game_id = gc.game_id
     LEFT JOIN theme_counts tc
@@ -686,17 +834,13 @@ base AS (
     LEFT JOIN screenshot_counts sc
         ON g.game_id = sc.game_id
 )
-SELECT
-    *,
-    CASE
-        WHEN relationship_count < 50 THEN 'Lean relationship profile'
-        WHEN relationship_count BETWEEN 50 AND 99 THEN 'Moderate relationship profile'
-        WHEN relationship_count BETWEEN 100 AND 149 THEN 'Rich relationship profile'
-        ELSE 'Very rich relationship profile'
-    END AS metadata_richness_band
-
+SELECT *
 FROM base;
 ```
+
+Do not define fixed metadata-quality thresholds in SQL. `metadata_volume_total`
+combines counts with different meanings and is only a volume summary. Analyze
+the separate components first.
 
 ## Python-Derived Fields and Rating Subsets
 
@@ -707,6 +851,18 @@ diagnostic_game_base["log_total_rating_count"] = np.log1p(
     diagnostic_game_base["total_rating_count"]
 )
 
+diagnostic_game_base["metadata_volume_percentile"] = (
+    diagnostic_game_base.groupby("release_year")["metadata_volume_total"]
+    .rank(pct=True, method="average")
+)
+
+diagnostic_game_base["metadata_volume_band"] = pd.cut(
+    diagnostic_game_base["metadata_volume_percentile"],
+    bins=[0.0, 0.25, 0.50, 0.75, 1.0],
+    labels=["Low", "Moderate", "High", "Very high"],
+    include_lowest=True,
+)
+
 rating_available = diagnostic_game_base[
     diagnostic_game_base["rating_available_flag"] == 1
 ].copy()
@@ -715,31 +871,30 @@ rating_reliable = diagnostic_game_base[
     diagnostic_game_base["rating_reliable_flag"] == 1
 ].copy()
 
-def percent_rank(series):
-    if len(series) <= 1:
-        return pd.Series(0.0, index=series.index)
-    return (series.rank(method="min") - 1) / (len(series) - 1)
-
-rating_reliable["visibility_percentile_rating_reliable"] = percent_rank(
-    rating_reliable["total_rating_count"]
-)
-
 hidden_gem_eligible = rating_reliable.copy()
 if MAIN_GAME_ONLY:
     hidden_gem_eligible = hidden_gem_eligible[
         hidden_gem_eligible["main_game_flag"] == 1
     ].copy()
 
-hidden_gem_eligible["visibility_percentile_eligible_pool"] = percent_rank(
-    hidden_gem_eligible["total_rating_count"]
+hidden_gem_eligible = hidden_gem_eligible[
+    hidden_gem_eligible["popscore_available_flag"] == 1
+].copy()
+
+hidden_gem_eligible["visibility_percentile_eligible_pool"] = (
+    hidden_gem_eligible.groupby("release_year")["custom_interest_score"]
+    .rank(pct=True, method="average")
 )
 ```
 
 This prevents two common mistakes:
 
-- RAG readiness and metadata richness analysis should not exclude unrated games.
-- Rating-vs-visibility percentiles should be calculated within the rating-reliable pool.
-- Hidden-gem visibility percentiles should be recalculated within the hidden-gem eligible pool, not reused from every extracted game.
+- Metadata coverage and future-readiness analysis should not exclude unrated games.
+- Missing PopScore should remain visibility unknown.
+- Hidden-gem visibility percentiles should be calculated within release year
+  among reliable games with PopScore coverage.
+- `extraction_cohort` must remain available for stratification and sensitivity
+  analysis.
 
 Export:
 
@@ -750,15 +905,16 @@ diagnostic_rating_reliable_base.csv
 
 ---
 
-# 11. Section 4 - Rating vs Visibility Analysis
+# 11. Section 4 - Quality, Rating Activity, and PopScore Visibility
 
 ## Main Question
 
-> Are highly rated games also the most visible games?
+> Are highly rated games also the most visible according to IGDB PopScore?
 
 ## Why It Matters
 
-The project problem includes popularity bias. If visibility and quality are not identical, the recommendation system should not simply rank by rating count or popularity.
+Rating activity and visibility are related but distinct. `total_rating_count`
+measures rating evidence, while PopScore measures current interest/activity.
 
 ## Metrics
 
@@ -766,40 +922,59 @@ The project problem includes popularity bias. If visibility and quality are not 
 total_rating
 total_rating_count
 log_total_rating_count
-visibility_percentile_rating_reliable
+custom_interest_score
+custom_interest_percentile
+popscore_available_flag
+extraction_cohort
+release_year
 rating_band
 ```
 
-## Analysis 4.1 - Scatter Plot: Rating vs Rating Count
+## Analysis 4.1 - Quality vs PopScore
 
 Chart:
 
 ```text
-x-axis: log_total_rating_count
+x-axis: custom_interest_percentile
 y-axis: total_rating
-color: rating_band
-tooltip: game name
+color: extraction_cohort
+facet or control: release_year
+tooltip: game name, total_rating_count
 ```
 
 Interpretation:
 
 ```markdown
-This chart compares rating quality against rating activity. It helps show whether high ratings and high visibility are the same thing or whether some games have strong ratings despite lower rating activity.
+This chart compares reception quality against IGDB interest among games with
+PopScore coverage. Missing PopScore games are excluded from this chart and
+reported separately as visibility unknown.
 ```
 
-## Analysis 4.2 - Correlation
+## Analysis 4.2 - Quality/Visibility and Quality/Activity Correlations
 
 Calculate:
 
 ```python
-pearson_corr = df["total_rating"].corr(df["log_total_rating_count"], method="pearson")
-spearman_corr = df["total_rating"].corr(df["total_rating_count"], method="spearman")
+popscore_df = rating_reliable[
+    rating_reliable["popscore_available_flag"] == 1
+].copy()
+
+quality_popscore_spearman = popscore_df["total_rating"].corr(
+    popscore_df["custom_interest_score"],
+    method="spearman",
+)
+
+quality_activity_spearman = rating_reliable["total_rating"].corr(
+    rating_reliable["total_rating_count"],
+    method="spearman",
+)
 ```
 
 Export:
 
 ```text
-rating_visibility_correlation.csv
+quality_popscore_correlation.csv
+quality_rating_activity_correlation.csv
 ```
 
 Interpretation guide:
@@ -811,37 +986,54 @@ Interpretation guide:
 | 0.40-0.60 | Meaningful relationship |
 | 0.60+ | Strong relationship |
 
-Use Spearman as the main discussion metric because rating counts are usually skewed.
+Calculate correlations by cohort and release-year band as sensitivity checks.
+Use Spearman as the main metric because both PopScore and rating counts are
+usually skewed.
 
-## Analysis 4.3 - Rating Band Visibility Summary
+## Analysis 4.3 - Rating Band PopScore Summary
 
 Group by:
 
 ```text
 rating_band
+extraction_cohort
 ```
 
 Metrics:
 
 ```text
 game_count
+popscore_covered_games
+median_custom_interest_score
+median_custom_interest_percentile
 median_total_rating_count
-mean_total_rating_count
-p75_total_rating_count
-max_total_rating_count
 ```
 
 This answers:
 
 ```text
-Do excellent games tend to have more rating activity than merely good games?
+Do excellent games tend to have more PopScore visibility or rating activity
+than merely good games, after accounting for cohort and release year?
 ```
 
 Export:
 
 ```text
-rating_band_visibility_summary.csv
+rating_band_popscore_summary.csv
 ```
+
+## Analysis 4.4 - PopScore Coverage
+
+Report PopScore availability by:
+
+```text
+release_year
+extraction_cohort
+rating_band
+```
+
+This is necessary because visibility conclusions apply only to games with
+available PopScore signals.
 
 ---
 
@@ -860,6 +1052,7 @@ Use a percentile-based definition:
 ```text
 hidden_gem = total_rating >= 80
              AND total_rating_count >= minimum_confidence_count
+             AND popscore_available_flag = 1
              AND visibility_percentile_eligible_pool <= 0.40
              AND main_game_flag = 1
 ```
@@ -873,10 +1066,9 @@ low_visibility_threshold = 40th percentile
 main game only = yes
 ```
 
-The 40th percentile must be calculated within the relevant cohort and release
-year, or within a clearly documented pooled analytical subset. Do not calculate
-one visibility percentile across the curated cohorts without controlling for
-their different selection rules.
+Calculate the 40th percentile within release year among reliable games with
+PopScore coverage. Use extraction cohort as a sensitivity check. A missing
+PopScore value means visibility unknown and cannot produce a hidden-gem label.
 
 Important implementation rule:
 
@@ -890,6 +1082,7 @@ For the MVP, that pool should be:
 total_rating IS NOT NULL
 AND total_rating_count >= 25
 AND game_type_name = 'Main Game'
+AND popscore_available_flag = 1
 ```
 
 This keeps "bottom 40% visibility" meaningful among the games that could actually become hidden-gem candidates.
@@ -906,26 +1099,18 @@ Create a sensitivity table:
 
 Use **Balanced** as the main project definition.
 
-## Hidden Gem Score
+## Diagnostic Hidden-Gem Strength
 
-Create a continuous score:
-
-```text
-hidden_gem_score =
-    0.60 * normalized_rating_score
-  + 0.30 * inverse_visibility_score
-  + 0.10 * metadata_readiness_score
-```
-
-Where:
+The diagnostic pillar may export a two-dimensional strength summary:
 
 ```text
-normalized_rating_score = total_rating / 100
-inverse_visibility_score = 1 - visibility_percentile_eligible_pool
-metadata_readiness_score = scaled relationship_count
+quality_percentile
+inverse_visibility_percentile
 ```
 
-The binary flag is good for reporting. The score is better for future ranking.
+Do not combine metadata coverage into the hidden-gem definition. A weighted
+ranking score is future prescriptive work and should be clearly labeled as
+such if retained in an appendix.
 
 ## Recommended Hidden Gem Table Columns
 
@@ -935,14 +1120,16 @@ name
 total_rating
 total_rating_count
 visibility_percentile_eligible_pool
-hidden_gem_score
+custom_interest_score
+custom_interest_percentile
+extraction_cohort
 release_year
 game_type_name
 num_genres
 num_themes
 num_keywords
 num_platforms
-metadata_richness_band
+metadata_volume_band
 genres
 themes
 platforms
@@ -953,28 +1140,9 @@ platforms
 ```python
 hidden_gems = hidden_gem_eligible.copy()
 
-hidden_gems["normalized_rating_score"] = hidden_gems["total_rating"] / 100.0
-hidden_gems["inverse_visibility_score"] = (
-    1.0 - hidden_gems["visibility_percentile_eligible_pool"]
-)
-hidden_gems["metadata_readiness_score"] = np.select(
-    [
-        hidden_gems["relationship_count"] >= 150,
-        hidden_gems["relationship_count"] >= 100,
-        hidden_gems["relationship_count"] >= 50,
-    ],
-    [1.0, 0.75, 0.50],
-    default=0.25,
-)
-
-hidden_gems["hidden_gem_score"] = (
-    0.60 * hidden_gems["normalized_rating_score"]
-    + 0.30 * hidden_gems["inverse_visibility_score"]
-    + 0.10 * hidden_gems["metadata_readiness_score"]
-)
-
 hidden_gems["hidden_gem_flag"] = (
     (hidden_gems["total_rating"] >= QUALITY_THRESHOLD)
+    & (hidden_gems["popscore_available_flag"] == 1)
     & (
         hidden_gems["visibility_percentile_eligible_pool"]
         <= HIDDEN_GEM_VISIBILITY_PERCENTILE
@@ -982,7 +1150,8 @@ hidden_gems["hidden_gem_flag"] = (
 ).astype(int)
 ```
 
-Use `hidden_gem_eligible` rather than the full `diagnostic_game_base` so the percentile threshold is calculated on the same population used for candidate selection.
+Use `hidden_gem_eligible` rather than the full `diagnostic_game_base`. Export
+year-specific PopScore cutoffs so the label is auditable.
 
 ## Visuals
 
@@ -1007,7 +1176,62 @@ hidden_gem_by_platform_family.csv
 
 ---
 
-# 13. Section 6 - Genre Rating Diagnostics
+# 13. Section 6 - User-versus-Critic Reception Diagnostics
+
+## Main Question
+
+> Where do IGDB users and external critics agree or disagree?
+
+Create an analysis subset:
+
+```text
+rating IS NOT NULL
+aggregated_rating IS NOT NULL
+rating_count >= 25
+aggregated_rating_count >= 5
+```
+
+Current database coverage:
+
+```text
+Games with both user and critic ratings: 3,554
+Games meeting both count thresholds: 1,300
+```
+
+Derived field:
+
+```text
+user_critic_gap = rating - aggregated_rating
+```
+
+Interpretation:
+
+```text
+positive gap = users rate the game higher
+negative gap = critics rate the game higher
+near zero    = broad agreement
+```
+
+Required outputs:
+
+- Pearson and Spearman agreement between user and critic ratings.
+- Median and IQR of `user_critic_gap`.
+- Largest positive and negative disagreement tables.
+- Gap summaries by release year, genre, theme, and extraction cohort.
+- Sensitivity comparison of conclusions using `total_rating` versus
+  user-only `rating`.
+
+Exports:
+
+```text
+user_critic_agreement_summary.csv
+user_critic_gap_games.csv
+user_critic_gap_by_genre.csv
+```
+
+---
+
+# 14. Section 7 - Genre Rating Diagnostics
 
 ## Main Question
 
@@ -1023,6 +1247,30 @@ A game can have multiple genres. Always use:
 COUNT(DISTINCT game_id)
 ```
 
+## Statistical Comparison Rule
+
+Because quality games were deliberately oversampled, genre analysis must not
+rely only on full-sample high-rated shares.
+
+Required primary comparison:
+
+```text
+outcome: quality cohort versus comparison cohort
+predictors: genre indicators
+controls: release year
+reported effect: odds ratio with 95% confidence interval
+```
+
+Use cluster-robust or bootstrap confidence intervals where practical because
+games can belong to multiple genres.
+
+For multiple genre tests, control the false discovery rate using
+Benjamini-Hochberg correction at:
+
+```text
+alpha = 0.05
+```
+
 ## Metrics by Genre
 
 ```text
@@ -1036,6 +1284,10 @@ high_rated_count
 high_rated_share
 hidden_gem_count
 hidden_gem_share
+quality_vs_comparison_odds_ratio
+odds_ratio_ci_low
+odds_ratio_ci_high
+adjusted_p_value
 ```
 
 ## Recommended Minimum Group Size
@@ -1053,6 +1305,7 @@ For smaller genres, still export them but mark them as low-sample.
 ```sql
 SELECT
     ge.name AS genre_name,
+    xc.cohort AS extraction_cohort,
     COUNT(DISTINCT g.game_id) AS game_count,
     AVG(g.total_rating) AS mean_total_rating,
     AVG(g.total_rating_count) AS mean_total_rating_count,
@@ -1064,14 +1317,18 @@ JOIN game_genres gg
     ON g.game_id = gg.game_id
 JOIN genres ge
     ON gg.genre_id = ge.genre_id
+JOIN extraction_cohorts xc
+    ON g.game_id = xc.game_id
 WHERE g.total_rating IS NOT NULL
-  AND g.total_rating_count IS NOT NULL
-GROUP BY ge.name
+  AND g.total_rating_count >= 25
+GROUP BY ge.name, xc.cohort
 HAVING COUNT(DISTINCT g.game_id) >= 25
 ORDER BY high_rated_share DESC, mean_total_rating DESC;
 ```
 
 Use Python/Pandas for median and IQR if SQLite percentile functions are unavailable.
+Use Python/statsmodels or equivalent for cohort-aware odds ratios, confidence
+intervals, and multiple-comparison correction.
 
 ## Visuals
 
@@ -1079,7 +1336,7 @@ Use Python/Pandas for median and IQR if SQLite percentile functions are unavaila
 |---|---|
 | Boxplot: rating by genre | Shows distribution, not just average |
 | Bar chart: median rating by genre | Easy dashboard view |
-| Bar chart: high-rated share by genre | Better than mean alone |
+| Bar chart: cohort-stratified high-rated share by genre | Descriptive support for adjusted effects |
 | Bar chart: hidden-gem share by genre | Identifies discovery-rich genres |
 
 ## Interpretation Style
@@ -1099,13 +1356,16 @@ genre_rating_summary.csv
 
 ---
 
-# 14. Section 7 - Theme Rating Diagnostics
+# 15. Section 8 - Theme Rating Diagnostics
 
 ## Main Question
 
 > Which themes are associated with stronger rating outcomes or hidden-gem potential?
 
 Themes are especially important because this project is about vibe-based discovery. Themes capture high-level mood, setting, or subject, such as fantasy, sci-fi, horror, survival, mystery, and comedy.
+
+Apply the same cohort-aware odds-ratio, release-year control, confidence
+interval, and false-discovery-rate rules used for genres.
 
 ## Metrics by Theme
 
@@ -1149,7 +1409,7 @@ hidden_gem_by_theme.csv
 
 ---
 
-# 15. Section 8 - Genre-Theme Combination Diagnostics
+# 16. Section 9 - Genre-Theme Combination Diagnostics
 
 ## Main Question
 
@@ -1200,6 +1460,7 @@ If too many combinations disappear, lower the threshold to 5 and clearly label t
 SELECT
     ge.name AS genre_name,
     th.name AS theme_name,
+    xc.cohort AS extraction_cohort,
     COUNT(DISTINCT g.game_id) AS game_count,
     AVG(g.total_rating) AS mean_total_rating,
     SUM(CASE WHEN g.total_rating >= 80 THEN 1 ELSE 0 END) * 1.0
@@ -1213,19 +1474,25 @@ JOIN game_themes gt
     ON g.game_id = gt.game_id
 JOIN themes th
     ON gt.theme_id = th.theme_id
+JOIN extraction_cohorts xc
+    ON g.game_id = xc.game_id
 WHERE g.total_rating IS NOT NULL
-  AND g.total_rating_count IS NOT NULL
-GROUP BY ge.name, th.name
-HAVING COUNT(DISTINCT g.game_id) >= 10
+  AND g.total_rating_count >= 25
+GROUP BY ge.name, th.name, xc.cohort
+HAVING COUNT(DISTINCT g.game_id) >= 20
 ORDER BY high_rated_share DESC, mean_total_rating DESC;
 ```
+
+Genre-theme combinations are exploratory high-dimensional tests. Apply
+Benjamini-Hochberg correction and report effect sizes with 95% confidence
+intervals. Do not rank combinations solely by raw high-rated share.
 
 ## Visuals
 
 | Visual | Purpose |
 |---|---|
 | Heatmap: median rating by genre-theme | Shows strong combinations |
-| Heatmap: high-rated share by genre-theme | Better for classification framing |
+| Heatmap: cohort-stratified high-rated share by genre-theme | Descriptive support for adjusted effects |
 | Table: top genre-theme combinations | Useful for final report |
 | Table: hidden-gem rich combinations | Useful for recommender logic |
 
@@ -1237,7 +1504,7 @@ genre_theme_rating_summary.csv
 
 ---
 
-# 16. Section 9 - Platform and Reach Diagnostics
+# 17. Section 10 - Platform and Reach Diagnostics
 
 ## Main Question
 
@@ -1257,15 +1524,16 @@ Metrics:
 
 ```text
 num_platforms
-total_rating_count
-log_total_rating_count
+custom_interest_score
+custom_interest_percentile
+popscore_available_flag
 ```
 
 Visuals:
 
 ```text
-Scatter plot: num_platforms vs log_total_rating_count
-Boxplot: log_total_rating_count by platform reach band
+Scatter plot: num_platforms vs custom_interest_percentile
+Boxplot: custom_interest_percentile by platform reach band
 ```
 
 Suggested platform reach bands:
@@ -1311,6 +1579,7 @@ platform_family
 game_count
 median_total_rating
 median_total_rating_count
+median_custom_interest_percentile
 high_rated_share
 hidden_gem_share
 ```
@@ -1345,7 +1614,7 @@ hidden_gem_by_platform_family.csv
 
 ---
 
-# 17. Section 10 - Developer and Publisher Diagnostics
+# 18. Section 11 - Developer and Publisher Diagnostics
 
 ## Main Question
 
@@ -1394,6 +1663,7 @@ Use the same structure as developer metrics.
 ```sql
 SELECT
     c.name AS developer_name,
+    xc.cohort AS extraction_cohort,
     COUNT(DISTINCT g.game_id) AS game_count,
     AVG(g.total_rating) AS mean_total_rating,
     AVG(g.total_rating_count) AS mean_total_rating_count,
@@ -1405,13 +1675,20 @@ JOIN involved_companies ic
     ON g.game_id = ic.game_id
 JOIN companies c
     ON ic.company_id = c.company_id
+JOIN extraction_cohorts xc
+    ON g.game_id = xc.game_id
 WHERE ic.developer = 1
   AND g.total_rating IS NOT NULL
-  AND g.total_rating_count IS NOT NULL
-GROUP BY c.name
-HAVING COUNT(DISTINCT g.game_id) >= 5
+  AND g.total_rating_count >= 25
+GROUP BY c.name, xc.cohort
+HAVING COUNT(DISTINCT g.game_id) >= 10
 ORDER BY high_rated_share DESC, mean_total_rating DESC;
 ```
+
+Company comparisons must be treated as exploratory. Report confidence
+intervals and use false-discovery-rate correction when testing many companies.
+Prefer quality-versus-comparison odds ratios with release-year controls over
+raw full-sample high-rated shares.
 
 ## Visuals
 
@@ -1437,79 +1714,86 @@ publisher_rating_summary.csv
 
 ---
 
-# 18. Section 11 - Metadata Richness and RAG Readiness Diagnostics
+# 19. Section 12 - Metadata Component Diagnostics
 
 ## Main Question
 
-> Are metadata-rich games more visible, more highly rated, or more useful for RAG?
+> How do separate metadata coverage components relate to reception and PopScore visibility?
 
-This is very important because the recommendation system and RAG chatbot depend on strong metadata.
+Metadata volume can reflect documentation practices, age, platform reach, and
+commercial visibility. It should not be interpreted as game quality.
 
-## Metadata Richness Fields
+## Metadata Component Fields
 
 Use:
 
 ```text
-relationship_count
-metadata_richness_band
-num_genres
-num_themes
-num_keywords
-num_platforms
-num_companies
-num_websites
-num_external_sources
+classification_count
+distribution_count
+company_coverage_count
+external_link_count
+media_count
+text_completeness_score
+metadata_volume_total
+metadata_volume_percentile
+metadata_volume_band
 summary_length
 storyline_length
 has_storyline
 rag_ready_flag
 ```
 
-## Analysis 11.1 - Metadata Richness vs Visibility
+Analyze components separately first. `metadata_volume_total` is a secondary
+volume summary, not an objective metadata-quality score.
+
+## Analysis 11.1 - Metadata Components vs Visibility
 
 Question:
 
 ```text
-Do metadata-rich games have higher rating activity?
+Do games with broader metadata coverage have higher PopScore visibility?
 ```
 
 Visual:
 
 ```text
-Boxplot: log_total_rating_count by metadata_richness_band
+Component scatter/boxplots against custom_interest_percentile
+Boxplot: custom_interest_percentile by metadata_volume_band
 ```
 
 Metrics:
 
 ```text
-metadata_richness_band
+metadata_component
+extraction_cohort
 game_count
-median_total_rating_count
-mean_total_rating_count
-p75_total_rating_count
+popscore_covered_games
+median_custom_interest_percentile
 ```
 
-## Analysis 11.2 - Metadata Richness vs Rating
+## Analysis 11.2 - Metadata Components vs Rating
 
 Question:
 
 ```text
-Do metadata-rich games have higher ratings?
+Do metadata coverage components differ between quality and comparison cohorts?
 ```
 
 Visual:
 
 ```text
-Boxplot: total_rating by metadata_richness_band
+Component distributions by extraction cohort
+Boxplot: total_rating by metadata_volume_band within reliable games
 ```
 
 Metrics:
 
 ```text
-metadata_richness_band
+metadata_component
+metadata_volume_band
 median_total_rating
-high_rated_share
-hidden_gem_share
+quality_vs_comparison_effect_size
+confidence_interval
 ```
 
 ## Analysis 11.3 - Text Richness
@@ -1542,19 +1826,21 @@ rag_ready = summary exists
             AND num_platforms >= 1
 ```
 
-This directly supports the later game profile document and vector embedding layer.
+Keep this as a future-use readiness summary. It is not evidence that a game is
+higher quality or more visible.
 
 Exports:
 
 ```text
-metadata_richness_rating_summary.csv
-metadata_richness_visibility_summary.csv
+metadata_component_summary.csv
+metadata_volume_rating_summary.csv
+metadata_volume_visibility_summary.csv
 rag_readiness_summary.csv
 ```
 
 ---
 
-# 19. Section 12 - Gameplay, Player Perspective, Multiplayer, and Playtime Diagnostics
+# 20. Section 13 - Gameplay, Player Perspective, Multiplayer, and Playtime Diagnostics
 
 ## Main Question
 
@@ -1565,8 +1851,10 @@ Compare gameplay fields against:
 ```text
 total_rating
 total_rating_count
+custom_interest_percentile
 high_rated_flag
 hidden_gem_flag
+extraction_cohort
 ```
 
 ## Analysis 12.1 - Game Mode Rating Patterns
@@ -1589,6 +1877,7 @@ game_mode_name
 game_count
 median_total_rating
 median_total_rating_count
+median_custom_interest_percentile
 high_rated_share
 hidden_gem_share
 ```
@@ -1630,6 +1919,7 @@ Against:
 ```text
 median_total_rating
 median_total_rating_count
+median_custom_interest_percentile
 high_rated_share
 hidden_gem_share
 ```
@@ -1683,15 +1973,15 @@ playtime_rating_summary.csv
 
 ---
 
-# 20. Section 13 - Popularity Primitive Diagnostics
+# 21. Section 14 - PopScore Coverage and Primitive Diagnostics
 
 ## Main Question
 
 > Are IGDB popularity signals available and useful beyond rating count?
 
-Use `total_rating_count` as the main visibility proxy for MVP diagnostic analysis.
+Use `vw_game_popscore_igdb_interest` as the main visibility source.
 
-Use `popularity_primitives` only as a secondary analysis:
+Use raw `popularity_primitives` for coverage and source/type diagnostics:
 
 ```text
 availability by popularity type
@@ -1713,6 +2003,16 @@ calculated_at
 
 Different sources or popularity types should not be treated as equivalent without normalization.
 
+Required reporting:
+
+```text
+PopScore coverage by release year and extraction cohort
+IGDB interest score distribution
+IGDB Visits fallback coverage
+correlation between PopScore, rating activity, and total rating
+missing-PopScore profile
+```
+
 Useful exports:
 
 ```text
@@ -1722,19 +2022,20 @@ popularity_type_rating_count_correlation.csv
 
 ---
 
-# 21. Section 14 - Diagnostic-to-Predictive Feature Recommendations
+# 22. Section 15 - Future-Pillar Implications
 
-This section bridges the diagnostic pillar to the predictive pillar.
+This section records possible future uses. It is not a required diagnostic
+modeling deliverable.
 
 Create a table like this:
 
 | Diagnostic Finding | Candidate Predictive Feature | Use? | Reason |
 |---|---|---:|---|
-| Rating count is skewed | `log_total_rating_count` | Conditional | Useful for visibility/recommendation scoring, but avoid as a quality predictor if the model is meant to score games before rating activity exists |
-| Genre high-rated share differs | Genre one-hot encoding | Yes | Captures structured quality pattern |
-| Theme high-rated share differs | Theme one-hot encoding | Yes | Supports vibe-based quality patterns |
+| Rating count is skewed | `log_total_rating_count` | Conditional | Measures rating activity/confidence; avoid leakage when predicting reception |
+| Cohort-adjusted genre association exists | Genre one-hot encoding | Maybe | Requires later validation outside the curated sample |
+| Cohort-adjusted theme association exists | Theme one-hot encoding | Maybe | Requires later validation outside the curated sample |
 | Platform reach relates to visibility | `num_platforms` | Yes | Measures distribution reach |
-| Metadata richness relates to visibility | `relationship_count` | Yes | Captures documentation/completeness |
+| Metadata components relate to visibility | Separate component variables | Maybe | Avoids conflating different relationship types |
 | Storyline availability differs by rating | `has_storyline` | Maybe | Could be useful but may reflect documentation bias |
 | Developer effects exist but sparse | Developer features | Maybe | Risk of high-cardinality overfitting |
 | Playtime bands differ by rating | Playtime band features | Maybe | Useful if coverage is strong |
@@ -1743,25 +2044,26 @@ Create a table like this:
 Export:
 
 ```text
-diagnostic_feature_recommendations.csv
+future_pillar_implications.csv
 ```
 
-This shows that the predictive pillar is informed by diagnostic evidence.
+Any use in predictive or prescriptive work must be evaluated later for leakage,
+availability at prediction time, and sampling bias.
 
 ---
 
-# 22. Recommended Dashboard Page: Hidden Gems & Rating Drivers
+# 23. Recommended Dashboard Page: Hidden Gems & Reception Patterns
 
 Recommended Streamlit page name:
 
 ```text
-Hidden Gems & Rating Drivers
+Hidden Gems & Reception Patterns
 ```
 
 ## Dashboard Sections
 
 ```text
-Hidden Gems & Rating Drivers
+Hidden Gems & Reception Patterns
 |
 |-- KPI Cards
 |-- Rating vs Visibility
@@ -1769,7 +2071,8 @@ Hidden Gems & Rating Drivers
 |-- Genre and Theme Drivers
 |-- Genre-Theme Heatmap
 |-- Platform Reach Patterns
-|-- Metadata Richness and RAG Readiness
+|-- User vs Critic Reception
+|-- Metadata Coverage Patterns
 |-- Gameplay and Playtime Patterns
 \-- Diagnostic Takeaways
 ```
@@ -1782,7 +2085,9 @@ Hidden Gems & Rating Drivers
 | High-Rated Games | Games with `total_rating >= 80` |
 | Hidden Gem Candidates | Games meeting hidden-gem rule |
 | Median Rating | Middle rating in diagnostic sample |
-| Median Rating Count | Middle visibility/confidence value |
+| Median Rating Count | Middle rating-evidence value |
+| PopScore Coverage | Games with IGDB interest visibility |
+| Median PopScore Percentile | Middle visibility among covered games |
 | Top Hidden-Gem Genre | Genre with strongest hidden-gem count/share |
 | Top Hidden-Gem Theme | Theme with strongest hidden-gem count/share |
 | RAG-Ready Games | Games with enough metadata for game profile documents |
@@ -1794,10 +2099,11 @@ platform
 platform family
 genre
 theme
-release decade
+release year
+extraction cohort
 rating band
 game type
-metadata richness band
+metadata volume band
 playtime band
 minimum rating count
 hidden gem threshold
@@ -1807,18 +2113,19 @@ hidden gem threshold
 
 | Visual | Dashboard Purpose |
 |---|---|
-| Rating vs rating count scatter | Shows popularity bias and hidden gems |
+| Rating vs PopScore scatter | Shows quality versus visibility |
 | Hidden gem table | Actionable discovery output |
-| Genre high-rated share bar chart | Rating pattern by genre |
+| Genre cohort-adjusted effect chart | Reception association by genre |
 | Theme hidden-gem share bar chart | Vibe discovery pattern |
 | Genre-theme heatmap | Strong metadata combinations |
 | Platform reach vs visibility chart | Distribution reach insight |
-| Metadata richness vs rating count chart | RAG readiness insight |
+| User vs critic agreement chart | Reception agreement and disagreement |
+| Metadata component chart | Documentation/coverage pattern |
 | Gameplay/playtime summary chart | User-preference insight |
 
 ---
 
-# 23. Implementation-Ready Notebook Checklist
+# 24. Implementation-Ready Notebook Checklist
 
 Use this as the build checklist in Codex or your notebook.
 
@@ -1838,38 +2145,46 @@ Use this as the build checklist in Codex or your notebook.
 - [ ] Count games with `total_rating_count`.
 - [ ] Count rating-reliable games.
 - [ ] Count high-rated games.
+- [ ] Validate 1,000 games per release year.
+- [ ] Validate one extraction cohort per game.
+- [ ] Count quality, popularity, and comparison cohorts.
+- [ ] Count PopScore-covered games.
 - [ ] Run integrity check or import data quality status.
 - [ ] Export `diagnostic_dataset_snapshot.csv`.
 
 ## Diagnostic Base
 
 - [ ] Build all-game `diagnostic_game_base`.
-- [ ] Add relationship counts.
+- [ ] Join extraction cohort and PopScore fields.
+- [ ] Add separate metadata component counts.
 - [ ] Add rating bands.
 - [ ] Add high-rated flag.
-- [ ] Add metadata richness band.
+- [ ] Add within-year metadata volume percentile/band.
 - [ ] Add RAG readiness flag.
+- [ ] Add user-critic gap.
 - [ ] Add `log_total_rating_count` in pandas with `np.log1p`.
 - [ ] Create rating-available and rating-reliable subsets.
-- [ ] Add visibility percentile within the rating-reliable pool.
+- [ ] Preserve missing PopScore as visibility unknown.
 - [ ] Create hidden-gem eligible subset.
-- [ ] Add visibility percentile within the hidden-gem eligible pool.
+- [ ] Add within-release-year PopScore percentile.
 - [ ] Export `diagnostic_game_base.csv`.
 - [ ] Export `diagnostic_rating_reliable_base.csv`.
 
-## Rating vs Visibility
+## Quality vs Visibility
 
-- [ ] Scatter plot: rating vs log rating count.
-- [ ] Pearson correlation.
-- [ ] Spearman correlation.
+- [ ] Scatter plot: rating vs PopScore percentile.
+- [ ] Calculate quality-PopScore Spearman correlation.
+- [ ] Calculate quality-rating-activity Spearman correlation separately.
+- [ ] Repeat by cohort/release-year band as sensitivity checks.
+- [ ] Summarize PopScore coverage.
 - [ ] Rating band visibility summary.
 - [ ] Export correlation and summary CSVs.
 
 ## Hidden Gems
 
 - [ ] Create hidden-gem flag.
-- [ ] Create hidden-gem score.
 - [ ] Create conservative, balanced, and broad sensitivity rules.
+- [ ] Export year-specific PopScore cutoffs.
 - [ ] Export hidden-gem candidate table.
 - [ ] Export threshold summary.
 - [ ] Export sensitivity analysis.
@@ -1881,6 +2196,9 @@ Use this as the build checklist in Codex or your notebook.
 - [ ] Build genre rating summary.
 - [ ] Build theme rating summary.
 - [ ] Add sample-size filters.
+- [ ] Estimate quality-vs-comparison odds ratios with release-year controls.
+- [ ] Add 95% confidence intervals.
+- [ ] Apply Benjamini-Hochberg correction.
 - [ ] Create median rating visuals.
 - [ ] Create high-rated share visuals.
 - [ ] Create hidden-gem share visuals.
@@ -1888,7 +2206,7 @@ Use this as the build checklist in Codex or your notebook.
 ## Genre-Theme Diagnostics
 
 - [ ] Build genre-theme combination table.
-- [ ] Filter combinations with at least 10 games.
+- [ ] Filter combinations with at least 20 reliable games.
 - [ ] Create heatmap for median rating.
 - [ ] Create heatmap or table for high-rated share.
 - [ ] Export `genre_theme_rating_summary.csv`.
@@ -1896,7 +2214,7 @@ Use this as the build checklist in Codex or your notebook.
 ## Platform Diagnostics
 
 - [ ] Build platform reach bands.
-- [ ] Compare platform reach vs rating count.
+- [ ] Compare platform reach vs PopScore visibility.
 - [ ] Compare platform reach vs rating.
 - [ ] Build platform family summary.
 - [ ] Build platform type summary.
@@ -1907,13 +2225,15 @@ Use this as the build checklist in Codex or your notebook.
 - [ ] Build developer summary with `developer = 1`.
 - [ ] Build publisher summary with `publisher = 1`.
 - [ ] Apply minimum sample-size thresholds.
+- [ ] Add confidence intervals and multiple-test correction.
 - [ ] Export developer and publisher summaries.
 - [ ] Document company-level caveats.
 
-## Metadata and RAG Readiness
+## Metadata Components and Future Readiness
 
-- [ ] Compare metadata richness vs visibility.
-- [ ] Compare metadata richness vs rating.
+- [ ] Compare separate metadata components vs visibility.
+- [ ] Compare separate metadata components vs rating/cohort.
+- [ ] Treat total metadata volume as a secondary percentile summary.
 - [ ] Compare storylines and text length against rating/rating count.
 - [ ] Summarize RAG-ready games.
 - [ ] Export metadata and RAG readiness summaries.
@@ -1926,16 +2246,24 @@ Use this as the build checklist in Codex or your notebook.
 - [ ] Build playtime band rating summary.
 - [ ] Export gameplay/playtime CSVs.
 
-## Popularity Primitives
+## PopScore and Popularity Primitives
 
-- [ ] Summarize popularity signal coverage.
+- [ ] Summarize PopScore coverage by year and cohort.
+- [ ] Use IGDB interest as the main visibility signal.
 - [ ] Group by source and popularity type.
 - [ ] Avoid combining incompatible popularity values.
 - [ ] Compare popularity signals with rating count only within comparable groups.
 
+## User-versus-Critic Diagnostics
+
+- [ ] Build user/critic agreement summary.
+- [ ] Calculate user-critic gap.
+- [ ] Export largest disagreement cases.
+- [ ] Compare total-rating findings against user-only ratings.
+
 ## Final Outputs
 
-- [ ] Export `diagnostic_feature_recommendations.csv`.
+- [ ] Export optional `future_pillar_implications.csv`.
 - [ ] Export `diagnostic_takeaways.csv`.
 - [ ] Close SQLite connection.
 - [ ] Write final notebook takeaways.
@@ -1943,7 +2271,7 @@ Use this as the build checklist in Codex or your notebook.
 
 ---
 
-# 24. Exact CSV Output Checklist
+# 25. Exact CSV Output Checklist
 
 Minimum required outputs:
 
@@ -1951,17 +2279,20 @@ Minimum required outputs:
 diagnostic_dataset_snapshot.csv
 diagnostic_game_base.csv
 diagnostic_rating_reliable_base.csv
-rating_visibility_correlation.csv
-rating_band_visibility_summary.csv
+quality_popscore_correlation.csv
+quality_rating_activity_correlation.csv
+rating_band_popscore_summary.csv
 hidden_gem_candidates.csv
 hidden_gem_threshold_summary.csv
 hidden_gem_sensitivity_analysis.csv
+user_critic_agreement_summary.csv
+user_critic_gap_games.csv
 genre_rating_summary.csv
 theme_rating_summary.csv
 genre_theme_rating_summary.csv
 platform_reach_summary.csv
-metadata_richness_visibility_summary.csv
-diagnostic_feature_recommendations.csv
+metadata_component_summary.csv
+cohort_adjusted_association_summary.csv
 diagnostic_takeaways.csv
 ```
 
@@ -1975,7 +2306,8 @@ platform_family_rating_summary.csv
 platform_type_rating_summary.csv
 developer_rating_summary.csv
 publisher_rating_summary.csv
-metadata_richness_rating_summary.csv
+metadata_volume_rating_summary.csv
+metadata_volume_visibility_summary.csv
 rag_readiness_summary.csv
 game_mode_rating_summary.csv
 player_perspective_rating_summary.csv
@@ -1987,22 +2319,22 @@ popularity_type_rating_count_correlation.csv
 
 ---
 
-# 25. Exact Chart Checklist
+# 26. Exact Chart Checklist
 
 Minimum required charts:
 
 | Chart | Required? | Purpose |
 |---|---:|---|
-| Rating vs log rating count scatter | Yes | Popularity bias / quality vs visibility |
-| Rating band visibility bar/table | Yes | Shows rating-count differences by quality band |
+| Rating vs PopScore scatter | Yes | Quality versus visibility |
+| Rating activity vs PopScore comparison | Yes | Separates confidence from visibility |
 | Hidden gems highlighted scatter | Yes | Main diagnostic story |
 | Top hidden gems table | Yes | Actionable output |
-| Median rating by genre | Yes | Genre performance |
-| High-rated share by genre | Yes | Predictive feature support |
+| Genre odds-ratio chart | Yes | Cohort-adjusted genre association |
+| User vs critic agreement scatter | Yes | Reception agreement |
 | Median rating by theme | Yes | Vibe performance |
 | Genre-theme heatmap | Yes | Supports natural-language matching |
 | Platform reach vs visibility | Yes | Platform distribution pattern |
-| Metadata richness vs rating count | Yes | RAG readiness / documentation bias |
+| Metadata components vs PopScore | Yes | Documentation/visibility association |
 
 Optional but valuable charts:
 
@@ -2010,8 +2342,8 @@ Optional but valuable charts:
 |---|---|
 | Hidden gems by theme | Vibe discovery |
 | Hidden gems by platform family | Platform-specific discovery |
-| Developer high-rated share | Company pattern |
-| Publisher high-rated share | Company pattern |
+| Developer effect-size chart | Company pattern |
+| Publisher effect-size chart | Company pattern |
 | Game mode rating summary | Gameplay preference insight |
 | Player perspective rating summary | Camera/view preference insight |
 | Playtime band rating summary | Session-length preference insight |
@@ -2019,20 +2351,20 @@ Optional but valuable charts:
 
 ---
 
-# 26. Minimum Viable Diagnostic Pillar
+# 27. Minimum Viable Diagnostic Pillar
 
 If time becomes limited, focus on the strongest diagnostic story.
 
 ## Must-Have Analyses
 
-1. Rating vs visibility
+1. Quality vs PopScore visibility
 2. Hidden gem identification
-3. Genre rating diagnostics
-4. Theme rating diagnostics
+3. User-versus-critic reception
+4. Cohort-adjusted genre/theme diagnostics
 5. Genre-theme combination diagnostics
 6. Platform reach diagnostics
-7. Metadata richness / RAG readiness diagnostics
-8. Diagnostic-to-predictive feature recommendations
+7. Metadata component diagnostics
+8. Statistical effect-size and confidence-interval reporting
 
 ## Can Be Secondary
 
@@ -2040,61 +2372,74 @@ If time becomes limited, focus on the strongest diagnostic story.
 2. Multiplayer support diagnostics
 3. Player perspective diagnostics
 4. Playtime diagnostics
-5. Popularity primitive diagnostics
+5. Raw popularity primitive diagnostics beyond the main IGDB interest view
 
 ## Why These Are Secondary
 
-Developer/publisher results can be noisy because company-level samples may be small. Gameplay and playtime analysis are useful, but they are less central than hidden gems, rating drivers, platform constraints, and metadata richness. Popularity primitives require careful normalization and should not distract from the MVP.
+Developer/publisher results can be noisy because company-level samples may be
+small. Gameplay and playtime analysis are useful, but they are less central
+than hidden gems, cohort-adjusted reception associations, platform constraints,
+and PopScore visibility.
 
 ---
 
-# 27. Recommended Final Diagnostic Takeaways Format
+# 28. Recommended Final Diagnostic Takeaways Format
 
 At the end of the notebook, write 5-8 takeaways using this format:
 
 ```markdown
 ## Diagnostic Takeaways
 
-1. Rating quality and rating activity are related but not identical.
-   - Evidence: [correlation result], rating-vs-count scatter.
-   - Project implication: Recommendation logic should not rank only by popularity.
+1. Rating quality, rating evidence, and PopScore visibility are distinct.
+   - Evidence: [quality-PopScore correlation], [quality-count correlation].
+   - Project implication: Keep quality, confidence, and visibility as separate signals.
 
 2. Hidden-gem candidates exist under the balanced threshold.
    - Evidence: [number] games meet the hidden-gem rule.
    - Project implication: Hidden-gem boost can be added to the prescriptive engine.
 
-3. Certain genres/themes show stronger high-rated shares.
-   - Evidence: [top genres/themes].
-   - Project implication: Genre/theme metadata should be included in predictive features and recommendation explanations.
+3. Certain genres/themes have cohort-adjusted reception associations.
+   - Evidence: [odds ratios, confidence intervals, adjusted p-values].
+   - Project implication: These are associations, not causal quality effects.
 
 4. Platform reach appears associated with visibility.
    - Evidence: [platform reach summary].
    - Project implication: Number of platforms can be used as a visibility/reach feature.
 
-5. Metadata richness appears related to rating activity or RAG readiness.
-   - Evidence: [metadata richness summary].
-   - Project implication: Relationship-count features can support model quality and RAG filtering.
+5. Specific metadata components appear related to visibility or cohort.
+   - Evidence: [component-level summaries].
+   - Project implication: Metadata volume may reflect documentation bias and
+     should not be treated as game quality.
 ```
 
 ---
 
-# 28. Final Report Wording
+# 29. Final Report Wording
 
 Use this paragraph in the final report or dashboard narrative:
 
 ```markdown
-The diagnostic analytics pillar investigates why certain games in the IGDB project sample appear more highly rated, more visible, or more discoverable than others. The analysis compares rating quality, rating activity, genre/theme structure, platform reach, developer/publisher roles, metadata richness, gameplay format, and playtime patterns. The main outputs are hidden-gem candidates, rating-driver summaries, and diagnostic findings that inform the predictive model and future hybrid recommendation engine.
+The diagnostic analytics pillar investigates associations between game
+reception, rating evidence, IGDB PopScore visibility, genre/theme structure,
+platform reach, company roles, metadata coverage, gameplay format, and
+playtime. Analyses account for release year and extraction cohort. The primary
+outputs are auditable hidden-gem candidates, user-versus-critic comparisons,
+and cohort-adjusted association summaries.
 ```
 
 For the dashboard introduction:
 
 ```markdown
-This page examines rating drivers and hidden-gem opportunities in the current IGDB project sample. It compares rating quality against visibility, highlights games that are highly rated but less visible, and explores how genre, theme, platform reach, metadata richness, gameplay format, and company roles relate to rating outcomes. These findings support the next project layers: predictive modeling and recommendation scoring.
+This page examines reception and hidden-gem patterns in the curated IGDB
+sample. It compares reliable ratings with PopScore visibility, highlights
+high-rated games with lower within-year interest, examines user-versus-critic
+agreement, and reports cohort-adjusted associations for genres, themes,
+platform reach, metadata coverage, gameplay format, and company roles.
 ```
 
 ---
 
-# 29. Key Limitations to Document
+# 30. Key Limitations to Document
 
 Include these limitations in the notebook and final report:
 
@@ -2103,17 +2448,19 @@ The analysis is based on a curated 15,000-game yearly cohort sample, not the
 full IGDB catalog. Quality and visibility cases are deliberately oversampled,
 so full-sample prevalence estimates require cohort-aware analysis.
 Ratings are observational and may reflect audience size, historical popularity, genre bias, or platform availability.
-total_rating_count is a proxy for visibility, not a perfect popularity measure.
+total_rating_count measures rating evidence/activity, not direct visibility.
+Missing PopScore means visibility unknown, not low visibility.
 Games can belong to multiple genres, themes, and platforms, so group counts overlap.
 Company analysis may be noisy because many developers/publishers have few games in the sample.
 Popularity primitive values should not be combined without normalization.
-Metadata richness may reflect documentation bias rather than game quality.
+Metadata volume may reflect documentation bias rather than game quality.
+Multiple category tests require effect sizes, confidence intervals, and false-discovery-rate correction.
 Diagnostic findings show association, not causation.
 ```
 
 ---
 
-# 30. Recommended Build Order
+# 31. Recommended Build Order
 
 Now that the curated 15,000-game database works, build in this order:
 
@@ -2135,7 +2482,7 @@ foreign key check
 
 This is the foundation.
 
-## Step 3 - Build rating vs visibility analysis
+## Step 3 - Build quality, rating-activity, and PopScore analysis
 
 This creates the logic for hidden gems.
 
@@ -2143,32 +2490,34 @@ This creates the logic for hidden gems.
 
 This is the most important diagnostic artifact.
 
-## Step 5 - Build genre/theme/platform diagnostics
+## Step 5 - Build user-versus-critic and cohort-adjusted category diagnostics
 
-These feed predictive and recommendation logic.
+Report odds ratios, confidence intervals, and adjusted p-values.
 
-## Step 6 - Build metadata richness and RAG readiness diagnostics
+## Step 6 - Build platform and metadata component diagnostics
 
-This connects directly to the chatbot and vector search layer.
+Analyze separate metadata components before any total-volume summary.
 
 ## Step 7 - Add secondary diagnostics
 
-Add developer/publisher, gameplay, multiplayer, playtime, and popularity primitive analysis if time allows.
+Add developer/publisher, gameplay, multiplayer, playtime, and raw popularity
+primitive analysis if time allows.
 
-## Step 8 - Build diagnostic-to-predictive recommendations
+## Step 8 - Document future-pillar implications
 
-This closes the pillar and prepares the predictive pillar.
+Keep these as implications, not diagnostic implementation requirements.
 
 ---
 
-# 31. Final Diagnostic Pillar Definition
+# 32. Final Diagnostic Pillar Definition
 
 The completed diagnostic pillar should be defined as:
 
 ```markdown
 The diagnostic analytics layer identifies relationships between game ratings,
-rating activity, PopScore visibility, genre/theme structure, platform reach,
-metadata richness, gameplay format, and hidden-gem potential in the curated
+rating activity, PopScore visibility, user-versus-critic agreement,
+genre/theme structure, platform reach, metadata coverage, gameplay format, and
+hidden-gem potential in the curated
 15,000-game IGDB project sample. Analyses must account for release year and
 extraction cohort.
 ```
@@ -2179,5 +2528,6 @@ The final diagnostic page should answer:
 Why do some games appear more highly rated, more visible, or more discoverable than others?
 ```
 
-The cleanest MVP is a **Hidden Gems & Rating Drivers** dashboard page supported by the diagnostic notebook and exported CSVs.
+The cleanest MVP is a **Hidden Gems & Reception Patterns** dashboard page
+supported by the diagnostic notebook and exported CSVs.
 

@@ -6,3 +6,6 @@ venv/
 .vscode
 docs/session_log.md
 data/analytics/descriptive/*
+data/database/igdb_games.db
+
+

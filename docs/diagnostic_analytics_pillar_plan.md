@@ -6,7 +6,7 @@
 **Course:** BUSA 649  
 **Pillar:** Diagnostic Analytics  
 **Recommended Dashboard Page:** Hidden Gems & Rating Drivers  
-**Current Dataset:** 10,000-game IGDB project sample
+**Current Dataset:** 15,000-game curated yearly IGDB sample
 **Recommended Notebook:** `notebooks/02_diagnostic_analytics_exploration.ipynb`  
 **Recommended Output Folder:** `data/analytics/diagnostic/`
 
@@ -97,72 +97,71 @@ Diagnostic = compare, segment, explain, and identify patterns
 
 ---
 
-# 4. Updated Dataset Caveat for the 10,000-Game Version
+# 4. Updated Dataset Caveat for the Curated 15,000-Game Version
 
-The previous extraction used 3,000 games. The current pipeline now contains
-**10,000 games**, providing larger diagnostic groups
-groups across ratings, platforms, genres, themes, and companies.
+The current extraction selects exactly 1,000 released main games from each year
+from 2010 through 2024. Every selected game has a name, first release date, at
+least one genre, at least one platform, and no version parent.
 
-The completed extraction uses `GAME_LIMIT = 10000`, sorts games by IGDB
-`id asc`, and does **not** pre-filter for summaries, rating availability, or
-rating-count thresholds. The expanded pull increases the number of games and
-usable rating records, but ID-ordered selection remains strongly concentrated
-in the 1990s through 2010s and is not random or representative.
+Selection uses three mutually exclusive cohorts:
 
-However, the diagnostic results still describe the **project sample**, not the entire IGDB catalog or the full video game market. Rating-dependent analysis must still filter to games with usable rating fields.
+```text
+Quality cohort:
+    total_rating >= 75
+    AND total_rating_count >= 25
+    ranked by Bayesian-adjusted yearly total rating
+
+Popularity cohort:
+    highest project-defined IGDB interest score
+    with IGDB Visits used as a fallback
+
+Comparison cohort:
+    reproducible random sample from remaining eligible games
+```
+
+The quality and popularity cohorts are deliberately oversampled. Consequently,
+the full 15,000-game sample must not be used to estimate the market prevalence
+of high-rated or popular games. Use `extraction_cohorts` to stratify results.
+Use the comparison cohort for population-oriented summaries, or apply a
+documented sampling-aware method.
 
 Suggested notebook/report caveat:
 
 ```markdown
-The diagnostic results represent the current 10,000-game IGDB project sample,
-not the full IGDB catalog or video game market. The pull is sorted by IGDB game
-ID and has no summary, rating-availability, or rating-count pre-filter.
-Increasing the sample improves coverage but does not remove selection bias.
-Rating, visibility, and hidden-gem findings use only records meeting the stated
-rating-availability and reliability rules and should be interpreted as
-project-sample findings rather than market-wide conclusions. Release decade
-must be reported and used to stratify or qualify analyses where game age could
-affect ratings, platform reach, metadata volume, or visibility.
+The diagnostic results represent a curated 15,000-game IGDB project sample,
+not the full IGDB catalog or video game market. The sample contains 1,000
+released main games per year from 2010 through 2024 and deliberately includes
+all games meeting the project reception rule, up to 200 PopScore-visible games
+per year, and a random comparison sample from the remaining eligible games.
+Because inclusion probabilities differ by cohort and year, unadjusted
+high-rated shares from the full sample are not market prevalence estimates.
+Analyses must report or control for `extraction_cohorts.cohort` and release
+year.
 ```
 
 Recommended extraction snapshot table:
 
 | Item | Value |
 |---|---:|
-| Games | 10,000 |
+| Games | 15,000 |
 | Database | `data/database/igdb_games.db` |
 | Diagnostic output folder | `data/analytics/diagnostic/` |
-| Extraction method | Expanded ID-ordered project pull |
-| Base sort | `id asc` |
-| Summary/rating pre-filters | None |
-| Games with `total_rating` | 7,794 |
-| Games with `total_rating_count >= 10` | 5,057 |
-| Games with `total_rating_count >= 25` | 3,172 |
-| Games with `total_rating_count >= 50` | 2,076 |
+| Extraction method | Curated yearly cohort sample |
+| Release years | 2010–2024 |
+| Games per year | 1,000 |
+| Game type | Main Game |
+| Games with `total_rating` | 6,278 |
+| Games with `total_rating_count >= 10` | 3,828 |
+| Games with `total_rating_count >= 25` | 2,498 |
+| Games with `total_rating_count >= 50` | 1,525 |
+| Quality cohort | 1,418 |
+| Popularity cohort | 3,000 |
+| Comparison cohort | 10,582 |
 | Rating field | `games.total_rating` |
 | Rating confidence field | `games.total_rating_count` |
 | Main quality threshold | `total_rating >= 80` |
-| Main visibility proxy | `total_rating_count` |
+| Main visibility signal | IGDB PopScore primitives |
 | Hidden-gem threshold | Percentile-based |
-
-Current release-decade coverage:
-
-| Release decade | Games |
-|---|---:|
-| 1950s | 1 |
-| 1960s | 1 |
-| 1970s | 21 |
-| 1980s | 650 |
-| 1990s | 2,215 |
-| 2000s | 4,153 |
-| 2010s | 2,814 |
-| 2020s | 21 |
-| Missing release year | 124 |
-
-The 2020s remain severely underrepresented. Do not make decade-level claims
-about the 1950s, 1960s, 1970s, or 2020s from this sample. For rating,
-visibility, platform-reach, and metadata-volume analyses, show release-decade
-strata or include release decade as a control/segmentation variable.
 
 ---
 
@@ -219,7 +218,7 @@ Use a minimum rating-count threshold when interpreting ratings.
 Recommended default:
 
 ```text
-total_rating_count >= 10
+total_rating_count >= 25
 ```
 
 Create separate diagnostic datasets instead of using one filtered table for every analysis:
@@ -228,7 +227,7 @@ Create separate diagnostic datasets instead of using one filtered table for ever
 |---|---|---|
 | All-game base | No rating filter | Metadata coverage, RAG readiness, descriptive carryover, and feature availability |
 | Rating-available sample | `total_rating IS NOT NULL` | Broad rating coverage summaries |
-| Rating-reliable sample | `total_rating IS NOT NULL AND total_rating_count >= 10` | Main diagnostic analysis |
+| Rating-reliable sample | `total_rating IS NOT NULL AND total_rating_count >= 25` | Main diagnostic analysis |
 | Hidden-gem eligible sample | Rating-reliable sample, optionally `game_type_name = 'Main Game'` | Hidden-gem percentile thresholds and candidate selection |
 
 Do not build `diagnostic_game_base` by filtering out unrated games. Build the base at one row per game first, then create rating-specific subsets from it. Otherwise, RAG readiness and metadata richness analysis would silently exclude games that are useful for recommendation but do not have rating data.
@@ -246,7 +245,7 @@ Recommended diagnostic filter:
 
 ```text
 total_rating IS NOT NULL
-AND total_rating_count >= 10
+AND total_rating_count >= 25
 ```
 
 ## 5.5 Platform Availability Rule
@@ -410,7 +409,7 @@ Recommended notebook constants:
 
 ```python
 QUALITY_THRESHOLD = 80
-MIN_RATING_COUNT = 10
+MIN_RATING_COUNT = 25
 HIDDEN_GEM_VISIBILITY_PERCENTILE = 0.40
 MAIN_GAME_ONLY = True
 ```
@@ -423,10 +422,9 @@ These constants make the notebook easier to adjust later.
 
 ## Purpose
 
-Before doing diagnostic analysis, confirm that the database is healthy and
-that the 10,000-game sample has enough usable records. Validate release-decade
-coverage explicitly because increasing the sample size did not remove the
-ID-order temporal bias.
+Before doing diagnostic analysis, confirm that the database is healthy, that
+each release year contains 1,000 games, and that every game has exactly one
+`extraction_cohorts` record. Report cohort counts and rating/PopScore coverage.
 
 Run a short validation block:
 
@@ -435,25 +433,28 @@ SELECT
     COUNT(*) AS total_games,
     SUM(CASE WHEN total_rating IS NOT NULL THEN 1 ELSE 0 END) AS games_with_total_rating,
     SUM(CASE WHEN total_rating_count IS NOT NULL THEN 1 ELSE 0 END) AS games_with_total_rating_count,
-    SUM(CASE WHEN total_rating IS NOT NULL AND total_rating_count >= 10 THEN 1 ELSE 0 END) AS rating_reliable_games,
-    SUM(CASE WHEN total_rating >= 80 AND total_rating_count >= 10 THEN 1 ELSE 0 END) AS high_rated_games
+    SUM(CASE WHEN total_rating IS NOT NULL AND total_rating_count >= 25 THEN 1 ELSE 0 END) AS rating_reliable_games,
+    SUM(CASE WHEN total_rating >= 80 AND total_rating_count >= 25 THEN 1 ELSE 0 END) AS high_rated_games
 FROM games;
 ```
 
-Add a release-decade coverage check:
+Add release-year and extraction-cohort checks:
 
 ```sql
 SELECT
-    CASE
-        WHEN release_year IS NULL THEN 'Missing'
-        ELSE CAST((release_year / 10) * 10 AS INTEGER) || 's'
-    END AS release_decade,
+    release_year,
     COUNT(*) AS game_count
 FROM games
-GROUP BY release_decade
-ORDER BY
-    CASE WHEN release_year IS NULL THEN 1 ELSE 0 END,
-    MIN(release_year);
+GROUP BY release_year
+ORDER BY release_year;
+
+SELECT
+    release_year,
+    cohort,
+    COUNT(*) AS game_count
+FROM extraction_cohorts
+GROUP BY release_year, cohort
+ORDER BY release_year, cohort;
 ```
 
 Also run or reference the existing data quality checks:
@@ -637,7 +638,7 @@ base AS (
 
         CASE
             WHEN g.total_rating IS NOT NULL
-             AND g.total_rating_count >= 10 THEN 1
+             AND g.total_rating_count >= 25 THEN 1
             ELSE 0
         END AS rating_reliable_flag,
 
@@ -867,14 +868,15 @@ Recommended current setting:
 
 ```text
 quality_threshold = 80
-minimum_confidence_count = 10
+minimum_confidence_count = 25
 low_visibility_threshold = 40th percentile
 main game only = yes
 ```
 
-Because the database now contains 10,000 games, the 40th percentile is based
-on a larger eligible pool than it was with 3,000 games. It remains relative to
-this ID-ordered project sample.
+The 40th percentile must be calculated within the relevant cohort and release
+year, or within a clearly documented pooled analytical subset. Do not calculate
+one visibility percentile across the curated cohorts without controlling for
+their different selection rules.
 
 Important implementation rule:
 
@@ -886,7 +888,7 @@ For the MVP, that pool should be:
 
 ```text
 total_rating IS NOT NULL
-AND total_rating_count >= 10
+AND total_rating_count >= 25
 AND game_type_name = 'Main Game'
 ```
 
@@ -1038,7 +1040,7 @@ hidden_gem_share
 
 ## Recommended Minimum Group Size
 
-Since the dataset now has 10,000 games:
+Since the curated dataset has 15,000 games:
 
 ```text
 genre game_count >= 25
@@ -1083,7 +1085,10 @@ Use Python/Pandas for median and IQR if SQLite percentile functions are unavaila
 ## Interpretation Style
 
 ```markdown
-In the current 10,000-game IGDB sample, [genre] has a higher median total rating than [genre]. This suggests the genre may be associated with stronger rating outcomes in the project dataset, but this does not prove the genre causes higher ratings.
+In the current curated IGDB sample, [genre] has a higher median total rating
+than [genre] within [cohort or sampling-adjusted subset]. This suggests an
+association in the project dataset, but it does not prove the genre causes
+higher ratings.
 ```
 
 Export:
@@ -1181,10 +1186,10 @@ median_total_rating_count
 
 ## Minimum Group Size
 
-Since the dataset now has 10,000 games:
+Since the curated dataset has 15,000 games:
 
 ```text
-genre-theme game_count >= 10
+genre-theme game_count >= 20
 ```
 
 If too many combinations disappear, lower the threshold to 5 and clearly label those outputs as exploratory.
@@ -1348,15 +1353,15 @@ hidden_gem_by_platform_family.csv
 
 ## Challenge
 
-Even with 10,000 games, company analysis can be noisy. Some developers may only appear once or twice.
+Even with 15,000 games, company analysis can be noisy. Some developers may only appear once or twice.
 
 ## Minimum Group Size
 
 Recommended:
 
 ```text
-developer_game_count >= 5
-publisher_game_count >= 5
+developer_game_count >= 10
+publisher_game_count >= 10
 ```
 
 For an exploratory appendix:
@@ -2094,8 +2099,9 @@ This page examines rating drivers and hidden-gem opportunities in the current IG
 Include these limitations in the notebook and final report:
 
 ```text
-The analysis is based on a 10,000-game ID-ordered project sample, not the full IGDB catalog.
-The sample remains concentrated in the 1990s through 2010s and severely underrepresents the 2020s.
+The analysis is based on a curated 15,000-game yearly cohort sample, not the
+full IGDB catalog. Quality and visibility cases are deliberately oversampled,
+so full-sample prevalence estimates require cohort-aware analysis.
 Ratings are observational and may reflect audience size, historical popularity, genre bias, or platform availability.
 total_rating_count is a proxy for visibility, not a perfect popularity measure.
 Games can belong to multiple genres, themes, and platforms, so group counts overlap.
@@ -2109,7 +2115,7 @@ Diagnostic findings show association, not causation.
 
 # 30. Recommended Build Order
 
-Now that the 10,000-game database works, build in this order:
+Now that the curated 15,000-game database works, build in this order:
 
 ## Step 1 - Re-run short descriptive sanity check
 
@@ -2160,7 +2166,11 @@ This closes the pillar and prepares the predictive pillar.
 The completed diagnostic pillar should be defined as:
 
 ```markdown
-The diagnostic analytics layer identifies relationships between game ratings, rating activity, genre/theme structure, platform reach, metadata richness, gameplay format, and hidden-gem potential in the current 10,000-game IGDB project sample. The key output is a hidden-gem definition and a set of rating/visibility driver analyses that inform both the predictive model and the future hybrid recommendation engine.
+The diagnostic analytics layer identifies relationships between game ratings,
+rating activity, PopScore visibility, genre/theme structure, platform reach,
+metadata richness, gameplay format, and hidden-gem potential in the curated
+15,000-game IGDB project sample. Analyses must account for release year and
+extraction cohort.
 ```
 
 The final diagnostic page should answer:

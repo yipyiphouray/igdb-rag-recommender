@@ -46,12 +46,15 @@ Validated against `data/database/igdb_games.db` on **2026-06-17** after the broa
 | Empty tables | 0 |
 | `PRAGMA integrity_check` | `ok` |
 | `PRAGMA foreign_key_check` failures | 0 |
-| Games with a platform | 2,999 |
-| Games with a summary | 2,933 |
-| Games with `total_rating` | 2,603 |
-| Games with a genre | 2,994 |
-| Games with a theme | 2,867 |
-| Games with a keyword | 2,836 |
+| Games | 15,000 |
+| Extraction cohort rows | 15,000 |
+| Games with a platform | 15,000 |
+| Games with a summary | 14,564 |
+| Games with `total_rating` | 6,278 |
+| Games with `total_rating_count >= 25` | 2,498 |
+| Games with a genre | 15,000 |
+| Games with a theme | 10,817 |
+| Games with a cover ID | 14,446 |
 
 Documented exceptions:
 
@@ -61,11 +64,13 @@ Documented exceptions:
 * Company `9254` (`Blade Games World`) has an IGDB founding timestamp outside
   Python's supported calendar range. The raw `start_date` is preserved and
   `start_date_iso` is intentionally `NULL`.
-* The current extraction selects 3,000 games using a generic unfiltered base
-  pull sorted by IGDB game ID. Unlike the earlier descriptive 500-game sample,
-  the current raw pull does not require summaries or rating-count thresholds.
-  Completeness metrics are therefore lower but more useful for diagnostic
-  analysis.
+* The current extraction selects 15,000 released main games: 1,000 per year
+  from 2010 through 2024. It requires a name, release date, genre, and platform.
+* The sample combines quality, PopScore-visible, and random comparison cohorts.
+  Quality and visibility are deliberately oversampled, so full-sample
+  prevalence estimates require cohort-aware interpretation.
+* Every game must have exactly one `extraction_cohorts` row. The current
+  database satisfies this rule.
 
 ---
 
@@ -1113,9 +1118,9 @@ Ideally 0 rows. If rows appear, document how these games will be handled in rati
 SELECT
     COUNT(*) AS total_games,
     SUM(CASE WHEN total_rating IS NOT NULL THEN 1 ELSE 0 END) AS games_with_total_rating,
-    SUM(CASE WHEN total_rating IS NOT NULL AND total_rating_count >= 10 THEN 1 ELSE 0 END) AS modeling_eligible_games,
-    SUM(CASE WHEN total_rating >= 80 AND total_rating_count >= 10 THEN 1 ELSE 0 END) AS highly_rated_games,
-    SUM(CASE WHEN total_rating < 80 AND total_rating_count >= 10 THEN 1 ELSE 0 END) AS lower_rated_games
+    SUM(CASE WHEN total_rating IS NOT NULL AND total_rating_count >= 25 THEN 1 ELSE 0 END) AS modeling_eligible_games,
+    SUM(CASE WHEN total_rating >= 80 AND total_rating_count >= 25 THEN 1 ELSE 0 END) AS highly_rated_games,
+    SUM(CASE WHEN total_rating < 80 AND total_rating_count >= 25 THEN 1 ELSE 0 END) AS lower_rated_games
 FROM games;
 ```
 
@@ -1795,7 +1800,7 @@ SELECT
     COUNT(*) AS rating_dashboard_eligible_games
 FROM games
 WHERE total_rating IS NOT NULL
-  AND total_rating_count >= 10;
+  AND total_rating_count >= 25;
 ```
 
 **Expected Result:**
@@ -1825,7 +1830,7 @@ SELECT
     COUNT(*) AS hidden_gem_candidate_count
 FROM ranked_games
 WHERE total_rating >= 80
-  AND total_rating_count >= 10
+  AND total_rating_count >= 25
   AND rating_count_decile <= 4;
 ```
 
@@ -1836,11 +1841,11 @@ sample-relative visibility threshold.
 
 **Important Note:**
 
-The earlier 500-game descriptive sample was sorted by `total_rating_count`
-descending during extraction. The current 3,000-game pull removes that
-popularity sort and rating-count filter, making it more suitable for diagnostic
-hidden-gem analysis. If `popularity_primitives` are used, normalize within each
-popularity type and source before combining signals.
+The current 15,000-game sample deliberately includes all quality-eligible games
+and separate PopScore-visible and random comparison cohorts. Hidden-gem checks
+must retain release year and extraction cohort. Prefer
+`vw_game_popscore_igdb_interest` over `total_rating_count` for visibility when
+coverage is available.
 
 ---
 

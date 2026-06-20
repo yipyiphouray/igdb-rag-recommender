@@ -1212,7 +1212,7 @@ Recommended filter for rating-based analysis:
 
 ```sql
 WHERE total_rating IS NOT NULL
-  AND total_rating_count >= 10
+  AND total_rating_count >= 25
 ```
 
 ---
@@ -1456,32 +1456,38 @@ LEFT JOIN release_date_statuses rds
 
 ---
 
-# 22. Recommended SQL View for Popularity Signals
+# 22. Implemented SQL Views for IGDB PopScore Signals
 
-```sql
-CREATE VIEW IF NOT EXISTS vw_game_popularity AS
-SELECT
-    pp.popularity_primitive_id,
-    g.game_id,
-    g.name AS game_name,
-    egs.source_name AS popularity_source,
-    pt.name AS popularity_type,
-    pp.value,
-    pp.calculated_at
-FROM popularity_primitives pp
-JOIN games g
-    ON pp.game_id = g.game_id
-LEFT JOIN popularity_types pt
-    ON pp.popularity_type_id = pt.popularity_type_id
-LEFT JOIN external_game_sources egs
-    ON pp.external_popularity_source_id = egs.external_game_source_id;
-```
+| View | Grain | Purpose |
+|---|---|---|
+| `vw_game_popscore_primitives` | One stored primitive snapshot | Adds readable game, source, and primitive labels. |
+| `vw_game_popscore_latest` | One latest row per game/source/type | Supports current popularity analysis without mixing historical snapshots. |
+| `vw_game_popscore_igdb_interest` | One game with both required IGDB signals | Provides a project-defined interest score using `0.60 * Want to Play + 0.40 * Playing`. |
+
+The interest score is based on the example in the official IGDB PopScore
+documentation. It is project-defined and should not be described as an
+official universal IGDB score.
+
+Do not use `AVG(popularity_primitives.value)` across types or sources. Steam
+reviews, Twitch watch hours, IGDB visits, and IGDB interest primitives have
+different meanings and distributions.
 
 ---
 
 # 23. Project-Defined Analytical Mappings
 
 These mappings are not official IGDB categories. They are project-defined labels to support analytics, dashboards, and recommendations.
+
+## 23.0 Extraction Cohort Mapping
+
+| `extraction_cohorts.cohort` | Meaning |
+|---|---|
+| `quality` | Met `total_rating >= 75` and `total_rating_count >= 25`; ranked by Bayesian-adjusted yearly rating. |
+| `popularity` | Selected by project-defined IGDB interest score or IGDB Visits after removing quality selections. |
+| `comparison` | Reproducible random sample from the remaining eligible games for the release year. |
+
+These cohorts have different inclusion rules and must be retained in
+diagnostic outputs.
 
 ## 23.1 Rating Bands
 
@@ -1499,8 +1505,8 @@ These mappings are not official IGDB categories. They are project-defined labels
 | Rule                                                   | Label               |
 | ------------------------------------------------------ | ------------------- |
 | `total_rating_count IS NULL OR total_rating_count = 0` | No Rating Evidence  |
-| `total_rating_count < 10`                              | Very Low Confidence |
-| `total_rating_count BETWEEN 10 AND 49`                 | Low Confidence      |
+| `total_rating_count < 25`                              | Low / insufficient diagnostic confidence |
+| `total_rating_count BETWEEN 25 AND 49`                 | Minimum diagnostic confidence |
 | `total_rating_count BETWEEN 50 AND 199`                | Medium Confidence   |
 | `total_rating_count >= 200`                            | Higher Confidence   |
 
@@ -1523,7 +1529,7 @@ A simple first version:
 ```text
 Hidden Gem Candidate =
 total_rating >= 80
-AND total_rating_count >= 10
+AND total_rating_count >= 25
 AND popularity value is below the median popularity value for comparable games
 ```
 

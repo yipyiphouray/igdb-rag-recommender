@@ -267,7 +267,7 @@ user asks for unavailable or historical titles.
 Important distinction:
 
 * In the current extract, `game_statuses` contains `Early Access`, `Offline`,
-  `Cancelled`, `Rumored`, and `Delisted`, and 9,699 of 10,000 games have
+  `Cancelled`, `Rumored`, and `Delisted`, and 13,600 of 15,000 games have
   `game_status_id = NULL`.
 * `NULL` must not automatically be interpreted as either released or
   unreleased.
@@ -298,7 +298,7 @@ Rating-based analysis should use a minimum rating count threshold.
 Recommended threshold:
 
 ```text
-total_rating_count >= 10
+total_rating_count >= 25
 ```
 
 Rationale:
@@ -318,7 +318,7 @@ highly_rated = 0 if total_rating < 80
 Recommended additional reliability filter:
 
 ```text
-total_rating_count >= 10
+total_rating_count >= 25
 ```
 
 This rule follows the project proposal’s modeling direction.
@@ -887,6 +887,32 @@ Rules:
 * Keep historical snapshots only if trend analysis is intended.
 * Do not compare popularity values from different calculation dates without documenting the method.
 
+## BR-057A — IGDB PopScore Integration Rule
+
+IGDB PopScore is a collection of popularity primitives, not one universal
+official score. The relational database exposes these signals through:
+
+```text
+vw_game_popscore_primitives
+vw_game_popscore_latest
+vw_game_popscore_igdb_interest
+```
+
+Rules:
+
+* Use `vw_game_popscore_latest` for current popularity analysis.
+* Do not average primitive values across popularity types or external sources.
+* Keep Steam, Twitch, and IGDB signals separate unless a documented
+  normalization method is applied.
+* `vw_game_popscore_igdb_interest.custom_interest_score` is project-defined,
+  not an official IGDB score.
+* The project-defined interest score follows IGDB's documented example:
+  `0.60 * Want to Play + 0.40 * Playing`.
+* Calculate the project-defined score only when both required IGDB primitives
+  are present.
+* Use `custom_interest_percentile` for relative comparisons within the current
+  database snapshot.
+
 ---
 
 # 13. Rating and Quality Rules
@@ -936,9 +962,9 @@ total_rating >= 80
 Recommended modeling version:
 
 ```text
-highly_rated = 1 if total_rating >= 80 and total_rating_count >= 10
-highly_rated = 0 if total_rating < 80 and total_rating_count >= 10
-exclude from supervised target if total_rating is null or total_rating_count < 10
+highly_rated = 1 if total_rating >= 80 and total_rating_count >= 25
+highly_rated = 0 if total_rating < 80 and total_rating_count >= 25
+exclude from supervised target if total_rating is null or total_rating_count < 25
 ```
 
 ## BR-062 — Rating Band Rule
@@ -976,19 +1002,32 @@ Suggested first rule:
 
 ```text
 total_rating >= 80
-AND total_rating_count >= 10
+AND total_rating_count >= 25
 AND normalized_popularity is below the median for comparable games
 ```
 
 Current-sample note:
 
-The earlier descriptive pull selected the 500 games with the highest
-`total_rating_count` among records meeting the base filters. The current
-diagnostic-ready pull contains 10,000 games and removes the rating-count and
-summary filters, so hidden-gem analysis is less constrained by the previous
-popularity-biased sample. The pull remains ordered by IGDB game ID and is not
-random or representative; comparable-group analysis should account for release
-decade where age may affect rating activity or visibility.
+The current diagnostic-ready pull contains 15,000 released main games: 1,000
+per year from 2010 through 2024. All games meeting the project quality
+selection rule are included, while visibility and comparison records follow
+different selection mechanisms. Hidden-gem analysis must therefore account for
+release year and `extraction_cohorts.cohort`.
+
+## BR-063A — Extraction Cohort Interpretation Rule
+
+Every selected game must have exactly one row in `extraction_cohorts`.
+
+Rules:
+
+* `quality` means the game met the extraction reception rule.
+* `popularity` means the game was selected using IGDB PopScore visibility after
+  removing quality-selected games.
+* `comparison` means the game was randomly selected from the remaining eligible
+  yearly population.
+* Full-sample high-rated or popular shares are not market prevalence estimates.
+* Use cohort-stratified reporting, the comparison cohort, or a documented
+  sampling-aware method for population-oriented conclusions.
 
 ## BR-064 — Comparable Group Rule
 
@@ -999,8 +1038,9 @@ Good comparison groups:
 ```text
 same genre
 same platform family
-same release decade
+same release year or nearby release period
 same game type
+same extraction cohort or sampling-adjusted population
 ```
 
 Avoid comparing:
@@ -1281,7 +1321,7 @@ Recommended modeling inclusion rule:
 
 ```text
 total_rating is not null
-AND total_rating_count >= 10
+AND total_rating_count >= 25
 ```
 
 ## BR-085 — Feature Leakage Rule
@@ -1445,8 +1485,8 @@ companies.status_id
 ```
 
 Treat these as optional source references. Do not assume they can always be
-joined within the local database. In the current 10,000-game extract, 9,949
-games have a selected cover ID and all 9,949 selected cover IDs resolve locally,
+joined within the local database. In the current 15,000-game extract, 14,446
+games have a selected cover ID and all 14,446 selected cover IDs resolve locally,
 but the relationship is not enforced by SQLite.
 
 ## BR-094 — Orphan Record Rule

@@ -6,7 +6,7 @@ This document visualizes the SQLite database created at:
 data/database/igdb_games.db
 ```
 
-The database contains 34 tables. It is split into two diagrams to keep the
+The database contains 35 tables. It is split into diagrams to keep the
 relationships readable.
 
 ## Core Catalog
@@ -38,6 +38,17 @@ erDiagram
     GAME_STATUSES {
         INTEGER game_status_id PK
         TEXT status_name
+    }
+
+    EXTRACTION_COHORTS {
+        INTEGER game_id PK, FK
+        INTEGER release_year
+        TEXT cohort
+        INTEGER selection_rank
+        REAL adjusted_quality_score
+        TEXT popularity_basis
+        REAL popularity_score
+        INTEGER random_seed
     }
 
     GENRES {
@@ -152,6 +163,7 @@ erDiagram
 
     GAME_TYPES ||--o{ GAMES : categorizes
     GAME_STATUSES ||--o{ GAMES : describes
+    GAMES ||--|| EXTRACTION_COHORTS : selected_as
 
     GAMES ||--o{ GAME_GENRES : has
     GENRES ||--o{ GAME_GENRES : classifies
@@ -300,6 +312,25 @@ erDiagram
     EXTERNAL_GAME_SOURCES ||--o{ POPULARITY_PRIMITIVES : supplies
     EXTERNAL_GAME_SOURCES ||--o{ POPULARITY_TYPES : supplies
 ```
+
+### PopScore Analytics Views
+
+The physical PopScore tables above support three implemented SQLite views:
+
+```text
+vw_game_popscore_primitives
+    -> readable primitive snapshots with game/source/type labels
+
+vw_game_popscore_latest
+    -> latest snapshot per game/source/type
+
+vw_game_popscore_igdb_interest
+    -> project-defined IGDB interest score:
+       0.60 * Want to Play + 0.40 * Playing
+```
+
+The interest score is project-defined from IGDB's documented example and is
+not an official universal score.
 
 ## Release Date Lookups
 

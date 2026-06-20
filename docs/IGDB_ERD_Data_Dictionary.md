@@ -83,6 +83,27 @@ One row represents one video game.
 
 ---
 
+## Table: `extraction_cohorts`
+
+One row records why a selected game entered the curated analytical sample.
+
+| Variable | Definition |
+|---|---|
+| `game_id` | Selected game; primary key and FK to `games`. |
+| `release_year` | Year-specific sampling stratum. |
+| `cohort` | `quality`, `popularity`, or `comparison`. |
+| `selection_rank` | Rank within the game’s year and cohort. |
+| `adjusted_quality_score` | Bayesian-adjusted yearly total rating used for quality ranking; nullable outside the quality-eligible population. |
+| `popularity_basis` | PopScore signal used for popularity selection, normally `igdb_interest` or fallback `igdb_visits`. |
+| `popularity_score` | Value of the selected popularity signal. |
+| `random_seed` | Reproducible year-specific seed for comparison selections. |
+
+The cohorts have different selection mechanisms. Full-sample quality or
+popularity shares are not population prevalence estimates unless the analysis
+accounts for the sampling design.
+
+---
+
 ## Table: `game_types`
 
 One row represents one game type/category.
@@ -547,6 +568,35 @@ One row defines one popularity signal type.
 | `popularity_types` | `popularity_type_id`            | Popularity Type ID            | INTEGER   | N/A  | Unique positive integer                                                   | Unique identifier for a popularity signal type.    | Renamed from IGDB `popularity_types.id`.                       | Primary key.                                             |
 | `popularity_types` | `external_popularity_source_id` | External Popularity Source ID | INTEGER   | N/A  | Should exist in `external_game_sources.external_game_source_id`; nullable | Source associated with the popularity type.        | Foreign key / source reference from IGDB popularity type data. | Useful for grouping popularity signals by source.        |
 | `popularity_types` | `name`                          | Popularity Type Name          | TEXT      | N/A  | Controlled vocabulary                                                     | Human-readable name of the popularity signal type. | Direct IGDB field.                                             | Explains how to interpret `popularity_primitives.value`. |
+
+---
+
+## View: `vw_game_popscore_primitives`
+
+Readable PopScore primitive records joined to game, source, and popularity-type
+labels. One row represents one stored primitive snapshot.
+
+## View: `vw_game_popscore_latest`
+
+The latest stored PopScore snapshot for each
+`game_id` + `external_popularity_source_id` + `popularity_type_id`
+combination.
+
+## View: `vw_game_popscore_igdb_interest`
+
+One row per game when both IGDB `Want to Play` and `Playing` primitives are
+available.
+
+| Variable | Definition |
+|---|---|
+| `want_to_play_value` | Latest IGDB Want to Play primitive value. |
+| `playing_value` | Latest IGDB Playing primitive value. |
+| `custom_interest_score` | Project-defined `0.60 * Want to Play + 0.40 * Playing` score based on IGDB's documented example. |
+| `custom_interest_percentile` | Percent rank of the project-defined score within games represented by the view. |
+
+This view does not represent an official universal IGDB PopScore. It is a
+documented project-defined indicator built only from comparable IGDB-source
+primitives.
 
 ---
 

@@ -1,5 +1,9 @@
 [
   {
+    "id": 0,
+    "status": "Released"
+  },
+  {
     "id": 2,
     "status": "Alpha"
   },

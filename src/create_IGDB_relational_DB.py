@@ -265,6 +265,19 @@ def create_schema(conn: sqlite3.Connection) -> None:
             FOREIGN KEY (game_status_id) REFERENCES game_statuses(game_status_id)
         );
 
+        CREATE TABLE extraction_cohorts (
+            game_id INTEGER PRIMARY KEY,
+            release_year INTEGER NOT NULL,
+            cohort TEXT NOT NULL
+                CHECK (cohort IN ('quality', 'popularity', 'comparison')),
+            selection_rank INTEGER NOT NULL,
+            adjusted_quality_score REAL,
+            popularity_basis TEXT,
+            popularity_score REAL,
+            random_seed INTEGER,
+            FOREIGN KEY (game_id) REFERENCES games(game_id) ON DELETE CASCADE
+        );
+
         CREATE TABLE game_genres (
             game_id INTEGER NOT NULL,
             genre_id INTEGER NOT NULL,
@@ -451,6 +464,8 @@ def create_schema(conn: sqlite3.Connection) -> None:
 
         CREATE INDEX idx_games_release_year ON games(release_year);
         CREATE INDEX idx_games_total_rating ON games(total_rating);
+        CREATE INDEX idx_extraction_cohorts_year_cohort
+            ON extraction_cohorts(release_year, cohort);
         CREATE INDEX idx_game_genres_genre_id ON game_genres(genre_id);
         CREATE INDEX idx_game_themes_theme_id ON game_themes(theme_id);
         CREATE INDEX idx_game_keywords_keyword_id ON game_keywords(keyword_id);
@@ -462,6 +477,109 @@ def create_schema(conn: sqlite3.Connection) -> None:
         CREATE INDEX idx_external_games_game_id ON external_games(game_id);
         CREATE INDEX idx_websites_game_id ON websites(game_id);
         CREATE INDEX idx_popularity_primitives_game_id ON popularity_primitives(game_id);
+        CREATE INDEX idx_popularity_primitives_game_type_calculated
+            ON popularity_primitives(
+                game_id,
+                popularity_type_id,
+                calculated_at
+            );
+        CREATE INDEX idx_popularity_primitives_type_value
+            ON popularity_primitives(popularity_type_id, value);
+
+        CREATE VIEW vw_game_popscore_primitives AS
+        SELECT
+            pp.popularity_primitive_id,
+            pp.game_id,
+            g.name AS game_name,
+            pp.external_popularity_source_id,
+            egs.source_name AS popularity_source,
+            pp.popularity_type_id,
+            pt.name AS popularity_type,
+            pp.value,
+            pp.calculated_at,
+            pp.calculated_at_iso,
+            pp.updated_at,
+            pp.updated_at_iso
+        FROM popularity_primitives pp
+        JOIN games g
+            ON pp.game_id = g.game_id
+        LEFT JOIN popularity_types pt
+            ON pp.popularity_type_id = pt.popularity_type_id
+        LEFT JOIN external_game_sources egs
+            ON pp.external_popularity_source_id =
+               egs.external_game_source_id;
+
+        CREATE VIEW vw_game_popscore_latest AS
+        WITH ranked AS (
+            SELECT
+                p.*,
+                ROW_NUMBER() OVER (
+                    PARTITION BY
+                        p.game_id,
+                        p.external_popularity_source_id,
+                        p.popularity_type_id
+                    ORDER BY
+                        p.calculated_at DESC,
+                        p.updated_at DESC,
+                        p.popularity_primitive_id DESC
+                ) AS snapshot_rank
+            FROM vw_game_popscore_primitives p
+        )
+        SELECT
+            popularity_primitive_id,
+            game_id,
+            game_name,
+            external_popularity_source_id,
+            popularity_source,
+            popularity_type_id,
+            popularity_type,
+            value,
+            calculated_at,
+            calculated_at_iso,
+            updated_at,
+            updated_at_iso
+        FROM ranked
+        WHERE snapshot_rank = 1;
+
+        CREATE VIEW vw_game_popscore_igdb_interest AS
+        WITH pivoted AS (
+            SELECT
+                game_id,
+                game_name,
+                MAX(CASE
+                    WHEN popularity_type_id = 2 THEN value
+                END) AS want_to_play_value,
+                MAX(CASE
+                    WHEN popularity_type_id = 3 THEN value
+                END) AS playing_value,
+                MAX(CASE
+                    WHEN popularity_type_id = 2 THEN calculated_at
+                END) AS want_to_play_calculated_at,
+                MAX(CASE
+                    WHEN popularity_type_id = 3 THEN calculated_at
+                END) AS playing_calculated_at
+            FROM vw_game_popscore_latest
+            WHERE external_popularity_source_id = 121
+              AND popularity_type_id IN (2, 3)
+            GROUP BY game_id, game_name
+        ),
+        scored AS (
+            SELECT
+                *,
+                (
+                    0.60 * want_to_play_value
+                  + 0.40 * playing_value
+                ) AS custom_interest_score
+            FROM pivoted
+            WHERE want_to_play_value IS NOT NULL
+              AND playing_value IS NOT NULL
+        )
+        SELECT
+            *,
+            PERCENT_RANK() OVER (
+                ORDER BY custom_interest_score
+            ) AS custom_interest_percentile
+        FROM scored;
         """
     )
 
@@ -881,6 +999,30 @@ def insert_detail_tables(conn: sqlite3.Connection, raw: Dict[str, List[Dict[str,
     execute_many(
         conn,
         """
+        INSERT INTO extraction_cohorts (
+            game_id, release_year, cohort, selection_rank,
+            adjusted_quality_score, popularity_basis, popularity_score,
+            random_seed
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            (
+                row["game_id"],
+                row["release_year"],
+                row["cohort"],
+                row["selection_rank"],
+                row.get("adjusted_quality_score"),
+                row.get("popularity_basis"),
+                row.get("popularity_score"),
+                row.get("random_seed"),
+            )
+            for row in raw["extraction_cohorts"]
+        ),
+    )
+    execute_many(
+        conn,
+        """
         INSERT INTO popularity_primitives (
             popularity_primitive_id, game_id, external_popularity_source_id,
             popularity_type_id, value, calculated_at, calculated_at_iso,
@@ -912,6 +1054,7 @@ def load_all_raw_files() -> Dict[str, List[Dict[str, Any]]]:
         "date_formats.json",
         "external_games.json",
         "external_game_sources.json",
+        "extraction_cohorts.json",
         "games.json",
         "game_modes.json",
         "game_release_formats.json",
@@ -978,10 +1121,19 @@ def run_integrity_checks(conn: sqlite3.Connection) -> None:
         if duplicates:
             raise RuntimeError(f"Found duplicate relationship rows in {table_name}.")
 
+    game_count = table_count(conn, "games")
+    cohort_count = table_count(conn, "extraction_cohorts")
+    if cohort_count != game_count:
+        raise RuntimeError(
+            "Every selected game must have one extraction cohort row: "
+            f"games={game_count}, extraction_cohorts={cohort_count}."
+        )
+
 
 def print_table_counts(conn: sqlite3.Connection) -> None:
     tables = [
         "games",
+        "extraction_cohorts",
         "genres",
         "themes",
         "keywords",

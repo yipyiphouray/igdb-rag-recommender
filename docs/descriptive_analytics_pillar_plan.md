@@ -494,20 +494,32 @@ This page summarizes the current IGDB game catalog used by the project. It provi
 
 If the current dataset is still a curated sample, clearly state that the results describe the extracted sample, not the full IGDB catalog.
 
-For the current project snapshot, the data quality documentation shows that the database contains 500 games selected by `total_rating_count` descending and requiring a summary. This means the descriptive results are intentionally biased toward games with more rating activity and stronger text coverage. Completeness metrics for summaries, ratings, platforms, and genres may look unusually high because those fields were part of the extraction strategy or strongly represented in the selected sample.
+The current extraction targets 10,000 games. It does not require summaries,
+ratings, or a minimum rating count. Games are ordered by IGDB identifier
+(`id asc`) before the limit is applied. Increasing the extraction from 3,000
+to 10,000 games improves temporal and category coverage, but it does not make
+the sample random or representative of the full IGDB catalog.
+
+The completed extraction contains 10,000 games, including 7,794 with
+`total_rating`, 9,761 with summaries, and 9,876 with release years. Release
+coverage remains uneven: the 2000s contain 4,153 games, while the 2020s contain
+only 21. Release-decade counts must therefore be shown as part of the dataset
+snapshot, and cross-era comparisons must acknowledge the small early-decade
+and 2020s groups.
 
 The sample size comes from the extraction setting in `src/fetch_IGDB.py`:
 
 ```python
-GAME_LIMIT = 500
+GAME_LIMIT = 10000
 ```
 
-The current base game extraction also applies:
+The current base game extraction applies:
 
 ```text
-where total_rating_count > 50
-  and summary is not null
-sort total_rating_count descending
+no summary filter
+no rating-availability filter
+no minimum rating-count filter
+sort id ascending
 ```
 
 If `GAME_LIMIT` or the base extraction filters change, rerun the extraction, rebuild the database, rerun this descriptive notebook, and update the caveat in the dashboard/report.
@@ -515,7 +527,15 @@ If `GAME_LIMIT` or the base extraction filters change, rerun the extraction, reb
 Suggested wording:
 
 ```markdown
-The current descriptive results represent the project's extracted IGDB sample, not the full IGDB catalog. This sample currently contains 500 games because `src/fetch_IGDB.py` sets `GAME_LIMIT = 500`. The extraction also requires summary availability, requires `total_rating_count > 50`, and orders games by total rating count. Charts should therefore be interpreted as a view of the project sample, not as a market-wide statement about all IGDB games.
+The current descriptive results represent the project's expanded 10,000-game
+IGDB sample, not the full IGDB catalog or video game market. The extraction
+does not require summaries, ratings, or a minimum rating count, but it applies
+the limit after sorting by IGDB identifier. The larger sample improves coverage
+relative to the previous 3,000-game extraction while retaining selection bias
+from the ID-ordered sampling method. It is concentrated in games released from
+the 1990s through the 2010s and contains only 21 games from the 2020s. Charts
+should therefore be interpreted as project-sample results rather than
+market-wide or cross-era estimates.
 ```
 
 ---
@@ -2038,7 +2058,10 @@ ORDER BY min_relationship_count;
 Important note:
 
 ```text
-A simple yes/no metadata signal score may be too easy for this 500-game sample because most popular games have core fields populated. Relationship-count bands create a more useful spread by measuring the amount of linked descriptive metadata per game.
+A simple yes/no metadata signal score may be too coarse for this 10,000-game
+sample. Relationship-count summaries measure linked metadata volume, but their
+thresholds should be derived from the observed distribution rather than assumed
+to represent objective metadata quality.
 ```
 
 ---

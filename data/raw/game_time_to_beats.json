@@ -1,8655 +1,1455 @@
 [
   {
-    "id": 2,
-    "game_id": 56,
-    "hastily": 90000,
-    "normally": 291360,
-    "completely": 1116000,
-    "count": 5,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 3,
-    "game_id": 2,
-    "hastily": 30200,
-    "normally": 68100,
-    "completely": 111150,
-    "count": 6,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 10,
-    "game_id": 73,
-    "hastily": 57860,
-    "normally": 108560,
-    "completely": 174922,
-    "count": 15,
-    "updated_at": 1768095451
-  },
-  {
-    "id": 16,
-    "game_id": 60,
-    "hastily": 32400,
-    "normally": 25200,
-    "completely": 81840,
-    "count": 6,
-    "updated_at": 1777524650
-  },
-  {
-    "id": 19,
-    "game_id": 75,
-    "hastily": 65520,
-    "normally": 135876,
-    "completely": 200565,
-    "count": 6,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 30,
-    "game_id": 78,
-    "hastily": 67590,
-    "normally": 100980,
-    "completely": 175350,
-    "count": 6,
-    "updated_at": 1761744653
-  },
-  {
-    "id": 33,
-    "game_id": 18,
-    "hastily": 25260,
-    "normally": 39300,
-    "count": 7,
-    "updated_at": 1757913858
-  },
-  {
-    "id": 51,
-    "game_id": 16,
-    "hastily": 75860,
-    "normally": 189774,
-    "completely": 341844,
-    "count": 11,
-    "updated_at": 1771416803
-  },
-  {
-    "id": 52,
-    "game_id": 59,
-    "hastily": 60000,
-    "normally": 164250,
-    "completely": 471260,
-    "count": 11,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 56,
-    "game_id": 72,
-    "hastily": 14914,
-    "normally": 32582,
-    "completely": 101781,
-    "count": 32,
-    "updated_at": 1777912415
-  },
-  {
-    "id": 57,
-    "game_id": 71,
-    "hastily": 6560,
-    "normally": 14680,
-    "completely": 25218,
-    "count": 42,
-    "updated_at": 1778113547
-  },
-  {
-    "id": 68,
-    "game_id": 11,
-    "hastily": 36000,
-    "normally": 122400,
-    "completely": 216000,
-    "count": 2,
-    "updated_at": 1761144654
-  },
-  {
-    "id": 86,
-    "game_id": 19,
-    "hastily": 19230,
-    "normally": 26640,
-    "completely": 29880,
-    "count": 7,
-    "updated_at": 1767359170
-  },
-  {
-    "id": 113,
-    "game_id": 76,
-    "hastily": 90000,
-    "normally": 213726,
-    "completely": 308880,
-    "count": 12,
-    "updated_at": 1761744586
-  },
-  {
-    "id": 138,
-    "game_id": 66,
-    "normally": 24660,
-    "completely": 41400,
-    "count": 4,
-    "updated_at": 1750116406
-  },
-  {
-    "id": 139,
-    "game_id": 65,
-    "hastily": 30600,
-    "normally": 42300,
-    "completely": 67500,
-    "count": 6,
-    "updated_at": 1728876136
-  },
-  {
-    "id": 167,
-    "game_id": 63,
-    "normally": 37200,
-    "completely": 65520,
-    "count": 2,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 180,
-    "game_id": 41,
-    "normally": 115200,
-    "completely": 130200,
-    "count": 3,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 191,
-    "game_id": 67,
-    "hastily": 23640,
-    "normally": 119820,
-    "count": 1,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 192,
-    "game_id": 74,
-    "hastily": 63000,
-    "normally": 133910,
-    "completely": 222246,
-    "count": 11,
-    "updated_at": 1748614602
-  },
-  {
-    "id": 193,
-    "game_id": 6,
-    "normally": 720000,
-    "count": 1,
-    "updated_at": 1728556536
-  },
-  {
-    "id": 205,
-    "game_id": 20,
-    "hastily": 23600,
-    "normally": 57270,
-    "completely": 88344,
-    "count": 17,
-    "updated_at": 1781203232
-  },
-  {
-    "id": 212,
-    "game_id": 37,
-    "hastily": 55800,
-    "normally": 73400,
-    "completely": 136800,
-    "count": 7,
-    "updated_at": 1767651786
-  },
-  {
-    "id": 258,
-    "game_id": 15,
-    "hastily": 108000,
-    "normally": 189000,
-    "completely": 630000,
-    "count": 6,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 284,
-    "game_id": 80,
-    "hastily": 90000,
-    "normally": 218880,
-    "completely": 336000,
-    "count": 9,
-    "updated_at": 1752688109
-  },
-  {
-    "id": 294,
-    "game_id": 43,
-    "hastily": 57960,
-    "normally": 145200,
-    "completely": 201600,
-    "count": 10,
-    "updated_at": 1764611320
-  },
-  {
-    "id": 309,
-    "game_id": 39,
-    "hastily": 73800,
-    "normally": 74700,
-    "completely": 108000,
-    "count": 6,
-    "updated_at": 1748612743
-  },
-  {
-    "id": 311,
-    "game_id": 1,
-    "hastily": 100800,
-    "normally": 115485,
-    "completely": 180000,
-    "count": 4,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 333,
-    "game_id": 4,
-    "hastily": 28800,
-    "normally": 71140,
-    "completely": 127350,
-    "count": 10,
-    "updated_at": 1777750889
-  },
-  {
-    "id": 347,
-    "game_id": 40,
-    "normally": 58070,
-    "completely": 183600,
-    "count": 8,
-    "updated_at": 1754751215
-  },
-  {
-    "id": 381,
-    "game_id": 21,
-    "hastily": 86400,
-    "normally": 51600,
-    "completely": 164400,
-    "count": 8,
-    "updated_at": 1767082187
-  },
-  {
-    "id": 384,
-    "game_id": 22,
-    "hastily": 66180,
-    "normally": 46800,
-    "completely": 116280,
-    "count": 3,
-    "updated_at": 1728556541
-  },
-  {
-    "id": 396,
-    "game_id": 77,
-    "hastily": 54000,
-    "normally": 100800,
-    "completely": 136800,
-    "count": 6,
-    "updated_at": 1761744846
-  },
-  {
-    "id": 440,
-    "game_id": 38,
-    "hastily": 48600,
-    "normally": 57240,
-    "completely": 99000,
-    "count": 6,
-    "updated_at": 1767173082
-  },
-  {
-    "id": 455,
-    "game_id": 62,
-    "normally": 30060,
-    "completely": 34200,
-    "count": 4,
-    "updated_at": 1750130646
-  },
-  {
-    "id": 701,
-    "game_id": 44,
-    "hastily": 39600,
-    "normally": 61200,
-    "completely": 84600,
-    "count": 2,
-    "updated_at": 1767614856
-  },
-  {
-    "id": 702,
-    "game_id": 45,
-    "hastily": 14400,
-    "normally": 25200,
-    "completely": 21600,
-    "count": 2,
-    "updated_at": 1767614928
-  },
-  {
-    "id": 1018,
-    "game_id": 3,
-    "normally": 79200,
-    "completely": 90000,
-    "count": 2,
-    "updated_at": 1744084215
-  },
-  {
-    "id": 1052,
-    "game_id": 10,
-    "normally": 86400,
-    "completely": 216000,
-    "count": 2,
-    "updated_at": 1728556561
-  },
-  {
-    "id": 1083,
-    "game_id": 13,
-    "hastily": 36000,
-    "normally": 92400,
-    "completely": 180000,
-    "count": 3,
-    "updated_at": 1778163583
-  },
-  {
-    "id": 1084,
-    "game_id": 14,
-    "hastily": 7200,
-    "normally": 140400,
-    "completely": 54000,
-    "count": 2,
-    "updated_at": 1728556562
-  },
-  {
-    "id": 1141,
-    "game_id": 95,
-    "hastily": 39600,
-    "normally": 50400,
-    "completely": 59400,
-    "count": 1,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1146,
-    "game_id": 97,
-    "normally": 57750,
-    "count": 2,
-    "updated_at": 1737896182
-  },
-  {
-    "id": 1256,
-    "game_id": 29,
-    "completely": 17460,
-    "count": 1,
-    "updated_at": 1728556567
-  },
-  {
-    "id": 1391,
-    "game_id": 64,
-    "normally": 48210,
-    "completely": 72000,
-    "count": 3,
-    "updated_at": 1728556571
-  },
-  {
-    "id": 1696,
-    "game_id": 42,
-    "normally": 111600,
-    "completely": 90000,
-    "count": 2,
-    "updated_at": 1742693271
-  },
-  {
-    "id": 1991,
-    "game_id": 83,
-    "hastily": 29760,
-    "normally": 49200,
-    "completely": 113520,
-    "count": 1,
-    "updated_at": 1728556589
-  },
-  {
-    "id": 2180,
-    "game_id": 23,
-    "hastily": 54000,
-    "completely": 132480,
-    "count": 2,
-    "updated_at": 1741805255
-  },
-  {
-    "id": 2729,
-    "game_id": 46,
-    "hastily": 46800,
-    "normally": 81900,
-    "completely": 108300,
-    "count": 2,
-    "updated_at": 1767615042
-  },
-  {
-    "id": 3925,
-    "game_id": 96,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1737896373
-  },
-  {
-    "id": 5513,
-    "game_id": 79,
-    "hastily": 21600,
-    "normally": 25200,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1753016838
-  },
-  {
-    "id": 5755,
-    "game_id": 49,
-    "hastily": 18000,
-    "normally": 36000,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1753711147
-  },
-  {
-    "id": 6463,
-    "game_id": 98,
-    "hastily": 72000,
-    "normally": 86400,
-    "completely": 115200,
-    "count": 2,
-    "updated_at": 1775062923
-  },
-  {
-    "id": 7003,
-    "game_id": 91,
-    "hastily": 10800,
-    "normally": 36000,
-    "completely": 57600,
-    "count": 1,
-    "updated_at": 1764176750
-  },
-  {
-    "id": 7538,
-    "game_id": 35,
-    "hastily": 3600,
-    "count": 1,
-    "updated_at": 1768502011
-  },
-  {
-    "id": 8649,
-    "game_id": 85,
-    "hastily": 39600,
-    "normally": 46800,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1779798302
-  },
-  {
-    "id": 35,
-    "game_id": 193,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 43290,
-    "count": 2,
-    "updated_at": 1762775991
-  },
-  {
-    "id": 50,
-    "game_id": 127,
-    "hastily": 73580,
-    "normally": 92700,
-    "completely": 132552,
-    "count": 21,
-    "updated_at": 1781362909
-  },
-  {
-    "id": 64,
-    "game_id": 113,
-    "hastily": 50250,
-    "normally": 83604,
-    "completely": 155520,
-    "count": 10,
-    "updated_at": 1772716301
-  },
-  {
-    "id": 122,
-    "game_id": 148,
-    "normally": 36000,
-    "count": 4,
-    "updated_at": 1760020469
-  },
-  {
-    "id": 156,
-    "game_id": 184,
-    "normally": 44565,
-    "completely": 32400,
-    "count": 4,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 177,
-    "game_id": 115,
-    "hastily": 56762562,
-    "normally": 52026685,
-    "completely": 50826150,
-    "count": 12,
-    "updated_at": 1773093114
-  },
-  {
-    "id": 200,
-    "game_id": 119,
-    "hastily": 162000,
-    "normally": 149040,
-    "completely": 210000,
-    "count": 5,
-    "updated_at": 1767650419
-  },
-  {
-    "id": 204,
-    "game_id": 128,
-    "hastily": 48200,
-    "normally": 54798,
-    "completely": 91200,
-    "count": 17,
-    "updated_at": 1777549138
-  },
-  {
-    "id": 210,
-    "game_id": 142,
-    "hastily": 14400,
-    "normally": 28800,
-    "count": 4,
-    "updated_at": 1772725594
-  },
-  {
-    "id": 229,
-    "game_id": 118,
-    "hastily": 60000,
-    "normally": 128365,
-    "completely": 192000,
-    "count": 7,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 257,
-    "game_id": 116,
-    "hastily": 72000,
-    "normally": 139800,
-    "completely": 254400,
-    "count": 7,
-    "updated_at": 1780506188
-  },
-  {
-    "id": 285,
-    "game_id": 121,
-    "hastily": 422800,
-    "normally": 3760560,
-    "completely": 81942214,
-    "count": 17,
-    "updated_at": 1780729623
-  },
-  {
-    "id": 297,
-    "game_id": 111,
-    "hastily": 21600,
-    "normally": 34080,
-    "completely": 40800,
-    "count": 10,
-    "updated_at": 1765990256
-  },
-  {
-    "id": 316,
-    "game_id": 123,
-    "hastily": 14846412,
-    "normally": 23820010,
-    "completely": 53208012,
-    "count": 10,
-    "updated_at": 1775165164
-  },
-  {
-    "id": 350,
-    "game_id": 109,
-    "hastily": 54000,
-    "normally": 103200,
-    "completely": 151590,
-    "count": 14,
-    "updated_at": 1740934071
-  },
-  {
-    "id": 478,
-    "game_id": 105,
-    "normally": 48600,
-    "count": 2,
-    "updated_at": 1750858587
-  },
-  {
-    "id": 548,
-    "game_id": 112,
-    "completely": 230400,
-    "count": 1,
-    "updated_at": 1728556546
-  },
-  {
-    "id": 553,
-    "game_id": 124,
-    "hastily": 47400,
-    "normally": 104400,
-    "completely": 550800,
-    "count": 9,
-    "updated_at": 1767357936
-  },
-  {
-    "id": 560,
-    "game_id": 189,
-    "hastily": 36000,
-    "normally": 66600,
-    "completely": 86400,
-    "count": 2,
-    "updated_at": 1745504413
-  },
-  {
-    "id": 723,
-    "game_id": 122,
-    "hastily": 55800,
-    "normally": 115200,
-    "count": 4,
-    "updated_at": 1767357644
-  },
-  {
-    "id": 743,
-    "game_id": 138,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 905,
-    "game_id": 132,
-    "normally": 100440,
-    "count": 1,
-    "updated_at": 1728556557
-  },
-  {
-    "id": 906,
-    "game_id": 130,
-    "normally": 90660,
-    "count": 1,
-    "updated_at": 1728556557
-  },
-  {
-    "id": 907,
-    "game_id": 129,
-    "normally": 56640,
-    "count": 2,
-    "updated_at": 1756905241
-  },
-  {
-    "id": 918,
-    "game_id": 117,
-    "normally": 48000,
-    "count": 3,
-    "updated_at": 1728556557
-  },
-  {
-    "id": 921,
-    "game_id": 120,
-    "hastily": 97800,
-    "normally": 238200,
-    "completely": 579600,
-    "count": 4,
-    "updated_at": 1774727721
-  },
-  {
-    "id": 1162,
-    "game_id": 192,
+    "id": 2358,
+    "game_id": 140268,
+    "hastily": 5400,
     "normally": 10800,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1273,
-    "game_id": 186,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1728556568
-  },
-  {
-    "id": 1336,
-    "game_id": 191,
-    "hastily": 12000,
-    "completely": 25320,
+    "completely": 25200,
     "count": 2,
-    "updated_at": 1728556570
+    "updated_at": 1779646187
   },
   {
-    "id": 1382,
-    "game_id": 134,
-    "hastily": 18960,
+    "id": 5784,
+    "game_id": 124042,
+    "normally": 540000,
     "count": 1,
-    "updated_at": 1728556571
+    "updated_at": 1754063454
   },
   {
-    "id": 1707,
-    "game_id": 164,
-    "normally": 48600,
+    "id": 7598,
+    "game_id": 113360,
+    "hastily": 2456400,
+    "normally": 168000,
+    "completely": 325800,
+    "count": 5,
+    "updated_at": 1780104254
+  },
+  {
+    "id": 7817,
+    "game_id": 8042,
+    "hastily": 129600,
+    "normally": 201600,
+    "completely": 468000,
     "count": 1,
-    "updated_at": 1728556581
+    "updated_at": 1771953270
   },
   {
-    "id": 4271,
-    "game_id": 139,
-    "normally": 136800,
-    "count": 1,
-    "updated_at": 1741806116
-  },
-  {
-    "id": 5034,
-    "game_id": 114,
-    "normally": 1501200,
-    "count": 2,
-    "updated_at": 1754463935
-  },
-  {
-    "id": 5072,
-    "game_id": 150,
-    "hastily": 25200,
-    "normally": 43200,
-    "count": 2,
-    "updated_at": 1750209837
-  },
-  {
-    "id": 5073,
-    "game_id": 157,
-    "hastily": 25200,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1749647556
-  },
-  {
-    "id": 5074,
-    "game_id": 160,
-    "hastily": 25200,
-    "normally": 32400,
-    "count": 1,
-    "updated_at": 1749647626
-  },
-  {
-    "id": 5091,
-    "game_id": 152,
-    "hastily": 36000,
-    "normally": 50400,
-    "count": 1,
-    "updated_at": 1749649746
-  },
-  {
-    "id": 5209,
-    "game_id": 101,
-    "normally": 39600,
-    "count": 1,
-    "updated_at": 1750862319
-  },
-  {
-    "id": 5957,
-    "game_id": 126,
-    "hastily": 77400,
-    "normally": 177600,
-    "completely": 779400,
+    "id": 8013,
+    "game_id": 115555,
+    "hastily": 75600,
+    "normally": 104400,
+    "completely": 133200,
     "count": 3,
-    "updated_at": 1778710097
+    "updated_at": 1773877292
   },
   {
-    "id": 6218,
-    "game_id": 153,
-    "completely": 57600,
+    "id": 8174,
+    "game_id": 126381,
+    "hastily": 82800,
+    "normally": 111600,
+    "completely": 183600,
     "count": 1,
-    "updated_at": 1760019886
+    "updated_at": 1773830795
   },
   {
-    "id": 7262,
-    "game_id": 125,
-    "hastily": 21600,
-    "normally": 25200,
-    "completely": 28800,
+    "id": 8308,
+    "game_id": 125633,
+    "hastily": 250800,
+    "normally": 297000,
+    "completely": 2655000,
+    "count": 3,
+    "updated_at": 1781108829
+  },
+  {
+    "id": 8464,
+    "game_id": 134612,
+    "hastily": 32400,
+    "normally": 52200,
+    "completely": 78480,
+    "count": 8,
+    "updated_at": 1779678838
+  },
+  {
+    "id": 8583,
+    "game_id": 103246,
+    "hastily": 57600,
+    "normally": 90000,
+    "completely": 180000,
     "count": 1,
-    "updated_at": 1767174278
+    "updated_at": 1779118165
   },
   {
-    "id": 7818,
-    "game_id": 136,
-    "hastily": 43200,
-    "normally": 57600,
-    "completely": 144000,
+    "id": 8656,
+    "game_id": 141114,
+    "hastily": 54000,
+    "normally": 65520,
+    "completely": 108000,
+    "count": 5,
+    "updated_at": 1781050984
+  },
+  {
+    "id": 8672,
+    "game_id": 137043,
+    "normally": 2700000,
+    "completely": 5400000,
     "count": 1,
-    "updated_at": 1771963800
+    "updated_at": 1780338441
   },
   {
-    "id": 8093,
-    "game_id": 102,
-    "hastily": 46800,
-    "normally": 61200,
-    "completely": 111600,
-    "count": 1,
-    "updated_at": 1773341612
-  },
-  {
-    "id": 8590,
-    "game_id": 149,
+    "id": 8678,
+    "game_id": 127152,
+    "hastily": 3600,
     "normally": 7200,
     "count": 1,
-    "updated_at": 1779138642
+    "updated_at": 1780494675
   },
   {
-    "id": 13,
-    "game_id": 233,
-    "hastily": 31800,
-    "normally": 48631,
-    "completely": 73542,
-    "count": 25,
-    "updated_at": 1780632503
+    "id": 8726,
+    "game_id": 148227,
+    "hastily": 79200,
+    "normally": 180000,
+    "completely": 216000,
+    "count": 1,
+    "updated_at": 1781487189
   },
   {
-    "id": 15,
-    "game_id": 247,
-    "hastily": 14200,
-    "normally": 22545,
-    "completely": 32400,
-    "count": 15,
-    "updated_at": 1761136699
+    "id": 7743,
+    "game_id": 172722,
+    "hastily": 82800,
+    "normally": 108000,
+    "completely": 180000,
+    "count": 1,
+    "updated_at": 1770947994
   },
   {
-    "id": 25,
-    "game_id": 236,
-    "hastily": 25200,
-    "completely": 28650,
-    "count": 3,
-    "updated_at": 1743978366
+    "id": 7992,
+    "game_id": 151501,
+    "count": 1,
+    "updated_at": 1773094521
   },
   {
-    "id": 71,
-    "game_id": 231,
-    "hastily": 25710,
-    "normally": 43503,
-    "completely": 67182,
-    "count": 20,
-    "updated_at": 1768279625
-  },
-  {
-    "id": 220,
-    "game_id": 246,
-    "hastily": 14400,
-    "normally": 42000,
-    "completely": 196800,
-    "count": 4,
-    "updated_at": 1778850204
-  },
-  {
-    "id": 291,
-    "game_id": 277,
-    "hastily": 14400,
-    "normally": 28800,
-    "count": 3,
-    "updated_at": 1767078400
-  },
-  {
-    "id": 374,
-    "game_id": 232,
-    "hastily": 15660,
-    "normally": 21893,
-    "completely": 19260,
-    "count": 9,
-    "updated_at": 1767351387
-  },
-  {
-    "id": 376,
-    "game_id": 281,
-    "hastily": 28800,
-    "normally": 44400,
-    "completely": 52200,
-    "count": 6,
-    "updated_at": 1767621200
-  },
-  {
-    "id": 378,
-    "game_id": 250,
-    "normally": 50400,
-    "count": 3,
-    "updated_at": 1748613068
-  },
-  {
-    "id": 417,
-    "game_id": 244,
-    "hastily": 14400,
-    "normally": 113100,
+    "id": 8455,
+    "game_id": 152244,
+    "hastily": 30600,
+    "normally": 49200,
     "completely": 54000,
     "count": 3,
-    "updated_at": 1745361095
+    "updated_at": 1780944957
   },
   {
-    "id": 684,
-    "game_id": 297,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1728556550
-  },
-  {
-    "id": 709,
-    "game_id": 238,
-    "hastily": 21600,
-    "completely": 21600,
-    "count": 2,
-    "updated_at": 1744283244
-  },
-  {
-    "id": 718,
-    "game_id": 284,
-    "hastily": 10800,
-    "normally": 28800,
-    "completely": 150240,
-    "count": 3,
-    "updated_at": 1748982954
-  },
-  {
-    "id": 720,
-    "game_id": 212,
-    "hastily": 64800,
-    "normally": 86400,
-    "completely": 183600,
-    "count": 4,
-    "updated_at": 1767167247
-  },
-  {
-    "id": 813,
-    "game_id": 295,
-    "hastily": 12660,
-    "normally": 54000,
-    "completely": 126000,
-    "count": 2,
-    "updated_at": 1759372686
-  },
-  {
-    "id": 843,
-    "game_id": 207,
-    "normally": 32400,
-    "count": 2,
-    "updated_at": 1728556555
-  },
-  {
-    "id": 859,
-    "game_id": 239,
-    "hastily": 57480,
-    "normally": 90000,
-    "completely": 1008000,
-    "count": 4,
-    "updated_at": 1777236417
-  },
-  {
-    "id": 902,
-    "game_id": 296,
-    "hastily": 18420,
-    "normally": 40428,
-    "completely": 18420,
-    "count": 5,
-    "updated_at": 1748983168
-  },
-  {
-    "id": 1306,
-    "game_id": 248,
-    "hastily": 7200,
-    "normally": 28800,
-    "completely": 95130,
-    "count": 2,
-    "updated_at": 1753413871
-  },
-  {
-    "id": 1667,
-    "game_id": 280,
-    "hastily": 86400,
-    "normally": 134100,
-    "count": 2,
-    "updated_at": 1767178074
-  },
-  {
-    "id": 2857,
-    "game_id": 234,
-    "hastily": 180178200,
-    "normally": 180214200,
-    "completely": 181078200,
-    "count": 2,
-    "updated_at": 1776603466
-  },
-  {
-    "id": 5037,
-    "game_id": 286,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1749568712
-  },
-  {
-    "id": 5271,
-    "game_id": 273,
-    "normally": 61200,
-    "count": 1,
-    "updated_at": 1751726926
-  },
-  {
-    "id": 5823,
-    "game_id": 283,
-    "hastily": 18000,
-    "normally": 43200,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1754471331
-  },
-  {
-    "id": 6150,
-    "game_id": 243,
+    "id": 8589,
+    "game_id": 165270,
     "hastily": 3600,
     "normally": 3600,
     "completely": 3600,
     "count": 1,
-    "updated_at": 1759852534
+    "updated_at": 1779118850
   },
   {
-    "id": 6441,
-    "game_id": 257,
-    "hastily": 61200,
-    "normally": 64800,
-    "completely": 136800,
-    "count": 2,
-    "updated_at": 1767656028
-  },
-  {
-    "id": 7059,
-    "game_id": 289,
-    "completely": 17301600,
-    "count": 1,
-    "updated_at": 1764684337
-  },
-  {
-    "id": 7179,
-    "game_id": 216,
-    "hastily": 61200,
-    "normally": 93600,
-    "completely": 201600,
-    "count": 1,
-    "updated_at": 1766577450
-  },
-  {
-    "id": 7236,
-    "game_id": 272,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1767105927
-  },
-  {
-    "id": 7311,
-    "game_id": 241,
-    "hastily": 32400,
-    "normally": 54000,
-    "completely": 2739600,
-    "count": 2,
-    "updated_at": 1772140679
-  },
-  {
-    "id": 14,
-    "game_id": 338,
-    "hastily": 9450,
-    "normally": 18526,
-    "completely": 31200,
-    "count": 15,
-    "updated_at": 1761136680
-  },
-  {
-    "id": 102,
-    "game_id": 375,
-    "hastily": 79200,
-    "normally": 43815,
-    "count": 10,
-    "updated_at": 1751990306
-  },
-  {
-    "id": 196,
-    "game_id": 343,
-    "hastily": 18020,
-    "normally": 23400,
-    "completely": 199800,
-    "count": 6,
-    "updated_at": 1763423962
-  },
-  {
-    "id": 286,
-    "game_id": 384,
-    "hastily": 72000,
-    "normally": 171000,
-    "completely": 216000,
-    "count": 2,
-    "updated_at": 1748426132
-  },
-  {
-    "id": 290,
-    "game_id": 389,
-    "hastily": 122400,
-    "normally": 201150,
-    "completely": 279000,
-    "count": 4,
-    "updated_at": 1769425451
-  },
-  {
-    "id": 382,
-    "game_id": 316,
+    "id": 8677,
+    "game_id": 189781,
+    "hastily": 43200,
     "normally": 54000,
     "count": 2,
-    "updated_at": 1728556541
+    "updated_at": 1780686028
   },
   {
-    "id": 481,
-    "game_id": 379,
-    "normally": 49700,
-    "count": 3,
-    "updated_at": 1728556544
+    "id": 7091,
+    "game_id": 191648,
+    "hastily": 126000,
+    "normally": 187200,
+    "completely": 255600,
+    "count": 1,
+    "updated_at": 1765261616
   },
   {
-    "id": 485,
-    "game_id": 376,
-    "normally": 35550,
-    "count": 3,
-    "updated_at": 1755260691
-  },
-  {
-    "id": 490,
-    "game_id": 380,
-    "normally": 79200,
-    "count": 2,
-    "updated_at": 1728556544
-  },
-  {
-    "id": 530,
-    "game_id": 352,
-    "hastily": 23280,
-    "normally": 22500,
+    "id": 7597,
+    "game_id": 194558,
+    "hastily": 3666600,
+    "normally": 120000,
+    "completely": 256500,
     "count": 5,
-    "updated_at": 1773362433
+    "updated_at": 1778097921
   },
   {
-    "id": 638,
-    "game_id": 385,
-    "hastily": 24000,
-    "normally": 39600,
-    "completely": 55200,
-    "count": 4,
-    "updated_at": 1748531386
-  },
-  {
-    "id": 666,
-    "game_id": 307,
-    "normally": 4813200,
+    "id": 7970,
+    "game_id": 213016,
+    "hastily": 54000,
+    "normally": 72000,
+    "completely": 90000,
     "count": 1,
-    "updated_at": 1728556550
+    "updated_at": 1772928596
   },
   {
-    "id": 670,
-    "game_id": 324,
-    "hastily": 68400,
-    "normally": 100800,
-    "completely": 111600,
-    "count": 2,
-    "updated_at": 1767016074
+    "id": 7985,
+    "game_id": 199055,
+    "hastily": 28800,
+    "normally": 36000,
+    "completely": 43200,
+    "count": 1,
+    "updated_at": 1773001465
   },
   {
-    "id": 721,
-    "game_id": 342,
+    "id": 7987,
+    "game_id": 204633,
+    "hastily": 39600,
+    "normally": 46800,
+    "count": 1,
+    "updated_at": 1773010550
+  },
+  {
+    "id": 8107,
+    "game_id": 201961,
+    "hastily": 144000,
+    "normally": 180000,
+    "completely": 288000,
+    "count": 1,
+    "updated_at": 1773522935
+  },
+  {
+    "id": 8408,
+    "game_id": 209288,
+    "count": 1,
+    "updated_at": 1775849831
+  },
+  {
+    "id": 8429,
+    "game_id": 204380,
+    "normally": 46800,
+    "count": 1,
+    "updated_at": 1776046191
+  },
+  {
+    "id": 7623,
+    "game_id": 217390,
+    "normally": 50400,
+    "count": 1,
+    "updated_at": 1769394742
+  },
+  {
+    "id": 8111,
+    "game_id": 224629,
+    "hastily": 28800,
+    "normally": 43200,
+    "completely": 54000,
+    "count": 1,
+    "updated_at": 1773605408
+  },
+  {
+    "id": 8543,
+    "game_id": 234662,
+    "hastily": 32400,
+    "normally": 43200,
+    "completely": 57600,
+    "count": 1,
+    "updated_at": 1778282188
+  },
+  {
+    "id": 8560,
+    "game_id": 237780,
     "hastily": 28800,
     "normally": 32400,
-    "completely": 48600,
-    "count": 3,
-    "updated_at": 1767178910
-  },
-  {
-    "id": 766,
-    "game_id": 339,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 837,
-    "game_id": 396,
-    "normally": 13740,
-    "count": 1,
-    "updated_at": 1728556555
-  },
-  {
-    "id": 839,
-    "game_id": 403,
-    "hastily": 54000,
-    "normally": 45600,
-    "completely": 108000,
+    "completely": 72000,
     "count": 2,
-    "updated_at": 1749024891
+    "updated_at": 1779078633
   },
   {
-    "id": 903,
-    "game_id": 359,
-    "hastily": 66600,
-    "normally": 188652,
-    "completely": 288000,
-    "count": 6,
-    "updated_at": 1751301814
-  },
-  {
-    "id": 919,
-    "game_id": 322,
-    "hastily": 3600,
-    "normally": 19800,
-    "completely": 14400,
-    "count": 2,
-    "updated_at": 1728556557
-  },
-  {
-    "id": 929,
-    "game_id": 387,
-    "hastily": 90000,
-    "normally": 72000,
-    "completely": 66600,
-    "count": 2,
-    "updated_at": 1728556558
-  },
-  {
-    "id": 964,
-    "game_id": 374,
-    "normally": 13440,
+    "id": 8597,
+    "game_id": 217304,
+    "hastily": 28800,
     "count": 1,
-    "updated_at": 1728556559
+    "updated_at": 1779180015
   },
   {
-    "id": 970,
-    "game_id": 377,
-    "normally": 26580,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 1015,
-    "game_id": 393,
-    "normally": 144000,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1053,
-    "game_id": 370,
-    "hastily": 68400,
-    "normally": 142200,
-    "completely": 154800,
-    "count": 2,
-    "updated_at": 1767353368
-  },
-  {
-    "id": 1111,
-    "game_id": 371,
-    "hastily": 46800,
-    "normally": 32400,
-    "completely": 39600,
-    "count": 2,
-    "updated_at": 1767353441
-  },
-  {
-    "id": 1134,
-    "game_id": 361,
-    "hastily": 53340,
-    "normally": 69160,
-    "completely": 56940,
-    "count": 3,
-    "updated_at": 1770312580
-  },
-  {
-    "id": 1137,
-    "game_id": 336,
-    "hastily": 12540,
-    "normally": 14980,
-    "completely": 12540,
-    "count": 3,
-    "updated_at": 1748983293
-  },
-  {
-    "id": 1156,
-    "game_id": 326,
-    "hastily": 36000,
-    "normally": 39600,
-    "completely": 50400,
-    "count": 2,
-    "updated_at": 1748612355
-  },
-  {
-    "id": 1164,
-    "game_id": 317,
-    "hastily": 57600,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1191,
-    "game_id": 372,
-    "hastily": 43200,
-    "normally": 95400,
-    "completely": 86400,
-    "count": 2,
-    "updated_at": 1767353535
-  },
-  {
-    "id": 1314,
-    "game_id": 306,
-    "hastily": 42980,
-    "normally": 62290,
-    "completely": 40335,
-    "count": 7,
-    "updated_at": 1770312580
-  },
-  {
-    "id": 1351,
-    "game_id": 333,
-    "hastily": 14400,
-    "normally": 21600,
-    "completely": 54000,
-    "count": 3,
-    "updated_at": 1757388427
-  },
-  {
-    "id": 1529,
-    "game_id": 364,
-    "completely": 252000,
-    "count": 1,
-    "updated_at": 1728556576
-  },
-  {
-    "id": 1654,
-    "game_id": 362,
-    "normally": 114600,
-    "count": 1,
-    "updated_at": 1728556579
-  },
-  {
-    "id": 1738,
-    "game_id": 356,
-    "normally": 48330,
-    "count": 2,
-    "updated_at": 1748612438
-  },
-  {
-    "id": 1827,
-    "game_id": 358,
-    "hastily": 8970,
-    "normally": 44460,
-    "completely": 7548,
-    "count": 7,
-    "updated_at": 1777783884
-  },
-  {
-    "id": 1962,
-    "game_id": 378,
-    "hastily": 25200,
-    "normally": 54360,
-    "count": 2,
-    "updated_at": 1757270381
-  },
-  {
-    "id": 1978,
-    "game_id": 394,
-    "completely": 358740,
-    "count": 1,
-    "updated_at": 1728556589
-  },
-  {
-    "id": 2069,
-    "game_id": 365,
-    "completely": 270000,
-    "count": 1,
-    "updated_at": 1728556591
-  },
-  {
-    "id": 2336,
-    "game_id": 328,
-    "hastily": 90000,
-    "normally": 133200,
-    "completely": 849360,
-    "count": 2,
-    "updated_at": 1772913058
-  },
-  {
-    "id": 2444,
-    "game_id": 312,
-    "hastily": 26040,
-    "normally": 70200,
-    "completely": 54000,
-    "count": 3,
-    "updated_at": 1767177582
-  },
-  {
-    "id": 2749,
-    "game_id": 303,
-    "normally": 126000,
-    "count": 1,
-    "updated_at": 1728556612
-  },
-  {
-    "id": 3631,
-    "game_id": 320,
+    "id": 7685,
+    "game_id": 252738,
     "hastily": 21600,
-    "normally": 62640,
-    "completely": 147600,
-    "count": 6,
-    "updated_at": 1768847180
-  },
-  {
-    "id": 4643,
-    "game_id": 392,
-    "hastily": 37800,
-    "normally": 90000,
-    "completely": 144000,
+    "normally": 25200,
+    "completely": 36000,
     "count": 2,
-    "updated_at": 1749031710
+    "updated_at": 1770420440
   },
   {
-    "id": 4766,
-    "game_id": 341,
+    "id": 8437,
+    "game_id": 250733,
+    "hastily": 28800,
+    "normally": 28800,
+    "completely": 28800,
+    "count": 1,
+    "updated_at": 1776212050
+  },
+  {
+    "id": 8524,
+    "game_id": 249324,
+    "normally": 43200,
+    "completely": 97200,
+    "count": 1,
+    "updated_at": 1777749766
+  },
+  {
+    "id": 8548,
+    "game_id": 254015,
+    "count": 1,
+    "updated_at": 1778586759
+  },
+  {
+    "id": 8601,
+    "game_id": 252867,
+    "hastily": 25200,
+    "count": 1,
+    "updated_at": 1779180267
+  },
+  {
+    "id": 7908,
+    "game_id": 261571,
+    "hastily": 54000,
+    "count": 1,
+    "updated_at": 1772912066
+  },
+  {
+    "id": 7423,
+    "game_id": 278600,
+    "hastily": 18000,
+    "normally": 25200,
+    "completely": 32400,
+    "count": 1,
+    "updated_at": 1767649792
+  },
+  {
+    "id": 8637,
+    "game_id": 270929,
+    "hastily": 36000,
+    "normally": 43200,
+    "count": 1,
+    "updated_at": 1779742691
+  },
+  {
+    "id": 8684,
+    "game_id": 279120,
+    "hastily": 18000,
     "normally": 21600,
     "count": 1,
-    "updated_at": 1748108263
+    "updated_at": 1780687570
   },
   {
-    "id": 4795,
-    "game_id": 386,
+    "id": 8710,
+    "game_id": 280437,
+    "normally": 7200,
+    "count": 1,
+    "updated_at": 1781114780
+  },
+  {
+    "id": 6444,
+    "game_id": 288461,
+    "hastily": 162000,
+    "normally": 288000,
+    "completely": 720000,
+    "count": 1,
+    "updated_at": 1761187581
+  },
+  {
+    "id": 7473,
+    "game_id": 290680,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 3600,
+    "count": 1,
+    "updated_at": 1767899243
+  },
+  {
+    "id": 8584,
+    "game_id": 286869,
+    "hastily": 39600,
+    "normally": 75600,
+    "completely": 180000,
+    "count": 1,
+    "updated_at": 1779118431
+  },
+  {
+    "id": 8595,
+    "game_id": 286327,
+    "hastily": 32400,
+    "normally": 46800,
+    "completely": 57600,
+    "count": 1,
+    "updated_at": 1779179256
+  },
+  {
+    "id": 8032,
+    "game_id": 296831,
+    "hastily": 21600,
+    "normally": 68400,
+    "count": 1,
+    "updated_at": 1773332612
+  },
+  {
+    "id": 8586,
+    "game_id": 298453,
+    "hastily": 39600,
+    "normally": 43200,
+    "completely": 46800,
+    "count": 1,
+    "updated_at": 1779118464
+  },
+  {
+    "id": 7607,
+    "game_id": 306141,
+    "normally": 57600,
+    "count": 1,
+    "updated_at": 1769178058
+  },
+  {
+    "id": 7622,
+    "game_id": 305142,
+    "hastily": 3600,
+    "normally": 3600,
+    "count": 1,
+    "updated_at": 1769389816
+  },
+  {
+    "id": 7906,
+    "game_id": 305017,
+    "hastily": 39600,
+    "normally": 46800,
+    "completely": 75600,
+    "count": 2,
+    "updated_at": 1780471197
+  },
+  {
+    "id": 8418,
+    "game_id": 306855,
+    "hastily": 28800,
+    "normally": 36000,
+    "completely": 43200,
+    "count": 1,
+    "updated_at": 1775957970
+  },
+  {
+    "id": 8480,
+    "game_id": 310206,
+    "hastily": 10800,
+    "normally": 14400,
+    "count": 1,
+    "updated_at": 1777054870
+  },
+  {
+    "id": 8564,
+    "game_id": 305157,
+    "hastily": 10800,
+    "normally": 12000,
+    "completely": 14400,
+    "count": 3,
+    "updated_at": 1780732073
+  },
+  {
+    "id": 8699,
+    "game_id": 304745,
+    "normally": 25200,
+    "count": 1,
+    "updated_at": 1780917861
+  },
+  {
+    "id": 8700,
+    "game_id": 308535,
+    "count": 1,
+    "updated_at": 1780927360
+  },
+  {
+    "id": 7764,
+    "game_id": 314265,
+    "hastily": 19800,
+    "normally": 21600,
+    "completely": 34200,
+    "count": 4,
+    "updated_at": 1773355185
+  },
+  {
+    "id": 7533,
+    "game_id": 319087,
+    "hastily": 93600,
+    "normally": 117000,
+    "completely": 147600,
+    "count": 2,
+    "updated_at": 1774685744
+  },
+  {
+    "id": 7684,
+    "game_id": 319894,
+    "hastily": 21600,
+    "count": 1,
+    "updated_at": 1770305521
+  },
+  {
+    "id": 7710,
+    "game_id": 325371,
+    "hastily": 3600,
+    "normally": 10800,
+    "completely": 21600,
+    "count": 1,
+    "updated_at": 1770665923
+  },
+  {
+    "id": 7827,
+    "game_id": 319134,
+    "completely": 720000,
+    "count": 1,
+    "updated_at": 1772138578
+  },
+  {
+    "id": 8565,
+    "game_id": 320140,
+    "hastily": 39600,
+    "normally": 75600,
+    "count": 4,
+    "updated_at": 1779393056
+  },
+  {
+    "id": 8690,
+    "game_id": 319769,
+    "hastily": 3600,
+    "normally": 10800,
+    "completely": 180000,
+    "count": 1,
+    "updated_at": 1780791932
+  },
+  {
+    "id": 6492,
+    "game_id": 326432,
+    "hastily": 10800,
+    "normally": 21600,
+    "completely": 32400,
+    "count": 1,
+    "updated_at": 1761754984
+  },
+  {
+    "id": 7632,
+    "game_id": 328275,
+    "hastily": 18000,
+    "normally": 28800,
+    "completely": 46800,
+    "count": 1,
+    "updated_at": 1769484286
+  },
+  {
+    "id": 8360,
+    "game_id": 329736,
+    "normally": 82800,
+    "completely": 82800,
+    "count": 1,
+    "updated_at": 1775063315
+  },
+  {
+    "id": 8376,
+    "game_id": 331202,
+    "normally": 34200,
+    "count": 2,
+    "updated_at": 1775623737
+  },
+  {
+    "id": 7017,
+    "game_id": 335125,
     "hastily": 180000,
     "normally": 360000,
-    "completely": 2586600,
-    "count": 2,
-    "updated_at": 1764606488
-  },
-  {
-    "id": 4841,
-    "game_id": 391,
-    "hastily": 54000,
-    "normally": 90000,
-    "completely": 216000,
+    "completely": 900000,
     "count": 1,
-    "updated_at": 1748591270
+    "updated_at": 1764245254
   },
   {
-    "id": 4846,
-    "game_id": 397,
-    "hastily": 28800,
-    "normally": 43200,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1748592600
-  },
-  {
-    "id": 4870,
-    "game_id": 355,
+    "id": 8146,
+    "game_id": 333618,
+    "hastily": 10800,
     "normally": 21600,
-    "count": 1,
-    "updated_at": 1748612037
-  },
-  {
-    "id": 4944,
-    "game_id": 401,
-    "hastily": 27000,
-    "normally": 43200,
-    "completely": 72000,
-    "count": 2,
-    "updated_at": 1774474447
-  },
-  {
-    "id": 4954,
-    "game_id": 388,
-    "hastily": 72000,
-    "normally": 108000,
-    "completely": 180000,
-    "count": 1,
-    "updated_at": 1749024646
-  },
-  {
-    "id": 4960,
-    "game_id": 383,
-    "hastily": 90000,
-    "normally": 126000,
-    "completely": 216000,
-    "count": 1,
-    "updated_at": 1749027931
-  },
-  {
-    "id": 4968,
-    "game_id": 398,
-    "hastily": 144000,
-    "normally": 216000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1749031583
-  },
-  {
-    "id": 4975,
-    "game_id": 405,
-    "hastily": 90000,
-    "normally": 144000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1749032086
-  },
-  {
-    "id": 4976,
-    "game_id": 402,
-    "hastily": 144000,
-    "normally": 216000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1749032140
-  },
-  {
-    "id": 5100,
-    "game_id": 323,
-    "completely": 50400,
-    "count": 1,
-    "updated_at": 1749702236
-  },
-  {
-    "id": 5407,
-    "game_id": 395,
-    "hastily": 54000,
-    "normally": 79200,
-    "completely": 126000,
-    "count": 1,
-    "updated_at": 1752739835
-  },
-  {
-    "id": 5507,
-    "game_id": 337,
-    "hastily": 25200,
-    "normally": 36000,
-    "completely": 46800,
-    "count": 2,
-    "updated_at": 1772381002
-  },
-  {
-    "id": 5792,
-    "game_id": 330,
-    "hastily": 3600,
-    "normally": 14400,
     "completely": 36000,
     "count": 1,
-    "updated_at": 1754153197
+    "updated_at": 1773666404
   },
   {
-    "id": 7276,
-    "game_id": 329,
-    "hastily": 90000,
-    "normally": 194400,
-    "completely": 442800,
+    "id": 8694,
+    "game_id": 333057,
     "count": 1,
-    "updated_at": 1767179757
+    "updated_at": 1780818588
   },
   {
-    "id": 8593,
-    "game_id": 308,
-    "hastily": 57600,
-    "normally": 64800,
-    "completely": 68400,
-    "count": 1,
-    "updated_at": 1779179012
-  },
-  {
-    "id": 5,
-    "game_id": 494,
-    "hastily": 26700,
-    "normally": 29820,
-    "completely": 32100,
-    "count": 2,
-    "updated_at": 1746130808
-  },
-  {
-    "id": 23,
-    "game_id": 427,
-    "hastily": 129600,
-    "normally": 174168,
-    "completely": 271365,
-    "count": 12,
-    "updated_at": 1760701175
-  },
-  {
-    "id": 28,
-    "game_id": 472,
-    "hastily": 91440,
-    "normally": 392583,
-    "completely": 723927,
-    "count": 27,
-    "updated_at": 1767182212
-  },
-  {
-    "id": 34,
-    "game_id": 478,
-    "normally": 101700,
-    "completely": 180360,
-    "count": 9,
-    "updated_at": 1762332990
-  },
-  {
-    "id": 95,
-    "game_id": 501,
-    "hastily": 44280,
-    "normally": 88268,
-    "completely": 181440,
-    "count": 20,
-    "updated_at": 1761129334
-  },
-  {
-    "id": 96,
-    "game_id": 500,
-    "hastily": 36420,
-    "normally": 51972,
-    "completely": 73000,
-    "count": 22,
-    "updated_at": 1773622134
-  },
-  {
-    "id": 116,
-    "game_id": 473,
-    "hastily": 17580,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 152,
-    "game_id": 493,
-    "hastily": 28800,
-    "normally": 39872,
-    "completely": 66600,
-    "count": 15,
-    "updated_at": 1766947767
-  },
-  {
-    "id": 234,
-    "game_id": 425,
-    "hastily": 126000,
-    "normally": 189000,
-    "completely": 324000,
+    "id": 7532,
+    "game_id": 340595,
+    "hastily": 3600,
+    "normally": 18000,
+    "completely": 36000,
     "count": 3,
-    "updated_at": 1749029180
+    "updated_at": 1771819888
   },
   {
-    "id": 292,
-    "game_id": 481,
-    "hastily": 18000,
-    "normally": 46080,
-    "count": 6,
-    "updated_at": 1762043061
-  },
-  {
-    "id": 320,
-    "game_id": 505,
-    "normally": 57600,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 343,
-    "game_id": 431,
-    "normally": 40260,
-    "completely": 54000,
-    "count": 8,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 348,
-    "game_id": 434,
-    "normally": 91297,
-    "completely": 164880,
-    "count": 10,
-    "updated_at": 1768095393
-  },
-  {
-    "id": 367,
-    "game_id": 498,
-    "hastily": 108000,
-    "normally": 154800,
-    "completely": 211680,
-    "count": 8,
-    "updated_at": 1759924256
-  },
-  {
-    "id": 422,
-    "game_id": 421,
-    "hastily": 108000,
-    "normally": 173700,
-    "completely": 216000,
-    "count": 4,
-    "updated_at": 1776266514
-  },
-  {
-    "id": 445,
-    "game_id": 495,
-    "hastily": 38160,
-    "normally": 37080,
-    "completely": 98100,
-    "count": 5,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 465,
-    "game_id": 418,
-    "hastily": 117000,
-    "normally": 180720,
-    "completely": 420300,
-    "count": 6,
-    "updated_at": 1781387737
-  },
-  {
-    "id": 475,
-    "game_id": 490,
-    "normally": 36000,
-    "count": 2,
-    "updated_at": 1748612509
-  },
-  {
-    "id": 578,
-    "game_id": 471,
-    "hastily": 28800,
-    "normally": 41400,
-    "count": 5,
-    "updated_at": 1772386995
-  },
-  {
-    "id": 585,
-    "game_id": 488,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 764,
-    "game_id": 475,
-    "normally": 28800,
-    "completely": 90000,
-    "count": 2,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 782,
-    "game_id": 429,
-    "normally": 34900,
-    "completely": 32400,
-    "count": 4,
-    "updated_at": 1746184360
-  },
-  {
-    "id": 825,
-    "game_id": 491,
-    "normally": 54000,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1728556554
-  },
-  {
-    "id": 842,
-    "game_id": 419,
-    "hastily": 90000,
-    "normally": 108000,
-    "completely": 134400,
-    "count": 2,
-    "updated_at": 1749028573
-  },
-  {
-    "id": 1026,
-    "game_id": 499,
-    "hastily": 33400,
-    "normally": 66600,
-    "completely": 129600,
-    "count": 4,
-    "updated_at": 1769852872
-  },
-  {
-    "id": 1510,
-    "game_id": 424,
-    "hastily": 16880,
-    "normally": 33090,
-    "count": 3,
-    "updated_at": 1750602020
-  },
-  {
-    "id": 1567,
-    "game_id": 480,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1728556577
-  },
-  {
-    "id": 2619,
-    "game_id": 414,
-    "hastily": 127650,
-    "normally": 162000,
-    "completely": 252000,
-    "count": 2,
-    "updated_at": 1749027708
-  },
-  {
-    "id": 2824,
-    "game_id": 430,
-    "hastily": 50400,
-    "normally": 44310,
-    "completely": 54000,
-    "count": 3,
-    "updated_at": 1767168357
-  },
-  {
-    "id": 4304,
-    "game_id": 451,
-    "count": 1,
-    "updated_at": 1742306587
-  },
-  {
-    "id": 4622,
-    "game_id": 504,
-    "normally": 61200,
-    "count": 1,
-    "updated_at": 1746391425
-  },
-  {
-    "id": 4921,
-    "game_id": 407,
+    "id": 8040,
+    "game_id": 338552,
     "hastily": 21600,
-    "normally": 36000,
-    "completely": 54000,
+    "normally": 25200,
+    "completely": 28800,
     "count": 1,
-    "updated_at": 1748954941
+    "updated_at": 1773332844
   },
   {
-    "id": 4939,
-    "game_id": 412,
-    "hastily": 36000,
-    "normally": 54000,
-    "completely": 108000,
+    "id": 8176,
+    "game_id": 335662,
+    "hastily": 21600,
+    "normally": 21600,
     "count": 1,
-    "updated_at": 1749021227
+    "updated_at": 1773830989
   },
   {
-    "id": 4955,
-    "game_id": 410,
-    "hastily": 54000,
-    "normally": 72000,
-    "completely": 108000,
-    "count": 1,
-    "updated_at": 1749024947
-  },
-  {
-    "id": 4956,
-    "game_id": 415,
-    "hastily": 28800,
-    "normally": 43200,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1749025071
-  },
-  {
-    "id": 4957,
-    "game_id": 428,
-    "hastily": 126000,
-    "normally": 162000,
-    "completely": 252000,
-    "count": 1,
-    "updated_at": 1749027550
-  },
-  {
-    "id": 4961,
-    "game_id": 426,
-    "hastily": 66000,
-    "normally": 144000,
-    "completely": 216000,
-    "count": 3,
-    "updated_at": 1774817181
-  },
-  {
-    "id": 4963,
-    "game_id": 483,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1749029124
-  },
-  {
-    "id": 4966,
-    "game_id": 413,
+    "id": 8488,
+    "game_id": 337036,
     "hastily": 90000,
-    "normally": 126000,
-    "completely": 288000,
-    "count": 1,
-    "updated_at": 1749030759
-  },
-  {
-    "id": 4970,
-    "game_id": 411,
-    "hastily": 360000,
-    "normally": 1080000,
-    "completely": 3600000,
-    "count": 1,
-    "updated_at": 1749031791
-  },
-  {
-    "id": 4971,
-    "game_id": 409,
-    "hastily": 108000,
-    "normally": 216000,
+    "normally": 291600,
     "completely": 360000,
-    "count": 1,
-    "updated_at": 1749031848
+    "count": 4,
+    "updated_at": 1780936429
   },
   {
-    "id": 4973,
-    "game_id": 416,
-    "hastily": 90000,
-    "normally": 180000,
-    "completely": 288000,
-    "count": 1,
-    "updated_at": 1749031968
-  },
-  {
-    "id": 4984,
-    "game_id": 484,
+    "id": 8492,
+    "game_id": 340031,
     "normally": 14400,
     "count": 1,
-    "updated_at": 1749043255
+    "updated_at": 1777234166
   },
   {
-    "id": 5021,
-    "game_id": 485,
-    "normally": 50400,
+    "id": 8512,
+    "game_id": 339996,
+    "normally": 21600,
     "count": 1,
-    "updated_at": 1749323090
+    "updated_at": 1777438750
   },
   {
-    "id": 5122,
-    "game_id": 482,
-    "normally": 24000,
-    "count": 3,
-    "updated_at": 1767401520
-  },
-  {
-    "id": 6526,
-    "game_id": 492,
-    "hastily": 72000,
-    "normally": 32400,
-    "completely": 7149600,
-    "count": 2,
-    "updated_at": 1768370127
-  },
-  {
-    "id": 7243,
-    "game_id": 502,
-    "hastily": 32400,
-    "normally": 50400,
+    "id": 8540,
+    "game_id": 336112,
+    "normally": 39600,
     "count": 1,
-    "updated_at": 1767166790
+    "updated_at": 1778192156
   },
   {
-    "id": 7455,
-    "game_id": 466,
-    "hastily": 79200,
-    "normally": 194400,
+    "id": 8680,
+    "game_id": 338730,
+    "hastily": 54000,
+    "normally": 57600,
     "count": 1,
-    "updated_at": 1767655817
+    "updated_at": 1780505236
   },
   {
-    "id": 7456,
-    "game_id": 469,
-    "hastily": 32400,
-    "normally": 54000,
+    "id": 7552,
+    "game_id": 342760,
+    "normally": 39600,
+    "completely": 54000,
+    "count": 5,
+    "updated_at": 1771051815
+  },
+  {
+    "id": 8061,
+    "game_id": 342853,
+    "hastily": 7200,
+    "normally": 57600,
+    "completely": 72000,
     "count": 1,
-    "updated_at": 1767655817
+    "updated_at": 1773334408
   },
   {
-    "id": 7457,
-    "game_id": 467,
-    "hastily": 75600,
-    "normally": 115200,
-    "completely": 154800,
-    "count": 1,
-    "updated_at": 1767656028
-  },
-  {
-    "id": 7458,
-    "game_id": 465,
-    "hastily": 32400,
-    "normally": 50400,
-    "completely": 61200,
-    "count": 1,
-    "updated_at": 1767656045
-  },
-  {
-    "id": 7459,
-    "game_id": 468,
+    "id": 8068,
+    "game_id": 342102,
     "hastily": 97200,
-    "normally": 194400,
-    "completely": 633600,
+    "normally": 104400,
+    "completely": 115200,
     "count": 1,
-    "updated_at": 1767656117
+    "updated_at": 1773334947
   },
   {
-    "id": 8494,
-    "game_id": 457,
-    "hastily": 57600,
-    "normally": 72000,
-    "completely": 108000,
-    "count": 1,
-    "updated_at": 1777236431
-  },
-  {
-    "id": 8495,
-    "game_id": 458,
-    "hastily": 72000,
-    "normally": 108000,
-    "completely": 180000,
-    "count": 1,
-    "updated_at": 1777236442
-  },
-  {
-    "id": 6,
-    "game_id": 529,
-    "hastily": 57660,
-    "normally": 77760,
-    "completely": 124080,
-    "count": 13,
-    "updated_at": 1777751031
-  },
-  {
-    "id": 8,
-    "game_id": 570,
-    "hastily": 41850,
-    "normally": 63000,
-    "completely": 114900,
-    "count": 2,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 17,
-    "game_id": 512,
-    "hastily": 25770,
-    "normally": 45900,
-    "completely": 54000,
-    "count": 5,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 22,
-    "game_id": 538,
-    "hastily": 46215,
-    "normally": 61415,
-    "completely": 101751,
-    "count": 27,
-    "updated_at": 1781107097
-  },
-  {
-    "id": 63,
-    "game_id": 537,
-    "hastily": 34200,
-    "normally": 64770,
-    "completely": 119520,
-    "count": 10,
-    "updated_at": 1774974613
-  },
-  {
-    "id": 66,
-    "game_id": 558,
-    "hastily": 54000,
-    "normally": 79200,
-    "completely": 192320,
-    "count": 7,
-    "updated_at": 1781371359
-  },
-  {
-    "id": 118,
-    "game_id": 604,
-    "normally": 16860,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 171,
-    "game_id": 565,
-    "hastily": 36000,
-    "normally": 51648,
-    "count": 5,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 176,
-    "game_id": 533,
-    "hastily": 32400,
-    "normally": 58633,
-    "completely": 179190,
-    "count": 16,
-    "updated_at": 1774463616
-  },
-  {
-    "id": 207,
-    "game_id": 517,
-    "hastily": 43200,
-    "normally": 37900,
-    "completely": 88200,
-    "count": 7,
-    "updated_at": 1767183396
-  },
-  {
-    "id": 208,
-    "game_id": 519,
-    "hastily": 25200,
-    "normally": 20700,
-    "completely": 27000,
-    "count": 6,
-    "updated_at": 1767183611
-  },
-  {
-    "id": 209,
-    "game_id": 518,
-    "hastily": 25200,
-    "normally": 18300,
-    "completely": 27000,
-    "count": 7,
-    "updated_at": 1767183611
-  },
-  {
-    "id": 345,
-    "game_id": 545,
-    "hastily": 35100,
-    "normally": 49704,
-    "completely": 173700,
-    "count": 9,
-    "updated_at": 1767167792
-  },
-  {
-    "id": 351,
-    "game_id": 539,
-    "normally": 45285,
-    "completely": 78120,
-    "count": 6,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 372,
-    "game_id": 509,
-    "normally": 72900,
-    "completely": 104400,
-    "count": 5,
-    "updated_at": 1751982363
-  },
-  {
-    "id": 377,
-    "game_id": 569,
-    "hastily": 46800,
-    "normally": 46800,
-    "completely": 86400,
-    "count": 2,
-    "updated_at": 1767654840
-  },
-  {
-    "id": 380,
-    "game_id": 544,
-    "hastily": 34200,
-    "normally": 34560,
-    "completely": 84000,
-    "count": 7,
-    "updated_at": 1767171859
-  },
-  {
-    "id": 389,
-    "game_id": 530,
-    "hastily": 43800,
-    "normally": 49490,
-    "completely": 260025,
-    "count": 9,
-    "updated_at": 1761137081
-  },
-  {
-    "id": 390,
-    "game_id": 536,
-    "hastily": 39600,
-    "normally": 68400,
-    "completely": 250200,
-    "count": 5,
-    "updated_at": 1752706387
-  },
-  {
-    "id": 442,
-    "game_id": 520,
-    "hastily": 46800,
-    "normally": 42700,
-    "completely": 93600,
-    "count": 8,
-    "updated_at": 1767183704
-  },
-  {
-    "id": 443,
-    "game_id": 514,
-    "hastily": 32400,
-    "normally": 30600,
-    "completely": 54000,
-    "count": 7,
-    "updated_at": 1767014509
-  },
-  {
-    "id": 450,
-    "game_id": 562,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 533,
-    "game_id": 534,
-    "hastily": 165600,
-    "normally": 164680,
-    "count": 4,
-    "updated_at": 1752097970
-  },
-  {
-    "id": 562,
-    "game_id": 559,
-    "hastily": 37800,
-    "normally": 32376,
-    "completely": 39600,
-    "count": 5,
-    "updated_at": 1767168120
-  },
-  {
-    "id": 590,
-    "game_id": 528,
-    "normally": 61200,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 591,
-    "game_id": 527,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 621,
-    "game_id": 547,
-    "hastily": 18000,
-    "normally": 32620,
-    "completely": 52200,
-    "count": 4,
-    "updated_at": 1779681151
-  },
-  {
-    "id": 734,
-    "game_id": 522,
-    "hastily": 43200,
-    "normally": 90000,
-    "completely": 144000,
-    "count": 2,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 736,
-    "game_id": 548,
-    "normally": 28800,
-    "completely": 79200,
-    "count": 2,
-    "updated_at": 1762182198
-  },
-  {
-    "id": 744,
-    "game_id": 546,
-    "hastily": 33120,
-    "normally": 36000,
-    "completely": 43200,
-    "count": 3,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 755,
-    "game_id": 571,
-    "normally": 30600,
-    "completely": 99000,
-    "count": 3,
-    "updated_at": 1767876302
-  },
-  {
-    "id": 995,
-    "game_id": 550,
-    "hastily": 14400,
-    "normally": 20300,
-    "count": 3,
-    "updated_at": 1768095562
-  },
-  {
-    "id": 1128,
-    "game_id": 506,
-    "completely": 86400,
-    "count": 1,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1149,
-    "game_id": 587,
-    "hastily": 4320,
-    "normally": 3900,
-    "completely": 4500,
-    "count": 2,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1238,
-    "game_id": 524,
-    "completely": 172800,
-    "count": 1,
-    "updated_at": 1728556567
-  },
-  {
-    "id": 1437,
-    "game_id": 554,
-    "completely": 118800,
-    "count": 2,
-    "updated_at": 1747309344
-  },
-  {
-    "id": 1453,
-    "game_id": 560,
-    "hastily": 18000,
-    "normally": 21600,
-    "completely": 61200,
-    "count": 2,
-    "updated_at": 1730826845
-  },
-  {
-    "id": 1460,
-    "game_id": 549,
-    "normally": 33075,
-    "count": 6,
-    "updated_at": 1776525630
-  },
-  {
-    "id": 1868,
-    "game_id": 552,
-    "normally": 12210,
-    "count": 2,
-    "updated_at": 1768095525
-  },
-  {
-    "id": 2194,
-    "game_id": 556,
-    "hastily": 14400,
-    "normally": 21600,
-    "count": 2,
-    "updated_at": 1748616746
-  },
-  {
-    "id": 2926,
-    "game_id": 578,
-    "hastily": 32400,
-    "normally": 38160,
-    "count": 5,
-    "updated_at": 1777541595
-  },
-  {
-    "id": 4612,
-    "game_id": 543,
-    "completely": 75600,
-    "count": 1,
-    "updated_at": 1746192985
-  },
-  {
-    "id": 4776,
-    "game_id": 523,
-    "completely": 122400,
-    "count": 1,
-    "updated_at": 1748356827
-  },
-  {
-    "id": 4777,
-    "game_id": 515,
-    "completely": 93600,
-    "count": 1,
-    "updated_at": 1748357097
-  },
-  {
-    "id": 5141,
-    "game_id": 507,
-    "hastily": 10800,
-    "count": 1,
-    "updated_at": 1750232215
-  },
-  {
-    "id": 5143,
-    "game_id": 516,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1750286153
-  },
-  {
-    "id": 5304,
-    "game_id": 564,
-    "hastily": 7200,
-    "normally": 21600,
-    "completely": 39600,
-    "count": 4,
-    "updated_at": 1767621750
-  },
-  {
-    "id": 5396,
-    "game_id": 542,
-    "hastily": 28800,
-    "normally": 34200,
-    "completely": 72000,
-    "count": 3,
-    "updated_at": 1781186776
-  },
-  {
-    "id": 6135,
-    "game_id": 551,
-    "hastily": 28800,
-    "normally": 34800,
-    "completely": 50400,
-    "count": 3,
-    "updated_at": 1781427843
-  },
-  {
-    "id": 6909,
-    "game_id": 553,
-    "hastily": 28800,
-    "normally": 43200,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1763650614
-  },
-  {
-    "id": 7433,
-    "game_id": 574,
-    "hastily": 32400,
-    "normally": 46800,
-    "count": 1,
-    "updated_at": 1767651786
-  },
-  {
-    "id": 38,
-    "game_id": 634,
-    "hastily": 18000,
-    "normally": 180000,
-    "count": 1,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 97,
-    "game_id": 623,
-    "hastily": 33300,
-    "normally": 32400,
-    "completely": 75600,
-    "count": 6,
-    "updated_at": 1769882869
-  },
-  {
-    "id": 157,
-    "game_id": 616,
-    "hastily": 40320,
-    "normally": 28800,
-    "count": 2,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 400,
-    "game_id": 671,
-    "hastily": 82800,
-    "normally": 216600,
-    "completely": 176400,
-    "count": 4,
-    "updated_at": 1767176618
-  },
-  {
-    "id": 595,
-    "game_id": 651,
-    "normally": 12000,
-    "count": 3,
-    "updated_at": 1739496898
-  },
-  {
-    "id": 1187,
-    "game_id": 620,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1201,
-    "game_id": 621,
-    "hastily": 35200,
-    "normally": 45600,
-    "completely": 82000,
-    "count": 6,
-    "updated_at": 1775708883
-  },
-  {
-    "id": 1202,
-    "game_id": 624,
-    "hastily": 15240,
-    "normally": 15240,
-    "completely": 15240,
-    "count": 1,
-    "updated_at": 1728556566
-  },
-  {
-    "id": 1594,
-    "game_id": 653,
-    "completely": 198000,
-    "count": 1,
-    "updated_at": 1728556577
-  },
-  {
-    "id": 1610,
-    "game_id": 612,
-    "normally": 27300,
-    "completely": 18000,
-    "count": 3,
-    "updated_at": 1753782517
-  },
-  {
-    "id": 1666,
-    "game_id": 672,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1728556580
-  },
-  {
-    "id": 1909,
-    "game_id": 673,
-    "hastily": 15000,
-    "normally": 25200,
-    "completely": 53320,
-    "count": 4,
-    "updated_at": 1767177320
-  },
-  {
-    "id": 1994,
-    "game_id": 661,
-    "normally": 18000,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1728556589
-  },
-  {
-    "id": 4602,
-    "game_id": 618,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1746130046
-  },
-  {
-    "id": 4604,
-    "game_id": 622,
-    "hastily": 32400,
-    "normally": 36000,
-    "completely": 52200,
-    "count": 4,
-    "updated_at": 1780872704
-  },
-  {
-    "id": 4611,
-    "game_id": 625,
-    "hastily": 30000,
-    "normally": 46800,
-    "completely": 78000,
-    "count": 3,
-    "updated_at": 1767168357
-  },
-  {
-    "id": 4877,
-    "game_id": 680,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1748612311
-  },
-  {
-    "id": 5797,
-    "game_id": 654,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1754229648
-  },
-  {
-    "id": 6827,
-    "game_id": 641,
-    "hastily": 39600,
-    "normally": 64800,
-    "completely": 39600,
-    "count": 1,
-    "updated_at": 1763054843
-  },
-  {
-    "id": 26,
-    "game_id": 753,
-    "hastily": 154920,
-    "count": 1,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 109,
-    "game_id": 740,
-    "hastily": 32540,
-    "normally": 37040,
-    "completely": 45000,
-    "count": 4,
-    "updated_at": 1765429478
-  },
-  {
-    "id": 202,
-    "game_id": 731,
-    "hastily": 108000,
-    "normally": 196242,
-    "completely": 180000,
-    "count": 8,
-    "updated_at": 1767349752
-  },
-  {
-    "id": 323,
-    "game_id": 732,
-    "hastily": 26400,
-    "normally": 122400,
-    "completely": 112970,
-    "count": 18,
-    "updated_at": 1780253770
-  },
-  {
-    "id": 689,
-    "game_id": 730,
-    "normally": 81000,
-    "completely": 139140,
-    "count": 4,
-    "updated_at": 1748982650
-  },
-  {
-    "id": 690,
-    "game_id": 733,
-    "hastily": 3153600,
-    "normally": 484386,
-    "completely": 763200,
-    "count": 12,
-    "updated_at": 1770908215
-  },
-  {
-    "id": 2437,
-    "game_id": 769,
-    "normally": 51480,
-    "count": 1,
-    "updated_at": 1728556603
-  },
-  {
-    "id": 4318,
-    "game_id": 748,
-    "normally": 97200,
-    "count": 2,
-    "updated_at": 1748111066
-  },
-  {
-    "id": 7408,
-    "game_id": 787,
-    "hastily": 43200,
-    "normally": 61200,
-    "completely": 86400,
-    "count": 1,
-    "updated_at": 1767623846
-  },
-  {
-    "id": 1,
-    "game_id": 873,
-    "hastily": 63720,
-    "normally": 93360,
-    "completely": 134748,
-    "count": 7,
-    "updated_at": 1729799010
-  },
-  {
-    "id": 31,
-    "game_id": 832,
-    "normally": 180720,
-    "count": 1,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 148,
-    "game_id": 826,
-    "hastily": 18000,
-    "normally": 100170,
-    "completely": 86400,
-    "count": 4,
-    "updated_at": 1729798899
-  },
-  {
-    "id": 158,
-    "game_id": 890,
-    "hastily": 25200,
-    "normally": 39930,
-    "completely": 32400,
-    "count": 3,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 287,
-    "game_id": 885,
-    "hastily": 43200,
-    "completely": 183720,
-    "count": 5,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 306,
-    "game_id": 836,
-    "hastily": 16200,
-    "normally": 37200,
-    "completely": 39600,
-    "count": 6,
-    "updated_at": 1758760521
-  },
-  {
-    "id": 406,
-    "game_id": 891,
-    "hastily": 196200,
-    "normally": 612000,
-    "completely": 4338900,
-    "count": 8,
-    "updated_at": 1771377240
-  },
-  {
-    "id": 420,
-    "game_id": 837,
-    "normally": 112500,
-    "completely": 162000,
-    "count": 4,
-    "updated_at": 1773550179
-  },
-  {
-    "id": 546,
-    "game_id": 847,
-    "hastily": 48600,
-    "normally": 128400,
-    "completely": 192600,
-    "count": 6,
-    "updated_at": 1768848925
-  },
-  {
-    "id": 557,
-    "game_id": 912,
-    "hastily": 32400,
-    "normally": 67350,
-    "completely": 86400,
-    "count": 6,
-    "updated_at": 1767626908
-  },
-  {
-    "id": 567,
-    "game_id": 866,
-    "hastily": 41400,
-    "normally": 190800,
-    "completely": 1839600,
-    "count": 3,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 716,
-    "game_id": 911,
-    "hastily": 54000,
-    "normally": 60150,
-    "count": 3,
-    "updated_at": 1748612708
-  },
-  {
-    "id": 787,
-    "game_id": 910,
-    "normally": 50400,
-    "completely": 61200,
-    "count": 3,
-    "updated_at": 1748612693
-  },
-  {
-    "id": 1179,
-    "game_id": 880,
-    "hastily": 9960,
-    "normally": 25980,
-    "completely": 32400,
-    "count": 4,
-    "updated_at": 1769265936
-  },
-  {
-    "id": 1242,
-    "game_id": 916,
-    "normally": 22410,
-    "count": 2,
-    "updated_at": 1728556567
-  },
-  {
-    "id": 1294,
-    "game_id": 909,
-    "hastily": 18420,
-    "normally": 18420,
-    "completely": 18420,
-    "count": 1,
-    "updated_at": 1728556569
-  },
-  {
-    "id": 2074,
-    "game_id": 857,
-    "hastily": 50400,
-    "normally": 61200,
-    "completely": 67620,
-    "count": 3,
-    "updated_at": 1767623391
-  },
-  {
-    "id": 2296,
-    "game_id": 851,
-    "hastily": 50400,
-    "normally": 61200,
-    "completely": 109200,
-    "count": 3,
-    "updated_at": 1767621572
-  },
-  {
-    "id": 4187,
-    "game_id": 858,
-    "hastily": 39600,
-    "normally": 61200,
-    "completely": 86400,
-    "count": 2,
-    "updated_at": 1767623391
-  },
-  {
-    "id": 4195,
-    "game_id": 892,
-    "completely": 46800,
-    "count": 1,
-    "updated_at": 1741054601
-  },
-  {
-    "id": 4880,
-    "game_id": 874,
-    "normally": 54000,
-    "count": 1,
-    "updated_at": 1748613185
-  },
-  {
-    "id": 4881,
-    "game_id": 897,
-    "normally": 57600,
-    "count": 1,
-    "updated_at": 1748613206
-  },
-  {
-    "id": 4883,
-    "game_id": 895,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1748613401
-  },
-  {
-    "id": 5953,
-    "game_id": 852,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1756422395
-  },
-  {
-    "id": 7379,
-    "game_id": 828,
-    "hastily": 50400,
-    "normally": 72000,
-    "completely": 104400,
-    "count": 1,
-    "updated_at": 1767615302
-  },
-  {
-    "id": 7931,
-    "game_id": 846,
-    "hastily": 46800,
-    "normally": 75600,
-    "completely": 154800,
-    "count": 1,
-    "updated_at": 1772913090
-  },
-  {
-    "id": 7932,
-    "game_id": 868,
-    "hastily": 36000,
-    "normally": 50400,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1772913126
-  },
-  {
-    "id": 12,
-    "game_id": 1009,
-    "hastily": 54760,
-    "normally": 71621,
-    "completely": 147975,
-    "count": 15,
-    "updated_at": 1775217601
-  },
-  {
-    "id": 90,
-    "game_id": 960,
-    "hastily": 38400,
-    "normally": 41622,
-    "completely": 79200,
-    "count": 13,
-    "updated_at": 1772021588
-  },
-  {
-    "id": 108,
-    "game_id": 986,
-    "hastily": 33960,
-    "normally": 39600,
-    "completely": 63000,
-    "count": 3,
-    "updated_at": 1779557309
-  },
-  {
-    "id": 140,
-    "game_id": 928,
-    "hastily": 25200,
-    "normally": 32400,
-    "count": 2,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 190,
-    "game_id": 1011,
-    "hastily": 109920,
-    "normally": 239400,
-    "completely": 524160,
-    "count": 8,
-    "updated_at": 1767164343
-  },
-  {
-    "id": 261,
-    "game_id": 987,
-    "hastily": 27660,
-    "count": 2,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 262,
-    "game_id": 988,
-    "hastily": 28770,
-    "count": 2,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 324,
-    "game_id": 998,
-    "normally": 31820,
-    "count": 3,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 354,
-    "game_id": 1013,
-    "hastily": 7620,
-    "count": 1,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 392,
-    "game_id": 979,
-    "hastily": 25400,
-    "normally": 47700,
-    "completely": 82800,
-    "count": 6,
-    "updated_at": 1767168357
-  },
-  {
-    "id": 700,
-    "game_id": 1000,
-    "normally": 106620,
-    "completely": 90000,
-    "count": 2,
-    "updated_at": 1728556551
-  },
-  {
-    "id": 740,
-    "game_id": 989,
-    "normally": 54000,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 741,
-    "game_id": 990,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 820,
-    "game_id": 966,
-    "hastily": 7620,
-    "normally": 16560,
-    "count": 4,
-    "updated_at": 1773146973
-  },
-  {
-    "id": 982,
-    "game_id": 955,
-    "hastily": 25200,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 1119,
-    "game_id": 978,
-    "hastily": 7200,
-    "normally": 27140,
-    "count": 3,
-    "updated_at": 1728556563
-  },
-  {
-    "id": 1166,
-    "game_id": 959,
-    "normally": 82800,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1181,
-    "game_id": 967,
-    "hastily": 5400,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1419,
-    "game_id": 924,
-    "completely": 71280,
-    "count": 1,
-    "updated_at": 1728556572
-  },
-  {
-    "id": 1469,
-    "game_id": 965,
-    "normally": 27480,
-    "count": 1,
-    "updated_at": 1728556574
-  },
-  {
-    "id": 1653,
-    "game_id": 942,
-    "hastily": 23220,
-    "normally": 24400,
-    "completely": 36000,
-    "count": 4,
-    "updated_at": 1753019858
-  },
-  {
-    "id": 1912,
-    "game_id": 999,
-    "completely": 54900,
-    "count": 2,
-    "updated_at": 1728556587
-  },
-  {
-    "id": 2416,
-    "game_id": 1015,
-    "completely": 43020,
-    "count": 1,
-    "updated_at": 1728556602
-  },
-  {
-    "id": 4452,
-    "game_id": 974,
-    "normally": 86400,
-    "count": 1,
-    "updated_at": 1743695768
-  },
-  {
-    "id": 4873,
-    "game_id": 949,
-    "normally": 25200,
-    "count": 2,
-    "updated_at": 1758228844
-  },
-  {
-    "id": 4926,
-    "game_id": 948,
-    "normally": 122400,
-    "count": 1,
-    "updated_at": 1748982728
-  },
-  {
-    "id": 5500,
-    "game_id": 1004,
-    "hastily": 32400,
-    "normally": 39600,
-    "completely": 46800,
-    "count": 1,
-    "updated_at": 1752997511
-  },
-  {
-    "id": 5999,
-    "game_id": 1016,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1757166440
-  },
-  {
-    "id": 6222,
-    "game_id": 1006,
-    "completely": 158400,
-    "count": 1,
-    "updated_at": 1760091754
-  },
-  {
-    "id": 7112,
-    "game_id": 980,
-    "hastily": 10800,
-    "normally": 28800,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1765614082
-  },
-  {
-    "id": 7214,
-    "game_id": 1014,
-    "hastily": 32400,
-    "normally": 7660800,
-    "completely": 51811200,
-    "count": 3,
-    "updated_at": 1779562787
-  },
-  {
-    "id": 8354,
-    "game_id": 981,
-    "hastily": 39600,
-    "normally": 50400,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1775062759
-  },
-  {
-    "id": 8541,
-    "game_id": 971,
-    "normally": 10800,
-    "count": 1,
-    "updated_at": 1778204147
-  },
-  {
-    "id": 61,
-    "game_id": 1051,
-    "hastily": 8400,
-    "normally": 21392,
-    "completely": 38880,
-    "count": 13,
-    "updated_at": 1761138881
-  },
-  {
-    "id": 101,
-    "game_id": 1022,
-    "hastily": 42960,
-    "normally": 23400,
-    "completely": 28800,
-    "count": 4,
-    "updated_at": 1760875611
-  },
-  {
-    "id": 168,
-    "game_id": 1062,
-    "hastily": 30600,
-    "normally": 46936,
-    "completely": 117000,
-    "count": 21,
-    "updated_at": 1781640635
-  },
-  {
-    "id": 170,
-    "game_id": 1058,
-    "hastily": 28800,
-    "normally": 194400,
-    "completely": 3600000,
-    "count": 2,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 231,
-    "game_id": 1025,
-    "hastily": 45240,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 241,
-    "game_id": 1036,
-    "normally": 108000,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 242,
-    "game_id": 1029,
-    "hastily": 31200,
-    "normally": 111888,
-    "completely": 187200,
-    "count": 11,
-    "updated_at": 1762990126
-  },
-  {
-    "id": 243,
-    "game_id": 1039,
-    "hastily": 100800,
-    "normally": 198000,
-    "count": 2,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 244,
-    "game_id": 1033,
-    "hastily": 54000,
-    "normally": 117820,
-    "completely": 149400,
-    "count": 4,
-    "updated_at": 1761619824
-  },
-  {
-    "id": 245,
-    "game_id": 1037,
-    "normally": 72000,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 246,
-    "game_id": 1035,
-    "hastily": 10800,
-    "normally": 57600,
-    "completely": 79200,
-    "count": 2,
-    "updated_at": 1731046546
-  },
-  {
-    "id": 247,
-    "game_id": 1100,
-    "hastily": 36000,
-    "normally": 90000,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 253,
-    "game_id": 1075,
-    "hastily": 39600,
-    "normally": 90000,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1764379423
-  },
-  {
-    "id": 254,
-    "game_id": 1077,
-    "hastily": 34200,
-    "normally": 50400,
-    "completely": 61300,
-    "count": 6,
-    "updated_at": 1776568773
-  },
-  {
-    "id": 255,
-    "game_id": 1078,
-    "hastily": 54000,
-    "normally": 78000,
-    "completely": 103200,
-    "count": 4,
-    "updated_at": 1778902315
-  },
-  {
-    "id": 267,
-    "game_id": 1020,
-    "hastily": 429513,
-    "normally": 476321,
-    "completely": 1918449,
-    "count": 65,
-    "updated_at": 1781300249
-  },
-  {
-    "id": 273,
-    "game_id": 1105,
-    "hastily": 26400,
-    "normally": 47700,
-    "completely": 63900,
-    "count": 4,
-    "updated_at": 1768095099
-  },
-  {
-    "id": 274,
-    "game_id": 1112,
-    "normally": 75600,
-    "count": 1,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 277,
-    "game_id": 1111,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 39600,
-    "count": 2,
-    "updated_at": 1763352341
-  },
-  {
-    "id": 278,
-    "game_id": 1113,
-    "normally": 21600,
-    "completely": 28800,
-    "count": 2,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 279,
-    "game_id": 1108,
-    "normally": 45900,
-    "completely": 297000,
-    "count": 4,
-    "updated_at": 1762991220
-  },
-  {
-    "id": 280,
-    "game_id": 1103,
-    "hastily": 12600,
-    "normally": 36257,
-    "completely": 43800,
-    "count": 7,
-    "updated_at": 1768095178
-  },
-  {
-    "id": 282,
-    "game_id": 1104,
-    "hastily": 10600,
-    "normally": 12465,
-    "completely": 21900,
-    "count": 4,
-    "updated_at": 1765678677
-  },
-  {
-    "id": 305,
-    "game_id": 1074,
-    "hastily": 30300,
-    "normally": 46800,
-    "completely": 57750,
-    "count": 7,
-    "updated_at": 1757388536
-  },
-  {
-    "id": 313,
-    "game_id": 1050,
-    "normally": 86400,
-    "count": 2,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 346,
-    "game_id": 1122,
-    "hastily": 29820,
-    "normally": 36000,
-    "completely": 90000,
-    "count": 7,
-    "updated_at": 1767168754
-  },
-  {
-    "id": 353,
-    "game_id": 1121,
-    "hastily": 54000,
-    "normally": 134930,
-    "completely": 216000,
-    "count": 8,
-    "updated_at": 1775916134
-  },
-  {
-    "id": 395,
-    "game_id": 1063,
-    "hastily": 2610,
-    "normally": 2715,
-    "completely": 5380,
-    "count": 6,
-    "updated_at": 1778114200
-  },
-  {
-    "id": 536,
-    "game_id": 1082,
-    "hastily": 75600,
-    "normally": 78120,
-    "completely": 1070460,
-    "count": 6,
-    "updated_at": 1751146308
-  },
-  {
-    "id": 695,
-    "game_id": 1042,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1728556551
-  },
-  {
-    "id": 777,
-    "game_id": 1027,
-    "completely": 57600,
-    "count": 1,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 841,
-    "game_id": 1028,
-    "normally": 43200,
-    "completely": 30600,
-    "count": 2,
-    "updated_at": 1728556555
-  },
-  {
-    "id": 847,
-    "game_id": 1107,
-    "normally": 8580,
-    "count": 1,
-    "updated_at": 1728556555
-  },
-  {
-    "id": 877,
-    "game_id": 1030,
-    "normally": 84320,
-    "count": 3,
-    "updated_at": 1777784698
-  },
-  {
-    "id": 928,
-    "game_id": 1117,
-    "hastily": 1200,
-    "normally": 1800,
-    "count": 1,
-    "updated_at": 1728556558
-  },
-  {
-    "id": 947,
-    "game_id": 1038,
-    "normally": 68760,
-    "count": 1,
-    "updated_at": 1728556558
-  },
-  {
-    "id": 1073,
-    "game_id": 1086,
-    "hastily": 2460,
-    "normally": 3600,
-    "completely": 5400,
-    "count": 3,
-    "updated_at": 1753355163
-  },
-  {
-    "id": 1145,
-    "game_id": 1101,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1209,
-    "game_id": 1059,
-    "completely": 540000,
-    "count": 1,
-    "updated_at": 1728556566
-  },
-  {
-    "id": 1565,
-    "game_id": 1092,
-    "hastily": 15810,
-    "normally": 32400,
-    "count": 3,
-    "updated_at": 1774735363
-  },
-  {
-    "id": 1597,
-    "game_id": 1040,
-    "hastily": 46800,
-    "normally": 57600,
-    "completely": 63750,
-    "count": 6,
-    "updated_at": 1773434763
-  },
-  {
-    "id": 1819,
-    "game_id": 1080,
-    "completely": 60060,
-    "count": 1,
-    "updated_at": 1728556584
-  },
-  {
-    "id": 1986,
-    "game_id": 1069,
+    "id": 8511,
+    "game_id": 341540,
     "hastily": 3600,
-    "normally": 3300,
-    "completely": 4500,
-    "count": 3,
-    "updated_at": 1757913346
-  },
-  {
-    "id": 2007,
-    "game_id": 1094,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1728556590
-  },
-  {
-    "id": 2055,
-    "game_id": 1068,
-    "completely": 17700,
-    "count": 2,
-    "updated_at": 1761142661
-  },
-  {
-    "id": 3561,
-    "game_id": 1021,
-    "hastily": 25200,
-    "normally": 30600,
-    "completely": 43200,
-    "count": 2,
-    "updated_at": 1757869222
-  },
-  {
-    "id": 4321,
-    "game_id": 1072,
     "normally": 10800,
-    "completely": 18000,
-    "count": 1,
-    "updated_at": 1742467748
+    "completely": 144000,
+    "count": 2,
+    "updated_at": 1778472847
   },
   {
-    "id": 4333,
-    "game_id": 1119,
+    "id": 8659,
+    "game_id": 343635,
+    "normally": 50400,
+    "count": 1,
+    "updated_at": 1779985957
+  },
+  {
+    "id": 8355,
+    "game_id": 346334,
+    "hastily": 43200,
+    "normally": 72000,
+    "completely": 75600,
+    "count": 1,
+    "updated_at": 1775062773
+  },
+  {
+    "id": 7700,
+    "game_id": 347225,
+    "hastily": 356400,
+    "normally": 356400,
+    "completely": 356400,
+    "count": 1,
+    "updated_at": 1770479138
+  },
+  {
+    "id": 7740,
+    "game_id": 347123,
+    "hastily": 88200,
+    "normally": 140400,
+    "completely": 273600,
+    "count": 3,
+    "updated_at": 1774704623
+  },
+  {
+    "id": 7760,
+    "game_id": 346707,
     "normally": 7200,
     "count": 1,
-    "updated_at": 1742828859
+    "updated_at": 1771007901
   },
   {
-    "id": 4574,
-    "game_id": 1076,
-    "hastily": 10800,
-    "normally": 10800,
-    "completely": 70200,
-    "count": 3,
-    "updated_at": 1774919196
+    "id": 7776,
+    "game_id": 347119,
+    "hastily": 43200,
+    "normally": 52200,
+    "completely": 90000,
+    "count": 2,
+    "updated_at": 1772754282
   },
   {
-    "id": 4768,
-    "game_id": 1048,
+    "id": 7836,
+    "game_id": 347668,
+    "hastily": 27360,
+    "normally": 48052,
+    "completely": 97854,
+    "count": 33,
+    "updated_at": 1781250880
+  },
+  {
+    "id": 7989,
+    "game_id": 347659,
+    "hastily": 14400,
     "normally": 28800,
-    "count": 1,
-    "updated_at": 1748111614
-  },
-  {
-    "id": 4895,
-    "game_id": 1071,
-    "completely": 18000,
-    "count": 2,
-    "updated_at": 1757913384
-  },
-  {
-    "id": 5300,
-    "game_id": 1055,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1751982965
-  },
-  {
-    "id": 5327,
-    "game_id": 1087,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 5400,
-    "count": 2,
-    "updated_at": 1753355489
-  },
-  {
-    "id": 5711,
-    "game_id": 1070,
-    "hastily": 9000,
-    "normally": 18000,
-    "completely": 36000,
-    "count": 2,
-    "updated_at": 1757912866
-  },
-  {
-    "id": 5826,
-    "game_id": 1041,
     "completely": 54000,
     "count": 1,
-    "updated_at": 1754588669
+    "updated_at": 1773020665
   },
   {
-    "id": 5860,
-    "game_id": 1083,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 25200,
+    "id": 8510,
+    "game_id": 347667,
+    "hastily": 54000,
+    "normally": 86400,
+    "completely": 129600,
     "count": 1,
-    "updated_at": 1754984207
+    "updated_at": 1777420015
   },
   {
-    "id": 6003,
-    "game_id": 1079,
+    "id": 8633,
+    "game_id": 347636,
+    "hastily": 111600,
     "normally": 165600,
-    "completely": 216000,
+    "completely": 169200,
     "count": 2,
-    "updated_at": 1774726664
+    "updated_at": 1781330051
   },
   {
-    "id": 6048,
-    "game_id": 1090,
-    "hastily": 5400,
+    "id": 7807,
+    "game_id": 348166,
+    "hastily": 45000,
+    "normally": 57600,
+    "completely": 108000,
+    "count": 3,
+    "updated_at": 1777720763
+  },
+  {
+    "id": 7969,
+    "game_id": 348200,
+    "hastily": 21600,
+    "normally": 26400,
+    "completely": 30000,
+    "count": 3,
+    "updated_at": 1777888184
+  },
+  {
+    "id": 8487,
+    "game_id": 348081,
+    "count": 1,
+    "updated_at": 1777150924
+  },
+  {
+    "id": 8518,
+    "game_id": 348216,
+    "hastily": 3600,
+    "normally": 7200,
+    "count": 1,
+    "updated_at": 1777685936
+  },
+  {
+    "id": 8536,
+    "game_id": 348272,
+    "hastily": 10800,
+    "normally": 14400,
+    "completely": 21600,
+    "count": 1,
+    "updated_at": 1777990208
+  },
+  {
+    "id": 8668,
+    "game_id": 348330,
+    "normally": 90000,
+    "completely": 165600,
+    "count": 5,
+    "updated_at": 1780969136
+  },
+  {
+    "id": 8693,
+    "game_id": 348192,
+    "hastily": 28800,
+    "normally": 30600,
+    "completely": 36000,
+    "count": 2,
+    "updated_at": 1781374384
+  },
+  {
+    "id": 7977,
+    "game_id": 355170,
+    "completely": 90000,
+    "count": 1,
+    "updated_at": 1772967028
+  },
+  {
+    "id": 8538,
+    "game_id": 354933,
+    "hastily": 18000,
+    "normally": 25200,
+    "completely": 50400,
+    "count": 1,
+    "updated_at": 1778069883
+  },
+  {
+    "id": 8362,
+    "game_id": 358525,
+    "hastily": 172800,
+    "normally": 208800,
+    "completely": 360000,
+    "count": 1,
+    "updated_at": 1775096787
+  },
+  {
+    "id": 8585,
+    "game_id": 358049,
+    "hastily": 7200,
+    "normally": 7200,
+    "completely": 7200,
+    "count": 1,
+    "updated_at": 1779118453
+  },
+  {
+    "id": 8600,
+    "game_id": 360748,
+    "hastily": 7200,
+    "normally": 50400,
+    "completely": 79200,
+    "count": 1,
+    "updated_at": 1779180193
+  },
+  {
+    "id": 8102,
+    "game_id": 362064,
+    "hastily": 25200,
+    "normally": 32400,
+    "completely": 43200,
+    "count": 1,
+    "updated_at": 1773465621
+  },
+  {
+    "id": 8332,
+    "game_id": 363307,
+    "count": 1,
+    "updated_at": 1774805014
+  },
+  {
+    "id": 8657,
+    "game_id": 361855,
+    "hastily": 54000,
+    "normally": 68400,
+    "completely": 118800,
+    "count": 3,
+    "updated_at": 1781549039
+  },
+  {
+    "id": 7670,
+    "game_id": 364882,
+    "normally": 18000,
+    "count": 1,
+    "updated_at": 1770135153
+  },
+  {
+    "id": 8474,
+    "game_id": 365488,
+    "normally": 14400,
+    "count": 1,
+    "updated_at": 1776881690
+  },
+  {
+    "id": 7991,
+    "game_id": 366893,
+    "hastily": 91800,
+    "normally": 164160,
+    "completely": 270000,
+    "count": 6,
+    "updated_at": 1778108342
+  },
+  {
+    "id": 8094,
+    "game_id": 366890,
+    "hastily": 36000,
+    "normally": 50400,
+    "completely": 72000,
+    "count": 1,
+    "updated_at": 1773374088
+  },
+  {
+    "id": 8147,
+    "game_id": 366884,
+    "hastily": 181800,
+    "normally": 262800,
+    "completely": 414000,
+    "count": 2,
+    "updated_at": 1778778806
+  },
+  {
+    "id": 8624,
+    "game_id": 369311,
+    "hastily": 64800,
+    "normally": 111600,
+    "completely": 180000,
+    "count": 1,
+    "updated_at": 1779376483
+  },
+  {
+    "id": 6114,
+    "game_id": 369799,
+    "normally": 14400,
+    "count": 2,
+    "updated_at": 1759353182
+  },
+  {
+    "id": 7759,
+    "game_id": 371106,
+    "count": 1,
+    "updated_at": 1771005667
+  },
+  {
+    "id": 8331,
+    "game_id": 371567,
+    "hastily": 18000,
+    "normally": 43200,
+    "count": 1,
+    "updated_at": 1775254498
+  },
+  {
+    "id": 8501,
+    "game_id": 369842,
+    "normally": 64800,
+    "count": 1,
+    "updated_at": 1777310508
+  },
+  {
+    "id": 7709,
+    "game_id": 372200,
+    "normally": 18000,
+    "count": 1,
+    "updated_at": 1770656322
+  },
+  {
+    "id": 8728,
+    "game_id": 372510,
+    "count": 1,
+    "updated_at": 1781510287
+  },
+  {
+    "id": 7547,
+    "game_id": 373191,
+    "hastily": 3600,
+    "normally": 3600,
+    "count": 1,
+    "updated_at": 1768586319
+  },
+  {
+    "id": 7130,
+    "game_id": 374123,
+    "hastily": 22800,
+    "normally": 37200,
+    "completely": 46800,
+    "count": 3,
+    "updated_at": 1767749560
+  },
+  {
+    "id": 8447,
+    "game_id": 373844,
+    "hastily": 7200000,
+    "normally": 21600,
+    "completely": 25200,
+    "count": 2,
+    "updated_at": 1776376576
+  },
+  {
+    "id": 8544,
+    "game_id": 374721,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 3600,
+    "count": 1,
+    "updated_at": 1778285876
+  },
+  {
+    "id": 7995,
+    "game_id": 377690,
+    "count": 1,
+    "updated_at": 1773147994
+  },
+  {
+    "id": 8481,
+    "game_id": 378229,
+    "normally": 72000,
+    "completely": 86400,
+    "count": 2,
+    "updated_at": 1779230518
+  },
+  {
+    "id": 8389,
+    "game_id": 380437,
+    "hastily": 25200,
+    "normally": 36000,
+    "completely": 72000,
+    "count": 1,
+    "updated_at": 1775740067
+  },
+  {
+    "id": 8043,
+    "game_id": 381578,
+    "hastily": 18000,
+    "normally": 21600,
+    "completely": 28800,
+    "count": 1,
+    "updated_at": 1773332937
+  },
+  {
+    "id": 7355,
+    "game_id": 383483,
     "normally": 10800,
     "completely": 14400,
-    "count": 2,
-    "updated_at": 1766102350
-  },
-  {
-    "id": 6213,
-    "game_id": 1045,
-    "normally": 21600,
     "count": 1,
-    "updated_at": 1760012650
+    "updated_at": 1767431539
   },
   {
-    "id": 6434,
-    "game_id": 1066,
-    "hastily": 7200,
+    "id": 7485,
+    "game_id": 384240,
+    "hastily": 39600,
+    "normally": 43200,
+    "completely": 50400,
     "count": 1,
-    "updated_at": 1761142799
+    "updated_at": 1768020976
   },
   {
-    "id": 6495,
-    "game_id": 1110,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1761883519
-  },
-  {
-    "id": 6919,
-    "game_id": 1065,
-    "hastily": 360000,
-    "normally": 360000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1763668270
-  },
-  {
-    "id": 7057,
-    "game_id": 1046,
-    "hastily": 43200,
-    "normally": 64800,
-    "completely": 93600,
-    "count": 1,
-    "updated_at": 1764650682
-  },
-  {
-    "id": 7540,
-    "game_id": 1047,
+    "id": 8526,
+    "game_id": 383682,
     "hastily": 3600,
-    "normally": 7200,
-    "count": 1,
-    "updated_at": 1768502459
-  },
-  {
-    "id": 8419,
-    "game_id": 1026,
-    "completely": 32400,
-    "count": 1,
-    "updated_at": 1775976232
-  },
-  {
-    "id": 8609,
-    "game_id": 1089,
     "normally": 10800,
-    "count": 1,
-    "updated_at": 1779225225
-  },
-  {
-    "id": 114,
-    "game_id": 1164,
-    "hastily": 39600,
-    "normally": 51138,
-    "completely": 75564,
-    "count": 23,
-    "updated_at": 1767991160
-  },
-  {
-    "id": 160,
-    "game_id": 1150,
-    "hastily": 43980,
-    "completely": 25200,
-    "count": 2,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 161,
-    "game_id": 1151,
-    "hastily": 45900,
-    "normally": 49590,
-    "completely": 61200,
-    "count": 4,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 162,
-    "game_id": 1152,
-    "hastily": 57420,
-    "normally": 70200,
-    "count": 2,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 317,
-    "game_id": 1134,
-    "hastily": 18000,
-    "normally": 28320,
-    "completely": 72000,
-    "count": 3,
-    "updated_at": 1761485617
-  },
-  {
-    "id": 414,
-    "game_id": 1174,
-    "hastily": 72000,
-    "normally": 90000,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 451,
-    "game_id": 1162,
-    "normally": 79200,
-    "completely": 97200,
-    "count": 2,
-    "updated_at": 1772336433
-  },
-  {
-    "id": 489,
-    "game_id": 1161,
-    "normally": 34200,
-    "completely": 54000,
-    "count": 3,
-    "updated_at": 1771817971
-  },
-  {
-    "id": 496,
-    "game_id": 1128,
-    "hastily": 34200,
-    "normally": 42480,
-    "completely": 70420,
-    "count": 6,
-    "updated_at": 1768095321
-  },
-  {
-    "id": 579,
-    "game_id": 1216,
-    "hastily": 52200,
-    "normally": 70200,
-    "count": 4,
-    "updated_at": 1767173220
-  },
-  {
-    "id": 609,
-    "game_id": 1156,
-    "hastily": 36000,
-    "normally": 81120,
-    "completely": 91800,
-    "count": 5,
-    "updated_at": 1773198898
-  },
-  {
-    "id": 616,
-    "game_id": 1157,
-    "hastily": 46800,
-    "normally": 118800,
-    "completely": 172800,
-    "count": 2,
-    "updated_at": 1767627143
-  },
-  {
-    "id": 826,
-    "game_id": 1182,
-    "hastily": 50400,
-    "normally": 60600,
-    "completely": 118800,
-    "count": 3,
-    "updated_at": 1768064106
-  },
-  {
-    "id": 835,
-    "game_id": 1226,
-    "hastily": 54000,
-    "normally": 57930,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1748592600
-  },
-  {
-    "id": 979,
-    "game_id": 1207,
-    "hastily": 139920,
-    "normally": 212400,
-    "count": 2,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 1034,
-    "game_id": 1212,
-    "hastily": 103740,
-    "normally": 147210,
-    "completely": 280110,
-    "count": 2,
-    "updated_at": 1748504497
-  },
-  {
-    "id": 1069,
-    "game_id": 1183,
-    "normally": 327600,
-    "count": 1,
-    "updated_at": 1728556562
-  },
-  {
-    "id": 1572,
-    "game_id": 1133,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1728556577
-  },
-  {
-    "id": 2753,
-    "game_id": 1163,
-    "hastily": 26460,
-    "normally": 39600,
-    "count": 2,
-    "updated_at": 1772594280
-  },
-  {
-    "id": 2997,
-    "game_id": 1193,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1728556619
-  },
-  {
-    "id": 3581,
-    "game_id": 1184,
-    "count": 5,
-    "updated_at": 1779087834
-  },
-  {
-    "id": 3670,
-    "game_id": 1217,
-    "hastily": 144000,
-    "normally": 288000,
-    "completely": 432000,
-    "count": 1,
-    "updated_at": 1733421088
-  },
-  {
-    "id": 3936,
-    "game_id": 1215,
-    "normally": 360000,
-    "count": 1,
-    "updated_at": 1738024231
-  },
-  {
-    "id": 3941,
-    "game_id": 1219,
-    "hastily": 72900,
-    "normally": 124560,
-    "completely": 250200,
-    "count": 5,
-    "updated_at": 1775847400
-  },
-  {
-    "id": 3987,
-    "game_id": 1221,
-    "hastily": 93600,
-    "normally": 126000,
-    "completely": 196200,
-    "count": 2,
-    "updated_at": 1748607496
-  },
-  {
-    "id": 4211,
-    "game_id": 1135,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1741381984
-  },
-  {
-    "id": 4225,
-    "game_id": 1224,
-    "hastily": 54000,
-    "normally": 82800,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1748592600
-  },
-  {
-    "id": 4439,
-    "game_id": 1149,
-    "hastily": 18000,
-    "normally": 28800,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1743218491
-  },
-  {
-    "id": 4796,
-    "game_id": 1175,
-    "hastily": 54000,
-    "normally": 90000,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1748434722
-  },
-  {
-    "id": 4797,
-    "game_id": 1176,
-    "hastily": 43200,
-    "normally": 64800,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1748434814
-  },
-  {
-    "id": 4804,
-    "game_id": 1204,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 252000,
-    "count": 1,
-    "updated_at": 1748437565
-  },
-  {
-    "id": 4808,
-    "game_id": 1208,
-    "hastily": 72000,
-    "normally": 108000,
-    "completely": 162000,
-    "count": 1,
-    "updated_at": 1748443970
-  },
-  {
-    "id": 4811,
-    "game_id": 1209,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 252000,
-    "count": 1,
-    "updated_at": 1748444552
-  },
-  {
-    "id": 4818,
-    "game_id": 1211,
-    "hastily": 108000,
-    "normally": 162000,
-    "completely": 216000,
-    "count": 1,
-    "updated_at": 1748504106
-  },
-  {
-    "id": 4820,
-    "game_id": 1213,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 288000,
-    "count": 1,
-    "updated_at": 1748506312
-  },
-  {
-    "id": 4831,
-    "game_id": 1200,
-    "hastily": 72000,
-    "normally": 90000,
-    "completely": 126000,
-    "count": 1,
-    "updated_at": 1748512071
-  },
-  {
-    "id": 4832,
-    "game_id": 1201,
-    "hastily": 72000,
-    "normally": 90000,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1748512211
-  },
-  {
-    "id": 4834,
-    "game_id": 1210,
-    "hastily": 72000,
-    "normally": 90000,
-    "completely": 126000,
-    "count": 1,
-    "updated_at": 1748512635
-  },
-  {
-    "id": 4835,
-    "game_id": 1202,
-    "hastily": 108000,
-    "normally": 144000,
-    "completely": 216000,
-    "count": 1,
-    "updated_at": 1748512635
-  },
-  {
-    "id": 4836,
-    "game_id": 1203,
-    "hastily": 108000,
-    "normally": 144000,
-    "completely": 198000,
-    "count": 1,
-    "updated_at": 1748512904
-  },
-  {
-    "id": 4849,
-    "game_id": 1223,
-    "hastily": 54000,
-    "normally": 72000,
-    "completely": 126000,
-    "count": 1,
-    "updated_at": 1748592600
-  },
-  {
-    "id": 4850,
-    "game_id": 1220,
-    "hastily": 36000,
-    "normally": 57600,
-    "completely": 72000,
-    "count": 2,
-    "updated_at": 1777903791
-  },
-  {
-    "id": 4866,
-    "game_id": 1225,
-    "hastily": 36000,
-    "normally": 54000,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1748608559
-  },
-  {
-    "id": 5088,
-    "game_id": 1191,
-    "hastily": 18000,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1749649584
-  },
-  {
-    "id": 5406,
-    "game_id": 1181,
-    "hastily": 43200,
-    "normally": 64800,
-    "completely": 108000,
-    "count": 1,
-    "updated_at": 1752737336
-  },
-  {
-    "id": 5464,
-    "game_id": 1185,
-    "hastily": 132000,
-    "normally": 136800,
-    "completely": 146400,
-    "count": 3,
-    "updated_at": 1778342053
-  },
-  {
-    "id": 5465,
-    "game_id": 1186,
-    "hastily": 21600,
-    "normally": 32400,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1752993752
-  },
-  {
-    "id": 5468,
-    "game_id": 1187,
-    "hastily": 28800,
-    "normally": 36000,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1752994009
-  },
-  {
-    "id": 5580,
-    "game_id": 1195,
-    "hastily": 54000,
-    "normally": 108000,
-    "completely": 216000,
-    "count": 1,
-    "updated_at": 1753029599
-  },
-  {
-    "id": 5714,
-    "game_id": 1123,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1753417314
-  },
-  {
-    "id": 6147,
-    "game_id": 1142,
-    "normally": 3600,
-    "count": 1,
-    "updated_at": 1759829185
-  },
-  {
-    "id": 7421,
-    "game_id": 1158,
-    "hastily": 68400,
-    "normally": 93600,
-    "completely": 122400,
-    "count": 1,
-    "updated_at": 1767627143
-  },
-  {
-    "id": 7460,
-    "game_id": 1192,
-    "hastily": 18000,
-    "normally": 54000,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1767663479
-  },
-  {
-    "id": 7918,
-    "game_id": 1172,
-    "hastily": 79200,
-    "normally": 93600,
-    "completely": 97200,
-    "count": 1,
-    "updated_at": 1772912515
-  },
-  {
-    "id": 7988,
-    "game_id": 1188,
-    "hastily": 25200,
-    "normally": 36000,
-    "completely": 46800,
-    "count": 1,
-    "updated_at": 1773017231
-  },
-  {
-    "id": 7994,
-    "game_id": 1194,
-    "hastily": 21600,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1773138340
-  },
-  {
-    "id": 8012,
-    "game_id": 1189,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 32400,
-    "count": 1,
-    "updated_at": 1773305172
-  },
-  {
-    "id": 8431,
-    "game_id": 1190,
-    "hastily": 28800,
-    "normally": 43200,
-    "completely": 57600,
-    "count": 1,
-    "updated_at": 1776061466
-  },
-  {
-    "id": 69,
-    "game_id": 1318,
-    "hastily": 52200,
-    "normally": 110053,
-    "completely": 194400,
-    "count": 12,
-    "updated_at": 1767653765
-  },
-  {
-    "id": 123,
-    "game_id": 1250,
-    "normally": 41760,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 136,
-    "game_id": 1314,
-    "normally": 16200,
-    "completely": 32400,
-    "count": 3,
-    "updated_at": 1748617088
-  },
-  {
-    "id": 172,
-    "game_id": 1262,
-    "hastily": 43200,
-    "normally": 45120,
-    "completely": 76500,
-    "count": 7,
-    "updated_at": 1759688398
-  },
-  {
-    "id": 272,
-    "game_id": 1266,
-    "hastily": 72000,
-    "normally": 79200,
-    "completely": 243600,
-    "count": 8,
-    "updated_at": 1768170279
-  },
-  {
-    "id": 308,
-    "game_id": 1256,
-    "completely": 24300,
-    "count": 2,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 327,
-    "game_id": 1270,
-    "normally": 88200,
-    "completely": 115200,
-    "count": 5,
-    "updated_at": 1747305418
-  },
-  {
-    "id": 328,
-    "game_id": 1269,
-    "normally": 126000,
-    "count": 1,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 330,
-    "game_id": 1267,
-    "hastily": 61200,
-    "normally": 72771,
-    "completely": 148800,
-    "count": 10,
-    "updated_at": 1760014437
-  },
-  {
-    "id": 405,
-    "game_id": 1265,
-    "normally": 111600,
-    "completely": 72000000,
-    "count": 2,
-    "updated_at": 1730822312
-  },
-  {
-    "id": 428,
-    "game_id": 1306,
-    "normally": 14400,
-    "count": 1,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 467,
-    "game_id": 1309,
-    "normally": 43200,
-    "count": 1,
-    "updated_at": 1728556544
-  },
-  {
-    "id": 482,
-    "game_id": 1289,
-    "normally": 42760,
-    "count": 3,
-    "updated_at": 1728556544
-  },
-  {
-    "id": 535,
-    "game_id": 1254,
-    "normally": 27000,
-    "completely": 211200,
-    "count": 3,
-    "updated_at": 1762182478
-  },
-  {
-    "id": 547,
-    "game_id": 1293,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1728556546
-  },
-  {
-    "id": 593,
-    "game_id": 1305,
-    "hastily": 43200,
-    "normally": 79200,
-    "completely": 532800,
-    "count": 3,
-    "updated_at": 1755650348
-  },
-  {
-    "id": 800,
-    "game_id": 1284,
-    "hastily": 27600,
-    "count": 1,
-    "updated_at": 1728556554
-  },
-  {
-    "id": 878,
-    "game_id": 1286,
-    "hastily": 36000,
-    "normally": 25410,
-    "completely": 43200,
-    "count": 2,
-    "updated_at": 1752990094
-  },
-  {
-    "id": 972,
-    "game_id": 1271,
-    "hastily": 54000,
-    "normally": 72000,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 1152,
-    "game_id": 1310,
-    "normally": 39600,
-    "count": 2,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1161,
-    "game_id": 1307,
-    "hastily": 25200,
-    "normally": 28800,
-    "completely": 32400,
-    "count": 1,
-    "updated_at": 1728556565
-  },
-  {
-    "id": 1272,
-    "game_id": 1290,
-    "completely": 74940,
-    "count": 1,
-    "updated_at": 1728556568
-  },
-  {
-    "id": 1339,
-    "game_id": 1277,
-    "normally": 50400,
-    "completely": 198615,
-    "count": 5,
-    "updated_at": 1776640276
-  },
-  {
-    "id": 1392,
-    "game_id": 1283,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1728556571
-  },
-  {
-    "id": 1869,
-    "game_id": 1291,
-    "normally": 26780,
-    "count": 3,
-    "updated_at": 1768095651
-  },
-  {
-    "id": 4874,
-    "game_id": 1268,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1748612153
-  },
-  {
-    "id": 6223,
-    "game_id": 1247,
-    "hastily": 68400,
-    "normally": 140400,
-    "completely": 64800,
-    "count": 2,
-    "updated_at": 1767651786
-  },
-  {
-    "id": 6312,
-    "game_id": 1238,
-    "hastily": 97200,
-    "normally": 172800,
-    "completely": 64800,
-    "count": 2,
-    "updated_at": 1767651219
-  },
-  {
-    "id": 6527,
-    "game_id": 1319,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1762182269
-  },
-  {
-    "id": 6914,
-    "game_id": 1234,
-    "hastily": 360000,
-    "normally": 360000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1763661363
-  },
-  {
-    "id": 6918,
-    "game_id": 1236,
-    "hastily": 226800,
-    "normally": 250200,
-    "completely": 360000,
-    "count": 2,
-    "updated_at": 1767651898
-  },
-  {
-    "id": 7413,
-    "game_id": 1274,
-    "hastily": 50400,
-    "normally": 68400,
-    "completely": 82800,
-    "count": 1,
-    "updated_at": 1767625825
-  },
-  {
-    "id": 7428,
-    "game_id": 1245,
-    "hastily": 54000,
-    "normally": 100800,
-    "completely": 122400,
-    "count": 1,
-    "updated_at": 1767650954
-  },
-  {
-    "id": 7430,
-    "game_id": 1246,
-    "hastily": 61200,
-    "normally": 97200,
-    "completely": 140400,
-    "count": 1,
-    "updated_at": 1767650954
-  },
-  {
-    "id": 7434,
-    "game_id": 1278,
-    "hastily": 39600,
-    "normally": 61200,
-    "completely": 86400,
-    "count": 1,
-    "updated_at": 1767651898
-  },
-  {
-    "id": 7739,
-    "game_id": 1259,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1770875962
-  },
-  {
-    "id": 20,
-    "game_id": 1352,
-    "hastily": 7200,
-    "normally": 9982,
-    "completely": 21792,
-    "count": 13,
-    "updated_at": 1766496234
-  },
-  {
-    "id": 37,
-    "game_id": 1342,
-    "hastily": 31200,
-    "normally": 42026,
-    "completely": 82800,
-    "count": 11,
-    "updated_at": 1768835538
-  },
-  {
-    "id": 60,
-    "game_id": 1339,
-    "hastily": 39600,
-    "normally": 48960,
-    "completely": 94628,
-    "count": 8,
-    "updated_at": 1779011755
-  },
-  {
-    "id": 65,
-    "game_id": 1331,
-    "hastily": 8640,
-    "normally": 13048,
-    "completely": 22577,
-    "count": 23,
-    "updated_at": 1761137906
-  },
-  {
-    "id": 76,
-    "game_id": 1384,
-    "hastily": 10350,
-    "normally": 20018,
-    "completely": 42711,
-    "count": 17,
-    "updated_at": 1772791076
-  },
-  {
-    "id": 134,
-    "game_id": 1334,
-    "hastily": 9600,
-    "normally": 11560,
-    "completely": 19980,
-    "count": 16,
-    "updated_at": 1741467291
-  },
-  {
-    "id": 137,
-    "game_id": 1363,
-    "hastily": 14400,
-    "normally": 14811,
     "completely": 18000,
-    "count": 8,
-    "updated_at": 1761137928
-  },
-  {
-    "id": 270,
-    "game_id": 1377,
-    "hastily": 22800,
-    "normally": 22824,
-    "completely": 36240,
-    "count": 18,
-    "updated_at": 1768094922
-  },
-  {
-    "id": 276,
-    "game_id": 1355,
-    "normally": 108000,
     "count": 1,
-    "updated_at": 1728556538
+    "updated_at": 1777827486
   },
   {
-    "id": 371,
-    "game_id": 1343,
-    "normally": 108000,
-    "count": 1,
-    "updated_at": 1728556541
-  },
-  {
-    "id": 379,
-    "game_id": 1347,
-    "hastily": 50400,
-    "normally": 57600,
-    "completely": 86400,
-    "count": 3,
-    "updated_at": 1767651219
-  },
-  {
-    "id": 436,
-    "game_id": 1333,
-    "hastily": 3600,
-    "normally": 1860,
-    "completely": 3600,
-    "count": 2,
-    "updated_at": 1753355089
-  },
-  {
-    "id": 437,
-    "game_id": 1372,
-    "hastily": 32520,
-    "normally": 590295,
-    "completely": 129240000,
-    "count": 6,
-    "updated_at": 1772140605
-  },
-  {
-    "id": 540,
-    "game_id": 1340,
-    "completely": 82800,
-    "count": 1,
-    "updated_at": 1728556546
-  },
-  {
-    "id": 569,
-    "game_id": 1337,
-    "hastily": 77400,
-    "normally": 117900,
-    "completely": 176160,
-    "count": 7,
-    "updated_at": 1767627381
-  },
-  {
-    "id": 588,
-    "game_id": 1381,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 592,
-    "game_id": 1335,
-    "hastily": 43200,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 674,
-    "game_id": 1341,
-    "hastily": 31080,
-    "normally": 42240,
-    "completely": 36000,
-    "count": 9,
-    "updated_at": 1776535961
-  },
-  {
-    "id": 861,
-    "game_id": 1354,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1728556556
-  },
-  {
-    "id": 1139,
-    "game_id": 1398,
-    "normally": 50880,
-    "count": 1,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1222,
-    "game_id": 1397,
-    "hastily": 5040,
-    "normally": 28140,
-    "completely": 31170,
-    "count": 3,
-    "updated_at": 1745859998
-  },
-  {
-    "id": 1360,
-    "game_id": 1367,
-    "normally": 14100,
-    "count": 1,
-    "updated_at": 1728556570
-  },
-  {
-    "id": 1476,
-    "game_id": 1427,
-    "hastily": 72000,
-    "count": 2,
-    "updated_at": 1779410285
-  },
-  {
-    "id": 1477,
-    "game_id": 1426,
-    "hastily": 61200,
-    "completely": 93600,
-    "count": 2,
-    "updated_at": 1780761954
-  },
-  {
-    "id": 1500,
-    "game_id": 1428,
-    "normally": 54000,
-    "count": 1,
-    "updated_at": 1728556575
-  },
-  {
-    "id": 1559,
-    "game_id": 1407,
-    "hastily": 2880,
-    "normally": 10800,
-    "completely": 21600,
-    "count": 3,
-    "updated_at": 1773200221
-  },
-  {
-    "id": 1560,
-    "game_id": 1404,
-    "hastily": 2420,
-    "normally": 10800,
-    "completely": 21600,
-    "count": 3,
-    "updated_at": 1757388290
-  },
-  {
-    "id": 2119,
-    "game_id": 1364,
-    "normally": 12600,
-    "count": 1,
-    "updated_at": 1728556593
-  },
-  {
-    "id": 2339,
-    "game_id": 1346,
-    "normally": 203400,
-    "completely": 306000,
-    "count": 2,
-    "updated_at": 1780511089
-  },
-  {
-    "id": 2812,
-    "game_id": 1408,
-    "hastily": 3720,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 2813,
-    "game_id": 1409,
-    "hastily": 2760,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 2814,
-    "game_id": 1410,
-    "hastily": 3180,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 2816,
-    "game_id": 1411,
-    "hastily": 3240,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 2829,
-    "game_id": 1412,
-    "hastily": 3660,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 2891,
-    "game_id": 1348,
-    "hastily": 21600,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1728556616
-  },
-  {
-    "id": 4440,
-    "game_id": 1378,
-    "count": 1,
-    "updated_at": 1743273823
-  },
-  {
-    "id": 4827,
-    "game_id": 1361,
+    "id": 8359,
+    "game_id": 384989,
     "hastily": 7200,
-    "normally": 28800,
-    "completely": 72000,
+    "normally": 7200,
+    "completely": 7200,
     "count": 1,
-    "updated_at": 1748509034
+    "updated_at": 1775063213
   },
   {
-    "id": 5810,
-    "game_id": 1370,
-    "normally": 32400,
+    "id": 8608,
+    "game_id": 384402,
+    "hastily": 14400,
+    "normally": 18000,
+    "completely": 18000,
     "count": 1,
-    "updated_at": 1754347091
+    "updated_at": 1779221948
   },
   {
-    "id": 6100,
-    "game_id": 1395,
+    "id": 7640,
+    "game_id": 385327,
+    "normally": 3600,
+    "count": 1,
+    "updated_at": 1769544271
+  },
+  {
+    "id": 7548,
+    "game_id": 385652,
+    "hastily": 7200,
+    "normally": 10800,
+    "completely": 14400,
+    "count": 1,
+    "updated_at": 1768610569
+  },
+  {
+    "id": 8537,
+    "game_id": 386820,
+    "hastily": 7200,
+    "count": 1,
+    "updated_at": 1778043605
+  },
+  {
+    "id": 8721,
+    "game_id": 386855,
+    "count": 1,
+    "updated_at": 1781433356
+  },
+  {
+    "id": 8579,
+    "game_id": 388583,
+    "hastily": 25200,
+    "count": 1,
+    "updated_at": 1779034736
+  },
+  {
+    "id": 7773,
+    "game_id": 389443,
+    "count": 1,
+    "updated_at": 1771206479
+  },
+  {
+    "id": 7852,
+    "game_id": 389429,
+    "normally": 25200,
+    "count": 1,
+    "updated_at": 1772566956
+  },
+  {
+    "id": 7981,
+    "game_id": 389423,
+    "hastily": 36000,
+    "normally": 50400,
+    "completely": 64800,
+    "count": 1,
+    "updated_at": 1772984357
+  },
+  {
+    "id": 8171,
+    "game_id": 389430,
+    "hastily": 3600,
+    "normally": 7200,
+    "completely": 7200,
+    "count": 1,
+    "updated_at": 1773823529
+  },
+  {
+    "id": 8387,
+    "game_id": 389412,
+    "count": 1,
+    "updated_at": 1775668020
+  },
+  {
+    "id": 8507,
+    "game_id": 390053,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 3600,
+    "count": 1,
+    "updated_at": 1777394092
+  },
+  {
+    "id": 8026,
+    "game_id": 390456,
+    "hastily": 46800,
+    "normally": 180000,
+    "completely": 792000,
+    "count": 1,
+    "updated_at": 1773331380
+  },
+  {
+    "id": 8724,
+    "game_id": 391727,
+    "hastily": 3600,
+    "normally": 14400,
+    "completely": 28800,
+    "count": 1,
+    "updated_at": 1781471577
+  },
+  {
+    "id": 8196,
+    "game_id": 392015,
+    "normally": 3600,
+    "count": 1,
+    "updated_at": 1774191546
+  },
+  {
+    "id": 8337,
+    "game_id": 392001,
     "hastily": 3600,
     "normally": 7200,
     "count": 1,
-    "updated_at": 1759023248
+    "updated_at": 1774844684
   },
   {
-    "id": 7910,
-    "game_id": 1399,
-    "hastily": 54000,
-    "normally": 64800,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1772912144
-  },
-  {
-    "id": 7911,
-    "game_id": 1338,
-    "hastily": 61200,
-    "normally": 158400,
-    "completely": 244800,
-    "count": 1,
-    "updated_at": 1772912170
-  },
-  {
-    "id": 8442,
-    "game_id": 1406,
-    "normally": 3600,
-    "count": 1,
-    "updated_at": 1776219330
-  },
-  {
-    "id": 21,
-    "game_id": 1517,
-    "hastily": 162600,
-    "normally": 189810,
-    "completely": 151200,
-    "count": 3,
-    "updated_at": 1768915386
-  },
-  {
-    "id": 226,
-    "game_id": 1512,
-    "hastily": 96630,
-    "normally": 151200,
-    "completely": 241200,
-    "count": 3,
-    "updated_at": 1761140901
-  },
-  {
-    "id": 358,
-    "game_id": 1443,
-    "hastily": 42420,
-    "normally": 129440,
-    "completely": 270000,
-    "count": 4,
-    "updated_at": 1753988398
-  },
-  {
-    "id": 601,
-    "game_id": 1519,
-    "hastily": 36000,
-    "normally": 105600,
-    "completely": 126000,
-    "count": 2,
-    "updated_at": 1766957246
-  },
-  {
-    "id": 603,
-    "game_id": 1439,
-    "normally": 142740,
-    "count": 3,
-    "updated_at": 1762185152
-  },
-  {
-    "id": 875,
-    "game_id": 1515,
-    "normally": 49800,
-    "count": 1,
-    "updated_at": 1728556556
-  },
-  {
-    "id": 1378,
-    "game_id": 1521,
-    "normally": 117960,
-    "count": 1,
-    "updated_at": 1728556571
-  },
-  {
-    "id": 1439,
-    "game_id": 1528,
-    "hastily": 32400,
-    "normally": 32400,
-    "completely": 33160,
-    "count": 3,
-    "updated_at": 1772912456
-  },
-  {
-    "id": 1673,
-    "game_id": 1436,
-    "normally": 259200,
-    "count": 1,
-    "updated_at": 1728556580
-  },
-  {
-    "id": 2000,
-    "game_id": 1437,
-    "normally": 140400,
-    "count": 1,
-    "updated_at": 1728556589
-  },
-  {
-    "id": 2029,
-    "game_id": 1498,
-    "completely": 162960,
-    "count": 1,
-    "updated_at": 1728556590
-  },
-  {
-    "id": 2261,
-    "game_id": 1445,
-    "normally": 97500,
-    "count": 1,
-    "updated_at": 1728556597
-  },
-  {
-    "id": 2324,
-    "game_id": 1438,
-    "normally": 108000,
-    "completely": 165360,
-    "count": 2,
-    "updated_at": 1762185172
-  },
-  {
-    "id": 2843,
-    "game_id": 1471,
-    "hastily": 18000,
-    "normally": 21600,
-    "count": 2,
-    "updated_at": 1728556615
-  },
-  {
-    "id": 2850,
-    "game_id": 1469,
-    "normally": 14400,
-    "count": 1,
-    "updated_at": 1728556615
-  },
-  {
-    "id": 3635,
-    "game_id": 1444,
-    "hastily": 36000,
-    "normally": 72000,
-    "completely": 180000,
-    "count": 1,
-    "updated_at": 1732529909
-  },
-  {
-    "id": 5058,
-    "game_id": 1459,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1749576353
-  },
-  {
-    "id": 5119,
-    "game_id": 1440,
+    "id": 7815,
+    "game_id": 392484,
     "hastily": 3600,
-    "normally": 54000,
+    "normally": 3600,
+    "completely": 3600,
+    "count": 1,
+    "updated_at": 1771914735
+  },
+  {
+    "id": 7826,
+    "game_id": 392415,
+    "hastily": 3600,
+    "normally": 3600,
     "completely": 7200,
+    "count": 1,
+    "updated_at": 1772129485
+  },
+  {
+    "id": 8098,
+    "game_id": 392264,
+    "hastily": 3600,
+    "normally": 7200,
+    "completely": 18000,
+    "count": 1,
+    "updated_at": 1773403188
+  },
+  {
+    "id": 8706,
+    "game_id": 392659,
+    "count": 1,
+    "updated_at": 1781021598
+  },
+  {
+    "id": 8156,
+    "game_id": 393219,
+    "hastily": 7200,
+    "normally": 10800,
+    "completely": 14400,
+    "count": 1,
+    "updated_at": 1773689357
+  },
+  {
+    "id": 8618,
+    "game_id": 393398,
+    "normally": 25200,
+    "completely": 61200,
     "count": 2,
-    "updated_at": 1753988621
+    "updated_at": 1779305903
   },
   {
-    "id": 5813,
-    "game_id": 1511,
-    "normally": 100800,
+    "id": 8580,
+    "game_id": 393732,
+    "completely": 3600,
     "count": 1,
-    "updated_at": 1754428774
+    "updated_at": 1779055811
   },
   {
-    "id": 5814,
-    "game_id": 1513,
-    "normally": 162000,
-    "count": 1,
-    "updated_at": 1754429066
-  },
-  {
-    "id": 5815,
-    "game_id": 1514,
-    "completely": 450000,
-    "count": 1,
-    "updated_at": 1754429154
-  },
-  {
-    "id": 6428,
-    "game_id": 1522,
-    "normally": 154800,
-    "completely": 234000,
+    "id": 8155,
+    "game_id": 394943,
+    "hastily": 3600,
+    "normally": 4800,
+    "completely": 5400,
     "count": 3,
-    "updated_at": 1772506282
+    "updated_at": 1774146219
   },
   {
-    "id": 6517,
-    "game_id": 1520,
-    "completely": 439200,
-    "count": 1,
-    "updated_at": 1762180320
-  },
-  {
-    "id": 7592,
-    "game_id": 1516,
-    "completely": 158400,
-    "count": 1,
-    "updated_at": 1768915313
-  },
-  {
-    "id": 8028,
-    "game_id": 1441,
-    "hastily": 118800,
-    "normally": 140400,
-    "completely": 158400,
-    "count": 1,
-    "updated_at": 1773331441
-  },
-  {
-    "id": 240,
-    "game_id": 1627,
-    "completely": 1080000,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 360,
-    "game_id": 1576,
-    "hastily": 21600,
-    "normally": 28800,
-    "completely": 34200,
-    "count": 2,
-    "updated_at": 1752990183
-  },
-  {
-    "id": 401,
-    "game_id": 1638,
-    "normally": 32400,
-    "count": 1,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 606,
-    "game_id": 1593,
-    "hastily": 100980,
-    "normally": 199800,
-    "count": 5,
-    "updated_at": 1761140414
-  },
-  {
-    "id": 873,
-    "game_id": 1570,
-    "normally": 55800,
-    "count": 1,
-    "updated_at": 1728556556
-  },
-  {
-    "id": 876,
-    "game_id": 1558,
-    "normally": 45000,
-    "completely": 428400,
-    "count": 2,
-    "updated_at": 1754428995
-  },
-  {
-    "id": 988,
-    "game_id": 1564,
-    "normally": 540,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 993,
-    "game_id": 1561,
-    "hastily": 7140,
-    "normally": 137700,
-    "completely": 216000,
-    "count": 6,
-    "updated_at": 1754428721
-  },
-  {
-    "id": 1548,
-    "game_id": 1624,
-    "hastily": 28800,
+    "id": 8172,
+    "game_id": 394937,
+    "hastily": 50400,
     "normally": 54000,
-    "completely": 54960,
+    "completely": 73800,
     "count": 2,
-    "updated_at": 1760701312
+    "updated_at": 1773829188
   },
   {
-    "id": 1975,
-    "game_id": 1559,
-    "hastily": 83010,
-    "normally": 132000,
-    "completely": 219600,
-    "count": 3,
-    "updated_at": 1766957246
-  },
-  {
-    "id": 4254,
-    "game_id": 1625,
-    "normally": 54000,
+    "id": 8294,
+    "game_id": 394844,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 3600,
     "count": 1,
-    "updated_at": 1741805714
+    "updated_at": 1774616576
   },
   {
-    "id": 5047,
-    "game_id": 1556,
-    "normally": 86400,
+    "id": 8293,
+    "game_id": 395582,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 3600,
     "count": 1,
-    "updated_at": 1749570829
+    "updated_at": 1774616454
   },
   {
-    "id": 5442,
-    "game_id": 1577,
-    "hastily": 32400,
+    "id": 8307,
+    "game_id": 396007,
+    "normally": 3600,
+    "completely": 3600,
+    "count": 1,
+    "updated_at": 1774659190
+  },
+  {
+    "id": 8522,
+    "game_id": 395854,
     "normally": 36000,
-    "completely": 39600,
     "count": 1,
-    "updated_at": 1752990224
+    "updated_at": 1777733042
   },
   {
-    "id": 5443,
-    "game_id": 1578,
-    "hastily": 13200,
-    "normally": 14400,
-    "completely": 24000,
-    "count": 3,
-    "updated_at": 1771499467
-  },
-  {
-    "id": 5617,
-    "game_id": 1587,
-    "hastily": 21600,
-    "normally": 25200,
-    "completely": 28800,
+    "id": 8458,
+    "game_id": 396762,
+    "hastily": 3600,
+    "normally": 7200,
+    "completely": 10800,
     "count": 1,
-    "updated_at": 1753032605
+    "updated_at": 1776601217
   },
   {
-    "id": 5618,
-    "game_id": 1588,
-    "hastily": 21600,
-    "normally": 25200,
-    "completely": 28800,
+    "id": 8385,
+    "game_id": 397493,
+    "completely": 3600,
     "count": 1,
-    "updated_at": 1753032626
+    "updated_at": 1775623737
   },
   {
-    "id": 5619,
-    "game_id": 1589,
-    "hastily": 25200,
+    "id": 8549,
+    "game_id": 397551,
+    "count": 1,
+    "updated_at": 1778617436
+  },
+  {
+    "id": 8390,
+    "game_id": 397743,
+    "hastily": 14400,
     "normally": 28800,
-    "completely": 32400,
-    "count": 1,
-    "updated_at": 1753032648
-  },
-  {
-    "id": 5630,
-    "game_id": 1580,
-    "hastily": 43200,
-    "normally": 54000,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1753033827
-  },
-  {
-    "id": 5748,
-    "game_id": 1618,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 7200,
-    "count": 1,
-    "updated_at": 1753627464
-  },
-  {
-    "id": 5761,
-    "game_id": 1560,
-    "normally": 144000,
-    "count": 1,
-    "updated_at": 1754907849
-  },
-  {
-    "id": 5798,
-    "game_id": 1619,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1754246495
-  },
-  {
-    "id": 5807,
-    "game_id": 1571,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1754327915
-  },
-  {
-    "id": 5809,
-    "game_id": 1547,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1754328358
-  },
-  {
-    "id": 5833,
-    "game_id": 1620,
-    "hastily": 3600,
-    "normally": 10800,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1754635207
-  },
-  {
-    "id": 5919,
-    "game_id": 1621,
-    "hastily": 3600,
-    "normally": 10800,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1755565318
-  },
-  {
-    "id": 6559,
-    "game_id": 1628,
-    "count": 1,
-    "updated_at": 1762290243
-  },
-  {
-    "id": 7027,
-    "game_id": 1622,
-    "hastily": 3600,
-    "normally": 14400,
     "completely": 36000,
     "count": 1,
-    "updated_at": 1764370960
+    "updated_at": 1775743929
   },
   {
-    "id": 7129,
-    "game_id": 1595,
+    "id": 8622,
+    "game_id": 397951,
+    "count": 1,
+    "updated_at": 1779355597
+  },
+  {
+    "id": 8497,
+    "game_id": 399040,
+    "hastily": 3600,
+    "normally": 3600,
+    "completely": 10800,
+    "count": 1,
+    "updated_at": 1777254621
+  },
+  {
+    "id": 8513,
+    "game_id": 398710,
+    "completely": 79200,
+    "count": 1,
+    "updated_at": 1777443830
+  },
+  {
+    "id": 8561,
+    "game_id": 399005,
+    "count": 1,
+    "updated_at": 1778912409
+  },
+  {
+    "id": 8746,
+    "game_id": 400111,
+    "count": 1,
+    "updated_at": 1781706763
+  },
+  {
+    "id": 8697,
+    "game_id": 400523,
+    "completely": 7200,
+    "count": 1,
+    "updated_at": 1780867050
+  },
+  {
+    "id": 8720,
+    "game_id": 400374,
+    "hastily": 21600,
+    "normally": 43200,
+    "completely": 72000,
+    "count": 1,
+    "updated_at": 1781411476
+  },
+  {
+    "id": 8705,
+    "game_id": 401318,
+    "normally": 3600,
+    "count": 1,
+    "updated_at": 1780995233
+  },
+  {
+    "id": 8716,
+    "game_id": 401144,
     "completely": 359996400,
     "count": 1,
-    "updated_at": 1765834568
+    "updated_at": 1781299795
   },
   {
-    "id": 7426,
-    "game_id": 1567,
-    "hastily": 50400,
-    "normally": 97200,
-    "count": 1,
-    "updated_at": 1767650419
-  },
-  {
-    "id": 7853,
-    "game_id": 1579,
-    "hastily": 28800,
-    "normally": 32400,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1772600288
-  },
-  {
-    "id": 8002,
-    "game_id": 1594,
-    "hastily": 36000,
-    "normally": 90000,
-    "completely": 180000,
-    "count": 1,
-    "updated_at": 1773199442
-  },
-  {
-    "id": 8109,
-    "game_id": 1582,
-    "hastily": 21600,
-    "normally": 21600,
-    "completely": 25200,
-    "count": 1,
-    "updated_at": 1773556117
-  },
-  {
-    "id": 8169,
-    "game_id": 1583,
-    "hastily": 25200,
-    "normally": 28800,
-    "completely": 32400,
-    "count": 1,
-    "updated_at": 1773803542
-  },
-  {
-    "id": 8186,
-    "game_id": 1584,
-    "hastily": 39600,
-    "normally": 43200,
-    "completely": 46800,
-    "count": 1,
-    "updated_at": 1774061382
-  },
-  {
-    "id": 8371,
-    "game_id": 1557,
-    "normally": 64800,
-    "count": 1,
-    "updated_at": 1775316494
-  },
-  {
-    "id": 858,
-    "game_id": 1653,
-    "hastily": 3000,
-    "completely": 16680,
-    "count": 2,
-    "updated_at": 1728556555
-  },
-  {
-    "id": 1017,
-    "game_id": 1677,
-    "normally": 90000,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1556,
-    "game_id": 1654,
-    "hastily": 3000,
-    "count": 1,
-    "updated_at": 1728556576
-  },
-  {
-    "id": 1557,
-    "game_id": 1652,
-    "hastily": 4200,
-    "normally": 7200,
-    "completely": 10800,
-    "count": 3,
-    "updated_at": 1753417840
-  },
-  {
-    "id": 1714,
-    "game_id": 1714,
-    "hastily": 7200,
-    "normally": 14610,
-    "completely": 28800,
-    "count": 2,
-    "updated_at": 1753413617
-  },
-  {
-    "id": 1746,
-    "game_id": 1692,
-    "hastily": 187200,
-    "count": 1,
-    "updated_at": 1728556582
-  },
-  {
-    "id": 1853,
-    "game_id": 1715,
-    "hastily": 9000,
-    "normally": 15800,
-    "completely": 23400,
-    "count": 3,
-    "updated_at": 1760663503
-  },
-  {
-    "id": 1857,
-    "game_id": 1716,
-    "normally": 16200,
-    "count": 1,
-    "updated_at": 1728556585
-  },
-  {
-    "id": 1882,
-    "game_id": 1701,
-    "hastily": 37920,
-    "normally": 49140,
-    "count": 1,
-    "updated_at": 1728556586
-  },
-  {
-    "id": 1898,
-    "game_id": 1700,
-    "hastily": 18000,
-    "normally": 18000,
-    "completely": 24780,
-    "count": 2,
-    "updated_at": 1757555111
-  },
-  {
-    "id": 1954,
-    "game_id": 1717,
-    "completely": 29400,
-    "count": 1,
-    "updated_at": 1728556588
-  },
-  {
-    "id": 2031,
-    "game_id": 1719,
-    "completely": 16980,
-    "count": 1,
-    "updated_at": 1728556590
-  },
-  {
-    "id": 2038,
-    "game_id": 1741,
-    "completely": 22140,
-    "count": 1,
-    "updated_at": 1728556591
-  },
-  {
-    "id": 4471,
-    "game_id": 1650,
-    "normally": 32400,
-    "count": 1,
-    "updated_at": 1744078109
-  },
-  {
-    "id": 4798,
-    "game_id": 1649,
-    "hastily": 21600,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1748435522
-  },
-  {
-    "id": 4799,
-    "game_id": 1646,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1748435704
-  },
-  {
-    "id": 5715,
-    "game_id": 1733,
-    "hastily": 3600,
-    "normally": 7200,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1753417720
-  },
-  {
-    "id": 6049,
-    "game_id": 1726,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1757913280
-  },
-  {
-    "id": 6445,
-    "game_id": 1703,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 75600,
-    "count": 1,
-    "updated_at": 1761191881
-  },
-  {
-    "id": 7025,
-    "game_id": 1744,
-    "hastily": 10800,
-    "normally": 21600,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1764370478
-  },
-  {
-    "id": 7832,
-    "game_id": 1655,
+    "id": 8620,
+    "game_id": 401738,
     "normally": 3600,
     "count": 1,
-    "updated_at": 1772221629
+    "updated_at": 1779327273
   },
   {
-    "id": 448,
-    "game_id": 1789,
-    "hastily": 104400,
-    "normally": 115200,
-    "completely": 105300,
-    "count": 2,
-    "updated_at": 1767616417
-  },
-  {
-    "id": 476,
-    "game_id": 1794,
-    "hastily": 7200,
-    "normally": 7200,
-    "completely": 7800,
-    "count": 1,
-    "updated_at": 1728556544
-  },
-  {
-    "id": 486,
-    "game_id": 1770,
-    "normally": 37800,
-    "count": 1,
-    "updated_at": 1728556544
-  },
-  {
-    "id": 509,
-    "game_id": 1819,
-    "hastily": 189000,
-    "normally": 261000,
-    "completely": 365460,
-    "count": 3,
-    "updated_at": 1750401760
-  },
-  {
-    "id": 565,
-    "game_id": 1802,
-    "hastily": 63000,
-    "normally": 105075,
-    "completely": 162000,
-    "count": 4,
-    "updated_at": 1748615240
-  },
-  {
-    "id": 863,
-    "game_id": 1827,
-    "hastily": 36000,
-    "normally": 40320,
-    "completely": 50400,
-    "count": 5,
-    "updated_at": 1774623190
-  },
-  {
-    "id": 881,
-    "game_id": 1815,
-    "hastily": 72000,
-    "normally": 79120,
-    "completely": 158040,
-    "count": 4,
-    "updated_at": 1762184164
-  },
-  {
-    "id": 1047,
-    "game_id": 1783,
-    "hastily": 46800,
-    "normally": 57600,
-    "count": 1,
-    "updated_at": 1728556561
-  },
-  {
-    "id": 1328,
-    "game_id": 1831,
-    "hastily": 19200,
-    "normally": 19200,
-    "completely": 19200,
-    "count": 1,
-    "updated_at": 1728556570
-  },
-  {
-    "id": 1922,
-    "game_id": 1833,
-    "normally": 39960,
-    "completely": 133560,
-    "count": 2,
-    "updated_at": 1728556587
-  },
-  {
-    "id": 3158,
-    "game_id": 1773,
-    "hastily": 43200,
-    "normally": 54000,
-    "completely": 109800,
-    "count": 2,
-    "updated_at": 1743889417
-  },
-  {
-    "id": 4394,
-    "game_id": 1812,
-    "hastily": 14400,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1742911932
-  },
-  {
-    "id": 4395,
-    "game_id": 1813,
-    "hastily": 21600,
-    "normally": 43200,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1742912043
-  },
-  {
-    "id": 4396,
-    "game_id": 1814,
-    "hastily": 28800,
-    "normally": 54000,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1742912073
-  },
-  {
-    "id": 4670,
-    "game_id": 1805,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1747135756
-  },
-  {
-    "id": 5145,
-    "game_id": 1820,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 540000,
-    "count": 1,
-    "updated_at": 1750327573
-  },
-  {
-    "id": 5149,
-    "game_id": 1822,
-    "hastily": 18000,
-    "normally": 28800,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1750327815
-  },
-  {
-    "id": 5161,
-    "game_id": 1817,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 270000,
-    "count": 1,
-    "updated_at": 1750401934
-  },
-  {
-    "id": 5165,
-    "game_id": 1825,
-    "hastily": 7200,
-    "normally": 18000,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1750402791
-  },
-  {
-    "id": 5184,
-    "game_id": 1818,
-    "hastily": 288000,
-    "normally": 360000,
-    "completely": 540000,
-    "count": 1,
-    "updated_at": 1750406129
-  },
-  {
-    "id": 7381,
-    "game_id": 1835,
-    "hastily": 21600,
-    "normally": 32400,
-    "completely": 39600,
-    "count": 1,
-    "updated_at": 1767615451
-  },
-  {
-    "id": 7382,
-    "game_id": 1836,
-    "hastily": 25200,
-    "normally": 32400,
-    "completely": 39600,
-    "count": 1,
-    "updated_at": 1767615776
-  },
-  {
-    "id": 8041,
-    "game_id": 1834,
-    "hastily": 21600,
-    "normally": 28800,
-    "completely": 50400,
-    "count": 1,
-    "updated_at": 1773332876
-  },
-  {
-    "id": 8393,
-    "game_id": 1830,
-    "hastily": 32400,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1775758925
-  },
-  {
-    "id": 47,
-    "game_id": 1944,
-    "hastily": 27600,
-    "normally": 34200,
-    "count": 4,
-    "updated_at": 1739498114
-  },
-  {
-    "id": 48,
-    "game_id": 1945,
-    "hastily": 24870,
-    "normally": 36000,
-    "count": 3,
-    "updated_at": 1739498413
-  },
-  {
-    "id": 49,
-    "game_id": 1946,
-    "hastily": 24840,
-    "normally": 43200,
-    "count": 2,
-    "updated_at": 1739498527
-  },
-  {
-    "id": 98,
-    "game_id": 1939,
-    "hastily": 19920,
-    "normally": 38880,
-    "completely": 94320,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 117,
-    "game_id": 1906,
-    "hastily": 106200,
-    "normally": 9440,
-    "completely": 11400,
-    "count": 21,
-    "updated_at": 1762798845
-  },
-  {
-    "id": 185,
-    "game_id": 1871,
-    "hastily": 37200,
-    "normally": 47775,
-    "completely": 53485,
-    "count": 17,
-    "updated_at": 1774602099
-  },
-  {
-    "id": 189,
-    "game_id": 1887,
-    "hastily": 142560,
-    "normally": 257673,
-    "completely": 425160,
-    "count": 13,
-    "updated_at": 1764171402
-  },
-  {
-    "id": 296,
-    "game_id": 1882,
-    "hastily": 12600,
-    "normally": 21240,
-    "completely": 10800,
-    "count": 5,
-    "updated_at": 1730305986
-  },
-  {
-    "id": 299,
-    "game_id": 1864,
-    "normally": 210600,
-    "completely": 536850,
-    "count": 3,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 315,
-    "game_id": 1879,
-    "hastily": 64800,
-    "normally": 200250,
-    "completely": 3030000,
-    "count": 8,
-    "updated_at": 1778074062
-  },
-  {
-    "id": 408,
-    "game_id": 1881,
-    "normally": 255600,
-    "count": 1,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 432,
-    "game_id": 1942,
-    "hastily": 134552,
-    "normally": 254778,
-    "completely": 581483,
-    "count": 41,
-    "updated_at": 1780908799
-  },
-  {
-    "id": 446,
-    "game_id": 1910,
-    "hastily": 16390,
-    "normally": 20700,
-    "completely": 12600,
-    "count": 11,
-    "updated_at": 1771964481
-  },
-  {
-    "id": 756,
-    "game_id": 1853,
-    "hastily": 11760,
-    "normally": 41880,
-    "completely": 11760,
-    "count": 2,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 781,
-    "game_id": 1919,
-    "hastily": 25380,
-    "normally": 26640,
-    "completely": 50400,
-    "count": 3,
-    "updated_at": 1753017147
-  },
-  {
-    "id": 796,
-    "game_id": 1889,
-    "normally": 128760,
-    "count": 2,
-    "updated_at": 1728556554
-  },
-  {
-    "id": 818,
-    "game_id": 1886,
-    "hastily": 54000,
-    "normally": 61200,
-    "completely": 68400,
-    "count": 1,
-    "updated_at": 1728556554
-  },
-  {
-    "id": 1266,
-    "game_id": 1925,
-    "completely": 31200,
-    "count": 1,
-    "updated_at": 1728556568
-  },
-  {
-    "id": 1302,
-    "game_id": 1924,
-    "completely": 25920,
-    "count": 1,
-    "updated_at": 1728556569
-  },
-  {
-    "id": 1725,
-    "game_id": 1877,
-    "hastily": 118080,
-    "normally": 260403,
-    "completely": 465210,
-    "count": 21,
-    "updated_at": 1780255093
-  },
-  {
-    "id": 1740,
-    "game_id": 1907,
-    "hastily": 122400,
-    "normally": 262800,
-    "completely": 248940,
-    "count": 2,
-    "updated_at": 1767350410
-  },
-  {
-    "id": 1863,
-    "game_id": 1869,
-    "normally": 15060,
-    "count": 1,
-    "updated_at": 1728556585
-  },
-  {
-    "id": 1884,
-    "game_id": 1941,
-    "normally": 57810,
-    "completely": 79200,
-    "count": 3,
-    "updated_at": 1742464503
-  },
-  {
-    "id": 1955,
-    "game_id": 1904,
-    "normally": 613800,
-    "count": 2,
-    "updated_at": 1730260862
-  },
-  {
-    "id": 2013,
-    "game_id": 1885,
-    "normally": 15900,
-    "count": 2,
-    "updated_at": 1748112650
-  },
-  {
-    "id": 2266,
-    "game_id": 1880,
-    "completely": 447600,
-    "count": 1,
-    "updated_at": 1728556597
-  },
-  {
-    "id": 3641,
-    "game_id": 1905,
-    "hastily": 16111200,
-    "normally": 1072800,
-    "completely": 45087428,
-    "count": 23,
-    "updated_at": 1777834401
-  },
-  {
-    "id": 4027,
-    "game_id": 1947,
-    "normally": 43200,
-    "count": 1,
-    "updated_at": 1739499544
-  },
-  {
-    "id": 4035,
-    "game_id": 1948,
-    "normally": 46800,
-    "count": 1,
-    "updated_at": 1739500195
-  },
-  {
-    "id": 4447,
-    "game_id": 1912,
-    "normally": 11700000,
-    "count": 2,
-    "updated_at": 1743551445
-  },
-  {
-    "id": 4479,
-    "game_id": 1950,
-    "completely": 61200,
-    "count": 1,
-    "updated_at": 1744247240
-  },
-  {
-    "id": 4688,
-    "game_id": 1940,
-    "completely": 194400,
-    "count": 1,
-    "updated_at": 1747309119
-  },
-  {
-    "id": 5015,
-    "game_id": 1876,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1749228180
-  },
-  {
-    "id": 5311,
-    "game_id": 1937,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1752283766
-  },
-  {
-    "id": 5665,
-    "game_id": 1911,
-    "hastily": 97200,
-    "normally": 194400,
-    "completely": 720000,
-    "count": 3,
-    "updated_at": 1771071161
-  },
-  {
-    "id": 5950,
-    "game_id": 1949,
-    "normally": 36000,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1756340856
-  },
-  {
-    "id": 7298,
-    "game_id": 1863,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1767228345
-  },
-  {
-    "id": 7337,
-    "game_id": 1913,
-    "hastily": 32400,
-    "normally": 39600,
-    "completely": 61200,
-    "count": 1,
-    "updated_at": 1767358022
-  },
-  {
-    "id": 8404,
-    "game_id": 1866,
-    "count": 1,
-    "updated_at": 1775834716
-  },
-  {
-    "id": 40,
-    "game_id": 1987,
-    "hastily": 31500,
-    "normally": 38700,
-    "count": 3,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 54,
-    "game_id": 1983,
-    "hastily": 21240,
-    "normally": 32512,
-    "completely": 53760,
-    "count": 11,
-    "updated_at": 1728740436
-  },
-  {
-    "id": 103,
-    "game_id": 1961,
-    "normally": 48660,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 133,
-    "game_id": 2003,
-    "hastily": 54000,
-    "normally": 75255,
-    "completely": 152820,
-    "count": 10,
-    "updated_at": 1753030899
-  },
-  {
-    "id": 169,
-    "game_id": 2001,
-    "hastily": 16200,
-    "normally": 26568,
-    "completely": 38412,
-    "count": 11,
-    "updated_at": 1762183358
-  },
-  {
-    "id": 184,
-    "game_id": 1981,
-    "normally": 104000,
-    "completely": 140400,
-    "count": 4,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 197,
-    "game_id": 1979,
-    "hastily": 14400,
-    "normally": 53500,
-    "completely": 249600,
-    "count": 10,
-    "updated_at": 1769904111
-  },
-  {
-    "id": 199,
-    "game_id": 2061,
-    "hastily": 36000,
-    "normally": 72000,
-    "count": 3,
-    "updated_at": 1728556536
-  },
-  {
-    "id": 203,
-    "game_id": 2042,
-    "normally": 25200,
-    "completely": 169200,
-    "count": 3,
-    "updated_at": 1748613840
-  },
-  {
-    "id": 232,
-    "game_id": 1990,
-    "hastily": 7755,
-    "normally": 12000,
-    "count": 6,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 283,
-    "game_id": 1976,
-    "hastily": 18280,
-    "normally": 23040,
-    "count": 8,
-    "updated_at": 1728556538
-  },
-  {
-    "id": 288,
-    "game_id": 2031,
-    "hastily": 46800,
-    "normally": 43762,
-    "completely": 89130,
-    "count": 24,
-    "updated_at": 1774463648
-  },
-  {
-    "id": 318,
-    "game_id": 2025,
-    "normally": 292290,
-    "count": 2,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 393,
-    "game_id": 2033,
-    "hastily": 32400,
-    "normally": 36090,
-    "completely": 62400,
-    "count": 5,
-    "updated_at": 1771693889
-  },
-  {
-    "id": 464,
-    "game_id": 1970,
-    "hastily": 86730,
-    "normally": 128988,
-    "completely": 206100,
-    "count": 11,
-    "updated_at": 1766023745
-  },
-  {
-    "id": 483,
-    "game_id": 1991,
-    "normally": 26400,
-    "completely": 45570,
-    "count": 5,
-    "updated_at": 1769153571
-  },
-  {
-    "id": 508,
-    "game_id": 1985,
-    "hastily": 176430,
-    "normally": 363600,
-    "count": 6,
-    "updated_at": 1762496340
-  },
-  {
-    "id": 589,
-    "game_id": 2058,
-    "hastily": 54000,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 673,
-    "game_id": 1962,
-    "normally": 90930,
-    "count": 2,
-    "updated_at": 1728556550
-  },
-  {
-    "id": 725,
-    "game_id": 1958,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 846,
-    "game_id": 1963,
-    "hastily": 10800,
-    "normally": 17070,
-    "completely": 43200,
-    "count": 2,
-    "updated_at": 1754984010
-  },
-  {
-    "id": 896,
-    "game_id": 2004,
-    "normally": 147600,
-    "completely": 218940,
-    "count": 2,
-    "updated_at": 1728556557
-  },
-  {
-    "id": 931,
-    "game_id": 2029,
-    "hastily": 12600,
-    "normally": 17100,
-    "completely": 29520,
-    "count": 3,
-    "updated_at": 1728556558
-  },
-  {
-    "id": 1019,
-    "game_id": 2059,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1020,
-    "game_id": 2060,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1255,
-    "game_id": 2030,
-    "hastily": 28800,
-    "normally": 31800,
-    "completely": 37800,
-    "count": 3,
-    "updated_at": 1764605839
-  },
-  {
-    "id": 1910,
-    "game_id": 2045,
-    "hastily": 10800,
-    "normally": 31170,
-    "count": 2,
-    "updated_at": 1730034233
-  },
-  {
-    "id": 2106,
-    "game_id": 1968,
-    "hastily": 68400,
-    "normally": 49200,
-    "completely": 266400,
-    "count": 3,
-    "updated_at": 1767621106
-  },
-  {
-    "id": 2772,
-    "game_id": 2000,
-    "hastily": 12120,
-    "normally": 28800,
-    "completely": 61200,
-    "count": 3,
-    "updated_at": 1773774747
-  },
-  {
-    "id": 4527,
-    "game_id": 2050,
-    "normally": 36000,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1745195383
-  },
-  {
-    "id": 5512,
-    "game_id": 2048,
-    "hastily": 28800,
-    "normally": 36000,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1753016773
-  },
-  {
-    "id": 5685,
-    "game_id": 1980,
-    "hastily": 7200,
-    "normally": 10800,
-    "completely": 14400,
-    "count": 1,
-    "updated_at": 1753356473
-  },
-  {
-    "id": 5702,
-    "game_id": 2051,
-    "hastily": 3600,
+    "id": 8636,
+    "game_id": 401529,
     "normally": 3600,
+    "count": 1,
+    "updated_at": 1779736659
+  },
+  {
+    "id": 8735,
+    "game_id": 402479,
     "completely": 3600,
     "count": 1,
-    "updated_at": 1753405119
+    "updated_at": 1781634062
   },
   {
-    "id": 5753,
-    "game_id": 1997,
-    "normally": 32400,
-    "count": 1,
-    "updated_at": 1753709315
-  },
-  {
-    "id": 5780,
-    "game_id": 1998,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1754012340
-  },
-  {
-    "id": 7220,
-    "game_id": 2002,
-    "hastily": 21600,
-    "normally": 43200,
-    "count": 1,
-    "updated_at": 1767022248
-  },
-  {
-    "id": 7334,
-    "game_id": 2040,
-    "hastily": 82800,
-    "normally": 162000,
-    "completely": 216000,
-    "count": 1,
-    "updated_at": 1767357282
-  },
-  {
-    "id": 7344,
-    "game_id": 2021,
-    "hastily": 82800,
-    "normally": 162000,
-    "completely": 345600,
-    "count": 1,
-    "updated_at": 1767369918
-  },
-  {
-    "id": 7398,
-    "game_id": 1966,
-    "hastily": 39600,
-    "normally": 57600,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1767620750
-  },
-  {
-    "id": 7762,
-    "game_id": 2049,
-    "normally": 7200,
-    "count": 1,
-    "updated_at": 1771081845
-  },
-  {
-    "id": 11,
-    "game_id": 2155,
-    "hastily": 134182,
-    "normally": 178560,
-    "completely": 409500,
-    "count": 17,
-    "updated_at": 1775573499
-  },
-  {
-    "id": 24,
-    "game_id": 2168,
-    "normally": 25260,
-    "count": 1,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 145,
-    "game_id": 2163,
-    "hastily": 92790,
-    "normally": 5970,
-    "completely": 9960,
-    "count": 5,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 154,
-    "game_id": 2205,
-    "normally": 24000,
-    "count": 1,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 179,
-    "game_id": 2064,
-    "hastily": 10800,
-    "normally": 22220,
-    "completely": 29660,
-    "count": 8,
-    "updated_at": 1761125620
-  },
-  {
-    "id": 271,
-    "game_id": 2148,
-    "completely": 66240,
-    "count": 4,
-    "updated_at": 1730686542
-  },
-  {
-    "id": 300,
-    "game_id": 2132,
-    "hastily": 43200,
-    "normally": 201600,
-    "completely": 420300,
-    "count": 8,
-    "updated_at": 1767078850
-  },
-  {
-    "id": 331,
-    "game_id": 2063,
-    "normally": 76710,
-    "count": 3,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 366,
-    "game_id": 2126,
-    "hastily": 29850,
-    "normally": 40690,
-    "completely": 118800,
-    "count": 7,
-    "updated_at": 1768064269
-  },
-  {
-    "id": 409,
-    "game_id": 2130,
-    "normally": 43200,
-    "completely": 68400,
-    "count": 2,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 444,
-    "game_id": 2129,
-    "hastily": 27000,
-    "normally": 34305,
-    "completely": 71400,
-    "count": 9,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 516,
-    "game_id": 2175,
-    "normally": 25200,
-    "count": 2,
-    "updated_at": 1728556545
-  },
-  {
-    "id": 665,
-    "game_id": 2116,
-    "normally": 54000,
-    "count": 1,
-    "updated_at": 1728556550
-  },
-  {
-    "id": 780,
-    "game_id": 2164,
-    "normally": 28800,
-    "count": 2,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 809,
-    "game_id": 2136,
-    "normally": 56265,
-    "count": 4,
-    "updated_at": 1765963960
-  },
-  {
-    "id": 810,
-    "game_id": 2172,
-    "hastily": 27000,
-    "normally": 34200,
-    "completely": 177600,
-    "count": 3,
-    "updated_at": 1759294027
-  },
-  {
-    "id": 959,
-    "game_id": 2135,
-    "hastily": 34200,
-    "normally": 50400,
-    "completely": 189000,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 1021,
-    "game_id": 2062,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1373,
-    "game_id": 2151,
-    "normally": 33720,
-    "count": 1,
-    "updated_at": 1728556571
-  },
-  {
-    "id": 2286,
-    "game_id": 2114,
-    "hastily": 64800,
-    "normally": 162000,
-    "completely": 350400,
-    "count": 4,
-    "updated_at": 1778592642
-  },
-  {
-    "id": 2704,
-    "game_id": 2171,
-    "count": 1,
-    "updated_at": 1747708993
-  },
-  {
-    "id": 2999,
-    "game_id": 2177,
-    "normally": 54000,
-    "count": 1,
-    "updated_at": 1728556619
-  },
-  {
-    "id": 3005,
-    "game_id": 2140,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1728556619
-  },
-  {
-    "id": 3151,
-    "game_id": 2112,
-    "normally": 43200,
-    "completely": 111600,
-    "count": 4,
-    "updated_at": 1750850623
-  },
-  {
-    "id": 3921,
-    "game_id": 2165,
-    "count": 3,
-    "updated_at": 1760375152
-  },
-  {
-    "id": 4109,
-    "game_id": 2176,
-    "normally": 14400,
-    "count": 1,
-    "updated_at": 1740414634
-  },
-  {
-    "id": 4634,
-    "game_id": 2174,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1746393029
-  },
-  {
-    "id": 4752,
-    "game_id": 2159,
-    "completely": 68400,
-    "count": 1,
-    "updated_at": 1748099459
-  },
-  {
-    "id": 4753,
-    "game_id": 2138,
-    "normally": 108000,
-    "completely": 122400,
-    "count": 2,
-    "updated_at": 1748983396
-  },
-  {
-    "id": 4932,
-    "game_id": 2150,
-    "normally": 50400,
-    "completely": 79200,
-    "count": 2,
-    "updated_at": 1760017561
-  },
-  {
-    "id": 5208,
-    "game_id": 2074,
-    "completely": 111600,
-    "count": 1,
-    "updated_at": 1754229332
-  },
-  {
-    "id": 5215,
-    "game_id": 2201,
-    "hastily": 43200,
-    "normally": 43200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1751007277
-  },
-  {
-    "id": 5522,
-    "game_id": 2162,
-    "hastily": 21600,
-    "normally": 28800,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1753017446
-  },
-  {
-    "id": 6316,
-    "game_id": 2137,
-    "hastily": 32400,
-    "completely": 597600,
-    "count": 1,
-    "updated_at": 1761686020
-  },
-  {
-    "id": 7088,
-    "game_id": 2197,
-    "normally": 57600,
-    "count": 1,
-    "updated_at": 1765234666
-  },
-  {
-    "id": 7427,
-    "game_id": 2181,
-    "hastily": 32400,
-    "normally": 46800,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1767650690
-  },
-  {
-    "id": 7557,
-    "game_id": 2180,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1768815011
-  },
-  {
-    "id": 8201,
-    "game_id": 2178,
-    "hastily": 7200,
-    "count": 1,
-    "updated_at": 1774226792
-  },
-  {
-    "id": 46,
-    "game_id": 2282,
-    "hastily": 25320,
-    "count": 1,
-    "updated_at": 1728556531
-  },
-  {
-    "id": 77,
-    "game_id": 2231,
-    "normally": 41940,
-    "count": 1,
-    "updated_at": 1728556532
-  },
-  {
-    "id": 107,
-    "game_id": 2238,
-    "normally": 37620,
-    "count": 2,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 110,
-    "game_id": 2229,
-    "normally": 46140,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 178,
-    "game_id": 2228,
-    "normally": 50580,
-    "count": 1,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 575,
-    "game_id": 2287,
-    "hastily": 133200,
-    "normally": 196200,
-    "completely": 702000,
-    "count": 5,
-    "updated_at": 1762181317
-  },
-  {
-    "id": 576,
-    "game_id": 2286,
-    "normally": 144000,
-    "completely": 684000,
-    "count": 3,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 614,
-    "game_id": 2291,
-    "normally": 11000,
-    "completely": 13200,
-    "count": 5,
-    "updated_at": 1778531940
-  },
-  {
-    "id": 618,
-    "game_id": 2207,
-    "hastily": 25200,
-    "normally": 32925,
-    "completely": 70200,
-    "count": 5,
-    "updated_at": 1728556548
-  },
-  {
-    "id": 779,
-    "game_id": 2262,
-    "normally": 178200,
-    "count": 2,
-    "updated_at": 1744032556
-  },
-  {
-    "id": 879,
-    "game_id": 2289,
-    "normally": 48180,
-    "count": 1,
-    "updated_at": 1728556556
-  },
-  {
-    "id": 880,
-    "game_id": 2290,
-    "normally": 63780,
-    "count": 1,
-    "updated_at": 1728556556
-  },
-  {
-    "id": 999,
-    "game_id": 2249,
-    "normally": 54600,
-    "count": 1,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1346,
-    "game_id": 2301,
-    "hastily": 2400,
-    "normally": 3600,
-    "completely": 4800,
-    "count": 1,
-    "updated_at": 1728556570
-  },
-  {
-    "id": 1385,
-    "game_id": 2274,
-    "hastily": 5400,
-    "normally": 9000,
-    "completely": 14400,
-    "count": 1,
-    "updated_at": 1728556571
-  },
-  {
-    "id": 1573,
-    "game_id": 2267,
-    "hastily": 16620,
-    "count": 1,
-    "updated_at": 1728556577
-  },
-  {
-    "id": 2244,
-    "game_id": 2248,
-    "normally": 118800,
-    "count": 1,
-    "updated_at": 1728556597
-  },
-  {
-    "id": 3410,
-    "game_id": 2241,
-    "normally": 90000,
-    "count": 1,
-    "updated_at": 1729988311
-  },
-  {
-    "id": 3612,
-    "game_id": 2254,
-    "hastily": 32400,
-    "normally": 61200,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1761039889
-  },
-  {
-    "id": 3989,
-    "game_id": 2305,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1739496883
-  },
-  {
-    "id": 4466,
-    "game_id": 2261,
-    "normally": 106200,
-    "count": 2,
-    "updated_at": 1761236660
-  },
-  {
-    "id": 5106,
-    "game_id": 2295,
-    "normally": 36000,
-    "completely": 86400,
-    "count": 1,
-    "updated_at": 1752542869
-  },
-  {
-    "id": 5531,
-    "game_id": 2284,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1753018883
-  },
-  {
-    "id": 5680,
-    "game_id": 2235,
-    "hastily": 3600,
-    "normally": 3600,
-    "completely": 3600,
-    "count": 1,
-    "updated_at": 1753355149
-  },
-  {
-    "id": 5969,
-    "game_id": 2239,
-    "normally": 14400,
-    "completely": 14400,
-    "count": 1,
-    "updated_at": 1756663188
-  },
-  {
-    "id": 6337,
-    "game_id": 2253,
-    "hastily": 18000,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1761039472
-  },
-  {
-    "id": 6341,
-    "game_id": 2252,
-    "hastily": 21600,
-    "normally": 43200,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1761039735
-  },
-  {
-    "id": 6915,
-    "game_id": 2265,
-    "hastily": 360000,
-    "normally": 360000,
-    "completely": 360000,
-    "count": 1,
-    "updated_at": 1763661419
-  },
-  {
-    "id": 7514,
-    "game_id": 2272,
-    "hastily": 39600,
-    "normally": 46800,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1768067609
-  },
-  {
-    "id": 7999,
-    "game_id": 2276,
-    "hastily": 72000,
-    "normally": 108000,
-    "completely": 144000,
-    "count": 1,
-    "updated_at": 1773180071
-  },
-  {
-    "id": 8328,
-    "game_id": 2216,
-    "normally": 86400,
-    "count": 1,
-    "updated_at": 1774736260
-  },
-  {
-    "id": 85,
-    "game_id": 2369,
-    "hastily": 22800,
-    "normally": 32400,
-    "completely": 90000,
-    "count": 4,
-    "updated_at": 1767171229
-  },
-  {
-    "id": 150,
-    "game_id": 2368,
-    "hastily": 72000,
-    "normally": 216514,
-    "completely": 316080,
-    "count": 11,
-    "updated_at": 1763726748
-  },
-  {
-    "id": 251,
-    "game_id": 2345,
-    "hastily": 36000,
-    "normally": 54000,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 252,
-    "game_id": 2344,
-    "hastily": 21600,
-    "normally": 36000,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 310,
-    "game_id": 2364,
-    "normally": 234000,
-    "completely": 298800,
-    "count": 3,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 407,
-    "game_id": 2358,
-    "hastily": 21600,
-    "normally": 66600,
-    "count": 3,
-    "updated_at": 1767168825
-  },
-  {
-    "id": 457,
-    "game_id": 2317,
-    "normally": 32400,
-    "completely": 54000,
-    "count": 2,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 510,
-    "game_id": 2355,
-    "hastily": 39600,
-    "normally": 44400,
-    "completely": 106800,
-    "count": 4,
-    "updated_at": 1767371136
-  },
-  {
-    "id": 625,
-    "game_id": 2346,
-    "hastily": 14400,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1728556548
-  },
-  {
-    "id": 667,
-    "game_id": 2366,
-    "normally": 360000,
-    "count": 1,
-    "updated_at": 1728556550
-  },
-  {
-    "id": 706,
-    "game_id": 2370,
-    "hastily": 127800,
-    "normally": 147600,
-    "completely": 128700,
-    "count": 2,
-    "updated_at": 1728556551
-  },
-  {
-    "id": 926,
-    "game_id": 2354,
-    "hastily": 7920,
-    "normally": 14940,
-    "completely": 27900,
-    "count": 3,
-    "updated_at": 1778187567
-  },
-  {
-    "id": 1644,
-    "game_id": 2407,
-    "hastily": 72000,
-    "normally": 108000,
-    "completely": 189000,
-    "count": 2,
-    "updated_at": 1748615860
-  },
-  {
-    "id": 1686,
-    "game_id": 2350,
-    "hastily": 36000,
-    "normally": 28800,
-    "completely": 180000,
-    "count": 1,
-    "updated_at": 1728556580
-  },
-  {
-    "id": 1976,
-    "game_id": 2361,
-    "hastily": 36000,
-    "normally": 54000,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1728556589
-  },
-  {
-    "id": 2122,
-    "game_id": 2357,
-    "normally": 160560,
-    "count": 1,
-    "updated_at": 1728556593
-  },
-  {
-    "id": 2992,
-    "game_id": 2349,
-    "normally": 14400,
-    "count": 2,
-    "updated_at": 1743601905
-  },
-  {
-    "id": 3715,
-    "game_id": 2323,
-    "normally": 90000,
-    "count": 1,
-    "updated_at": 1734491606
-  },
-  {
-    "id": 4407,
-    "game_id": 2343,
-    "hastily": 10800,
-    "normally": 36000,
-    "completely": 79200,
-    "count": 1,
-    "updated_at": 1745875065
-  },
-  {
-    "id": 4675,
-    "game_id": 2408,
-    "hastily": 126000,
-    "normally": 180000,
-    "completely": 360000,
-    "count": 2,
-    "updated_at": 1749027609
-  },
-  {
-    "id": 5315,
-    "game_id": 2337,
-    "hastily": 18000,
-    "normally": 18000,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1752341919
-  },
-  {
-    "id": 6086,
-    "game_id": 2327,
-    "hastily": 100800,
-    "normally": 100800,
-    "completely": 151200,
-    "count": 1,
-    "updated_at": 1758650701
-  },
-  {
-    "id": 8089,
-    "game_id": 2359,
-    "hastily": 169200,
-    "normally": 270000,
-    "completely": 961200,
-    "count": 1,
-    "updated_at": 1773336639
-  },
-  {
-    "id": 78,
-    "game_id": 2499,
-    "normally": 43020,
-    "count": 1,
-    "updated_at": 1728556532
-  },
-  {
-    "id": 151,
-    "game_id": 2479,
-    "hastily": 5400,
-    "normally": 9000,
-    "completely": 10800,
-    "count": 3,
-    "updated_at": 1739496884
-  },
-  {
-    "id": 403,
-    "game_id": 2448,
-    "normally": 25200,
-    "count": 2,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 421,
-    "game_id": 2437,
-    "normally": 57600,
-    "count": 1,
-    "updated_at": 1728556542
-  },
-  {
-    "id": 750,
-    "game_id": 2438,
-    "hastily": 25200,
-    "normally": 41400,
-    "completely": 54000,
-    "count": 2,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 998,
-    "game_id": 2480,
-    "hastily": 201600,
-    "normally": 211560,
-    "completely": 155160,
-    "count": 5,
-    "updated_at": 1767627381
-  },
-  {
-    "id": 1041,
-    "game_id": 2476,
-    "normally": 47400,
-    "count": 1,
-    "updated_at": 1728556561
-  },
-  {
-    "id": 1080,
-    "game_id": 2473,
-    "hastily": 6150,
-    "normally": 2700,
-    "completely": 3600,
-    "count": 2,
-    "updated_at": 1757913741
-  },
-  {
-    "id": 1118,
-    "game_id": 2444,
-    "hastily": 3600,
-    "count": 1,
-    "updated_at": 1728556563
-  },
-  {
-    "id": 1248,
-    "game_id": 2417,
-    "completely": 75060,
-    "count": 1,
-    "updated_at": 1728556567
-  },
-  {
-    "id": 1307,
-    "game_id": 2461,
-    "completely": 198120,
-    "count": 1,
-    "updated_at": 1728556569
-  },
-  {
-    "id": 1421,
-    "game_id": 2456,
-    "completely": 155280,
-    "count": 1,
-    "updated_at": 1728556572
-  },
-  {
-    "id": 1422,
-    "game_id": 2460,
-    "completely": 39720,
-    "count": 1,
-    "updated_at": 1728556572
-  },
-  {
-    "id": 2783,
-    "game_id": 2485,
-    "hastily": 72960,
-    "normally": 18000,
-    "completely": 43200,
-    "count": 4,
-    "updated_at": 1759466287
-  },
-  {
-    "id": 4793,
-    "game_id": 2449,
-    "hastily": 90000,
-    "normally": 144000,
-    "completely": 252000,
-    "count": 1,
-    "updated_at": 1748426189
-  },
-  {
-    "id": 5859,
-    "game_id": 2470,
-    "hastily": 3600,
-    "normally": 7200,
-    "completely": 14400,
-    "count": 1,
-    "updated_at": 1754983869
-  },
-  {
-    "id": 6103,
-    "game_id": 2469,
-    "hastily": 7200,
-    "normally": 18000,
+    "id": 8683,
+    "game_id": 403189,
     "completely": 28800,
     "count": 1,
-    "updated_at": 1759050102
+    "updated_at": 1780666139
   },
   {
-    "id": 7201,
-    "game_id": 2474,
+    "id": 8670,
+    "game_id": 403539,
+    "normally": 3600,
     "count": 1,
-    "updated_at": 1766887730
+    "updated_at": 1780314784
   },
   {
-    "id": 222,
-    "game_id": 2599,
-    "normally": 39150,
-    "completely": 123600,
-    "count": 5,
-    "updated_at": 1728556536
-  },
-  {
-    "id": 248,
-    "game_id": 2591,
-    "hastily": 5340,
-    "normally": 13500,
-    "completely": 72000,
-    "count": 6,
-    "updated_at": 1768095262
-  },
-  {
-    "id": 293,
-    "game_id": 2602,
-    "hastily": 10800,
-    "normally": 20475,
-    "count": 8,
-    "updated_at": 1771551931
-  },
-  {
-    "id": 373,
-    "game_id": 2549,
-    "hastily": 10860,
-    "normally": 14480,
-    "completely": 12660,
-    "count": 9,
-    "updated_at": 1779758241
-  },
-  {
-    "id": 429,
-    "game_id": 2595,
-    "normally": 252000,
-    "completely": 428400,
-    "count": 3,
-    "updated_at": 1766445560
-  },
-  {
-    "id": 513,
-    "game_id": 2552,
-    "hastily": 72000,
-    "normally": 215542,
-    "completely": 250800,
-    "count": 12,
-    "updated_at": 1766505059
-  },
-  {
-    "id": 724,
-    "game_id": 2601,
-    "normally": 7200,
-    "count": 1,
-    "updated_at": 1728556551
-  },
-  {
-    "id": 760,
-    "game_id": 2540,
-    "hastily": 50400,
-    "count": 1,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 1010,
-    "game_id": 2525,
-    "hastily": 14400,
-    "normally": 23400,
-    "completely": 30600,
-    "count": 2,
-    "updated_at": 1728556560
-  },
-  {
-    "id": 1147,
-    "game_id": 2538,
-    "normally": 32760,
-    "count": 1,
-    "updated_at": 1728556564
-  },
-  {
-    "id": 1299,
-    "game_id": 2539,
-    "normally": 126000,
-    "count": 1,
-    "updated_at": 1728556569
-  },
-  {
-    "id": 2267,
-    "game_id": 2536,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1728556598
-  },
-  {
-    "id": 2268,
-    "game_id": 2532,
-    "normally": 14400,
-    "count": 1,
-    "updated_at": 1728556598
-  },
-  {
-    "id": 2837,
-    "game_id": 2571,
-    "hastily": 5850,
-    "normally": 10800,
-    "completely": 14400,
-    "count": 2,
-    "updated_at": 1761040493
-  },
-  {
-    "id": 3900,
-    "game_id": 2607,
-    "hastily": 21600,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1737484042
-  },
-  {
-    "id": 4169,
-    "game_id": 2575,
-    "hastily": 7200,
-    "normally": 12600,
-    "completely": 21600,
-    "count": 2,
-    "updated_at": 1761045648
-  },
-  {
-    "id": 4201,
-    "game_id": 2567,
-    "hastily": 12600,
-    "normally": 32400,
-    "completely": 46800,
-    "count": 2,
-    "updated_at": 1761039683
-  },
-  {
-    "id": 5067,
-    "game_id": 2587,
-    "normally": 46800,
-    "count": 1,
-    "updated_at": 1749626479
-  },
-  {
-    "id": 5503,
-    "game_id": 2542,
-    "hastily": 14400,
-    "normally": 18000,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1752997671
-  },
-  {
-    "id": 5842,
-    "game_id": 2543,
-    "hastily": 12600,
-    "normally": 19800,
-    "completely": 28800,
-    "count": 2,
-    "updated_at": 1760958781
-  },
-  {
-    "id": 6296,
-    "game_id": 2578,
-    "hastily": 10800,
-    "normally": 18000,
-    "completely": 25200,
-    "count": 1,
-    "updated_at": 1760957854
-  },
-  {
-    "id": 6298,
-    "game_id": 2545,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1760958505
-  },
-  {
-    "id": 6300,
-    "game_id": 2560,
+    "id": 8671,
+    "game_id": 403464,
     "hastily": 3600,
-    "normally": 7200,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1760958505
-  },
-  {
-    "id": 6301,
-    "game_id": 2546,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1760958505
-  },
-  {
-    "id": 6302,
-    "game_id": 2548,
-    "hastily": 10800,
-    "normally": 18000,
-    "completely": 25200,
-    "count": 1,
-    "updated_at": 1760958505
-  },
-  {
-    "id": 6304,
-    "game_id": 2550,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1760958505
-  },
-  {
-    "id": 6308,
-    "game_id": 2561,
-    "hastily": 10800,
-    "normally": 18000,
-    "completely": 25200,
-    "count": 1,
-    "updated_at": 1760958628
-  },
-  {
-    "id": 6309,
-    "game_id": 2562,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1760958688
-  },
-  {
-    "id": 6320,
-    "game_id": 2557,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1761036902
-  },
-  {
-    "id": 6321,
-    "game_id": 2579,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1761036948
-  },
-  {
-    "id": 6322,
-    "game_id": 2558,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1761037015
-  },
-  {
-    "id": 6326,
-    "game_id": 2563,
-    "hastily": 18000,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1761038782
-  },
-  {
-    "id": 6328,
-    "game_id": 2564,
-    "hastily": 18000,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1761038882
-  },
-  {
-    "id": 6329,
-    "game_id": 2580,
-    "hastily": 7200,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1761038948
-  },
-  {
-    "id": 6330,
-    "game_id": 2565,
-    "hastily": 18000,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1761039018
-  },
-  {
-    "id": 6331,
-    "game_id": 2576,
-    "hastily": 14400,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1761039086
-  },
-  {
-    "id": 6334,
-    "game_id": 2566,
-    "hastily": 18000,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1761039241
-  },
-  {
-    "id": 6338,
-    "game_id": 2577,
-    "hastily": 14400,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1761039534
-  },
-  {
-    "id": 6340,
-    "game_id": 2581,
-    "hastily": 14400,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1761039633
-  },
-  {
-    "id": 6342,
-    "game_id": 2568,
-    "hastily": 18000,
-    "normally": 32400,
-    "completely": 50400,
-    "count": 1,
-    "updated_at": 1761039784
-  },
-  {
-    "id": 6344,
-    "game_id": 2569,
-    "hastily": 21600,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1761039946
-  },
-  {
-    "id": 6346,
-    "game_id": 2570,
-    "hastily": 21600,
-    "normally": 43200,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1761040036
-  },
-  {
-    "id": 6352,
-    "game_id": 2572,
-    "hastily": 14400,
-    "normally": 28800,
-    "completely": 43200,
-    "count": 1,
-    "updated_at": 1761045078
-  },
-  {
-    "id": 6355,
-    "game_id": 2559,
-    "hastily": 14400,
-    "normally": 25200,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1761045325
-  },
-  {
-    "id": 6356,
-    "game_id": 2573,
-    "hastily": 10800,
-    "normally": 21600,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1761045496
-  },
-  {
-    "id": 6357,
-    "game_id": 2574,
-    "hastily": 21600,
-    "normally": 43200,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1761045569
-  },
-  {
-    "id": 6360,
-    "game_id": 2583,
-    "hastily": 18000,
-    "normally": 36000,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1761045939
-  },
-  {
-    "id": 8086,
-    "game_id": 2605,
-    "hastily": 36000,
-    "normally": 50400,
-    "completely": 154800,
-    "count": 1,
-    "updated_at": 1773336485
-  },
-  {
-    "id": 8517,
-    "game_id": 2584,
-    "count": 1,
-    "updated_at": 1777670819
-  },
-  {
-    "id": 135,
-    "game_id": 2638,
-    "normally": 43200,
-    "completely": 118800,
-    "count": 2,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 250,
-    "game_id": 2686,
-    "normally": 72000,
-    "count": 1,
-    "updated_at": 1728556537
-  },
-  {
-    "id": 430,
-    "game_id": 2623,
-    "hastily": 2100,
-    "normally": 5400,
+    "normally": 3600,
     "completely": 7200,
     "count": 1,
-    "updated_at": 1728556543
+    "updated_at": 1780331522
   },
   {
-    "id": 435,
-    "game_id": 2621,
-    "normally": 7200,
-    "count": 1,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 737,
-    "game_id": 2672,
-    "hastily": 18000,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 738,
-    "game_id": 2671,
-    "hastily": 28800,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 739,
-    "game_id": 2629,
-    "hastily": 25200,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 745,
-    "game_id": 2692,
-    "hastily": 25200,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 747,
-    "game_id": 2682,
-    "hastily": 36000,
-    "normally": 54000,
-    "completely": 72000,
-    "count": 2,
-    "updated_at": 1749650094
-  },
-  {
-    "id": 752,
-    "game_id": 2685,
-    "hastily": 25200,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 763,
-    "game_id": 2693,
-    "hastily": 28800,
-    "count": 1,
-    "updated_at": 1728556553
-  },
-  {
-    "id": 974,
-    "game_id": 2640,
-    "hastily": 14400,
-    "normally": 18000,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1728556559
-  },
-  {
-    "id": 2169,
-    "game_id": 2668,
-    "hastily": 58860,
-    "normally": 73200,
-    "completely": 125880,
-    "count": 5,
-    "updated_at": 1767184088
-  },
-  {
-    "id": 2740,
-    "game_id": 2667,
-    "normally": 33980,
-    "count": 3,
-    "updated_at": 1748982567
-  },
-  {
-    "id": 5050,
-    "game_id": 2626,
-    "normally": 57600,
-    "count": 1,
-    "updated_at": 1749571445
-  },
-  {
-    "id": 5060,
-    "game_id": 2713,
-    "hastily": 14400,
-    "count": 1,
-    "updated_at": 1749576466
-  },
-  {
-    "id": 5552,
-    "game_id": 2656,
-    "count": 1,
-    "updated_at": 1753023113
-  },
-  {
-    "id": 5846,
-    "game_id": 2670,
-    "hastily": 284400,
-    "count": 1,
-    "updated_at": 1754712753
-  },
-  {
-    "id": 7239,
-    "game_id": 2698,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1767135210
-  },
-  {
-    "id": 7420,
-    "game_id": 2714,
-    "hastily": 28800,
-    "normally": 39600,
-    "completely": 50400,
-    "count": 1,
-    "updated_at": 1767626908
-  },
-  {
-    "id": 8315,
-    "game_id": 2687,
-    "completely": 1260000,
-    "count": 1,
-    "updated_at": 1774726191
-  },
-  {
-    "id": 8343,
-    "game_id": 2688,
-    "hastily": 25200,
-    "count": 1,
-    "updated_at": 1774942122
-  },
-  {
-    "id": 8454,
-    "game_id": 2704,
-    "count": 1,
-    "updated_at": 1776519109
-  },
-  {
-    "id": 696,
-    "game_id": 2738,
-    "normally": 37800,
-    "completely": 79200,
-    "count": 4,
-    "updated_at": 1769528026
-  },
-  {
-    "id": 735,
-    "game_id": 2751,
-    "hastily": 5400,
-    "normally": 3600,
-    "completely": 3600,
-    "count": 2,
-    "updated_at": 1753355197
-  },
-  {
-    "id": 742,
-    "game_id": 2732,
-    "hastily": 32400,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 3376,
-    "game_id": 2720,
-    "normally": 57600,
-    "completely": 97200,
-    "count": 3,
-    "updated_at": 1768788981
-  },
-  {
-    "id": 3993,
-    "game_id": 2727,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1739496883
-  },
-  {
-    "id": 5679,
-    "game_id": 2750,
+    "id": 8679,
+    "game_id": 403705,
     "hastily": 3600,
     "normally": 3600,
     "completely": 3600,
     "count": 1,
-    "updated_at": 1753355138
-  },
-  {
-    "id": 5689,
-    "game_id": 2741,
-    "hastily": 3600,
-    "normally": 14400,
-    "completely": 21600,
-    "count": 1,
-    "updated_at": 1753357663
-  },
-  {
-    "id": 7007,
-    "game_id": 2749,
-    "hastily": 3600,
-    "normally": 14400,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1764177212
-  },
-  {
-    "id": 7665,
-    "game_id": 2728,
-    "hastily": 21600,
-    "normally": 43200,
-    "completely": 64800,
-    "count": 1,
-    "updated_at": 1769993617
-  },
-  {
-    "id": 8062,
-    "game_id": 2765,
-    "hastily": 43200,
-    "normally": 50400,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1773334493
-  },
-  {
-    "id": 99,
-    "game_id": 2878,
-    "hastily": 151380,
-    "completely": 199500,
-    "count": 2,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 153,
-    "game_id": 2853,
-    "normally": 19665,
-    "completely": 25200,
-    "count": 9,
-    "updated_at": 1779591523
-  },
-  {
-    "id": 307,
-    "game_id": 2899,
-    "normally": 90000,
-    "count": 2,
-    "updated_at": 1760875325
-  },
-  {
-    "id": 355,
-    "game_id": 2886,
-    "hastily": 54000,
-    "normally": 89130,
-    "completely": 198000,
-    "count": 2,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 441,
-    "game_id": 2904,
-    "normally": 17840,
-    "count": 3,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 611,
-    "game_id": 2903,
-    "hastily": 126000,
-    "normally": 3049200,
-    "completely": 6451200,
-    "count": 10,
-    "updated_at": 1768846855
-  },
-  {
-    "id": 728,
-    "game_id": 2896,
-    "hastily": 28800,
-    "normally": 50400,
-    "completely": 108000,
-    "count": 2,
-    "updated_at": 1735545507
-  },
-  {
-    "id": 729,
-    "game_id": 2897,
-    "hastily": 64800,
-    "normally": 84600,
-    "count": 2,
-    "updated_at": 1736060842
-  },
-  {
-    "id": 957,
-    "game_id": 2909,
-    "normally": 60360,
-    "count": 2,
-    "updated_at": 1728556558
-  },
-  {
-    "id": 961,
-    "game_id": 2868,
-    "normally": 93600,
-    "completely": 120840,
-    "count": 3,
-    "updated_at": 1739499305
-  },
-  {
-    "id": 1318,
-    "game_id": 2867,
-    "normally": 100800,
-    "completely": 156840,
-    "count": 2,
-    "updated_at": 1739499661
-  },
-  {
-    "id": 1897,
-    "game_id": 2918,
-    "normally": 842400,
-    "count": 1,
-    "updated_at": 1728556586
-  },
-  {
-    "id": 2658,
-    "game_id": 2920,
-    "hastily": 4260,
-    "normally": 4920,
-    "completely": 4920,
-    "count": 1,
-    "updated_at": 1728556609
-  },
-  {
-    "id": 2839,
-    "game_id": 2826,
-    "hastily": 3060,
-    "count": 1,
-    "updated_at": 1728556615
-  },
-  {
-    "id": 3998,
-    "game_id": 2863,
-    "normally": 144000,
-    "count": 1,
-    "updated_at": 1739496883
-  },
-  {
-    "id": 4000,
-    "game_id": 2870,
-    "normally": 36000,
-    "count": 1,
-    "updated_at": 1739496946
-  },
-  {
-    "id": 4006,
-    "game_id": 2865,
-    "normally": 108000,
-    "count": 1,
-    "updated_at": 1739497619
-  },
-  {
-    "id": 4030,
-    "game_id": 2871,
-    "normally": 90000,
-    "count": 1,
-    "updated_at": 1739499867
-  },
-  {
-    "id": 4445,
-    "game_id": 2911,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1743453418
-  },
-  {
-    "id": 6416,
-    "game_id": 2900,
-    "normally": 39600,
-    "count": 1,
-    "updated_at": 1761136792
-  },
-  {
-    "id": 7624,
-    "game_id": 2841,
-    "hastily": 3600,
-    "normally": 7200,
-    "completely": 10800,
-    "count": 1,
-    "updated_at": 1769399577
-  },
-  {
-    "id": 9,
-    "game_id": 2940,
-    "hastily": 25200,
-    "normally": 38700,
-    "completely": 65700,
-    "count": 3,
-    "updated_at": 1728556530
-  },
-  {
-    "id": 92,
-    "game_id": 2935,
-    "hastily": 14400,
-    "normally": 22335,
-    "completely": 114040,
-    "count": 16,
-    "updated_at": 1772799655
-  },
-  {
-    "id": 106,
-    "game_id": 2960,
-    "hastily": 29400,
-    "count": 1,
-    "updated_at": 1728556533
-  },
-  {
-    "id": 163,
-    "game_id": 2924,
-    "hastily": 21600,
-    "normally": 50640,
-    "completely": 48900,
-    "count": 7,
-    "updated_at": 1728556535
-  },
-  {
-    "id": 174,
-    "game_id": 2939,
-    "hastily": 12600,
-    "normally": 15075,
-    "completely": 18240,
-    "count": 13,
-    "updated_at": 1762247953
-  },
-  {
-    "id": 186,
-    "game_id": 3015,
-    "hastily": 7200,
-    "normally": 6495,
-    "completely": 14400,
-    "count": 4,
-    "updated_at": 1767654840
-  },
-  {
-    "id": 275,
-    "game_id": 3022,
-    "hastily": 15400,
-    "normally": 26910,
-    "completely": 54771,
-    "count": 12,
-    "updated_at": 1760717136
-  },
-  {
-    "id": 304,
-    "game_id": 2963,
-    "hastily": 1285346,
-    "normally": 5423724,
-    "completely": 20976030,
-    "count": 13,
-    "updated_at": 1770753015
-  },
-  {
-    "id": 319,
-    "game_id": 2985,
-    "hastily": 267420,
-    "normally": 468090,
-    "completely": 591400,
-    "count": 5,
-    "updated_at": 1762401370
-  },
-  {
-    "id": 334,
-    "game_id": 2969,
-    "normally": 11880,
-    "completely": 14160,
-    "count": 3,
-    "updated_at": 1751982655
-  },
-  {
-    "id": 335,
-    "game_id": 3004,
-    "normally": 12800,
-    "completely": 10410,
-    "count": 5,
-    "updated_at": 1761134629
-  },
-  {
-    "id": 336,
-    "game_id": 3018,
-    "completely": 72000,
-    "count": 1,
-    "updated_at": 1728556540
-  },
-  {
-    "id": 375,
-    "game_id": 2973,
-    "normally": 21600,
-    "count": 1,
-    "updated_at": 1728556541
-  },
-  {
-    "id": 383,
-    "game_id": 2977,
-    "hastily": 216000,
-    "normally": 189600,
-    "completely": 270000,
-    "count": 3,
-    "updated_at": 1763661393
-  },
-  {
-    "id": 386,
-    "game_id": 3025,
-    "normally": 64440,
-    "completely": 204214,
-    "count": 10,
-    "updated_at": 1761138812
-  },
-  {
-    "id": 433,
-    "game_id": 2947,
-    "normally": 25200,
-    "count": 1,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 523,
-    "game_id": 2993,
-    "hastily": 28800,
-    "normally": 36471,
-    "completely": 46800,
-    "count": 9,
-    "updated_at": 1767655103
-  },
-  {
-    "id": 586,
-    "game_id": 2949,
-    "hastily": 126000,
-    "normally": 216000,
-    "count": 2,
-    "updated_at": 1767355579
-  },
-  {
-    "id": 698,
-    "game_id": 2990,
-    "hastily": 16200,
-    "normally": 20400,
-    "completely": 19440,
-    "count": 5,
-    "updated_at": 1763560069
-  },
-  {
-    "id": 727,
-    "game_id": 3008,
-    "completely": 90000,
-    "count": 1,
-    "updated_at": 1728556552
-  },
-  {
-    "id": 770,
-    "game_id": 3020,
-    "hastily": 3600,
-    "normally": 32850,
-    "completely": 91200,
-    "count": 6,
-    "updated_at": 1748614090
-  },
-  {
-    "id": 1310,
-    "game_id": 2933,
-    "hastily": 138000,
-    "normally": 166500,
-    "completely": 237600,
-    "count": 4,
-    "updated_at": 1778914811
-  },
-  {
-    "id": 1354,
-    "game_id": 2934,
-    "hastily": 25200,
-    "normally": 32400,
-    "completely": 108600,
-    "count": 2,
-    "updated_at": 1728556570
-  },
-  {
-    "id": 1433,
-    "game_id": 2959,
-    "normally": 115200,
-    "count": 1,
-    "updated_at": 1728556573
-  },
-  {
-    "id": 1606,
-    "game_id": 2964,
-    "normally": 72420,
-    "count": 1,
-    "updated_at": 1728556578
-  },
-  {
-    "id": 1759,
-    "game_id": 3019,
-    "normally": 183600,
-    "count": 1,
-    "updated_at": 1728556582
-  },
-  {
-    "id": 2136,
-    "game_id": 2991,
-    "completely": 14400,
-    "count": 1,
-    "updated_at": 1728556593
-  },
-  {
-    "id": 4765,
-    "game_id": 3011,
-    "completely": 61200,
-    "count": 1,
-    "updated_at": 1748107971
-  },
-  {
-    "id": 4780,
-    "game_id": 2957,
-    "hastily": 21600,
-    "normally": 32400,
-    "completely": 180000,
-    "count": 3,
-    "updated_at": 1762183852
-  },
-  {
-    "id": 5054,
-    "game_id": 2943,
-    "normally": 37800,
-    "completely": 32400,
-    "count": 3,
-    "updated_at": 1779282787
-  },
-  {
-    "id": 5914,
-    "game_id": 2971,
-    "hastily": 86400,
-    "count": 1,
-    "updated_at": 1755440084
-  },
-  {
-    "id": 6267,
-    "game_id": 2982,
-    "hastily": 10800,
-    "normally": 21600,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1760701436
-  },
-  {
-    "id": 7031,
-    "game_id": 2951,
-    "completely": 720000,
-    "count": 1,
-    "updated_at": 1764436436
-  },
-  {
-    "id": 7032,
-    "game_id": 2953,
-    "completely": 1080000,
-    "count": 1,
-    "updated_at": 1764436458
-  },
-  {
-    "id": 7033,
-    "game_id": 2954,
-    "completely": 1440000,
-    "count": 1,
-    "updated_at": 1764436590
-  },
-  {
-    "id": 7217,
-    "game_id": 2956,
-    "hastily": 32400,
-    "normally": 64800,
-    "completely": 115200,
-    "count": 1,
-    "updated_at": 1767019962
-  },
-  {
-    "id": 7418,
-    "game_id": 2974,
-    "hastily": 7200,
-    "normally": 10800,
-    "count": 1,
-    "updated_at": 1767626673
-  },
-  {
-    "id": 7591,
-    "game_id": 2988,
-    "completely": 54000,
-    "count": 1,
-    "updated_at": 1768915143
-  },
-  {
-    "id": 7933,
-    "game_id": 2995,
-    "hastily": 108000,
-    "normally": 118800,
-    "completely": 129600,
-    "count": 1,
-    "updated_at": 1772913146
-  },
-  {
-    "id": 8261,
-    "game_id": 2955,
-    "hastily": 406800,
-    "normally": 914400,
-    "completely": 2437200,
-    "count": 1,
-    "updated_at": 1774484740
-  },
-  {
-    "id": 8396,
-    "game_id": 3002,
-    "normally": 68400,
-    "count": 1,
-    "updated_at": 1775801823
-  },
-  {
-    "id": 124,
-    "game_id": 3035,
-    "hastily": 4200,
-    "normally": 9675,
-    "completely": 22073,
-    "count": 16,
-    "updated_at": 1761144141
-  },
-  {
-    "id": 131,
-    "game_id": 3075,
-    "hastily": 38550,
-    "normally": 74010,
-    "count": 2,
-    "updated_at": 1728556534
-  },
-  {
-    "id": 218,
-    "game_id": 3101,
-    "normally": 153000,
-    "count": 2,
-    "updated_at": 1728556536
-  },
-  {
-    "id": 221,
-    "game_id": 3041,
-    "normally": 93600,
-    "count": 1,
-    "updated_at": 1728556536
-  },
-  {
-    "id": 223,
-    "game_id": 3048,
-    "hastily": 28800,
-    "normally": 20640,
-    "completely": 39600,
-    "count": 4,
-    "updated_at": 1762129381
-  },
-  {
-    "id": 238,
-    "game_id": 3097,
-    "hastily": 30600,
-    "normally": 36210,
-    "completely": 45500,
-    "count": 14,
-    "updated_at": 1775031022
-  },
-  {
-    "id": 322,
-    "game_id": 3029,
-    "hastily": 216000,
-    "normally": 324000,
-    "completely": 432000,
-    "count": 1,
-    "updated_at": 1728556539
-  },
-  {
-    "id": 388,
-    "game_id": 3109,
-    "hastily": 50400,
-    "normally": 72000,
-    "completely": 149400,
-    "count": 3,
-    "updated_at": 1767619922
-  },
-  {
-    "id": 391,
-    "game_id": 3042,
-    "hastily": 45000,
-    "normally": 102780,
-    "completely": 165270,
-    "count": 13,
-    "updated_at": 1777820322
-  },
-  {
-    "id": 449,
-    "game_id": 3078,
-    "hastily": 22300,
-    "normally": 29790,
-    "completely": 52590,
-    "count": 5,
-    "updated_at": 1728556543
-  },
-  {
-    "id": 531,
-    "game_id": 3082,
-    "normally": 5790,
-    "count": 6,
-    "updated_at": 1761134277
-  },
-  {
-    "id": 571,
-    "game_id": 3077,
-    "hastily": 22560,
-    "normally": 30880,
-    "completely": 63920,
-    "count": 5,
-    "updated_at": 1760015915
-  },
-  {
-    "id": 581,
-    "game_id": 3043,
-    "normally": 720000,
-    "count": 1,
-    "updated_at": 1728556547
-  },
-  {
-    "id": 608,
-    "game_id": 3040,
-    "normally": 86400,
-    "count": 2,
-    "updated_at": 1728556548
-  },
-  {
-    "id": 683,
-    "game_id": 3050,
-    "completely": 18000,
-    "count": 1,
-    "updated_at": 1728556550
-  },
-  {
-    "id": 1321,
-    "game_id": 3100,
-    "completely": 406140,
-    "count": 1,
-    "updated_at": 1728556569
-  },
-  {
-    "id": 2113,
-    "game_id": 3031,
-    "normally": 2700,
-    "count": 1,
-    "updated_at": 1728556593
-  },
-  {
-    "id": 2569,
-    "game_id": 3087,
-    "completely": 49500,
-    "count": 1,
-    "updated_at": 1728556607
-  },
-  {
-    "id": 2827,
-    "game_id": 3034,
-    "hastily": 2280,
-    "count": 1,
-    "updated_at": 1728556614
-  },
-  {
-    "id": 4036,
-    "game_id": 3032,
-    "normally": 18000,
-    "count": 1,
-    "updated_at": 1739500241
-  },
-  {
-    "id": 4275,
-    "game_id": 3070,
-    "hastily": 3600,
-    "normally": 190800,
-    "completely": 493200,
-    "count": 6,
-    "updated_at": 1767528757
-  },
-  {
-    "id": 4668,
-    "game_id": 3071,
-    "completely": 7200,
-    "count": 2,
-    "updated_at": 1754074257
-  },
-  {
-    "id": 4704,
-    "game_id": 3047,
-    "normally": 64800,
-    "count": 1,
-    "updated_at": 1747392050
-  },
-  {
-    "id": 4708,
-    "game_id": 3072,
-    "completely": 302400,
-    "count": 1,
-    "updated_at": 1747394257
-  },
-  {
-    "id": 4709,
-    "game_id": 3069,
-    "completely": 424800,
-    "count": 1,
-    "updated_at": 1747395385
-  },
-  {
-    "id": 5703,
-    "game_id": 3055,
-    "hastily": 3600,
-    "normally": 10800,
-    "completely": 18000,
-    "count": 1,
-    "updated_at": 1753405935
-  },
-  {
-    "id": 6275,
-    "game_id": 3119,
-    "hastily": 1224000,
-    "normally": 35996400,
-    "count": 2,
-    "updated_at": 1766489209
-  },
-  {
-    "id": 6278,
-    "game_id": 3121,
-    "normally": 43200,
-    "count": 1,
-    "updated_at": 1760875466
-  },
-  {
-    "id": 6817,
-    "game_id": 3089,
-    "completely": 108000,
-    "count": 1,
-    "updated_at": 1762944302
-  },
-  {
-    "id": 7028,
-    "game_id": 3056,
-    "hastily": 3600,
-    "normally": 10800,
-    "completely": 28800,
-    "count": 1,
-    "updated_at": 1764371255
-  },
-  {
-    "id": 7309,
-    "game_id": 3076,
-    "hastily": 25200,
-    "normally": 28800,
-    "count": 1,
-    "updated_at": 1767351044
-  },
-  {
-    "id": 7350,
-    "game_id": 3026,
-    "hastily": 18000,
-    "normally": 25200,
-    "completely": 50400,
-    "count": 1,
-    "updated_at": 1767370899
-  },
-  {
-    "id": 8192,
-    "game_id": 3117,
-    "completely": 46800,
-    "count": 1,
-    "updated_at": 1774098995
-  },
-  {
-    "id": 8234,
-    "game_id": 3027,
-    "hastily": 25200,
-    "normally": 32400,
-    "completely": 36000,
-    "count": 1,
-    "updated_at": 1774483577
-  },
-  {
-    "id": 8368,
-    "game_id": 3068,
-    "completely": 543600,
-    "count": 1,
-    "updated_at": 1775232651
+    "updated_at": 1780498830
   }
 ]

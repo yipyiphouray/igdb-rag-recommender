@@ -267,7 +267,7 @@ user asks for unavailable or historical titles.
 Important distinction:
 
 * In the current extract, `game_statuses` contains `Early Access`, `Offline`,
-  `Cancelled`, `Rumored`, and `Delisted`, and 2,891 of 3,000 games have
+  `Cancelled`, `Rumored`, and `Delisted`, and 9,699 of 10,000 games have
   `game_status_id = NULL`.
 * `NULL` must not automatically be interpreted as either released or
   unreleased.
@@ -984,9 +984,11 @@ Current-sample note:
 
 The earlier descriptive pull selected the 500 games with the highest
 `total_rating_count` among records meeting the base filters. The current
-diagnostic-ready pull contains 3,000 games and removes the rating-count and
+diagnostic-ready pull contains 10,000 games and removes the rating-count and
 summary filters, so hidden-gem analysis is less constrained by the previous
-popularity-biased sample.
+popularity-biased sample. The pull remains ordered by IGDB game ID and is not
+random or representative; comparable-group analysis should account for release
+decade where age may affect rating activity or visibility.
 
 ## BR-064 — Comparable Group Rule
 
@@ -1443,8 +1445,8 @@ companies.status_id
 ```
 
 Treat these as optional source references. Do not assume they can always be
-joined within the local database. In the current 3,000-game extract, 2,994
-games have a selected cover ID and all 2,994 selected cover IDs resolve locally,
+joined within the local database. In the current 10,000-game extract, 9,949
+games have a selected cover ID and all 9,949 selected cover IDs resolve locally,
 but the relationship is not enforced by SQLite.
 
 ## BR-094 — Orphan Record Rule

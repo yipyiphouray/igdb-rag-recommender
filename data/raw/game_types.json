@@ -36,8 +36,16 @@
     "type": "Fork"
   },
   {
+    "id": 14,
+    "type": "Update"
+  },
+  {
     "id": 10,
     "type": "Expanded Game"
+  },
+  {
+    "id": 13,
+    "type": "Pack / Addon"
   },
   {
     "id": 9,

@@ -16,13 +16,13 @@ from config import RAW_DATA_DIR
 IGDB_BASE_URL = "https://api.igdb.com/v4"
 TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token"
 
-# Change this one value to control how many games are fetched.
+# Change this one value to control the maximum number of recent games fetched.
 # IGDB still returns at most 500 records per request, so larger values are
 # automatically split across multiple paginated requests.
 #
-# The diagnostic pillar needs a broader sample than the descriptive 500-game
-# pull, so the default is now a larger unfiltered project sample.
-GAME_LIMIT = 3000
+# Games are ordered by first release date descending. Games without a release
+# date and games with a future release date are excluded.
+GAME_LIMIT = 10000
 
 # IGDB allows a maximum of 500 records per request and 4 requests per second.
 IGDB_MAX_LIMIT = 500
@@ -64,10 +64,20 @@ GAME_FIELDS = """
     updated_at
 """
 
-BASE_GAME_QUERY = f"""
-    fields {GAME_FIELDS};
-    sort id asc;
-"""
+
+def build_base_game_query(released_on_or_before: int) -> str:
+    """
+    Build the recent-game query using a reproducible release-date cutoff.
+
+    The cutoff is captured once when the extraction starts so every paginated
+    request uses the same eligible population.
+    """
+    return f"""
+        fields {GAME_FIELDS};
+        where first_release_date != null
+          & first_release_date <= {released_on_or_before};
+        sort first_release_date desc;
+    """
 
 
 LOOKUP_ENDPOINTS = {
@@ -438,11 +448,16 @@ def fetch_selected_endpoints() -> None:
     load_dotenv()
     access_token = get_access_token()
     headers = get_headers(access_token)
+    release_cutoff = int(time.time())
+    base_game_query = build_base_game_query(release_cutoff)
 
-    print(f"\nFetching games: target={GAME_LIMIT} (unfiltered base pull)")
+    print(
+        f"\nFetching up to {GAME_LIMIT} recently released games "
+        f"(release cutoff={release_cutoff})"
+    )
     games = fetch_paginated(
         endpoint="games",
-        base_query=BASE_GAME_QUERY,
+        base_query=base_game_query,
         headers=headers,
         max_records=GAME_LIMIT,
     )

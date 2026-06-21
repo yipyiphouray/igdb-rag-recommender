@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Visits",
+    "external_popularity_source": 121
+  },
+  {
+    "id": 3,
+    "name": "Playing",
+    "external_popularity_source": 121
+  },
+  {
+    "id": 2,
+    "name": "Want to Play",
+    "external_popularity_source": 121
+  },
+  {
+    "id": 4,
+    "name": "Played",
+    "external_popularity_source": 121
+  },
+  {
+    "id": 8,
+    "name": "Total Reviews",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 7,
+    "name": "Negative Reviews",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 5,
+    "name": "24hr Peak Players",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 6,
+    "name": "Postitive Reviews",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 10,
+    "name": "Most Wishlisted Upcoming",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 9,
+    "name": "Global Top Sellers",
+    "external_popularity_source": 1
+  },
+  {
+    "id": 34,
+    "name": "24hr Hours Watched",
+    "external_popularity_source": 14
+  }
+]

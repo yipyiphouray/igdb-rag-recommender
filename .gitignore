@@ -4,3 +4,9 @@ __pycache__/
 .venv/
 venv/
 .vscode
+docs/session_log.md
+data/analytics/descriptive/*
+data/database/igdb_games.db
+data/analytics/diagnostic/*
+data/vector_store/*.sqlite3
+models/*.pkl

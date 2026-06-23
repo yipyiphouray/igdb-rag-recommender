@@ -56,6 +56,18 @@ Stores exported descriptive analytics tables from the descriptive exploration no
 
 Stores project documentation, planning notes, schema documentation, session logs, and pillar-specific planning files.
 
+### `docs/project_source_of_truth`
+
+Stores all markdown files containing the source of truth of the project. Becareful before modifying. Making sure it always align and if something changes, make sure every other source of truth is followed
+
+### `docs/plan`
+
+Stores all plan markdown file. 
+
+### `docs/report`
+
+Stores all reports type of markdown or narrative. 
+
 ## `models/`
 
 Reserved for saved model artifacts created during the predictive analytics layer.
@@ -87,3 +99,7 @@ Reserved for reusable SQL queries, views, or database scripts.
 ## `src/`
 
 Stores reusable Python scripts for API extraction, database creation, quality checks, feature engineering, and other project workflows.
+
+## tests
+
+Stores all test scripts. 

@@ -5,7 +5,7 @@
 **Team:** QUEST ACCEPTED!  
 **Course:** BUSA 649  
 **Product Direction:** User-facing game-discovery product with an evaluator-facing analytics backbone  
-**Primary Delivery:** Streamlit MVP, working locally first and deployable publicly afterward  
+**Primary Delivery:** Local Streamlit MVP, with public deployment as an optional stretch goal after the MVP is stable  
 
 ---
 
@@ -13,7 +13,7 @@
 
 This document defines the architecture for the Streamlit MVP of the IGDB Game Discovery & RAG Recommendation System.
 
-The app should feel like a real game-discovery product for players while also giving evaluators a clear, inspectable view of the project’s data engineering, four analytics pillars, recommendation logic, model outputs, RAG approach, and limitations.
+The app should feel like a real game-discovery product for players while also giving evaluators a clear, inspectable view of the project's data engineering, four analytics pillars, recommendation logic, model outputs, RAG approach, and limitations.
 
 The Streamlit app is not the place to rebuild the database, rerun extraction, retrain models, or generate embeddings. Those processes should remain in reproducible scripts and notebooks. Streamlit should load prepared, validated assets and present them through a polished interactive interface.
 
@@ -125,7 +125,7 @@ Predictive-model integration page
 RAG chatbot integration page
 Methodology and limitation transparency
 Local app execution
-Public deployment when stable
+Public deployment only if time, hosting constraints, and MVP stability allow it
 ```
 
 ## 4.2 Out of scope for the MVP
@@ -169,17 +169,17 @@ Use the following layered structure:
 
 ```text
 IGDB extraction pipeline
-        ↓
+        ->
 Normalized SQLite database
-        ↓
+        ->
 Analytics notebooks and validated exports
-        ↓
+        ->
 App-ready datasets and artifacts
-        ↓
+        ->
 Streamlit service layer
-        ↓
+        ->
 Reusable UI components
-        ↓
+        ->
 Streamlit pages
 ```
 
@@ -260,97 +260,126 @@ Games can belong to multiple genres, themes, platforms, and companies.
 
 ```text
 igdb-rag-recommender/
-│
-├── streamlit_app.py
-│
-├── pages/
-│   ├── 1_Home.py
-│   ├── 2_Explore_Games.py
-│   ├── 3_Hidden_Gems.py
-│   ├── 4_Recommendations.py
-│   ├── 5_Chatbot.py
-│   ├── 6_Insights.py
-│   ├── 7_Predictive_Model.py
-│   └── 8_Methodology.py
-│
-├── src/
-│   ├── app/
-│   │   ├── config.py
-│   │   ├── constants.py
-│   │   ├── data_loader.py
-│   │   ├── database.py
-│   │   ├── filters.py
-│   │   ├── formatting.py
-│   │   ├── recommendation_service.py
-│   │   ├── hidden_gem_service.py
-│   │   ├── predictive_service.py
-│   │   ├── rag_service.py
-│   │   └── validation.py
-│   │
-│   └── pipeline/
-│       ├── build_app_catalog.py
-│       ├── build_recommendation_features.py
-│       ├── build_game_profiles.py
-│       └── build_app_insight_assets.py
-│
-├── components/
-│   ├── sidebar_filters.py
-│   ├── game_card.py
-│   ├── game_detail_panel.py
-│   ├── metric_cards.py
-│   ├── chart_helpers.py
-│   ├── methodology_notice.py
-│   ├── empty_state.py
-│   └── loading_state.py
-│
-├── data/
-│   ├── database/
-│   │   └── igdb_games.db
-│   │
-│   ├── analytics/
-│   │   ├── descriptive/
-│   │   ├── diagnostic/
-│   │   └── predictive/
-│   │
-│   ├── app/
-│   │   ├── app_game_catalog.parquet
-│   │   ├── app_hidden_gems.parquet
-│   │   ├── app_filter_options.json
-│   │   ├── app_insight_summary.json
-│   │   └── app_methodology_metrics.json
-│   │
-│   ├── recommendations/
-│   │   ├── recommendation_feature_table.parquet
-│   │   └── recommendation_explanations.json
-│   │
-│   └── rag/
-│       ├── game_profiles.parquet
-│       ├── retrieval_metadata.parquet
-│       └── vector_store/
-│
-├── assets/
-│   ├── logo/
-│   ├── screenshots/
-│   ├── diagrams/
-│   └── styles/
-│
-├── tests/
-│   ├── test_data_loader.py
-│   ├── test_filters.py
-│   ├── test_recommendation_service.py
-│   └── test_app_data_validation.py
-│
-├── .streamlit/
-│   └── config.toml
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
+|
+|-- streamlit_app.py
+|
+|-- pages/
+|   |-- 1_Home.py
+|   |-- 2_Explore_Games.py
+|   |-- 3_Hidden_Gems.py
+|   |-- 4_Recommendations.py
+|   |-- 5_Chatbot.py
+|   |-- 6_Insights.py
+|   |-- 7_Predictive_Model.py
+|   `-- 8_Methodology.py
+|
+|-- src/
+|   |-- app/
+|   |   |-- config.py
+|   |   |-- constants.py
+|   |   |-- data_loader.py
+|   |   |-- database.py
+|   |   |-- filters.py
+|   |   |-- formatting.py
+|   |   |-- recommendation_service.py
+|   |   |-- hidden_gem_service.py
+|   |   |-- predictive_service.py
+|   |   |-- rag_service.py
+|   |   |-- validation.py
+|   |   |
+|   |   `-- components/
+|   |       |-- sidebar_filters.py
+|   |       |-- game_card.py
+|   |       |-- game_detail_panel.py
+|   |       |-- metric_cards.py
+|   |       |-- chart_helpers.py
+|   |       |-- methodology_notice.py
+|   |       |-- empty_state.py
+|   |       `-- loading_state.py
+|   |
+|   `-- pipeline/
+|       |-- build_app_catalog.py
+|       |-- build_recommendation_features.py
+|       |-- build_game_profiles.py
+|       `-- build_app_insight_assets.py
+|
+|-- data/
+|   |-- database/
+|   |   `-- igdb_games.db
+|   |
+|   |-- analytics/
+|   |   |-- descriptive/
+|   |   |-- diagnostic/
+|   |   `-- predictive/
+|   |
+|   |-- app/
+|   |   |-- app_game_catalog.parquet
+|   |   |-- app_hidden_gems.parquet
+|   |   |-- app_filter_options.json
+|   |   |-- app_insight_summary.json
+|   |   `-- app_methodology_metrics.json
+|   |
+|   |-- recommendations/
+|   |   |-- recommendation_feature_table.parquet
+|   |   `-- recommendation_explanations.json
+|   |
+|   `-- rag/
+|       |-- game_profiles.parquet
+|       |-- retrieval_metadata.parquet
+|       `-- vector_store/
+|
+|-- assets/
+|   |-- logo/
+|   |-- screenshots/
+|   |-- diagrams/
+|   `-- styles/
+|
+|-- tests/
+|   |-- test_data_loader.py
+|   |-- test_filters.py
+|   |-- test_recommendation_service.py
+|   `-- test_app_data_validation.py
+|
+|-- .streamlit/
+|   `-- config.toml
+|
+|-- requirements.txt
+|-- README.md
+`-- .gitignore
 ```
+
+Reusable app components should live under `src/app/components/` so Streamlit pages, services, and shared UI helpers import from one app package instead of splitting app code across root-level folders.
 
 ---
 
 # 7. App-Ready Data Layer
+
+## 7.0 Phase 0: artifact audit
+
+Before building app-ready datasets, confirm that the source artifacts exist and identify which teammate-owned artifacts are still pending.
+
+Required checks:
+
+```text
+Current SQLite database exists:
+    data/database/igdb_games.db
+
+Descriptive exports exist:
+    data/analytics/descriptive/
+
+Diagnostic exports exist:
+    data/analytics/diagnostic/
+
+Hidden-gem candidate output exists or can be generated from the diagnostic definition.
+
+Predictive artifacts are present, pending, or intentionally stubbed.
+
+RAG artifacts are present, pending, or intentionally stubbed.
+
+All required app columns can be loaded directly or derived from the database and analytics exports.
+```
+
+This audit should be treated as the first implementation checkpoint. Do not build pages around assumed fields until their source is confirmed.
 
 ## 7.1 Purpose
 
@@ -441,6 +470,8 @@ Recommended storage approach:
 Parquet list columns where feasible.
 ```
 
+If Parquet is used, include `pyarrow` in `requirements.txt`. If deployment size, environment compatibility, or dependency issues become a problem, use CSV plus JSON list fields for smaller app artifacts.
+
 If serialization or compatibility becomes difficult, use a standardized delimiter:
 
 ```text
@@ -456,6 +487,10 @@ Do not use inconsistent delimiters across fields.
 ### `app_hidden_gems.parquet`
 
 Contains the final hidden-gem candidate list and explanation fields.
+
+The default Balanced hidden-gem list should be generated from the finalized diagnostic definition and exported as an app artifact. The app should not silently calculate a different default rule than the one documented in the diagnostic notebook and report.
+
+Sensitivity options can create alternate exploratory views, but the default Balanced view should remain the documented diagnostic rule.
 
 Suggested fields:
 
@@ -545,7 +580,7 @@ Methodology
 Navigation should be ordered around the user journey first:
 
 ```text
-Discover → Explore → Recommend → Ask
+Discover -> Explore -> Recommend -> Ask
 ```
 
 Analytics and methodology should remain easy to find but should not interrupt the product experience.
@@ -696,6 +731,15 @@ AND PopScore available
 AND within-year visibility percentile <= 40%
 ```
 
+## Data source rule
+
+```text
+The default Balanced view should load from `data/app/app_hidden_gems.parquet`,
+which should be generated from the finalized diagnostic hidden-gem definition.
+```
+
+The app may offer Conservative and Broad sensitivity settings, but those should be labeled as exploratory alternate views. They should not replace the documented diagnostic definition.
+
 ## User controls
 
 ```text
@@ -764,7 +808,18 @@ Provide users with ranked and explainable game recommendations based on structur
 
 Use a guided form, not a large technical filter panel.
 
-Recommended inputs:
+MVP inputs:
+
+```text
+Required platform
+Preferred genres
+Preferred themes or mood
+Preferred release-year range
+Desired quality level
+Preference for hidden gems
+```
+
+Full target inputs after the MVP recommender works:
 
 ```text
 Required platform
@@ -813,7 +868,7 @@ These should remove games from consideration:
 Platform availability
 Main-game status
 Released status when applicable
-Explicit offline or delisted status unless requested
+Cancelled or rumored records excluded
 ```
 
 ## Soft preferences
@@ -832,33 +887,54 @@ Playtime fit
 Multiplayer fit
 ```
 
-## Recommended scoring design
+For the first implementation, keep the recommender intentionally simple:
+
+```text
+Hard gates:
+    Platform, if specified
+    Released main games
+    Valid core metadata
+
+MVP scoring:
+    Genre match
+    Theme match
+    Quality score
+    Rating evidence
+    Hidden-gem boost
+```
+
+Add game mode, perspective, playtime, and multiplayer scoring only after the first recommendation flow works end to end.
+
+## MVP scoring design
 
 ```text
 Platform eligibility: required gate
-Genre match:          0–30
-Theme match:          0–20
-Game mode match:      0–10
-Perspective match:    0–10
-Quality score:        0–15
-Rating evidence:      0–5
-Hidden-gem boost:     0–10
-Playtime fit:         0–10
+Genre match:          0-30
+Theme match:          0-20
+Quality score:        0-15
+Rating evidence:      0-5
+Hidden-gem boost:     0-10
 ```
 
-Store weights centrally:
+Store MVP weights centrally:
 
 ```python
-RECOMMENDATION_WEIGHTS = {
+MVP_RECOMMENDATION_WEIGHTS = {
     "genre": 30,
     "theme": 20,
-    "game_mode": 10,
-    "perspective": 10,
     "quality": 15,
     "rating_evidence": 5,
     "hidden_gem": 10,
-    "playtime": 10,
 }
+```
+
+Full target scoring can later add:
+
+```text
+Game mode match:      0-10
+Perspective match:    0-10
+Playtime fit:         0-10
+Multiplayer fit:      0-10
 ```
 
 ## Explanation template
@@ -902,15 +978,15 @@ Fallback status message when retrieval is unavailable
 
 ```text
 User prompt
-    ↓
+    ->
 Preference and intent extraction
-    ↓
+    ->
 Metadata filters where applicable
-    ↓
+    ->
 Vector retrieval from game profiles
-    ↓
+    ->
 Hybrid ranking with recommendation logic
-    ↓
+    ->
 Grounded answer and game cards
 ```
 
@@ -1024,7 +1100,7 @@ The page supports the app story rather than feeling like a raw dashboard dump.
 
 ## Purpose
 
-Demonstrate the predictive analytics pillar and integrate your teammate’s work.
+Demonstrate the predictive analytics pillar and integrate your teammate's work.
 
 ## Initial placeholder
 
@@ -1415,11 +1491,11 @@ Whether charts add value or distract.
 
 ---
 
-# 14. Deployment Architecture
+# 14. Local Execution and Optional Deployment
 
 ## 14.1 Stage 1: Local execution
 
-Before deployment, verify:
+Before considering any deployment, verify:
 
 ```text
 The app runs from a clean environment.
@@ -1430,7 +1506,9 @@ Missing predictive and RAG artifacts fail gracefully.
 No secrets are committed.
 ```
 
-## 14.2 Stage 2: Public Streamlit deployment
+## 14.2 Stage 2: Optional public Streamlit deployment
+
+Public deployment is optional for the MVP. It should only be attempted after the local Streamlit app is stable and should not delay the core analytics, recommendation, predictive, or RAG deliverables.
 
 Recommended first hosting option:
 
@@ -1547,6 +1625,20 @@ Fully integrated:
     Page provides final predictive or RAG interactions.
 ```
 
+## 15.4 Initial integration priority
+
+The first Streamlit implementation should include Predictive Model and Chatbot pages as placeholder/integration-contract pages. These pages should clearly show what artifacts are expected from the teammate and should fail gracefully when those artifacts are missing.
+
+Predictive and RAG availability should not block:
+
+```text
+Explore Games
+Hidden Gems
+Insights
+Methodology
+Basic structured Recommendations
+```
+
 ---
 
 # 16. MVP Acceptance Criteria
@@ -1595,8 +1687,8 @@ Recommendation explanations reflect actual filters and scores.
 ## Deployment
 
 ```text
-The app is ready for public deployment.
-A deployed version is available if hosting constraints permit.
+The app is structured so it can be deployed later if time and hosting constraints permit.
+Public deployment is optional and should not delay the local MVP.
 ```
 
 ---
@@ -1606,20 +1698,21 @@ A deployed version is available if hosting constraints permit.
 Do not treat this as a weekly schedule. It is the preferred dependency order.
 
 ```text
+0. Confirm source artifacts and required app fields.
 1. Create app-ready datasets and validation checks.
 2. Build shared data loader and formatting utilities.
 3. Build reusable game-card and detail-panel components.
 4. Build Explore Games.
-5. Build Hidden Gems.
-6. Build Recommendations and transparent scoring.
-7. Build Home page around the completed discovery features.
-8. Build Insights using selected analytics outputs.
-9. Build Methodology page.
+5. Build Hidden Gems using the finalized diagnostic definition.
+6. Build Methodology page so caveats are available early.
+7. Build Insights using selected analytics outputs.
+8. Build a basic Recommendations page with transparent MVP scoring.
+9. Build Home page around the completed discovery features.
 10. Add Predictive Model placeholder and integration contract.
 11. Add Chatbot placeholder and integration contract.
-12. Integrate teammate artifacts.
-13. Run functional, UX, and deployment testing.
-14. Deploy only after the local application is stable.
+12. Integrate teammate artifacts after their interfaces are stable.
+13. Run functional, UX, and local execution testing.
+14. Attempt public deployment only if the local MVP is stable and time permits.
 ```
 
 ---
@@ -1629,8 +1722,13 @@ Do not treat this as a weekly schedule. It is the preferred dependency order.
 The most important immediate work is the app-ready data layer.
 
 ```text
+0. Run the artifact audit:
+   - confirm `data/database/igdb_games.db`;
+   - confirm descriptive exports;
+   - confirm diagnostic exports;
+   - identify pending predictive and RAG artifacts.
 1. Build `app_game_catalog.parquet`.
-2. Build `app_hidden_gems.parquet`.
+2. Build `app_hidden_gems.parquet` from the finalized diagnostic hidden-gem rule.
 3. Build `app_filter_options.json`.
 4. Write `data_loader.py`.
 5. Write validation checks for app artifacts.

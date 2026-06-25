@@ -1,0 +1,17 @@
+{
+  "total_games": 15000,
+  "release_year_start": 2010,
+  "release_year_end": 2024,
+  "games_per_year": 1000,
+  "quality_cohort_count": 1418,
+  "popularity_cohort_count": 3000,
+  "comparison_cohort_count": 10582,
+  "rating_coverage": 0.4185333333333333,
+  "reliable_rating_coverage": 0.16653333333333334,
+  "popscore_coverage": 0.3214,
+  "summary_coverage": 0.9709333333333333,
+  "hidden_gem_count": 229,
+  "quality_threshold": 80,
+  "min_rating_count": 25,
+  "hidden_gem_visibility_percentile": 0.4
+}

@@ -1,100 +1,319 @@
-# IGDB Game Discovery and Recommender (WIP)
-An advanced video game discovery and recommendation platform. This system integrates a cleaned relational database of IGDB (Internet Game Database) metadata, a four-pillar analytics pipeline, and a Retrieval-Augmented Generation (RAG) conversational chatbot to help players find games matching their unique "vibe," platform, and playstyle.
+# IGDB Game Discovery & RAG Recommendation System
 
-## 🚀 Key Features
+This project builds a Streamlit-based game discovery and recommendation MVP using IGDB data. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, and placeholder integration pages for predictive modeling and RAG chatbot work.
 
-Data Normalization: Automates extraction from the IGDB API into a fully normalized, local SQLite database.
+The current project direction is:
 
-Four Pillars of Analytics:
+```text
+Local Streamlit MVP first.
+Public deployment and custom website later only if the MVP is stable.
+```
 
-- Descriptive: Visualizes the gaming landscape (genres, platform share, developer networks).
+## Current Status
 
-- Diagnostic: Explores game quality metrics and isolates "hidden gems" (highly-rated, low-popularity titles).
+Completed:
 
-- Predictive: Classifies whether games are likely to be highly-rated based on metadata features.
+- IGDB extraction pipeline.
+- Curated 15,000-game analytical sample.
+- Normalized SQLite database.
+- Descriptive analytics notebook and findings report.
+- Diagnostic analytics notebook and findings report.
+- Streamlit MVP foundation.
+- App-ready data layer.
+- Explore Games page.
+- Hidden Gems page.
+- Basic structured Recommendations page.
+- Insights page.
+- Methodology page.
+- Predictive and RAG placeholder pages.
 
-- Prescriptive: Leverages a hybrid recommendation engine combining strict metadata filters with semantic similarity.
+Pending / teammate-owned:
 
-Conversational RAG Chatbot: Utilizes vector embeddings to parse natural language queries (e.g., "I want a cozy, low-stress sci-fi game on Nintendo Switch") and returns grounded, explainable game suggestions.
+- Predictive model artifact integration.
+- RAG/vector-store integration.
+- Final chatbot behavior.
+- Final UI polish and demo flow.
 
-Interactive Dashboard: A multi-page Streamlit UI hosting the analytics, model evaluation metrics, and the chatbot interface.
+## Current Dataset
 
-## 🛠️ Technical Stack
+Primary database:
 
-- Language: Python 3.9+
+```text
+data/database/igdb_games.db
+```
 
-- Data & Storage: pandas, SQLite, ChromaDB / FAISS (Vector Database)
+Current analytical sample:
 
-- Modeling & RAG: scikit-learn, Gemini 2.5 API (or open-source sentence-transformers)
+```text
+Total games:       15,000
+Release years:     2010-2024
+Games per year:    1,000
+Quality cohort:    1,418
+Popularity cohort: 3,000
+Comparison cohort: 10,582
+```
 
-- Front-End: Streamlit
+Important interpretation rules:
 
-- Source API: Twitch Developer / IGDB API
+```text
+total_rating       = quality / reception signal
+total_rating_count = rating evidence / rating activity signal
+PopScore interest  = visibility / current-interest signal
+```
 
-## 📁 Project Structure
+Important caveats:
 
-├── archive/
-│   └── Project_Guideline.md       # Original guidelines archive
-├── data/
-│   └── raw/                       # Raw JSON metadata schemas from IGDB API
-│       ├── companies.json
-│       ├── covers.json
-│       ├── external_games.json
-│       ├── game_modes.json
-│       ├── games.json
-│       ├── genres.json
-│       ├── involved_companies.json
-│       ├── keywords.json
-│       ├── platforms.json
-│       ├── player_perspectives.json
-│       ├── release_dates.json
-│       ├── screenshots.json
-│       └── themes.json
-├── docs/                          # Project contextual design documentations
-│   ├── definitive_project_guideline_igdb_rag.md
-│   ├── folder_structure.md
-│   └── IGDB_context.md
-├── src/                           # Source scripts directory
-│   ├── API_Connection_Test.py     # Connection testing module for credentials
-│   ├── config.py                  # API config and credential loader
-│   ├── fetch_IGDB.py              # Main raw endpoint retrieval pipeline
-│   └── query_test.py              # Local testing suite for parsing metadata
-├── .env.example                   # Dummy environment credential keys configuration
-├── .gitignore                     # Git configuration ignore file
-├── LICENSE                        # Project licensing terms
-├── README.md                      # Primary project documentation hub
-└── requirement.txt                # Python installation dependency packages
+- The dataset is a curated project sample, not the full IGDB catalog.
+- Quality and visibility cohorts are intentionally oversampled.
+- Full-sample high-rating or popularity shares should not be interpreted as market prevalence.
+- Missing PopScore means unknown visibility, not low visibility.
+- Diagnostic associations are not causal claims.
 
+## Streamlit App
 
-## ⚙️ Getting Started
+Main entry point:
 
-1. Prerequisites
+```text
+streamlit_app.py
+```
 
-Get an IGDB API Client ID and Secret by registering an application on the Twitch Developer Portal.
+Run locally:
 
-2. Installation
+```bash
+streamlit run streamlit_app.py
+```
 
-# Clone the repository
-git clone [https://github.com/your-username/pixelrag-analytics.git](https://github.com/your-username/pixelrag-analytics.git)
-cd pixelrag-analytics
+Current pages:
 
-# Install dependencies
-pip install -r requirement.txt
+```text
+Home
+Explore Games
+Hidden Gems
+Recommendations
+Chatbot
+Insights
+Predictive Model
+Methodology
+```
 
+Current app-ready artifacts:
 
-3. Setup Environment Variables
+```text
+data/app/app_game_catalog.parquet
+data/app/app_hidden_gems.parquet
+data/app/app_filter_options.json
+data/app/app_insight_summary.json
+data/app/app_methodology_metrics.json
+```
 
-Create a .env file in the root directory:
+Rebuild app-ready artifacts:
 
+```bash
+python src/pipeline/build_app_catalog.py
+```
+
+## Setup
+
+Recommended Python environment:
+
+```text
+Python 3.10+
+```
+
+Install Streamlit MVP dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+The older `requirement.txt` file is retained for legacy pipeline dependencies. Prefer `requirements.txt` for the Streamlit MVP.
+
+## Environment Variables
+
+Create a `.env` file only if you need to run IGDB extraction or future API-backed RAG features.
+
+Example:
+
+```text
 IGDB_CLIENT_ID=your_twitch_client_id
 IGDB_CLIENT_SECRET=your_twitch_client_secret
 GEMINI_API_KEY=your_gemini_api_key
+```
 
+Do not commit secrets.
 
-4. Run the Pipeline & App
+Local Streamlit secrets should go in:
 
-# 1. Fetch, clean, and populate the database
-python src/fetch_IGDB.py
+```text
+.streamlit/secrets.toml
+```
 
-# 2. Run the connection testing script
-python src/API_Connection_Test.py
+That file is ignored by Git.
+
+## Project Structure
+
+```text
+Community_Project/
+|-- .streamlit/
+|-- assets/
+|-- data/
+|   |-- raw/
+|   |-- database/
+|   |-- analytics/
+|   |   |-- descriptive/
+|   |   |-- diagnostic/
+|   |   `-- predictive/
+|   |-- app/
+|   |-- recommendations/
+|   `-- rag/
+|-- docs/
+|   |-- plan/
+|   |-- project_source_of_truth/
+|   `-- report/
+|-- notebooks/
+|-- pages/
+|-- src/
+|   |-- app/
+|   |   `-- components/
+|   `-- pipeline/
+|-- tests/
+|-- streamlit_app.py
+|-- requirements.txt
+`-- requirement.txt
+```
+
+More detail:
+
+```text
+docs/folder_structure.md
+```
+
+## Key Documentation
+
+Project source of truth:
+
+```text
+docs/project_source_of_truth/definitive_project_guideline_igdb_rag.md
+docs/project_source_of_truth/streamlit_page_context.md
+docs/project_source_of_truth/IGDB_API_Documentation.md
+```
+
+Plans:
+
+```text
+docs/plan/descriptive_analytics_pillar_plan.md
+docs/plan/diagnostic_analytics_pillar_plan.md
+docs/plan/streamlit_mvp_architecture_plan.md
+docs/plan/streamlit_manual_qa_test_cases.md
+```
+
+Findings reports:
+
+```text
+docs/report/descriptive_pillar_findings.md
+docs/report/diagnostic_pillar_findings.md
+```
+
+Session log:
+
+```text
+docs/session_log.md
+```
+
+## Notebooks
+
+```text
+notebooks/01_descriptive_analytics_exploration.ipynb
+notebooks/02_diagnostic_analytics_exploration.ipynb
+```
+
+The notebooks generate exported analytics tables under:
+
+```text
+data/analytics/descriptive/
+data/analytics/diagnostic/
+```
+
+## Tests
+
+Run app data validation tests:
+
+```bash
+python -m unittest tests/test_app_data_validation.py
+```
+
+Run Python compile checks manually if needed:
+
+```bash
+python -m compileall streamlit_app.py pages src/app src/pipeline
+```
+
+Manual Streamlit QA checklist:
+
+```text
+docs/plan/streamlit_manual_qa_test_cases.md
+```
+
+## Current Hidden-Gem Definition
+
+The default Balanced hidden-gem rule is:
+
+```text
+quality cohort
+AND total_rating >= 80
+AND total_rating_count >= 25
+AND main game
+AND PopScore available
+AND within-year quality-cohort visibility percentile <= 40%
+```
+
+The app's Hidden Gems page uses:
+
+```text
+data/app/app_hidden_gems.parquet
+```
+
+This artifact is generated from the finalized diagnostic hidden-gem definition.
+
+## Teammate Integration Contracts
+
+Predictive model expected artifacts:
+
+```text
+data/analytics/predictive/model_metrics.json
+data/analytics/predictive/feature_importance.csv
+data/analytics/predictive/model_predictions.parquet
+data/analytics/predictive/confusion_matrix.png
+data/analytics/predictive/roc_curve.png
+```
+
+RAG expected artifacts:
+
+```text
+data/rag/game_profiles.parquet
+data/rag/retrieval_metadata.parquet
+data/rag/vector_store/
+```
+
+The current Predictive Model and Chatbot pages are designed to load safely even when these artifacts are not yet available.
+
+## Typical Development Flow
+
+```text
+1. Rebuild app artifacts if database or analytics exports changed.
+2. Run validation tests.
+3. Run Streamlit locally.
+4. Complete manual QA checklist.
+5. Fix page-specific issues.
+6. Integrate teammate predictive/RAG artifacts when ready.
+7. Polish UI and final demo flow.
+```
+
+Commands:
+
+```bash
+python src/pipeline/build_app_catalog.py
+python -m unittest tests/test_app_data_validation.py
+streamlit run streamlit_app.py
+```
+

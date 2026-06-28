@@ -4,14 +4,16 @@ import streamlit as st
 
 from src.app.components.empty_state import render_empty_state
 from src.app.components.game_card import render_game_card
-from src.app.components.methodology_notice import render_sample_caveat, render_signal_caveat
+from src.app.components.ui_style import inject_global_styles
 from src.app.data_loader import load_app_catalog, load_filter_options
 from src.app.filters import apply_catalog_filters, sort_catalog
 
 
 st.set_page_config(page_title="Explore Games", page_icon="🔎", layout="wide")
+inject_global_styles()
+
 st.title("Explore Games")
-render_signal_caveat()
+st.caption("Browse the curated IGDB catalog with structured filters. Use this when you want to explore manually.")
 
 try:
     catalog = load_app_catalog()
@@ -64,12 +66,12 @@ filtered = apply_catalog_filters(
 )
 filtered = sort_catalog(filtered, sort_option)
 
-st.metric("Matching games", f"{len(filtered):,}")
-render_sample_caveat()
+col1, col2 = st.columns([1, 3])
+col1.metric("Matching games", f"{len(filtered):,}")
+col2.caption("Tip: use Recommendations when you want the app to rank games for you based on guided preferences.")
 
 if filtered.empty:
     render_empty_state()
 else:
     for _, row in filtered.head(result_limit).iterrows():
         render_game_card(row)
-

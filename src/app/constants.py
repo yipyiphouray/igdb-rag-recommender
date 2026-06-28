@@ -17,6 +17,8 @@ MVP_RECOMMENDATION_WEIGHTS = {
     "quality": 15,
     "rating_evidence": 5,
     "hidden_gem": 10,
+    "visibility": 5,
+    "playtime": 5,
 }
 
 DEFAULT_RESULT_LIMIT = 50

@@ -19,10 +19,11 @@ Completed:
 - Descriptive analytics notebook and findings report.
 - Diagnostic analytics notebook and findings report.
 - Streamlit MVP foundation.
+- Streamlit UI polish V1.
 - App-ready data layer.
 - Explore Games page.
 - Hidden Gems page.
-- Basic structured Recommendations page.
+- Guided structured Recommendations page.
 - Insights page.
 - Methodology page.
 - Predictive and RAG placeholder pages.
@@ -32,7 +33,7 @@ Pending / teammate-owned:
 - Predictive model artifact integration.
 - RAG/vector-store integration.
 - Final chatbot behavior.
-- Final UI polish and demo flow.
+- Final demo flow and presentation polish.
 
 ## Current Dataset
 
@@ -95,6 +96,14 @@ Insights
 Predictive Model
 Methodology
 ```
+
+Current UI direction:
+
+- Home is a menu-style landing page.
+- Explore Games and Hidden Gems use compact game cards.
+- Recommendations uses guided preference questions.
+- Insights summarizes descriptive and diagnostic findings.
+- Methodology holds technical definitions, formulas, caveats, and artifact audits.
 
 Current app-ready artifacts:
 
@@ -205,6 +214,7 @@ docs/plan/descriptive_analytics_pillar_plan.md
 docs/plan/diagnostic_analytics_pillar_plan.md
 docs/plan/streamlit_mvp_architecture_plan.md
 docs/plan/streamlit_manual_qa_test_cases.md
+docs/plan/streamlit_ui_polish_plan_v1.md
 ```
 
 Findings reports:
@@ -306,7 +316,7 @@ The current Predictive Model and Chatbot pages are designed to load safely even 
 4. Complete manual QA checklist.
 5. Fix page-specific issues.
 6. Integrate teammate predictive/RAG artifacts when ready.
-7. Polish UI and final demo flow.
+7. Polish final demo flow.
 ```
 
 Commands:

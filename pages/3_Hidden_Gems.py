@@ -4,15 +4,19 @@ import streamlit as st
 
 from src.app.components.empty_state import render_empty_state
 from src.app.components.game_card import render_game_card
-from src.app.components.methodology_notice import render_sample_caveat, render_signal_caveat
+from src.app.components.ui_style import inject_global_styles
 from src.app.data_loader import load_app_catalog, load_filter_options, load_hidden_gems
 from src.app.hidden_gem_service import filter_hidden_gems, hidden_gem_rule_text
 
 
 st.set_page_config(page_title="Hidden Gems", page_icon="💎", layout="wide")
+inject_global_styles()
+
 st.title("Hidden Gems")
-st.write("Lower-visibility, high-quality candidates from the curated project sample.")
-render_signal_caveat()
+st.write(
+    "Hidden gems are reliable high-rated quality-cohort games with known lower visibility inside their release year. "
+    "This is a within-sample discovery signal, not a claim about the full video game market."
+)
 
 try:
     catalog = load_app_catalog()
@@ -36,8 +40,8 @@ with st.sidebar:
     min_rating_count = st.slider("Minimum rating evidence", 25, 500, 25)
     result_limit = st.slider("Candidates to show", 5, 100, 25)
 
-st.info(hidden_gem_rule_text(sensitivity))
-render_sample_caveat()
+with st.expander("Hidden-gem rule"):
+    st.write(hidden_gem_rule_text(sensitivity))
 
 filtered = filter_hidden_gems(
     hidden_gems,
@@ -58,4 +62,3 @@ if filtered.empty:
 else:
     for _, row in filtered.head(result_limit).iterrows():
         render_game_card(row, show_explanation=True)
-

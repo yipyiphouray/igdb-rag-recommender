@@ -11,6 +11,21 @@ def render_sample_caveat() -> None:
     )
 
 
+def render_sample_footnote() -> None:
+    import streamlit as st
+
+    st.markdown(
+        """
+        <div class="small-caveat">
+        * Uses a curated 15,000-game IGDB analytical sample, not the full IGDB catalog.
+        Quality and visibility cohorts are intentionally oversampled, so rating or visibility shares
+        are not market prevalence estimates.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_signal_caveat() -> None:
     import streamlit as st
 

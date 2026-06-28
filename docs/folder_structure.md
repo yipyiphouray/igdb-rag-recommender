@@ -1,6 +1,6 @@
 # Folder Structure Description
 
-Last updated: 2026-06-23
+Last updated: 2026-06-25
 
 This file describes the high-level folder layout for the IGDB Game Discovery and RAG Recommendation System.
 
@@ -178,7 +178,7 @@ Stores Streamlit app service-layer code, including configuration, data loading, 
 
 ### `src/app/components/`
 
-Stores reusable Streamlit UI components such as game cards, metric rows, caveat notices, chart helpers, and empty/loading states.
+Stores reusable Streamlit UI components such as compact game cards, menu cards, metric rows, caveat notices, shared UI styling, chart helpers, and empty/loading states.
 
 ### `src/pipeline/`
 

@@ -1,6 +1,6 @@
 # Streamlit Page Context
 
-Last updated: 2026-06-25
+Last updated: 2026-06-29
 
 This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page does, what data it uses, and what still needs integration.
 
@@ -46,17 +46,17 @@ Important caveats:
 
 ## Current UI Direction
 
-The current app has completed the first UI polish pass.
+The current app has completed the second UI polish pass.
 
 The user-facing discovery pages are intentionally cleaner and less technical:
 
-- Home is a game-menu style landing page.
-- Explore Games and Hidden Gems use compact horizontal game cards.
-- Recommendations is a guided preference form, not a raw technical filter page.
-- Insights is the analytical dashboard page.
-- Methodology is the academic/trust page that holds technical definitions, formulas, caveats, and artifact audits.
+- Home is a cyberpunk game-menu landing page with clickable hover panels.
+- Explore Games and Hidden Gems support List View, Grid View, and Detailed View.
+- Recommendations is a step-by-step wizard with Back, Next, Reset, and final recommendation actions.
+- Insights is the deep "Data nerds only" page for descriptive and diagnostic exports, excluding hidden-gem and coverage-only analysis sections.
+- Methodology is a continuous academic/trust page with headings, cards, formulas, caveats, and artifact audits instead of expander sections.
 
-Technical explanations that were previously visible on discovery pages have been moved into Methodology or page-specific expanders.
+Technical explanations that were previously visible on discovery pages have been moved into Methodology or concise styled rule/caveat boxes.
 
 ---
 
@@ -80,20 +80,13 @@ Primary audience:
 Main data sources:
 
 ```text
-data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
+None loaded on the Home page.
 ```
 
 Current content:
 
-- Project title and short caption.
-- Metric cards:
-  - total games;
-  - release-year range;
-  - hidden-gem candidate count;
-  - reliable-rated share.
-- Menu cards linking to:
+- Cyberpunk arcade-style title treatment.
+- Clickable hover menu panels linking to:
   - Explore Games;
   - Hidden Gems;
   - Recommendations;
@@ -101,18 +94,20 @@ Current content:
   - Methodology;
   - Chatbot;
   - Predictive Model.
-- Small curated-sample footnote.
+- Page details appear on hover.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Implementation notes:
 
 - The Home page no longer shows featured hidden-gem cards.
+- The Home page no longer shows dataset metric cards.
 - The Home page no longer shows the technical signal explanation. Those definitions now live in Methodology.
+- The full menu panel is clickable through `src/app/components/menu_card.py`.
 - Menu cards are rendered through `src/app/components/menu_card.py`.
 - Shared CSS is injected through `src/app/components/ui_style.py`.
 
@@ -137,22 +132,19 @@ Primary audience:
 Main data sources:
 
 ```text
-data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
+None loaded on the Home page.
 ```
 
 Current content:
 
 - Same high-level orientation as the main app Home page.
-- Metric cards.
-- Menu cards for major app sections.
-- Small curated-sample footnote.
+- Clickable cyberpunk menu panels for major app sections.
+- Hover details for each page.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Implementation note:
@@ -221,7 +213,12 @@ Current sort options:
 Current output:
 
 - Matching game count.
-- Compact horizontal game cards with:
+- User-selectable display view:
+  - List View;
+  - Grid View;
+  - Detailed View.
+- List and Detailed cards keep useful details inside the card rectangle.
+- Game cards can show:
   - cover image;
   - title;
   - release year;
@@ -231,12 +228,12 @@ Current output:
   - visibility status or percentile;
   - short summary;
   - genre and theme badges;
-  - expandable details.
+  - useful details such as modes, perspectives, cohort, and playtime.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Trust rules:
@@ -315,14 +312,15 @@ Current controls:
 Current output:
 
 - Short user-facing explanation.
-- Hidden-gem rule inside an expander.
+- Hidden-gem rule shown directly in a styled rule box.
 - Matching candidate count.
-- Compact horizontal game cards with candidate explanations.
+- User-selectable List View, Grid View, and Detailed View.
+- Game cards with candidate explanations.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Important implementation rule:
@@ -375,7 +373,7 @@ src/app/components/game_card.py
 src/app/components/ui_style.py
 ```
 
-Current user inputs:
+Current wizard steps:
 
 - Platform.
 - Preferred genres.
@@ -408,15 +406,17 @@ Playtime fit:         0-5 when selected and playtime data exists
 
 Current output:
 
+- Step-by-step wizard with Back, Next, Reset, and final Show Recommendations controls.
+- Current preference loadout summary.
 - Ranked recommendation cards.
 - Recommendation score.
 - Explanation text describing why each game matched.
-- Technical scoring details inside an expander.
+- Compact scoring caveat shown below the wizard.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Trust rules:
@@ -515,49 +515,58 @@ Main data sources:
 
 ```text
 data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
-data/analytics/descriptive/rating_coverage.csv
-data/analytics/descriptive/relationship_coverage.csv
+data/analytics/descriptive/games_by_release_year.csv
+data/analytics/descriptive/rating_bands.csv
 data/analytics/descriptive/top_genres.csv
+data/analytics/descriptive/top_themes.csv
 data/analytics/descriptive/top_platforms.csv
+data/analytics/descriptive/game_mode_distribution.csv
+data/analytics/descriptive/player_perspective_distribution.csv
+data/analytics/descriptive/playtime_band_distribution.csv
 data/analytics/diagnostic/quality_popscore_correlation.csv
+data/analytics/diagnostic/quality_rating_activity_correlation.csv
 data/analytics/diagnostic/user_critic_agreement_summary.csv
-data/analytics/diagnostic/hidden_gem_sensitivity_analysis.csv
 data/analytics/diagnostic/diagnostic_takeaways.csv
+data/analytics/diagnostic/genre_rating_summary.csv
+data/analytics/diagnostic/theme_rating_summary.csv
+data/analytics/diagnostic/platform_family_rating_summary.csv
+data/analytics/diagnostic/cohort_adjusted_association_summary.csv
 ```
 
 Current tabs:
 
-- Descriptive Snapshot.
+- Catalog.
+- Composition.
+- Reception.
 - Diagnostic Signals.
-- Hidden-Gem Lab.
-- Coverage & Caveats.
+- Category Diagnostics.
+- Export Browser.
 
 Current content:
 
-- Dataset and hidden-gem metric cards.
-- Top genre chart.
-- Top platform chart.
-- Rating coverage metrics.
+- Dataset metric cards.
+- Release-year timeline.
+- Genre, theme, platform, mode, perspective, developer, and publisher charts.
+- Rating-band and playtime-band charts.
 - Quality versus PopScore diagnostic metric.
+- Quality versus rating activity diagnostic metric.
 - User versus critic agreement diagnostic metric.
 - Diagnostic takeaway table.
-- Hidden-gem sensitivity table.
-- Hidden-gem sample table.
-- Relationship coverage chart.
-- Methodology metrics JSON expander.
+- Category-level diagnostic tables.
+- Cohort-adjusted association table.
+- Export browser with table previews and CSV downloads.
+- Hidden-gem and coverage-only analysis sections are intentionally excluded from this page.
 
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Known limitations:
 
-- The page intentionally summarizes the notebooks instead of reproducing every chart.
-- Tables and charts are app-facing summaries, not a full statistical appendix.
+- Large notebook tables are previewed with download buttons instead of fully rendered at page load.
+- Hidden-gem and coverage-only outputs remain available in project files but are intentionally not part of this page.
 
 ---
 
@@ -653,14 +662,16 @@ Service-layer dependencies:
 ```text
 src/app/validation.py
 src/app/data_loader.py
-src/app/components/methodology_notice.py
+src/app/components/metric_cards.py
+src/app/components/ui_style.py
 ```
 
 Current content:
 
 - Top-level methodology metric cards.
+- Continuous report-style sections with no expander/toggle blocks.
 - Data source and app artifact explanation.
-- Curated sample design explanation.
+- Curated sample design explanation and caveat.
 - Metric definitions:
   - `total_rating`;
   - `total_rating_count`;
@@ -675,7 +686,7 @@ Current content:
 Current status:
 
 ```text
-Implemented and polished for UI V1.
+Implemented and polished for UI V2.
 ```
 
 Key implementation boundary:
@@ -689,7 +700,7 @@ Streamlit loads prepared assets. It should not:
 
 Known limitations:
 
-- Methodology is currently app-facing, not a full written methodology chapter.
+- Methodology is app-facing, not a full written methodology chapter.
 - More polished report narrative can still be added for final presentation.
 
 ---
@@ -744,14 +755,14 @@ tests/test_fetch_igdb_selection.py
 ## 11. Current Implementation Status Summary
 
 ```text
-Home:                 UI V1 polished
-Explore Games:        UI V1 polished
-Hidden Gems:          UI V1 polished
-Recommendations:      Guided MVP implemented
+Home:                 UI V2 cyberpunk menu
+Explore Games:        UI V2 with List/Grid/Detailed views
+Hidden Gems:          UI V2 with visible rule box and multiple views
+Recommendations:      UI V2 step-by-step wizard
 Chatbot:              Placeholder / teammate integration pending
-Insights:             UI V1 polished
+Insights:             UI V2 deep analytics page
 Predictive Model:     Placeholder / teammate integration pending
-Methodology:          UI V1 polished
+Methodology:          UI V2 continuous trust page
 ```
 
 Recommended next improvements:

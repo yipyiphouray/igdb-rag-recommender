@@ -19,7 +19,7 @@ Completed:
 - Descriptive analytics notebook and findings report.
 - Diagnostic analytics notebook and findings report.
 - Streamlit MVP foundation.
-- Streamlit UI polish V1.
+- Streamlit UI polish V2.
 - App-ready data layer.
 - Explore Games page.
 - Hidden Gems page.
@@ -99,11 +99,11 @@ Methodology
 
 Current UI direction:
 
-- Home is a menu-style landing page.
-- Explore Games and Hidden Gems use compact game cards.
-- Recommendations uses guided preference questions.
-- Insights summarizes descriptive and diagnostic findings.
-- Methodology holds technical definitions, formulas, caveats, and artifact audits.
+- Home is a cyberpunk game-menu landing page with clickable hover panels.
+- Explore Games and Hidden Gems support List View, Grid View, and Detailed View.
+- Recommendations uses a step-by-step wizard with Back / Next controls.
+- Insights is a deep descriptive and diagnostic analytics page.
+- Methodology is a continuous trust page with definitions, formulas, caveats, and artifact audits.
 
 Current app-ready artifacts:
 

@@ -246,10 +246,19 @@ data/analytics/diagnostic/
 
 ## Tests
 
-Run app data validation tests:
+Run the full project unit test suite:
 
 ```bash
-python -m unittest tests/test_app_data_validation.py
+python -m unittest tests/test_app_data_validation.py tests/test_fetch_igdb_selection.py tests/test_app_filters.py tests/test_recommendation_service.py tests/test_hidden_gem_service.py tests/test_app_artifact_schema.py
+```
+
+Focused app/service tests:
+
+```bash
+python -m unittest tests/test_app_filters.py
+python -m unittest tests/test_recommendation_service.py
+python -m unittest tests/test_hidden_gem_service.py
+python -m unittest tests/test_app_artifact_schema.py
 ```
 
 Run Python compile checks manually if needed:

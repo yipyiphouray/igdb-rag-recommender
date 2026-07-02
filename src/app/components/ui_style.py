@@ -12,8 +12,9 @@ def inject_global_styles() -> None:
             --cyber-panel: rgba(15, 0, 35, 0.92);
             --cyber-panel-2: rgba(25, 0, 55, 0.92);
             --cyber-cyan: #00E5FF;
+            --cyber-blue: #00B7FF;
             --cyber-pink: #FF2BD6;
-            --cyber-purple: #8B5CF6;
+            --cyber-purple: #8A2BE2;
             --cyber-yellow: #F9F871;
             --cyber-text: #F8FAFC;
             --cyber-muted: #B9A8D8;
@@ -22,9 +23,10 @@ def inject_global_styles() -> None:
 
         .stApp {
             background:
-                radial-gradient(circle at 8% 12%, rgba(255, 43, 214, 0.18), transparent 28%),
-                radial-gradient(circle at 85% 8%, rgba(0, 229, 255, 0.18), transparent 30%),
-                linear-gradient(135deg, #070014 0%, #12002A 48%, #020617 100%);
+                radial-gradient(circle at 8% 12%, rgba(255, 43, 214, 0.24), transparent 30%),
+                radial-gradient(circle at 85% 8%, rgba(0, 229, 255, 0.24), transparent 32%),
+                radial-gradient(circle at 58% 88%, rgba(249, 248, 113, 0.10), transparent 34%),
+                linear-gradient(135deg, #050012 0%, #15002E 44%, #070014 72%, #020617 100%);
             color: var(--cyber-text);
         }
 
@@ -95,7 +97,7 @@ def inject_global_styles() -> None:
 
         .menu-card-link {
             display: block;
-            min-height: 136px;
+            min-height: 128px;
             padding: 1.15rem;
             margin-bottom: 0.9rem;
             border-radius: 0;
@@ -139,7 +141,7 @@ def inject_global_styles() -> None:
 
         .menu-card-title {
             position: relative;
-            font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+            font-size: clamp(0.98rem, 1.55vw, 1.22rem);
             font-weight: 900;
             color: var(--cyber-cyan);
             text-transform: uppercase;
@@ -176,6 +178,14 @@ def inject_global_styles() -> None:
             text-transform: uppercase;
         }
 
+        .menu-card-empty {
+            min-height: 128px;
+            margin-bottom: 0.9rem;
+            border: 1px dashed rgba(0, 229, 255, 0.12);
+            background: rgba(10, 0, 30, 0.20);
+            opacity: 0.35;
+        }
+
         .game-card {
             display: grid;
             grid-template-columns: 118px minmax(0, 1fr);
@@ -200,8 +210,8 @@ def inject_global_styles() -> None:
         }
 
         .game-grid-card {
-            min-height: 315px;
-            padding: 0.75rem;
+            min-height: 365px;
+            padding: 0.65rem;
             margin-bottom: 0.85rem;
             border: 1px solid rgba(0, 229, 255, 0.28);
             background:
@@ -216,8 +226,10 @@ def inject_global_styles() -> None:
 
         .game-cover {
             width: 110px;
-            min-height: 145px;
+            height: 155px;
             object-fit: cover;
+            object-position: center;
+            display: block;
             border: 1px solid rgba(0, 229, 255, 0.25);
             background: rgba(15, 23, 42, 0.95);
             box-shadow: 0 0 14px rgba(0, 229, 255, 0.12);
@@ -225,13 +237,14 @@ def inject_global_styles() -> None:
 
         .game-card.detailed .game-cover {
             width: 140px;
-            min-height: 185px;
+            height: 205px;
         }
 
         .game-grid-card .game-cover {
             width: 100%;
-            min-height: 215px;
-            max-height: 245px;
+            height: 275px;
+            min-height: 275px;
+            max-height: 275px;
         }
 
         .game-cover-placeholder {
@@ -249,7 +262,7 @@ def inject_global_styles() -> None:
 
         .game-grid-card .game-cover-placeholder {
             width: 100%;
-            height: 225px;
+            height: 275px;
         }
 
         .game-title {
@@ -398,6 +411,20 @@ def inject_global_styles() -> None:
         .insight-panel {
             padding: 1rem 1.1rem;
             margin: 0.85rem 0;
+        }
+
+        .question-card {
+            padding: 1.25rem 1.35rem;
+            text-align: center;
+            border-color: rgba(255, 43, 214, 0.36);
+            box-shadow:
+                0 0 24px rgba(255, 43, 214, 0.12),
+                0 0 34px rgba(0, 229, 255, 0.08);
+        }
+
+        .compact-summary {
+            text-align: left;
+            margin-top: 0.7rem;
         }
 
         .method-section-title {

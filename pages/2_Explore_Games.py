@@ -14,7 +14,7 @@ inject_global_styles()
 
 st.markdown('<div class="section-kicker">Catalog browser</div>', unsafe_allow_html=True)
 st.title("Explore Games")
-st.caption("Browse the curated IGDB catalog with filters, sorting, and multiple display views.")
+st.caption("Search the catalog, tune a few filters, and switch between cover grid or detailed cards.")
 
 try:
     catalog = load_app_catalog()
@@ -75,6 +75,14 @@ col1.metric("Matching games", f"{len(filtered):,}")
 col2.caption("Tip: use Recommendations when you want the app to rank games for you based on guided preferences.")
 
 if filtered.empty:
-    render_empty_state()
+    render_empty_state(
+        "No games matched this search.",
+        [
+            "Clear the title search or try a broader keyword.",
+            "Remove one platform, genre, or theme filter.",
+            "Lower the minimum rating or rating evidence.",
+            "Expand the release-year range.",
+        ],
+    )
 else:
     render_game_results(filtered.head(result_limit), view_mode=view_mode)

@@ -5,5 +5,5 @@ gatherUsageStats = false
 base = "dark"
 primaryColor = "#00E5FF"
 backgroundColor = "#070014"
-secondaryBackgroundColor = "#15002B"
+secondaryBackgroundColor = "#210044"
 textColor = "#F8FAFC"

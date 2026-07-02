@@ -107,7 +107,6 @@ def _category_rating_table(df: pd.DataFrame, label_column: str, rows: int = 15) 
 
 def _downloadable_table(label: str, df: pd.DataFrame, source_path: Path) -> None:
     st.subheader(label)
-    st.caption(f"Source: `{source_path.as_posix()}`")
     _table(df, rows=200)
     if not df.empty:
         st.download_button(
@@ -161,18 +160,12 @@ render_metric_row(
     ]
 )
 
-tabs = st.tabs(
-    [
-        "Catalog",
-        "Composition",
-        "Reception",
-        "Diagnostic Signals",
-        "Category Diagnostics",
-        "Export Browser",
-    ]
-)
+tabs = st.tabs(["Descriptive Insights", "Diagnostic Insights", "Export Browser"])
 
 with tabs[0]:
+    st.header("Descriptive Insights")
+    st.write("Descriptive analytics explains what is in the current project catalog: release timing, genres, themes, platforms, modes, playtime, and major companies.")
+
     st.subheader("Catalog timeline")
     st.write("The current app sample is balanced by release year, which makes time-based comparisons easier to read.")
     _line_chart(games_by_year, "release_year", "game_count", "Games by release year")
@@ -183,7 +176,6 @@ with tabs[0]:
     with col2:
         render_bar_chart(rating_bands, "rating_band", "game_count", "Rating bands")
 
-with tabs[1]:
     st.subheader("Catalog composition")
     st.write("These charts describe the major content surfaces in the curated IGDB sample.")
     col1, col2 = st.columns(2)
@@ -196,7 +188,6 @@ with tabs[1]:
         render_bar_chart(perspectives.head(12), "player_perspective", "game_count", "Player perspectives")
         render_bar_chart(top_publishers.head(12), "publisher_name", "game_count", "Top publishers")
 
-with tabs[2]:
     st.subheader("Reception and playtime")
     st.write("This section focuses on observed reception and experience signals, not recommendation logic.")
     col1, col2 = st.columns(2)
@@ -207,7 +198,10 @@ with tabs[2]:
     st.subheader("Playtime summary")
     _table(playtime_bands, rows=20)
 
-with tabs[3]:
+with tabs[1]:
+    st.header("Diagnostic Insights")
+    st.write("Diagnostic analytics explains relationships in the sample. These are useful signals, not causal claims.")
+
     st.subheader("Diagnostic signal strength")
     st.write(
         "Diagnostic analytics keeps quality, rating activity, and visibility separate. "
@@ -238,7 +232,6 @@ with tabs[3]:
     st.subheader("Notebook takeaways")
     _table(diagnostic_takeaways, rows=50)
 
-with tabs[4]:
     st.subheader("Category-level diagnostics")
     st.write(
         "These tables summarize rating and enrichment patterns by category. Odds ratios are cohort-adjusted association "
@@ -290,7 +283,7 @@ with tabs[4]:
         assoc_preview = associations[association_columns].sort_values("odds_ratio", ascending=False, na_position="last")
         _table(assoc_preview, rows=50)
 
-with tabs[5]:
+with tabs[2]:
     st.subheader("Notebook export browser")
     st.write(
         "Use this browser to inspect notebook exports without forcing every large table to render at page load. "

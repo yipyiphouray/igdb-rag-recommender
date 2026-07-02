@@ -1,6 +1,6 @@
 # Streamlit Page Context
 
-Last updated: 2026-06-29
+Last updated: 2026-07-02
 
 This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page does, what data it uses, and what still needs integration.
 
@@ -46,14 +46,14 @@ Important caveats:
 
 ## Current UI Direction
 
-The current app has completed the second UI polish pass.
+The current app has completed the third UI polish pass.
 
 The user-facing discovery pages are intentionally cleaner and less technical:
 
-- Home is a cyberpunk game-menu landing page with clickable hover panels.
-- Explore Games and Hidden Gems support List View, Grid View, and Detailed View.
-- Recommendations is a step-by-step wizard with Back, Next, Reset, and final recommendation actions.
-- Insights is the deep "Data nerds only" page for descriptive and diagnostic exports, excluding hidden-gem and coverage-only analysis sections.
+- Home is a cyberpunk game-menu landing page with a 3-column clickable hover-panel grid.
+- Explore Games and Hidden Gems support Grid View and Detailed View.
+- Recommendations is a minimal step-by-step wizard with quick-start personas, Back, Next, Reset, and a Review/Confirm step.
+- Insights is split into clear Descriptive and Diagnostic sections plus an export browser.
 - Methodology is a continuous academic/trust page with headings, cards, formulas, caveats, and artifact audits instead of expander sections.
 
 Technical explanations that were previously visible on discovery pages have been moved into Methodology or concise styled rule/caveat boxes.
@@ -85,7 +85,7 @@ None loaded on the Home page.
 
 Current content:
 
-- Cyberpunk arcade-style title treatment.
+- Cyberpunk arcade-style title treatment without the old "cyberpunk game menu" label.
 - Clickable hover menu panels linking to:
   - Explore Games;
   - Hidden Gems;
@@ -95,11 +95,12 @@ Current content:
   - Chatbot;
   - Predictive Model.
 - Page details appear on hover.
+- Panels are arranged in a 3-column menu grid.
 
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Implementation notes:
@@ -108,6 +109,7 @@ Implementation notes:
 - The Home page no longer shows dataset metric cards.
 - The Home page no longer shows the technical signal explanation. Those definitions now live in Methodology.
 - The full menu panel is clickable through `src/app/components/menu_card.py`.
+- The 3-column menu layout is rendered through `src/app/components/home_menu.py`.
 - Menu cards are rendered through `src/app/components/menu_card.py`.
 - Shared CSS is injected through `src/app/components/ui_style.py`.
 
@@ -140,11 +142,12 @@ Current content:
 - Same high-level orientation as the main app Home page.
 - Clickable cyberpunk menu panels for major app sections.
 - Hover details for each page.
+- 3-column menu grid.
 
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Implementation note:
@@ -214,10 +217,10 @@ Current output:
 
 - Matching game count.
 - User-selectable display view:
-  - List View;
   - Grid View;
   - Detailed View.
-- List and Detailed cards keep useful details inside the card rectangle.
+- Detailed cards keep useful details inside the card rectangle.
+- Grid cards use larger cover images where available.
 - Game cards can show:
   - cover image;
   - title;
@@ -233,7 +236,7 @@ Current output:
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Trust rules:
@@ -297,30 +300,30 @@ AND within-year quality-cohort visibility percentile <= 40%
 
 Current controls:
 
-- Sensitivity:
-  - Balanced;
-  - Conservative;
-  - Broad.
+- Discovery mode:
+  - Balanced discovery;
+  - Strict hidden gems;
+  - More discoveries.
 - Release-year range.
 - Platform.
 - Genre.
 - Theme.
-- Minimum rating.
-- Minimum rating evidence.
+- Minimum rating score.
+- Minimum rating activity.
 - Number of candidates to show.
 
 Current output:
 
 - Short user-facing explanation.
-- Hidden-gem rule shown directly in a styled rule box.
+- User-friendly hidden-gem explanation shown directly in a styled rule box.
 - Matching candidate count.
-- User-selectable List View, Grid View, and Detailed View.
+- User-selectable Grid View and Detailed View.
 - Game cards with candidate explanations.
 
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Important implementation rule:
@@ -406,17 +409,18 @@ Playtime fit:         0-5 when selected and playtime data exists
 
 Current output:
 
-- Step-by-step wizard with Back, Next, Reset, and final Show Recommendations controls.
-- Current preference loadout summary.
+- Quick-start persona buttons.
+- Centered step-by-step wizard with Back, Next, Reset, and final Review/Confirm controls.
+- Final preference review before results are generated.
 - Ranked recommendation cards.
 - Recommendation score.
 - Explanation text describing why each game matched.
-- Compact scoring caveat shown below the wizard.
+- Technical scoring details are kept out of the main wizard flow and documented in Methodology.
 
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Trust rules:
@@ -535,11 +539,8 @@ data/analytics/diagnostic/cohort_adjusted_association_summary.csv
 
 Current tabs:
 
-- Catalog.
-- Composition.
-- Reception.
-- Diagnostic Signals.
-- Category Diagnostics.
+- Descriptive Insights.
+- Diagnostic Insights.
 - Export Browser.
 
 Current content:
@@ -555,12 +556,13 @@ Current content:
 - Category-level diagnostic tables.
 - Cohort-adjusted association table.
 - Export browser with table previews and CSV downloads.
+- Export browser does not display local file-system paths.
 - Hidden-gem and coverage-only analysis sections are intentionally excluded from this page.
 
 Current status:
 
 ```text
-Implemented and polished for UI V2.
+Implemented and polished for UI V3.
 ```
 
 Known limitations:
@@ -727,6 +729,7 @@ Reusable UI components:
 ```text
 src/app/components/game_card.py
 src/app/components/game_detail_panel.py
+src/app/components/home_menu.py
 src/app/components/metric_cards.py
 src/app/components/chart_helpers.py
 src/app/components/methodology_notice.py
@@ -748,6 +751,10 @@ Validation tests:
 ```text
 tests/test_app_data_validation.py
 tests/test_fetch_igdb_selection.py
+tests/test_app_filters.py
+tests/test_recommendation_service.py
+tests/test_hidden_gem_service.py
+tests/test_app_artifact_schema.py
 ```
 
 ---
@@ -755,12 +762,12 @@ tests/test_fetch_igdb_selection.py
 ## 11. Current Implementation Status Summary
 
 ```text
-Home:                 UI V2 cyberpunk menu
-Explore Games:        UI V2 with List/Grid/Detailed views
-Hidden Gems:          UI V2 with visible rule box and multiple views
-Recommendations:      UI V2 step-by-step wizard
+Home:                 UI V3 cyberpunk 3-column menu
+Explore Games:        UI V3 with Grid/Detailed views
+Hidden Gems:          UI V3 simplified discovery modes
+Recommendations:      UI V3 minimal wizard with personas
 Chatbot:              Placeholder / teammate integration pending
-Insights:             UI V2 deep analytics page
+Insights:             UI V3 descriptive/diagnostic split
 Predictive Model:     Placeholder / teammate integration pending
 Methodology:          UI V2 continuous trust page
 ```

@@ -13,7 +13,7 @@ from src.app.formatting import (
 )
 
 
-VIEW_MODES = ["List View", "Grid View", "Detailed View"]
+VIEW_MODES = ["Grid View", "Detailed View"]
 
 
 def _is_missing(value: object) -> bool:
@@ -66,8 +66,16 @@ def _playtime_text(row: pd.Series) -> str:
 def _cover_html(row: pd.Series) -> str:
     cover_url = row.get("cover_url")
     if not _is_missing(cover_url):
-        return f'<img class="game-cover" src="{html_escape(cover_url)}" alt="Game cover" />'
+        return f'<img class="game-cover" src="{html_escape(_high_res_cover_url(str(cover_url)))}" alt="Game cover" />'
     return '<div class="game-cover-placeholder">No cover</div>'
+
+
+def _high_res_cover_url(cover_url: str) -> str:
+    return (
+        cover_url.replace("/t_thumb/", "/t_cover_big/")
+        .replace("/t_cover_small/", "/t_cover_big/")
+        .replace("/t_720p/", "/t_cover_big/")
+    )
 
 
 def _platform_badges(row: pd.Series, max_items: int = 7) -> str:
@@ -138,10 +146,10 @@ def _explanation_html(row: pd.Series, show_explanation: bool) -> str:
     return f'<div class="card-explanation">{html_escape(explanation)}</div>'
 
 
-def render_game_card(row: pd.Series, show_explanation: bool = False, view_mode: str = "List View") -> None:
+def render_game_card(row: pd.Series, show_explanation: bool = False, view_mode: str = "Grid View") -> None:
     import streamlit as st
 
-    view_mode = view_mode if view_mode in VIEW_MODES else "List View"
+    view_mode = view_mode if view_mode in VIEW_MODES else "Grid View"
     title = _field(row, "name")
     release_year = _field(row, "release_year")
     hidden_flag = int(row.get("hidden_gem_balanced_flag", 0) or 0) == 1
@@ -153,7 +161,7 @@ def render_game_card(row: pd.Series, show_explanation: bool = False, view_mode: 
             <div class="game-grid-card">
               {_cover_html(row)}
               <div class="game-grid-title">{html_escape(title)}</div>
-              <div class="game-subtitle">{html_escape(release_year)} · {html_escape(_rating_text(row))}</div>
+              <div class="game-subtitle">{html_escape(release_year)} - {html_escape(_rating_text(row))}</div>
               <div class="badge-row">{hidden_badge}</div>
               {_explanation_html(row, show_explanation)}
             </div>
@@ -188,13 +196,13 @@ def render_game_card(row: pd.Series, show_explanation: bool = False, view_mode: 
 
 def render_game_results(
     games: pd.DataFrame,
-    view_mode: str = "List View",
+    view_mode: str = "Grid View",
     show_explanation: bool = False,
     grid_columns: int = 4,
 ) -> None:
     import streamlit as st
 
-    view_mode = view_mode if view_mode in VIEW_MODES else "List View"
+    view_mode = view_mode if view_mode in VIEW_MODES else "Grid View"
 
     if view_mode == "Grid View":
         columns = st.columns(grid_columns)

@@ -2,8 +2,54 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.app.components.menu_card import render_menu_card
+from src.app.components.home_menu import render_home_menu
 from src.app.components.ui_style import inject_global_styles
+
+
+MENU_ITEMS = [
+    (
+        "Explore Games",
+        "Browse the curated catalog with filters, sorting, and visual result layouts.",
+        "pages/2_Explore_Games.py",
+        "Enter catalog",
+    ),
+    (
+        "Hidden Gems",
+        "Find strong games that may be easier to miss in the broader catalog.",
+        "pages/3_Hidden_Gems.py",
+        "Enter gems",
+    ),
+    (
+        "Recommendations",
+        "Answer a few guided questions and get explainable game suggestions.",
+        "pages/4_Recommendations.py",
+        "Start wizard",
+    ),
+    (
+        "Insights",
+        "Open the deep descriptive and diagnostic analytics room.",
+        "pages/6_Insights.py",
+        "Open data room",
+    ),
+    (
+        "Methodology",
+        "Review sources, formulas, caveats, and implementation boundaries.",
+        "pages/8_Methodology.py",
+        "Open trust layer",
+    ),
+    (
+        "Chatbot",
+        "Placeholder page for teammate RAG integration and natural-language discovery.",
+        "pages/5_Chatbot.py",
+        "Open shell",
+    ),
+    (
+        "Predictive Model",
+        "Placeholder page for teammate model outputs and interpretation.",
+        "pages/7_Predictive_Model.py",
+        "Open model shell",
+    ),
+]
 
 
 st.set_page_config(
@@ -16,63 +62,11 @@ inject_global_styles()
 st.markdown(
     """
     <div class="cyber-hero">
-      <div class="section-kicker">Cyberpunk game menu</div>
       <div class="cyber-title">IGDB Arcade</div>
-      <div class="cyber-subtitle">Select a mode. Hover to preview. Click anywhere on a panel to enter.</div>
+      <div class="cyber-subtitle">Hover to preview. Click any panel to enter.</div>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-row1 = st.columns(3)
-with row1[0]:
-    render_menu_card(
-        "Explore Games",
-        "Browse the curated catalog with platform, genre, theme, rating, release-year, cohort, and hidden-gem controls.",
-        "pages/2_Explore_Games.py",
-        "Enter catalog",
-    )
-with row1[1]:
-    render_menu_card(
-        "Hidden Gems",
-        "Find reliable high-rated games with lower known visibility inside the project sample.",
-        "pages/3_Hidden_Gems.py",
-        "Enter gems",
-    )
-with row1[2]:
-    render_menu_card(
-        "Recommendations",
-        "Use a step-by-step preference wizard to get ranked and explainable game suggestions.",
-        "pages/4_Recommendations.py",
-        "Start wizard",
-    )
-
-row2 = st.columns(4)
-with row2[0]:
-    render_menu_card(
-        "Insights",
-        "The deep descriptive and diagnostic analytics room for data-heavy exploration.",
-        "pages/6_Insights.py",
-        "Open data room",
-    )
-with row2[1]:
-    render_menu_card(
-        "Methodology",
-        "Source data, metric definitions, formulas, limitations, and implementation boundaries.",
-        "pages/8_Methodology.py",
-        "Open trust layer",
-    )
-with row2[2]:
-    render_menu_card(
-        "Chatbot",
-        "Placeholder page for teammate RAG integration and future natural-language discovery.",
-        "pages/5_Chatbot.py",
-        "Open shell",
-    )
-with row2[3]:
-    render_menu_card(
-        "Predictive Model",
-        "Placeholder page for teammate model metrics, predictions, and interpretation.",
-        "pages/7_Predictive_Model.py",
-        "Open model shell",
-    )
+render_home_menu(MENU_ITEMS, columns_per_row=3)

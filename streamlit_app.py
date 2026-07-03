@@ -2,10 +2,54 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.app import config
-from src.app.components.methodology_notice import render_sample_caveat, render_signal_caveat
-from src.app.components.metric_cards import render_metric_row
-from src.app.data_loader import load_app_catalog, load_hidden_gems, load_json_artifact
+from src.app.components.home_menu import render_home_menu
+from src.app.components.ui_style import inject_global_styles
+
+
+MENU_ITEMS = [
+    (
+        "Explore Games",
+        "Browse the curated catalog with filters, sorting, and visual result layouts.",
+        "pages/2_Explore_Games.py",
+        "Enter catalog",
+    ),
+    (
+        "Hidden Gems",
+        "Find strong games that may be easier to miss in the broader catalog.",
+        "pages/3_Hidden_Gems.py",
+        "Enter gems",
+    ),
+    (
+        "Recommendations",
+        "Answer a few guided questions and get explainable game suggestions.",
+        "pages/4_Recommendations.py",
+        "Start wizard",
+    ),
+    (
+        "Insights",
+        "Open the deep descriptive and diagnostic analytics room.",
+        "pages/6_Insights.py",
+        "Open data room",
+    ),
+    (
+        "Methodology",
+        "Review sources, formulas, caveats, and implementation boundaries.",
+        "pages/8_Methodology.py",
+        "Open trust layer",
+    ),
+    (
+        "Chatbot",
+        "Placeholder page for teammate RAG integration and natural-language discovery.",
+        "pages/5_Chatbot.py",
+        "Open shell",
+    ),
+    (
+        "Predictive Model",
+        "Placeholder page for teammate model outputs and interpretation.",
+        "pages/7_Predictive_Model.py",
+        "Open model shell",
+    ),
+]
 
 
 st.set_page_config(
@@ -13,46 +57,16 @@ st.set_page_config(
     page_icon="🎮",
     layout="wide",
 )
+inject_global_styles()
 
-st.title("IGDB Game Discovery & RAG Recommendation System")
-st.caption("Streamlit MVP for catalog exploration, hidden-gem discovery, recommendations, and teammate RAG/predictive integration.")
-
-try:
-    catalog = load_app_catalog()
-    hidden_gems = load_hidden_gems()
-    metrics = load_json_artifact(config.APP_METHODOLOGY_METRICS_PATH)
-except FileNotFoundError:
-    st.error("App-ready data artifacts are missing.")
-    st.code("python src/pipeline/build_app_catalog.py", language="bash")
-    st.stop()
-
-render_metric_row(
-    [
-        ("Games", f"{int(metrics.get('total_games', len(catalog))):,}", "Curated IGDB project sample"),
-        ("Release years", f"{metrics.get('release_year_start')}–{metrics.get('release_year_end')}", "Balanced yearly sample"),
-        ("Hidden gems", f"{len(hidden_gems):,}", "Balanced diagnostic hidden-gem candidates"),
-        ("Reliable-rated share", f"{metrics.get('reliable_rating_coverage', 0) * 100:.1f}%", "total_rating_count >= 25"),
-    ]
+st.markdown(
+    """
+    <div class="cyber-hero">
+      <div class="cyber-title">IGDB Arcade</div>
+      <div class="cyber-subtitle">Hover to preview. Click any panel to enter.</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
-render_sample_caveat()
-render_signal_caveat()
-
-st.subheader("What you can do")
-
-cols = st.columns(4)
-cols[0].page_link("pages/2_Explore_Games.py", label="Explore games", icon="🔎")
-cols[1].page_link("pages/3_Hidden_Gems.py", label="Find hidden gems", icon="💎")
-cols[2].page_link("pages/4_Recommendations.py", label="Get recommendations", icon="🎯")
-cols[3].page_link("pages/5_Chatbot.py", label="Ask chatbot", icon="💬")
-
-st.subheader("Featured hidden-gem candidates")
-sample = hidden_gems.head(3)
-if sample.empty:
-    st.info("No hidden-gem artifact available yet.")
-else:
-    from src.app.components.game_card import render_game_card
-
-    for _, row in sample.iterrows():
-        render_game_card(row, show_explanation=True)
-
+render_home_menu(MENU_ITEMS, columns_per_row=3)

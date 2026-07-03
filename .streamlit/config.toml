@@ -3,7 +3,7 @@ gatherUsageStats = false
 
 [theme]
 base = "dark"
-primaryColor = "#7C3AED"
-backgroundColor = "#0F172A"
-secondaryBackgroundColor = "#1E293B"
+primaryColor = "#00E5FF"
+backgroundColor = "#070014"
+secondaryBackgroundColor = "#210044"
 textColor = "#F8FAFC"

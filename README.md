@@ -19,10 +19,11 @@ Completed:
 - Descriptive analytics notebook and findings report.
 - Diagnostic analytics notebook and findings report.
 - Streamlit MVP foundation.
+- Streamlit UI polish V3.
 - App-ready data layer.
 - Explore Games page.
 - Hidden Gems page.
-- Basic structured Recommendations page.
+- Guided structured Recommendations page.
 - Insights page.
 - Methodology page.
 - Predictive and RAG placeholder pages.
@@ -32,7 +33,7 @@ Pending / teammate-owned:
 - Predictive model artifact integration.
 - RAG/vector-store integration.
 - Final chatbot behavior.
-- Final UI polish and demo flow.
+- Final demo flow and presentation polish.
 
 ## Current Dataset
 
@@ -95,6 +96,14 @@ Insights
 Predictive Model
 Methodology
 ```
+
+Current UI direction:
+
+- Home is a cyberpunk game-menu landing page with a 3-column clickable hover-panel grid.
+- Explore Games and Hidden Gems support Grid View and Detailed View.
+- Recommendations uses a minimal step-by-step wizard with quick-start personas and review/confirm.
+- Insights is split into clear Descriptive and Diagnostic sections.
+- Methodology is a continuous trust page with definitions, formulas, caveats, and artifact audits.
 
 Current app-ready artifacts:
 
@@ -205,6 +214,7 @@ docs/plan/descriptive_analytics_pillar_plan.md
 docs/plan/diagnostic_analytics_pillar_plan.md
 docs/plan/streamlit_mvp_architecture_plan.md
 docs/plan/streamlit_manual_qa_test_cases.md
+docs/plan/streamlit_ui_polish_plan_v1.md
 ```
 
 Findings reports:
@@ -236,10 +246,19 @@ data/analytics/diagnostic/
 
 ## Tests
 
-Run app data validation tests:
+Run the full project unit test suite:
 
 ```bash
-python -m unittest tests/test_app_data_validation.py
+python -m unittest tests/test_app_data_validation.py tests/test_fetch_igdb_selection.py tests/test_app_filters.py tests/test_recommendation_service.py tests/test_hidden_gem_service.py tests/test_app_artifact_schema.py
+```
+
+Focused app/service tests:
+
+```bash
+python -m unittest tests/test_app_filters.py
+python -m unittest tests/test_recommendation_service.py
+python -m unittest tests/test_hidden_gem_service.py
+python -m unittest tests/test_app_artifact_schema.py
 ```
 
 Run Python compile checks manually if needed:
@@ -306,7 +325,7 @@ The current Predictive Model and Chatbot pages are designed to load safely even 
 4. Complete manual QA checklist.
 5. Fix page-specific issues.
 6. Integrate teammate predictive/RAG artifacts when ready.
-7. Polish UI and final demo flow.
+7. Polish final demo flow.
 ```
 
 Commands:

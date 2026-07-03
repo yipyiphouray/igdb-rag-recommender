@@ -3,15 +3,18 @@ from __future__ import annotations
 import streamlit as st
 
 from src.app.components.empty_state import render_empty_state
-from src.app.components.game_card import render_game_card
-from src.app.components.methodology_notice import render_sample_caveat, render_signal_caveat
+from src.app.components.game_card import VIEW_MODES, render_game_results
+from src.app.components.ui_style import inject_global_styles
 from src.app.data_loader import load_app_catalog, load_filter_options
 from src.app.filters import apply_catalog_filters, sort_catalog
 
 
 st.set_page_config(page_title="Explore Games", page_icon="🔎", layout="wide")
+inject_global_styles()
+
+st.markdown('<div class="section-kicker">Catalog browser</div>', unsafe_allow_html=True)
 st.title("Explore Games")
-render_signal_caveat()
+st.caption("Search the catalog, tune a few filters, and switch between cover grid or detailed cards.")
 
 try:
     catalog = load_app_catalog()
@@ -24,6 +27,9 @@ years = options.get("release_years") or sorted(catalog["release_year"].dropna().
 min_year, max_year = int(min(years)), int(max(years))
 
 with st.sidebar:
+    st.header("Display")
+    view_mode = st.radio("View type", VIEW_MODES, index=0)
+    st.divider()
     st.header("Filters")
     search_text = st.text_input("Title or summary search")
     year_range = st.slider("Release year", min_year, max_year, (min_year, max_year))
@@ -64,12 +70,19 @@ filtered = apply_catalog_filters(
 )
 filtered = sort_catalog(filtered, sort_option)
 
-st.metric("Matching games", f"{len(filtered):,}")
-render_sample_caveat()
+col1, col2 = st.columns([1, 3])
+col1.metric("Matching games", f"{len(filtered):,}")
+col2.caption("Tip: use Recommendations when you want the app to rank games for you based on guided preferences.")
 
 if filtered.empty:
-    render_empty_state()
+    render_empty_state(
+        "No games matched this search.",
+        [
+            "Clear the title search or try a broader keyword.",
+            "Remove one platform, genre, or theme filter.",
+            "Lower the minimum rating or rating evidence.",
+            "Expand the release-year range.",
+        ],
+    )
 else:
-    for _, row in filtered.head(result_limit).iterrows():
-        render_game_card(row)
-
+    render_game_results(filtered.head(result_limit), view_mode=view_mode)

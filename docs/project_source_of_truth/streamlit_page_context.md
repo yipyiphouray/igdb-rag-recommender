@@ -1,6 +1,8 @@
 # Streamlit Page Context
 
-This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page currently does, what data it uses, and what still needs integration.
+Last updated: 2026-07-02
+
+This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page does, what data it uses, and what still needs integration.
 
 Main app entry point:
 
@@ -42,7 +44,23 @@ Important caveats:
 
 ---
 
-# 1. Main App Home
+## Current UI Direction
+
+The current app has completed the third UI polish pass.
+
+The user-facing discovery pages are intentionally cleaner and less technical:
+
+- Home is a cyberpunk game-menu landing page with a 3-column clickable hover-panel grid.
+- Explore Games and Hidden Gems support Grid View and Detailed View.
+- Recommendations is a minimal step-by-step wizard with quick-start personas, Back, Next, Reset, and a Review/Confirm step.
+- Insights is split into clear Descriptive and Diagnostic sections plus an export browser.
+- Methodology is a continuous academic/trust page with headings, cards, formulas, caveats, and artifact audits instead of expander sections.
+
+Technical explanations that were previously visible on discovery pages have been moved into Methodology or concise styled rule/caveat boxes.
+
+---
+
+## 1. Main App Home
 
 File:
 
@@ -52,52 +70,52 @@ streamlit_app.py
 
 Purpose:
 
-The main app home page introduces the project, shows top-level dataset metrics, provides navigation shortcuts, and highlights a few hidden-gem candidates.
+The main Home page introduces the product and acts as a navigation menu for the app.
 
 Primary audience:
 
-- Project evaluators who need a quick orientation.
 - Users landing in the app for the first time.
+- Project evaluators who need a quick orientation.
 
 Main data sources:
 
 ```text
-data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
+None loaded on the Home page.
 ```
 
 Current content:
 
-- Project title and short caption.
-- Metric cards:
-  - total games;
-  - release-year range;
-  - hidden-gem candidate count;
-  - reliable-rated share.
-- Sample caveat.
-- Signal caveat explaining rating, rating count, and PopScore.
-- Navigation links to:
+- Cyberpunk arcade-style title treatment without the old "cyberpunk game menu" label.
+- Clickable hover menu panels linking to:
   - Explore Games;
   - Hidden Gems;
   - Recommendations;
-  - Chatbot.
-- Featured hidden-gem candidate cards.
+  - Insights;
+  - Methodology;
+  - Chatbot;
+  - Predictive Model.
+- Page details appear on hover.
+- Panels are arranged in a 3-column menu grid.
 
 Current status:
 
 ```text
-Implemented and functional.
+Implemented and polished for UI V3.
 ```
 
-Known limitations:
+Implementation notes:
 
-- Featured hidden gems currently use the first few rows from the hidden-gem artifact.
-- No custom branding or visual design polish has been added yet.
+- The Home page no longer shows featured hidden-gem cards.
+- The Home page no longer shows dataset metric cards.
+- The Home page no longer shows the technical signal explanation. Those definitions now live in Methodology.
+- The full menu panel is clickable through `src/app/components/menu_card.py`.
+- The 3-column menu layout is rendered through `src/app/components/home_menu.py`.
+- Menu cards are rendered through `src/app/components/menu_card.py`.
+- Shared CSS is injected through `src/app/components/ui_style.py`.
 
 ---
 
-# 2. Home Page in Multipage Navigation
+## 2. Home Page in Multipage Navigation
 
 File:
 
@@ -107,7 +125,7 @@ pages/1_Home.py
 
 Purpose:
 
-This page mirrors the main home page inside Streamlit's multipage navigation. It exists because Streamlit treats `streamlit_app.py` and files inside `pages/` differently.
+This page mirrors the main Home page inside Streamlit's multipage navigation. It exists because Streamlit treats `streamlit_app.py` and files inside `pages/` differently.
 
 Primary audience:
 
@@ -116,23 +134,20 @@ Primary audience:
 Main data sources:
 
 ```text
-data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
+None loaded on the Home page.
 ```
 
 Current content:
 
-- Same high-level project orientation as the main app page.
-- Metric cards.
-- Caveat notices.
-- Quick action page links.
-- Featured hidden-gem candidates.
+- Same high-level orientation as the main app Home page.
+- Clickable cyberpunk menu panels for major app sections.
+- Hover details for each page.
+- 3-column menu grid.
 
 Current status:
 
 ```text
-Implemented and functional.
+Implemented and polished for UI V3.
 ```
 
 Implementation note:
@@ -141,7 +156,7 @@ This page is intentionally standalone. It should not import `streamlit_app.py` d
 
 ---
 
-# 3. Explore Games
+## 3. Explore Games
 
 File:
 
@@ -155,7 +170,7 @@ Allows users to browse the current game catalog through structured search and fi
 
 Primary audience:
 
-- Users who want to explore the catalog manually.
+- Users who want to manually explore the catalog.
 - Evaluators who want to inspect the current dataset through the app.
 
 Main data sources:
@@ -171,6 +186,7 @@ Service-layer dependencies:
 src/app/data_loader.py
 src/app/filters.py
 src/app/components/game_card.py
+src/app/components/ui_style.py
 ```
 
 Current filters:
@@ -200,22 +216,27 @@ Current sort options:
 Current output:
 
 - Matching game count.
-- Game cards with:
-  - cover;
+- User-selectable display view:
+  - Grid View;
+  - Detailed View.
+- Detailed cards keep useful details inside the card rectangle.
+- Grid cards use larger cover images where available.
+- Game cards can show:
+  - cover image;
   - title;
   - release year;
+  - platform badges;
   - rating;
   - rating evidence;
-  - visibility percentile;
-  - summary;
-  - genres;
-  - platforms;
-  - expandable details.
+  - visibility status or percentile;
+  - short summary;
+  - genre and theme badges;
+  - useful details such as modes, perspectives, cohort, and playtime.
 
 Current status:
 
 ```text
-Implemented and functional.
+Implemented and polished for UI V3.
 ```
 
 Trust rules:
@@ -223,17 +244,17 @@ Trust rules:
 - Result rows are one row per game.
 - Missing ratings are not treated as low ratings.
 - Missing PopScore is not treated as low visibility.
-- `total_rating_count` is displayed as rating evidence, not popularity.
+- `total_rating_count` is displayed as rating evidence/activity, not popularity.
 
 Known limitations:
 
-- Result display is currently card-based with a result limit, not full pagination.
-- Some multi-value fields can be visually long.
+- Result display is card-based with a result limit, not full pagination.
+- Platform icons are represented as short badges rather than official platform icons.
 - No dedicated game detail page exists yet.
 
 ---
 
-# 4. Hidden Gems
+## 4. Hidden Gems
 
 File:
 
@@ -248,7 +269,7 @@ Surfaces lower-visibility, high-quality games from the curated project sample.
 Primary audience:
 
 - Users looking for strong games that may be less obvious.
-- Evaluators reviewing the diagnostic/prescriptive logic.
+- Evaluators reviewing the diagnostic hidden-gem logic.
 
 Main data sources:
 
@@ -263,6 +284,7 @@ Service-layer dependencies:
 ```text
 src/app/hidden_gem_service.py
 src/app/components/game_card.py
+src/app/components/ui_style.py
 ```
 
 Default Balanced hidden-gem rule:
@@ -278,28 +300,30 @@ AND within-year quality-cohort visibility percentile <= 40%
 
 Current controls:
 
-- Sensitivity:
-  - Balanced;
-  - Conservative;
-  - Broad.
+- Discovery mode:
+  - Balanced discovery;
+  - Strict hidden gems;
+  - More discoveries.
 - Release-year range.
 - Platform.
 - Genre.
 - Theme.
-- Minimum rating.
-- Minimum rating evidence.
+- Minimum rating score.
+- Minimum rating activity.
 - Number of candidates to show.
 
 Current output:
 
-- Hidden-gem rule explanation.
+- Short user-facing explanation.
+- User-friendly hidden-gem explanation shown directly in a styled rule box.
 - Matching candidate count.
-- Candidate game cards with explanation text.
+- User-selectable Grid View and Detailed View.
+- Game cards with candidate explanations.
 
 Current status:
 
 ```text
-Implemented and functional.
+Implemented and polished for UI V3.
 ```
 
 Important implementation rule:
@@ -319,7 +343,7 @@ Known limitations:
 
 ---
 
-# 5. Recommendations
+## 5. Recommendations
 
 File:
 
@@ -329,11 +353,11 @@ pages/4_Recommendations.py
 
 Purpose:
 
-Provides structured, explainable MVP recommendations using simple preference inputs.
+Provides structured, explainable MVP recommendations through guided user preference questions.
 
 Primary audience:
 
-- Users who want ranked suggestions from structured preferences.
+- Users who want ranked suggestions without manually tuning every catalog filter.
 - Evaluators who want to inspect transparent recommendation logic.
 
 Main data sources:
@@ -349,39 +373,54 @@ Service-layer dependencies:
 src/app/recommendation_service.py
 src/app/filters.py
 src/app/components/game_card.py
+src/app/components/ui_style.py
 ```
 
-Current user inputs:
+Current wizard steps:
 
-- Required platform.
+- Platform.
 - Preferred genres.
 - Preferred themes / mood.
-- Release-year range.
+- Discovery preference:
+  - Balanced;
+  - Hidden gems;
+  - Popular / visible games.
 - Desired quality level.
-- Hidden-gem boost toggle.
+- Desired playtime:
+  - Any length;
+  - Shorter games;
+  - Medium games;
+  - Longer games.
+- Release-year range.
 - Number of recommendations.
 
 MVP scoring components:
 
 ```text
-Platform eligibility: required gate
+Platform eligibility: hard gate when selected
 Genre match:          0-30
 Theme match:          0-20
 Quality score:        0-15
 Rating evidence:      0-5
-Hidden-gem boost:     0-10
+Hidden-gem boost:     0-10 when selected
+Visibility bias:      0-5 when popular/visible is selected
+Playtime fit:         0-5 when selected and playtime data exists
 ```
 
 Current output:
 
+- Quick-start persona buttons.
+- Centered step-by-step wizard with Back, Next, Reset, and final Review/Confirm controls.
+- Final preference review before results are generated.
 - Ranked recommendation cards.
 - Recommendation score.
 - Explanation text describing why each game matched.
+- Technical scoring details are kept out of the main wizard flow and documented in Methodology.
 
 Current status:
 
 ```text
-Implemented as first MVP version.
+Implemented and polished for UI V3.
 ```
 
 Trust rules:
@@ -390,16 +429,17 @@ Trust rules:
 - Recommendations are limited to existing catalog games.
 - The page does not predict ratings for imaginary games.
 - Explanations are generated from actual scoring/filter components.
+- Missing playtime does not penalize a game unless playtime data is needed for a selected fit bonus.
 
 Known limitations:
 
-- Game mode, perspective, playtime, multiplayer, and natural-language preference scoring are planned later.
 - The scoring formula is intentionally simple for MVP clarity.
+- Game mode, perspective, multiplayer, and natural-language preference scoring can be added later.
 - This page should eventually integrate teammate predictive/RAG signals when those artifacts are ready.
 
 ---
 
-# 6. Chatbot
+## 6. Chatbot
 
 File:
 
@@ -454,11 +494,11 @@ Required final behavior:
 Known limitations:
 
 - No final vector retrieval is currently wired into the app.
-- The page is intentionally non-blocking so Explore, Hidden Gems, Insights, Methodology, and basic Recommendations can work before RAG is complete.
+- The page is intentionally non-blocking so Explore, Hidden Gems, Insights, Methodology, and Recommendations can work before RAG is complete.
 
 ---
 
-# 7. Insights
+## 7. Insights
 
 File:
 
@@ -468,7 +508,7 @@ pages/6_Insights.py
 
 Purpose:
 
-Summarizes the completed descriptive and diagnostic analytics in a concise app-facing format.
+Summarizes the completed descriptive and diagnostic analytics in a dashboard-style page.
 
 Primary audience:
 
@@ -479,46 +519,60 @@ Main data sources:
 
 ```text
 data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_methodology_metrics.json
+data/analytics/descriptive/games_by_release_year.csv
+data/analytics/descriptive/rating_bands.csv
 data/analytics/descriptive/top_genres.csv
+data/analytics/descriptive/top_themes.csv
 data/analytics/descriptive/top_platforms.csv
+data/analytics/descriptive/game_mode_distribution.csv
+data/analytics/descriptive/player_perspective_distribution.csv
+data/analytics/descriptive/playtime_band_distribution.csv
 data/analytics/diagnostic/quality_popscore_correlation.csv
+data/analytics/diagnostic/quality_rating_activity_correlation.csv
 data/analytics/diagnostic/user_critic_agreement_summary.csv
+data/analytics/diagnostic/diagnostic_takeaways.csv
+data/analytics/diagnostic/genre_rating_summary.csv
+data/analytics/diagnostic/theme_rating_summary.csv
+data/analytics/diagnostic/platform_family_rating_summary.csv
+data/analytics/diagnostic/cohort_adjusted_association_summary.csv
 ```
 
 Current tabs:
 
-- Catalog Overview.
-- Reception and Visibility.
-- Hidden Gems.
-- Coverage and Limits.
+- Descriptive Insights.
+- Diagnostic Insights.
+- Export Browser.
 
 Current content:
 
-- Metric cards.
-- Top genre chart.
-- Top platform chart.
-- Quality versus PopScore diagnostic table.
-- User versus critic agreement diagnostic table.
-- Hidden-gem sample table.
-- Methodology metrics and caveats.
+- Dataset metric cards.
+- Release-year timeline.
+- Genre, theme, platform, mode, perspective, developer, and publisher charts.
+- Rating-band and playtime-band charts.
+- Quality versus PopScore diagnostic metric.
+- Quality versus rating activity diagnostic metric.
+- User versus critic agreement diagnostic metric.
+- Diagnostic takeaway table.
+- Category-level diagnostic tables.
+- Cohort-adjusted association table.
+- Export browser with table previews and CSV downloads.
+- Export browser does not display local file-system paths.
+- Hidden-gem and coverage-only analysis sections are intentionally excluded from this page.
 
 Current status:
 
 ```text
-Implemented as first MVP version.
+Implemented and polished for UI V3.
 ```
 
 Known limitations:
 
-- Visual polish is minimal.
-- The page intentionally does not reproduce every notebook chart.
-- Some diagnostic tables may need more narrative interpretation before final presentation.
+- Large notebook tables are previewed with download buttons instead of fully rendered at page load.
+- Hidden-gem and coverage-only outputs remain available in project files but are intentionally not part of this page.
 
 ---
 
-# 8. Predictive Model
+## 8. Predictive Model
 
 File:
 
@@ -581,7 +635,7 @@ Known limitations:
 
 ---
 
-# 9. Methodology
+## 9. Methodology
 
 File:
 
@@ -591,7 +645,7 @@ pages/8_Methodology.py
 
 Purpose:
 
-Explains the project methodology, current sample design, hidden-gem definition, artifact audit, and implementation boundaries.
+Explains the project methodology, current sample design, metric definitions, hidden-gem definition, recommendation scoring, artifact audit, limitations, and implementation boundaries.
 
 Primary audience:
 
@@ -610,22 +664,31 @@ Service-layer dependencies:
 ```text
 src/app/validation.py
 src/app/data_loader.py
+src/app/components/metric_cards.py
+src/app/components/ui_style.py
 ```
 
 Current content:
 
-- Sample caveat.
-- Signal caveat.
-- Current sample design explanation.
-- Hidden-gem definition.
-- Artifact audit status.
-- Methodology metrics JSON.
-- Implementation boundaries.
+- Top-level methodology metric cards.
+- Continuous report-style sections with no expander/toggle blocks.
+- Data source and app artifact explanation.
+- Curated sample design explanation and caveat.
+- Metric definitions:
+  - `total_rating`;
+  - `total_rating_count`;
+  - PopScore interest;
+  - missing PopScore interpretation.
+- Hidden-gem calculation.
+- Recommendation scoring.
+- Artifact audit.
+- Known limitations.
+- Streamlit implementation boundaries.
 
 Current status:
 
 ```text
-Implemented and functional.
+Implemented and polished for UI V2.
 ```
 
 Key implementation boundary:
@@ -639,12 +702,12 @@ Streamlit loads prepared assets. It should not:
 
 Known limitations:
 
-- Methodology is currently concise.
-- More polished narrative can be added for final presentation.
+- Methodology is app-facing, not a full written methodology chapter.
+- More polished report narrative can still be added for final presentation.
 
 ---
 
-# 10. Shared App Service Layer
+## 10. Shared App Service Layer
 
 The pages rely on the following shared service modules:
 
@@ -666,9 +729,12 @@ Reusable UI components:
 ```text
 src/app/components/game_card.py
 src/app/components/game_detail_panel.py
+src/app/components/home_menu.py
 src/app/components/metric_cards.py
 src/app/components/chart_helpers.py
 src/app/components/methodology_notice.py
+src/app/components/menu_card.py
+src/app/components/ui_style.py
 src/app/components/empty_state.py
 src/app/components/loading_state.py
 src/app/components/sidebar_filters.py
@@ -680,34 +746,38 @@ App-ready artifact builder:
 src/pipeline/build_app_catalog.py
 ```
 
-Validation test:
+Validation tests:
 
 ```text
 tests/test_app_data_validation.py
+tests/test_fetch_igdb_selection.py
+tests/test_app_filters.py
+tests/test_recommendation_service.py
+tests/test_hidden_gem_service.py
+tests/test_app_artifact_schema.py
 ```
 
 ---
 
-# 11. Current Implementation Status Summary
+## 11. Current Implementation Status Summary
 
 ```text
-Home:                 Implemented
-Explore Games:        Implemented
-Hidden Gems:          Implemented
-Recommendations:      MVP implemented
+Home:                 UI V3 cyberpunk 3-column menu
+Explore Games:        UI V3 with Grid/Detailed views
+Hidden Gems:          UI V3 simplified discovery modes
+Recommendations:      UI V3 minimal wizard with personas
 Chatbot:              Placeholder / teammate integration pending
-Insights:             MVP implemented
+Insights:             UI V3 descriptive/diagnostic split
 Predictive Model:     Placeholder / teammate integration pending
-Methodology:          Implemented
+Methodology:          UI V2 continuous trust page
 ```
 
 Recommended next improvements:
 
-1. Polish game-card layout and reduce overly long tag text.
-2. Add better result pagination or "load more" behavior.
-3. Improve Insights narrative and chart formatting.
-4. Add game detail modal/page behavior.
-5. Integrate teammate predictive artifacts.
-6. Integrate teammate RAG/vector-store artifacts.
-7. Prepare final Streamlit demo flow for evaluators.
-
+1. Run a manual Streamlit QA pass for the UI polish branch.
+2. Fix any visual spacing/card issues found during browser testing.
+3. Add better result pagination or "load more" behavior.
+4. Add a game detail page or modal-style detail view if time allows.
+5. Integrate teammate predictive artifacts when ready.
+6. Integrate teammate RAG/vector-store artifacts when ready.
+7. Prepare the final Streamlit demo flow for evaluators.

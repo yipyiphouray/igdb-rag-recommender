@@ -100,7 +100,7 @@ Stores exported diagnostic analytics tables from the diagnostic exploration note
 
 ### `data/analytics/predictive/`
 
-Reserved for teammate predictive-model outputs, such as model metrics, feature importance, predictions, and evaluation visuals.
+Reserved for teammate predictive/similarity outputs, such as game profile vectors, nearest-neighbor results, persona test results, and similarity evaluation summaries.
 
 ### `data/app/`
 

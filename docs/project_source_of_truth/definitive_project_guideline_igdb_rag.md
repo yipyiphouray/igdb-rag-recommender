@@ -4,7 +4,7 @@
 **Course:** BUSA 649  
 **Team:** QUEST ACCEPTED!  
 **Project:** IGDB Game Discovery & RAG Recommendation System  
-**Core Positioning:** A four-pillar analytics project that combines an IGDB-powered relational database, exploratory analytics, predictive modeling, hybrid recommendation logic, and a RAG chatbot interface to help users discover games through natural-language preferences.
+**Core Positioning:** A four-pillar analytics project that combines an IGDB-powered relational database, exploratory analytics, similarity-based predictive scoring, hybrid recommendation logic, and a RAG chatbot interface to help users discover games through natural-language preferences.
 
 ---
 
@@ -18,8 +18,8 @@ The project should demonstrate the full analytics lifecycle:
 2. **Data engineering** through a structured extraction and relational database pipeline.
 3. **Descriptive analytics** to understand the game catalog.
 4. **Diagnostic analytics** to uncover patterns behind ratings, popularity, genres, themes, and platforms.
-5. **Predictive analytics** to classify or score games based on quality and match potential.
-6. **Prescriptive analytics** to recommend games to users.
+5. **Predictive analytics** to estimate match potential using cosine similarity instead of supervised machine learning.
+6. **Prescriptive analytics** to recommend games using structured filters, similarity ranking, and grounded explanations.
 7. **RAG chatbot interface** to let users ask for games in natural language.
 8. **Dashboard/application layer** to present findings, model results, recommendations, and chatbot outputs.
 
@@ -102,15 +102,16 @@ Key outputs:
 - Genre-theme-platform relationships
 - Developer/publisher patterns where feasible
 
-### Objective 3: Build Predictive and Prescriptive Logic
+### Objective 3: Build Similarity-Based Predictive and Prescriptive Logic
 
-Develop a predictive model and recommendation engine.
+Develop a similarity-scoring layer and recommendation engine.
 
 Key outputs:
 
-- Feature table for modeling
-- High-rated game classifier
-- Evaluation metrics such as ROC-AUC, precision, recall, and confusion matrix
+- Game profile feature table for similarity scoring
+- Cosine similarity match-scoring function
+- Top-k similarity ranking outputs
+- Relevance checks such as persona tests, precision@k, hit rate, and manual review
 - Hybrid recommendation scoring function
 - Explainable recommendation outputs
 
@@ -144,8 +145,8 @@ The following are core commitments:
 - Data cleaning and transformation rules.
 - Descriptive analytics dashboard.
 - Diagnostic analytics dashboard.
-- Predictive model for high-rated game classification.
-- Hybrid recommendation engine.
+- Similarity-based predictive scoring for user-game and game-game match potential.
+- Hybrid recommendation engine using structured rules, cosine similarity, and explainable ranking.
 - Game profile document generation for embeddings.
 - Vector search for semantic retrieval.
 - RAG chatbot that only uses retrieved game context.
@@ -193,8 +194,8 @@ Recommended build order:
 5. Data quality checks pass.
 6. Descriptive analytics are completed.
 7. Diagnostic analytics are completed.
-8. Predictive feature table is created.
-9. Predictive model is trained and evaluated.
+8. Game profile feature table is created.
+9. Cosine similarity scoring is implemented and evaluated.
 10. Recommendation scoring function works.
 11. Game profile documents are generated.
 12. Vector search works.
@@ -230,11 +231,11 @@ Diagnostic Analysis       |
    v                   RAG Retrieval
 Dashboard Pages           |
                           v
-Predictive Feature     LLM Response Generation
+Similarity Feature    LLM Response Generation
 Table                     |
    |                      v
    v                   Chatbot Interface
-ML Model
+Cosine Similarity
    |
    v
 Recommendation Scoring Engine
@@ -503,10 +504,11 @@ For recommendation and RAG use, a game should ideally have:
 - Summary or storyline
 - At least one genre, theme, platform, or keyword
 
-For predictive modeling, a game should have:
+For similarity-based predictive scoring, a game should have:
 
-- Target variable availability, such as `total_rating`
-- Sufficient features for prediction
+- Sufficient metadata to build a meaningful game profile
+- Usable structured fields such as genres, themes, platforms, and release information
+- Usable text fields such as summary, storyline, or keywords when available
 
 ---
 
@@ -650,72 +652,72 @@ Components:
 
 ### Main Question
 
-> Can we predict whether a game is likely to be highly rated or relevant to a user’s preferences?
+> Can we estimate which games are most similar or relevant to a user's preferences?
 
 ### Purpose
 
-Predictive analytics should show that the project can move beyond describing the catalog and estimate game quality or match potential using structured metadata.
+Predictive analytics should show that the project can move beyond describing the catalog and estimate match potential using structured metadata and text profile similarity. This project will use cosine similarity rather than a supervised machine learning classifier.
 
-### 15.1 Target Variable
+### 15.1 Similarity Objective
 
-Recommended target:
+Recommended objective:
 
 ```text
-high_rated = 1 if total_rating >= 80 else 0
+score how closely a game matches a user preference profile or another reference game
 ```
 
-Only include games with valid `total_rating` in the supervised model.
+This objective avoids treating `total_rating` as a ground-truth label for personal enjoyment. Ratings can still be used as a supporting quality signal in the final recommendation rank.
 
-### 15.2 Feature Engineering
+### 15.2 Profile and Feature Engineering
 
-Recommended features:
+Recommended profile fields:
 
 | Feature Type | Examples |
 |---|---|
 | Release features | release_year, game_age |
 | Platform features | number_of_platforms, platform flags |
-| Genre features | one-hot encoded genres |
-| Theme features | one-hot encoded themes |
+| Genre features | genre indicators or weighted genre tokens |
+| Theme features | theme indicators or weighted theme tokens |
 | Company features | developer/publisher indicators if reliable |
 | Popularity features | rating_count, log_rating_count |
-| Text features | summary length, storyline availability, optional embeddings |
+| Text features | summary, storyline, keywords, optional embeddings |
 | Metadata completeness | has_summary, has_storyline, num_genres, num_themes |
 
-### 15.3 Model Choices
+### 15.3 Similarity Method
 
-Use simple, explainable models first.
+Use simple, explainable similarity scoring first.
 
-Recommended baseline models:
+Recommended approach:
 
-1. Logistic Regression
-2. Random Forest
-3. Gradient Boosting / XGBoost if time allows
+1. Build a game profile representation from structured fields and available text.
+2. Transform profiles into comparable vectors.
+3. Use cosine similarity to rank candidate games against a user preference profile or reference game.
+4. Combine the similarity score with structured recommendation rules.
 
-Recommended final model selection criteria:
+Recommended method selection criteria:
 
-- Strong enough performance.
 - Easy to explain.
-- Compatible with available time.
-- Does not dominate the whole project.
+- Stable enough for the Streamlit app.
+- Compatible with available artifacts from the teammate.
+- Does not require labels that the project cannot defend.
 
-### 15.4 Train/Test Strategy
+### 15.4 Evaluation Strategy
 
-Recommended split:
+Recommended evaluation:
 
-- 70% training
-- 15% validation
-- 15% test
-
-Alternative:
-
-- 80% training
-- 20% test with cross-validation
+- Persona-based test cases.
+- Reference-game test cases.
+- Precision@k where expected relevant games can be manually labeled.
+- Hit rate for curated examples.
+- Mean reciprocal rank if the test cases define an expected best match.
+- Manual relevance review for top recommendations.
 
 Important considerations:
 
-- Use stratified split because the target may be imbalanced.
-- Do not evaluate only with accuracy.
-- Compare against a simple baseline.
+- Do not evaluate the scorer as if it were a supervised classifier.
+- Check whether top results satisfy platform, genre, theme, and vibe constraints.
+- Compare against a simple baseline such as genre-only matching.
+- Document failure cases where similarity retrieves technically similar but practically unhelpful games.
 
 ### 15.5 Evaluation Metrics
 
@@ -723,39 +725,37 @@ Recommended metrics:
 
 | Metric | Why It Matters |
 |---|---|
-| ROC-AUC | Measures ranking ability across thresholds |
-| Precision | Important when recommending high-rated games |
-| Recall | Measures ability to capture high-rated games |
-| F1-score | Balances precision and recall |
-| Confusion matrix | Easy to explain to non-technical audience |
-| Feature importance | Helps interpret drivers |
+| Precision@k | Measures how many top results are relevant |
+| Hit rate@k | Measures whether at least one relevant result appears in the top results |
+| Mean reciprocal rank | Rewards relevant results appearing near the top |
+| Manual relevance rating | Captures vibe and usefulness when no formal labels exist |
+| Constraint satisfaction rate | Ensures platform and filter requirements are respected |
 
 Target:
 
 ```text
-ROC-AUC >= 0.70
+Top recommendations should be explainable, relevant, and constraint-valid in the manual/persona test suite.
 ```
 
-This is a reasonable academic target, but if the data does not support it, document why.
-
-### 15.6 Model Interpretation
+### 15.6 Interpretation
 
 Include interpretation such as:
 
-- Which genres are associated with higher predicted quality?
-- Does platform coverage matter?
-- Does metadata completeness influence prediction?
-- Does rating count correlate with predicted high-rating probability?
+- Which fields drive similarity most strongly?
+- Are recommendations mostly driven by genre/theme, platform, or text profile similarity?
+- Does the method over-return popular games?
+- Does the method surface useful hidden gems when relevant?
+- Where does cosine similarity fail to capture subjective vibe?
 
 ### 15.7 Predictive Limitations
 
 Document clearly:
 
-- Ratings are not perfect measures of quality.
-- IGDB data may have missing or biased ratings.
-- Popular games may have more complete metadata.
-- The model predicts historical rating patterns, not personal enjoyment.
-- The classifier should support recommendation, not replace user preference matching.
+- Cosine similarity estimates metadata/profile closeness, not guaranteed personal enjoyment.
+- IGDB metadata may be incomplete or unevenly detailed.
+- Games with richer text and tags may receive better similarity matches.
+- Ratings are supporting signals, not ground truth for whether a user will like a game.
+- The similarity scorer should support recommendation, not replace user preference matching and explanation.
 
 ---
 
@@ -783,7 +783,7 @@ The engine should combine:
    Natural-language match between user prompt and game profile.
 
 4. **Quality score**  
-   Rating-based or model-based quality signal.
+   Rating-based quality signal used as support, not as the only ranking driver.
 
 5. **Hidden gem adjustment**  
    Boosts relevant, high-quality, lower-popularity games.
@@ -806,7 +806,7 @@ Examples:
 - Keyword match
 - Similarity to user prompt
 - Rating score
-- Predicted high-rated probability
+- Cosine similarity match score
 - Hidden gem boost
 - Popularity confidence
 
@@ -819,7 +819,7 @@ final_score =
     0.40 * semantic_similarity
   + 0.20 * genre_theme_match_score
   + 0.15 * normalized_rating_score
-  + 0.10 * predicted_quality_score
+  + 0.10 * cosine_similarity_score
   + 0.10 * platform_match_score
   + 0.05 * hidden_gem_boost
 ```
@@ -833,7 +833,7 @@ This formula can be adjusted after testing.
 | semantic_similarity | Similarity between user prompt and game profile embedding |
 | genre_theme_match_score | Structured match on extracted genres/themes |
 | normalized_rating_score | Rating scaled from 0 to 1 |
-| predicted_quality_score | Model probability that game is high-rated |
+| cosine_similarity_score | Profile similarity between the user/reference profile and the candidate game |
 | platform_match_score | 1 if matched, 0 if not, or filtered out if required |
 | hidden_gem_boost | Small boost for high-quality lower-popularity games |
 
@@ -975,7 +975,7 @@ Streamlit is recommended for the MVP because it is fast to build and suitable fo
 | Home | Explain project, data source, and system flow |
 | Catalog Overview | Descriptive analytics |
 | Hidden Gems & Diagnostics | Diagnostic analytics |
-| Predictive Model | Model performance and interpretation |
+| Predictive / Similarity Scoring | Cosine similarity method, ranking behavior, and interpretation |
 | Recommendation Engine | Structured recommendation filters and ranked results |
 | RAG Chatbot | Natural-language game discovery |
 | Data Quality | Missingness, coverage, limitations |
@@ -1015,16 +1015,16 @@ Include:
 - Rating vs rating count scatter plot
 - Genre/theme breakdown
 
-### 18.6 Predictive Model Page
+### 18.6 Predictive / Similarity Scoring Page
 
 Include:
 
-- Target definition
-- Model selected
-- ROC-AUC
-- Precision/recall/F1
-- Confusion matrix
-- Feature importance
+- Similarity objective
+- Profile fields used for scoring
+- Cosine similarity method
+- Example user profile or reference-game query
+- Top-k ranked results
+- Relevance checks such as persona tests, precision@k, hit rate, or manual review
 - Interpretation
 - Limitations
 
@@ -1065,8 +1065,8 @@ Business rules keep the project consistent and defensible.
 ### 19.2 Rating Rules
 
 - Use `total_rating` as the primary quality rating when available.
-- Define high-rated games as `total_rating >= 80`.
-- Exclude missing ratings from supervised rating classification.
+- Use `total_rating >= 80` as a high-rated flag for descriptive, diagnostic, and hidden-gem analysis.
+- Do not treat missing ratings as negative preference labels.
 - Use rating count to represent confidence or popularity.
 
 ### 19.3 Hidden Gem Rules
@@ -1103,7 +1103,7 @@ A hidden gem must satisfy:
 
 ## 20. Evaluation Plan
 
-Evaluation should cover the full system, not only the machine learning model.
+Evaluation should cover the full system, not only the similarity scorer.
 
 ### 20.1 Data Quality Evaluation
 
@@ -1139,17 +1139,18 @@ Checks:
 - Same for platforms, themes, companies, and release dates.
 - ERD accurately reflects implemented tables.
 
-### 20.3 Predictive Model Evaluation
+### 20.3 Predictive / Similarity Scoring Evaluation
 
 Report:
 
-- Baseline performance.
-- Final model performance.
-- ROC-AUC.
-- Precision, recall, F1.
-- Confusion matrix.
-- Feature importance.
-- Model limitations.
+- Similarity objective.
+- Profile fields used.
+- Baseline comparison, such as genre-only matching.
+- Top-k relevance results.
+- Persona or reference-game test cases.
+- Constraint satisfaction rate.
+- Manual relevance review.
+- Similarity scoring limitations.
 
 ### 20.4 Recommendation Engine Evaluation
 
@@ -1194,7 +1195,7 @@ Assess:
 | Metric | Definition | Target | Measurement |
 |---|---|---|---|
 | Data Quality & Integrity | Valid schema, no orphaned relationships, required fields respected | 100% relationship integrity | SQL assertion scripts |
-| Predictive Model Performance | Ability to classify high-rated games | ROC-AUC >= 0.70 | Holdout test or cross-validation |
+| Similarity Match Quality | Ability to rank relevant games for user or reference-game profiles | Strong manual/persona relevance with valid top-k results | Persona tests, precision@k, hit rate, and manual review |
 | Recommendation Speed | Time to retrieve and rank recommendations | < 2 seconds excluding LLM response | Execution logs |
 | Chatbot Grounding Accuracy | Responses do not include unsupported metadata | >= 90% grounded responses | Manual 50-prompt evaluation |
 | Dashboard Completeness | All four pillars represented | 100% required pages completed | Final review checklist |
@@ -1214,7 +1215,7 @@ Assess:
 | Database | SQLite |
 | SQL querying | sqlite3 / SQLAlchemy |
 | Visualization | matplotlib, plotly, Streamlit charts |
-| Machine learning | scikit-learn |
+| Similarity scoring | pandas, numpy, scikit-learn cosine similarity utilities |
 | Embeddings | sentence-transformers or Gemini embeddings |
 | Vector store | FAISS or Chroma |
 | Chatbot/RAG | Custom retrieval + LLM call |
@@ -1258,7 +1259,7 @@ igdb-game-discovery-rag/
 │   ├── 01_data_exploration.ipynb
 │   ├── 02_data_quality_checks.ipynb
 │   ├── 03_descriptive_diagnostic_analysis.ipynb
-│   ├── 04_predictive_modeling.ipynb
+│   ├── 04_similarity_match_scoring.ipynb
 │   └── 05_recommendation_testing.ipynb
 │
 ├── src/
@@ -1279,10 +1280,10 @@ igdb-game-discovery-rag/
 │   ├── analytics/
 │   │   ├── descriptive.py
 │   │   └── diagnostic.py
-│   ├── modeling/
-│   │   ├── train_model.py
-│   │   ├── evaluate_model.py
-│   │   └── predict_quality.py
+│   ├── similarity/
+│   │   ├── build_profiles.py
+│   │   ├── score_similarity.py
+│   │   └── evaluate_similarity.py
 │   ├── recommender/
 │   │   ├── scoring.py
 │   │   ├── recommend.py
@@ -1297,7 +1298,7 @@ igdb-game-discovery-rag/
 │       └── pages/
 │           ├── 1_catalog_overview.py
 │           ├── 2_hidden_gems.py
-│           ├── 3_predictive_model.py
+│           ├── 3_similarity_scoring.py
 │           ├── 4_recommendations.py
 │           └── 5_rag_chatbot.py
 │
@@ -1327,8 +1328,8 @@ Because this is a two-person team, each person should own a primary domain and b
 
 | Team Member | Primary Ownership | Backup Ownership |
 |---|---|---|
-| Calvin | Data engineering, API pipeline, database, RAG/NLP | Analytics, modeling, dashboard |
-| Faye | Analytics, modeling, dashboard, UX | Data engineering, RAG/NLP |
+| Calvin | Data engineering, API pipeline, database, RAG/NLP | Analytics, similarity scoring, dashboard |
+| Faye | Analytics, similarity scoring, dashboard, UX | Data engineering, RAG/NLP |
 
 ### 24.1 Practical Work Split
 
@@ -1350,8 +1351,8 @@ Recommended division:
 - Descriptive analysis.
 - Diagnostic analysis.
 - Hidden gem logic.
-- Predictive modeling.
-- Model evaluation visuals.
+- Similarity scoring.
+- Relevance evaluation visuals.
 - Streamlit dashboard layout.
 - Recommendation result presentation.
 
@@ -1376,7 +1377,7 @@ The proposal uses an 8-week plan. The following version adds more specific miles
 | Week 2 | API extraction and raw data caching | Working IGDB extraction script, raw JSON saved |
 | Week 3 | Database schema, cleaning, normalization | SQLite database, normalized tables, ERD draft |
 | Week 4 | Descriptive and diagnostic analytics | Catalog dashboard visuals, hidden gem logic |
-| Week 5 | Predictive model and feature table | Trained model, evaluation metrics, feature importance |
+| Week 5 | Similarity scoring and profile feature table | Game profile vectors, cosine similarity ranking, relevance checks |
 | Week 6 | Recommendation engine and vector store | Hybrid scoring, embeddings, retrieval working |
 | Week 7 | RAG chatbot and dashboard integration | Streamlit app with chatbot and analytics pages |
 | Week 8 | Testing, validation, report, demo polish | Final report, README, test results, final demo |
@@ -1393,7 +1394,7 @@ The proposal uses an 8-week plan. The following version adds more specific miles
 | Popularity bias | High | Medium | Add hidden gem boost and percentile-based popularity logic |
 | RAG hallucination | Medium | High | Use strict context-only prompt and manual grounding evaluation |
 | Scope creep | High | High | Treat deployment, profiles, and feedback as stretch goals only |
-| Predictive model underperforms | Medium | Medium | Include baseline, explain limitations, emphasize full analytics system |
+| Similarity ranking is weak or too generic | Medium | Medium | Compare against simple baselines, tune profile fields, explain limitations |
 | Dashboard integration delays | Medium | Medium | Build simple pages early; polish after core logic works |
 | Team bottlenecks | Medium | Medium | Use clear ownership and weekly integration checkpoints |
 
@@ -1411,7 +1412,7 @@ The final submission should include:
 | Data dictionary | Explanation of tables and fields | `.md` |
 | Descriptive analytics | Catalog overview and summary visuals | Dashboard / notebook |
 | Diagnostic analytics | Hidden gems and rating relationship analysis | Dashboard / notebook |
-| Predictive model | High-rated game classifier | `.py`, notebook, model file |
+| Similarity scoring module | Cosine similarity match scoring and top-k ranking | `.py`, notebook/artifacts |
 | Recommendation engine | Hybrid scoring and ranked outputs | `.py` |
 | RAG chatbot | Natural-language grounded recommender | Streamlit page / `.py` |
 | Dashboard/app | Integrated user interface | Streamlit app |
@@ -1465,7 +1466,7 @@ Recommended README outline:
 ## Environment Variables
 ## How to Run the Pipeline
 ## How to Build the Database
-## How to Train the Model
+## How to Build Similarity Profiles and Run Match Scoring
 ## How to Run the Streamlit App
 ## Project Structure
 ## Evaluation Summary
@@ -1496,13 +1497,13 @@ Use this checklist to know whether the project is complete enough.
 - [ ] Hidden gem logic is defined and implemented.
 - [ ] Visualizations are clear and interpretable.
 
-### Predictive Modeling
+### Predictive / Similarity Scoring
 
-- [ ] Target variable is defined.
-- [ ] Feature table is built.
-- [ ] Baseline model is included.
-- [ ] Final model is evaluated.
-- [ ] ROC-AUC, precision, recall, and F1 are reported.
+- [ ] Similarity objective is defined.
+- [ ] Game profile feature table is built.
+- [ ] Baseline matching approach is included.
+- [ ] Cosine similarity scorer is evaluated.
+- [ ] Top-k relevance, hit rate, persona review, or manual relevance checks are reported.
 - [ ] Limitations are documented.
 
 ### Recommendation Engine
@@ -1527,7 +1528,7 @@ Use this checklist to know whether the project is complete enough.
 - [ ] Home page exists.
 - [ ] Catalog overview page exists.
 - [ ] Hidden gems/diagnostic page exists.
-- [ ] Predictive model page exists.
+- [ ] Predictive / similarity scoring page exists.
 - [ ] Recommendation page exists.
 - [ ] RAG chatbot page exists.
 
@@ -1546,7 +1547,7 @@ Use this checklist to know whether the project is complete enough.
 
 Use this as the clean final framing for the project:
 
-> This project builds a four-pillar analytics system for video game discovery using IGDB data. It combines a relational database, descriptive and diagnostic analysis, predictive quality modeling, prescriptive hybrid recommendations, and a RAG chatbot interface to help users find games based on natural-language preferences. The system is designed to reduce choice paralysis, surface hidden gems, and provide explainable, dataset-grounded recommendations.
+> This project builds a four-pillar analytics system for video game discovery using IGDB data. It combines a relational database, descriptive and diagnostic analysis, similarity-based predictive scoring, prescriptive hybrid recommendations, and a RAG chatbot interface to help users find games based on natural-language preferences. The system is designed to reduce choice paralysis, surface hidden gems, and provide explainable, dataset-grounded recommendations.
 
 ---
 
@@ -1559,7 +1560,7 @@ Prioritize this order:
 1. Working data pipeline.
 2. Clean database.
 3. Clear analytics.
-4. Simple but defensible model.
+4. Simple but defensible similarity scoring.
 5. Transparent recommendation logic.
 6. Grounded chatbot.
 7. Clean dashboard.

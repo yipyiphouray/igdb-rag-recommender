@@ -1,6 +1,6 @@
 # IGDB Game Discovery & RAG Recommendation System
 
-This project builds a Streamlit-based game discovery and recommendation MVP using IGDB data. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, and placeholder integration pages for predictive modeling and RAG chatbot work.
+This project builds a Streamlit-based game discovery and recommendation MVP using IGDB data. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, similarity-based predictive scoring, and placeholder integration pages for similarity/RAG work.
 
 The current project direction is:
 
@@ -26,11 +26,11 @@ Completed:
 - Guided structured Recommendations page.
 - Insights page.
 - Methodology page.
-- Predictive and RAG placeholder pages.
+- Predictive/similarity and RAG placeholder pages.
 
 Pending / teammate-owned:
 
-- Predictive model artifact integration.
+- Similarity-scoring artifact integration.
 - RAG/vector-store integration.
 - Final chatbot behavior.
 - Final demo flow and presentation polish.
@@ -93,7 +93,7 @@ Hidden Gems
 Recommendations
 Chatbot
 Insights
-Predictive Model
+Predictive / Similarity Scoring
 Methodology
 ```
 
@@ -296,14 +296,14 @@ This artifact is generated from the finalized diagnostic hidden-gem definition.
 
 ## Teammate Integration Contracts
 
-Predictive model expected artifacts:
+Predictive/similarity scoring expected artifacts:
 
 ```text
-data/analytics/predictive/model_metrics.json
-data/analytics/predictive/feature_importance.csv
-data/analytics/predictive/model_predictions.parquet
-data/analytics/predictive/confusion_matrix.png
-data/analytics/predictive/roc_curve.png
+data/analytics/predictive/similarity_config.json
+data/analytics/predictive/game_similarity_profiles.parquet
+data/analytics/predictive/similarity_neighbors.parquet
+data/analytics/predictive/persona_similarity_results.parquet
+data/analytics/predictive/similarity_evaluation.json
 ```
 
 RAG expected artifacts:
@@ -314,7 +314,7 @@ data/rag/retrieval_metadata.parquet
 data/rag/vector_store/
 ```
 
-The current Predictive Model and Chatbot pages are designed to load safely even when these artifacts are not yet available.
+The current Predictive / Similarity Scoring and Chatbot pages are designed to load safely even when these artifacts are not yet available.
 
 ## Typical Development Flow
 
@@ -324,7 +324,7 @@ The current Predictive Model and Chatbot pages are designed to load safely even 
 3. Run Streamlit locally.
 4. Complete manual QA checklist.
 5. Fix page-specific issues.
-6. Integrate teammate predictive/RAG artifacts when ready.
+6. Integrate teammate similarity/RAG artifacts when ready.
 7. Polish final demo flow.
 ```
 

@@ -15,7 +15,7 @@ This document defines the architecture for the Streamlit MVP of the IGDB Game Di
 
 The app should feel like a real game-discovery product for players while also giving evaluators a clear, inspectable view of the project's data engineering, four analytics pillars, recommendation logic, model outputs, RAG approach, and limitations.
 
-The Streamlit app is not the place to rebuild the database, rerun extraction, retrain models, or generate embeddings. Those processes should remain in reproducible scripts and notebooks. Streamlit should load prepared, validated assets and present them through a polished interactive interface.
+The Streamlit app is not the place to rebuild the database, rerun extraction, recompute similarity profiles, or generate embeddings. Those processes should remain in reproducible scripts and notebooks. Streamlit should load prepared, validated assets and present them through a polished interactive interface.
 
 ---
 
@@ -121,7 +121,7 @@ Filters and game cards
 Hidden-gem discovery
 Rule-based or hybrid recommendation logic
 Descriptive and diagnostic insight pages
-Predictive-model integration page
+Predictive/similarity-scoring integration page
 RAG chatbot integration page
 Methodology and limitation transparency
 Local app execution
@@ -573,7 +573,7 @@ Hidden Gems
 Recommendations
 Chatbot
 Insights
-Predictive Model
+Predictive / Similarity Scoring
 Methodology
 ```
 
@@ -1096,65 +1096,63 @@ The page supports the app story rather than feeling like a raw dashboard dump.
 
 ---
 
-# 9.7 Predictive Model
+# 9.7 Predictive / Similarity Scoring
 
 ## Purpose
 
-Demonstrate the predictive analytics pillar and integrate your teammate's work.
+Demonstrate the predictive analytics pillar as similarity-based match scoring and integrate your teammate's work.
 
 ## Initial placeholder
 
 ```text
-Model objective
-Target definition
-Feature groups
-Evaluation metric placeholders
-Model status
+Similarity objective
+Profile fields
+Cosine similarity method
+Relevance evaluation placeholders
+Artifact status
 ```
 
 ## Final page content
 
 ```text
-Model objective
-High-rated target definition
-Training and test approach
-Performance metrics
-Confusion matrix
-ROC curve
-Feature importance
-Prediction examples on catalog games
-Model limitations
+Similarity objective
+Profile fields used
+Cosine similarity method
+Top-k ranked examples on catalog games
+Persona/reference-game test results
+Precision@k, hit rate, or manual relevance summaries where available
+Similarity limitations
 ```
 
 ## Recommended integration artifacts
 
 ```text
-data/analytics/predictive/model_metrics.json
-data/analytics/predictive/feature_importance.csv
-data/analytics/predictive/model_predictions.parquet
-data/analytics/predictive/confusion_matrix.png
-data/analytics/predictive/roc_curve.png
-docs/predictive_model_methodology.md
+data/analytics/predictive/similarity_config.json
+data/analytics/predictive/game_similarity_profiles.parquet
+data/analytics/predictive/similarity_neighbors.parquet
+data/analytics/predictive/persona_similarity_results.parquet
+data/analytics/predictive/similarity_evaluation.json
+docs/similarity_scoring_methodology.md
 ```
 
 ## Important product rule
 
 Do not let users type arbitrary imaginary game concepts and receive a fake predicted rating.
 
-Use predictions only for existing catalog games:
+Use similarity results only for existing catalog games:
 
 ```text
-Model-estimated likelihood of being highly rated
+Cosine-similarity match score
 ```
 
-Treat prediction as a supporting signal, not a replacement for observed ratings.
+Treat similarity as a supporting recommendation signal, not a replacement for observed ratings or user preference explanation.
 
 ## Completion criteria
 
 ```text
 The page loads even when artifacts are missing.
-Model metrics are clearly labeled.
-Prediction outputs are tied to existing games.
+Similarity metrics are clearly labeled.
+Similarity outputs are tied to existing games.
 Limitations are shown.
 ```
 
@@ -1265,7 +1263,7 @@ Generate candidate explanations.
 Responsibilities:
 
 ```text
-Load predictive artifacts.
+Load predictive/similarity artifacts.
 Attach model probabilities to existing catalog games.
 Provide metrics and visual paths.
 Return graceful fallback output when files do not exist.
@@ -1567,27 +1565,28 @@ This is not part of the required MVP.
 
 # 15. Data Contracts With Teammate
 
-## 15.1 Predictive analytics contract
+## 15.1 Predictive/similarity analytics contract
 
 Your teammate should provide:
 
 ```text
-model_metrics.json
-feature_importance.csv
-model_predictions.parquet
-confusion_matrix.png
-roc_curve.png
-predictive_model_methodology.md
+similarity_config.json
+game_similarity_profiles.parquet
+similarity_neighbors.parquet
+persona_similarity_results.parquet
+similarity_evaluation.json
+similarity_scoring_methodology.md
 ```
 
-Recommended minimum fields for `model_predictions.parquet`:
+Recommended minimum fields for `similarity_neighbors.parquet`:
 
 ```text
 game_id
-predicted_high_rated_probability
-predicted_high_rated_class
-model_version
-prediction_available_flag
+neighbor_game_id
+similarity_score
+similarity_method
+similarity_version
+similarity_available_flag
 ```
 
 ## 15.2 RAG contract
@@ -1627,7 +1626,7 @@ Fully integrated:
 
 ## 15.4 Initial integration priority
 
-The first Streamlit implementation should include Predictive Model and Chatbot pages as placeholder/integration-contract pages. These pages should clearly show what artifacts are expected from the teammate and should fail gracefully when those artifacts are missing.
+The first Streamlit implementation should include Predictive / Similarity Scoring and Chatbot pages as placeholder/integration-contract pages. These pages should clearly show what artifacts are expected from the teammate and should fail gracefully when those artifacts are missing.
 
 Predictive and RAG availability should not block:
 
@@ -1660,7 +1659,7 @@ Users can receive explainable recommendations.
 ```text
 Insights page communicates key descriptive and diagnostic findings.
 Methodology accurately explains the curated sample and caveats.
-Predictive model page can display teammate outputs.
+Predictive/similarity page can display teammate outputs.
 ```
 
 ## Technical
@@ -1708,7 +1707,7 @@ Do not treat this as a weekly schedule. It is the preferred dependency order.
 7. Build Insights using selected analytics outputs.
 8. Build a basic Recommendations page with transparent MVP scoring.
 9. Build Home page around the completed discovery features.
-10. Add Predictive Model placeholder and integration contract.
+10. Add Predictive / Similarity Scoring placeholder and integration contract.
 11. Add Chatbot placeholder and integration contract.
 12. Integrate teammate artifacts after their interfaces are stable.
 13. Run functional, UX, and local execution testing.

@@ -93,7 +93,7 @@ Current content:
   - Insights;
   - Methodology;
   - Chatbot;
-  - Predictive Model.
+  - Predictive / Similarity Scoring.
 - Page details appear on hover.
 - Panels are arranged in a 3-column menu grid.
 
@@ -435,7 +435,7 @@ Known limitations:
 
 - The scoring formula is intentionally simple for MVP clarity.
 - Game mode, perspective, multiplayer, and natural-language preference scoring can be added later.
-- This page should eventually integrate teammate predictive/RAG signals when those artifacts are ready.
+- This page should eventually integrate teammate similarity/RAG signals when those artifacts are ready.
 
 ---
 
@@ -572,7 +572,7 @@ Known limitations:
 
 ---
 
-## 8. Predictive Model
+## 8. Predictive / Similarity Scoring
 
 File:
 
@@ -582,21 +582,21 @@ pages/7_Predictive_Model.py
 
 Purpose:
 
-Provides the app shell for teammate predictive-model integration.
+Provides the app shell for teammate similarity-scoring integration.
 
 Primary audience:
 
-- Teammate building the predictive pillar.
-- Evaluators reviewing model results once available.
+- Teammate building the predictive/similarity pillar.
+- Evaluators reviewing similarity scoring and relevance results once available.
 
 Expected future artifacts:
 
 ```text
-data/analytics/predictive/model_metrics.json
-data/analytics/predictive/feature_importance.csv
-data/analytics/predictive/model_predictions.parquet
-data/analytics/predictive/confusion_matrix.png
-data/analytics/predictive/roc_curve.png
+data/analytics/predictive/similarity_config.json
+data/analytics/predictive/game_similarity_profiles.parquet
+data/analytics/predictive/similarity_neighbors.parquet
+data/analytics/predictive/persona_similarity_results.parquet
+data/analytics/predictive/similarity_evaluation.json
 ```
 
 Service-layer dependency:
@@ -607,9 +607,9 @@ src/app/predictive_service.py
 
 Current content:
 
-- Predictive artifact status.
-- Model metrics display if available.
-- Model predictions preview if available.
+- Predictive/similarity artifact status.
+- Similarity configuration display if available.
+- Similarity results preview if available.
 - Expected teammate artifact list.
 
 Current status:
@@ -620,17 +620,17 @@ Placeholder / integration-contract page.
 
 Required final behavior:
 
-- Show model objective.
-- Show target definition.
-- Show train/test approach.
-- Show performance metrics.
-- Show feature importance.
+- Show similarity objective.
+- Show profile fields used for scoring.
+- Show cosine similarity method.
+- Show top-k relevance results.
+- Show persona/manual evaluation results.
 - Show limitations.
-- Attach predictions only to existing catalog games.
+- Attach similarity outputs only to existing catalog games.
 
 Known limitations:
 
-- Predictive artifacts are not currently integrated.
+- Predictive/similarity artifacts are not currently integrated.
 - This page should remain non-blocking until teammate outputs are ready.
 
 ---
@@ -697,7 +697,7 @@ Streamlit loads prepared assets. It should not:
 
 - rebuild the database;
 - call the live IGDB API;
-- retrain models;
+- recompute similarity profiles;
 - generate embeddings during normal app use.
 
 Known limitations:
@@ -768,7 +768,7 @@ Hidden Gems:          UI V3 simplified discovery modes
 Recommendations:      UI V3 minimal wizard with personas
 Chatbot:              Placeholder / teammate integration pending
 Insights:             UI V3 descriptive/diagnostic split
-Predictive Model:     Placeholder / teammate integration pending
+Predictive/Similarity: Placeholder / teammate integration pending
 Methodology:          UI V2 continuous trust page
 ```
 
@@ -778,6 +778,6 @@ Recommended next improvements:
 2. Fix any visual spacing/card issues found during browser testing.
 3. Add better result pagination or "load more" behavior.
 4. Add a game detail page or modal-style detail view if time allows.
-5. Integrate teammate predictive artifacts when ready.
+5. Integrate teammate similarity artifacts when ready.
 6. Integrate teammate RAG/vector-store artifacts when ready.
 7. Prepare the final Streamlit demo flow for evaluators.

@@ -1108,9 +1108,9 @@ Ideally 0 rows. If rows appear, document how these games will be handled in rati
 
 ---
 
-## DQ-031 — High-Rated Modeling Eligibility Summary
+## DQ-031 — Reliable Rating and High-Rated Summary
 
-**Purpose:** Count how many games are eligible for the predictive modeling target.
+**Purpose:** Count how many games have reliable rating evidence and how many qualify as high-rated for descriptive, diagnostic, hidden-gem, or supporting recommendation signals.
 
 **Severity:** Medium
 
@@ -1126,7 +1126,7 @@ FROM games;
 
 **Expected Result:**
 
-This is a summary check. It should return 1 row. Use the result to document modeling sample size and class balance.
+This is a summary check. It should return 1 row. Use the result to document reliable rating coverage and high-rated candidate counts. Do not treat this as a supervised machine learning target unless the project scope changes.
 
 ---
 

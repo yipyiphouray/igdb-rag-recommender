@@ -56,8 +56,8 @@ The descriptive pillar should be positioned as the foundation for the other anal
 |---|---|---|
 | Descriptive | What does the catalog look like? | Summarize dataset composition, coverage, and quality. |
 | Diagnostic | Why do patterns exist? | Investigate ratings, popularity bias, hidden gems, and genre/theme performance. |
-| Predictive | Can we estimate future or unknown outcomes? | Predict whether a game is likely to be highly rated. |
-| Prescriptive | What should the user do? | Recommend games using filters, scoring, semantic similarity, and RAG. |
+| Predictive | Can we estimate future or unknown match potential? | Score game similarity to user preferences or reference games using cosine similarity. |
+| Prescriptive | What should the user do? | Recommend games using filters, scoring, cosine similarity, and RAG-grounded explanations. |
 
 The descriptive pillar should avoid making causal claims. It should provide clean, trustworthy summaries that support the later pillars.
 
@@ -77,7 +77,7 @@ Because of this, the descriptive analytics layer should not join every table int
 
 Instead, create separate analytics views for each descriptive purpose.
 
-The descriptive layer should use the normalized SQLite database tables and descriptive SQL views. It should not depend on predictive-layer artifacts such as `analytics_ready_games`, `modeling_train_features.csv`, or `modeling_test_features.csv`. Those assets belong to the predictive pillar and can be used later when the project moves into modeling.
+The descriptive layer should use the normalized SQLite database tables and descriptive SQL views. It should not depend on predictive-layer artifacts such as similarity profiles, nearest-neighbor outputs, or persona evaluation results. Those assets belong to the predictive/similarity pillar and can be used later when the project moves into match scoring.
 
 ---
 

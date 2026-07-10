@@ -35,7 +35,7 @@ Changes:
   - Insights
   - Methodology
   - Chatbot
-  - Predictive Model
+  - Predictive / Similarity Scoring
 
 ## Explore Games Page
 
@@ -118,7 +118,7 @@ Changes:
 - Add short interpretation text.
 - Make caveats visible but not overwhelming.
 
-## Predictive Model Page
+## Predictive / Similarity Scoring Page
 
 Status:
 

@@ -1,6 +1,6 @@
 # Streamlit MVP Manual QA Test Cases
 
-This checklist is for manually testing the current Streamlit MVP before additional UI polish, predictive integration, or RAG integration.
+This checklist is for manually testing the current Streamlit MVP before additional UI polish, similarity integration, or RAG integration.
 
 Run the app before starting:
 
@@ -37,7 +37,7 @@ Hidden Gems:          Implemented
 Recommendations:      MVP implemented
 Chatbot:              Placeholder / RAG integration pending
 Insights:             MVP implemented
-Predictive Model:     Placeholder / predictive integration pending
+Predictive/Similarity: Placeholder / similarity integration pending
 Methodology:          Implemented
 ```
 
@@ -655,18 +655,18 @@ Notes:
 
 ---
 
-# 7. Predictive Model Tests
+# 7. Predictive / Similarity Scoring Tests
 
-## TC-PRED-001: Predictive placeholder loads
+## TC-PRED-001: Similarity placeholder loads
 
 Steps:
 
-1. Open `Predictive Model`.
+1. Open `Predictive / Similarity Scoring`.
 
 Expected result:
 
 - Page loads.
-- Predictive artifact status appears.
+- Predictive/similarity artifact status appears.
 - Expected teammate artifact list appears.
 - Missing artifacts do not crash the page.
 

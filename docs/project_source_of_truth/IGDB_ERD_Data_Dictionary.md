@@ -12,7 +12,7 @@ Database file:
 data/database/igdb_games.db
 ```
 
-The database is centered on the `games` table and supports descriptive analytics, diagnostic analytics, predictive modeling, prescriptive recommendation logic, and RAG-based game discovery.
+The database is centered on the `games` table and supports descriptive analytics, diagnostic analytics, similarity-based predictive scoring, prescriptive recommendation logic, and RAG-based game discovery.
 
 ---
 

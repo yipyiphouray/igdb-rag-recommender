@@ -94,7 +94,7 @@ Diagnostic = compare, segment, explain, and identify patterns
 9. Are some developers or publishers overrepresented among high-rated games?
 10. Do separate metadata coverage components relate to rating activity or visibility?
 11. Do game modes, player perspectives, multiplayer support, or playtime bands relate to rating patterns?
-12. Which diagnostic findings should become predictive features later?
+12. Which diagnostic findings should become similarity-scoring or recommendation signals later?
 
 ---
 
@@ -2029,15 +2029,15 @@ modeling deliverable.
 
 Create a table like this:
 
-| Diagnostic Finding | Candidate Predictive Feature | Use? | Reason |
+| Diagnostic Finding | Candidate Similarity/Recommendation Signal | Use? | Reason |
 |---|---|---:|---|
-| Rating count is skewed | `log_total_rating_count` | Conditional | Measures rating activity/confidence; avoid leakage when predicting reception |
-| Cohort-adjusted genre association exists | Genre one-hot encoding | Maybe | Requires later validation outside the curated sample |
-| Cohort-adjusted theme association exists | Theme one-hot encoding | Maybe | Requires later validation outside the curated sample |
+| Rating count is skewed | `log_total_rating_count` | Conditional | Measures rating activity/confidence; avoid overpowering relevance |
+| Cohort-adjusted genre association exists | Genre profile weights | Maybe | Requires later validation outside the curated sample |
+| Cohort-adjusted theme association exists | Theme profile weights | Maybe | Requires later validation outside the curated sample |
 | Platform reach relates to visibility | `num_platforms` | Yes | Measures distribution reach |
 | Metadata components relate to visibility | Separate component variables | Maybe | Avoids conflating different relationship types |
 | Storyline availability differs by rating | `has_storyline` | Maybe | Could be useful but may reflect documentation bias |
-| Developer effects exist but sparse | Developer features | Maybe | Risk of high-cardinality overfitting |
+| Developer effects exist but sparse | Developer signal | Maybe | Risk of over-personalizing or over-weighting sparse data |
 | Playtime bands differ by rating | Playtime band features | Maybe | Useful if coverage is strong |
 | Multiplayer support differs | Multiplayer flags | Maybe | Useful for user preference matching |
 
@@ -2047,8 +2047,8 @@ Export:
 future_pillar_implications.csv
 ```
 
-Any use in predictive or prescriptive work must be evaluated later for leakage,
-availability at prediction time, and sampling bias.
+Any use in predictive/similarity or prescriptive work must be evaluated later for proxy bias,
+availability at recommendation time, and sampling bias.
 
 ---
 

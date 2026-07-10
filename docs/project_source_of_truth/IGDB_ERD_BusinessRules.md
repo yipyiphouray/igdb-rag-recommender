@@ -33,8 +33,8 @@ The database should support:
 
 * Descriptive analytics: catalog composition, release trends, platform distribution, genre/theme distribution.
 * Diagnostic analytics: rating differences, popularity versus rating, hidden-gem patterns, developer/publisher patterns.
-* Predictive analytics: classification of high-rated games and user-game match scoring.
-* Prescriptive analytics: recommendation ranking and filtering.
+* Predictive analytics: cosine-similarity scoring for user-game and game-game match potential.
+* Prescriptive analytics: recommendation ranking, filtering, and grounded explanation.
 * RAG chatbot grounding: generating recommendations only from database-backed game records.
 
 ## BR-002 — Central Entity Rule
@@ -308,7 +308,7 @@ Rationale:
 
 ## BR-014 — High-Rated Game Rule
 
-For predictive modeling and classification, a high-rated game is defined as:
+For descriptive, diagnostic, and hidden-gem analysis, a high-rated game is defined as:
 
 ```text
 highly_rated = 1 if total_rating >= 80
@@ -321,7 +321,7 @@ Recommended additional reliability filter:
 total_rating_count >= 25
 ```
 
-This rule follows the project proposal’s modeling direction.
+This rule supports quality and hidden-gem analysis. It should not be treated as a supervised machine learning target unless the project scope changes.
 
 ---
 
@@ -959,12 +959,12 @@ A game is classified as highly rated when:
 total_rating >= 80
 ```
 
-Recommended modeling version:
+Recommended reliable-rating analysis version:
 
 ```text
-highly_rated = 1 if total_rating >= 80 and total_rating_count >= 25
-highly_rated = 0 if total_rating < 80 and total_rating_count >= 25
-exclude from supervised target if total_rating is null or total_rating_count < 25
+highly_rated = true if total_rating >= 80 and total_rating_count >= 25
+highly_rated = false if total_rating < 80 and total_rating_count >= 25
+exclude from reliable-rating analysis if total_rating is null or total_rating_count < 25
 ```
 
 ## BR-062 — Rating Band Rule
@@ -1307,37 +1307,38 @@ regional releases
 
 ---
 
-# 18. Predictive Modeling Rules
+# 18. Predictive / Similarity Scoring Rules
 
-## BR-084 — Modeling Target Rule
+## BR-084 — Similarity Objective Rule
 
-The default predictive target is:
-
-```text
-highly_rated = total_rating >= 80
-```
-
-Recommended modeling inclusion rule:
+The default predictive objective is:
 
 ```text
-total_rating is not null
-AND total_rating_count >= 25
+rank games by cosine similarity to a user preference profile or reference game
 ```
 
-## BR-085 — Feature Leakage Rule
+Recommended similarity-scoring inclusion rule:
 
-Do not use target-derived fields as predictors.
+```text
+game_id is not null
+AND name is not null
+AND at least one useful profile field is available
+```
 
-If predicting high rating from `total_rating`, do not use:
+## BR-085 — Rating Signal Use Rule
+
+Ratings may be used as supporting quality signals in recommendation ranking, but they should not be treated as ground-truth labels for user enjoyment.
+
+Do not present similarity scores as predicted ratings. Acceptable supporting signals include:
 
 ```text
 total_rating
-rating
-aggregated rating equivalents
-rating_count as a proxy without justification
+total_rating_count
+PopScore visibility signals
+hidden-gem flags
 ```
 
-Potentially acceptable features:
+Primary similarity fields should come from:
 
 ```text
 release_year
@@ -1355,7 +1356,7 @@ player perspective flags
 
 ## BR-086 — Text Feature Rule
 
-Text-derived features from `summary`, `storyline`, genres, themes, and keywords may be used for modeling if documented.
+Text-derived features from `summary`, `storyline`, genres, themes, and keywords may be used for similarity scoring if documented.
 
 Examples:
 
@@ -1367,31 +1368,30 @@ embedding clusters
 semantic topic features
 ```
 
-## BR-087 — Train/Test Split Rule
+## BR-087 — Similarity Evaluation Set Rule
 
-Predictive modeling should avoid random leakage where possible.
+Similarity scoring should be evaluated with reproducible test cases.
 
 Recommended approach:
 
 ```text
-Use a reproducible random seed.
-Consider time-based validation if release year is central to the analysis.
-Document the split strategy.
+Use documented persona prompts or reference-game examples.
+Keep a stable evaluation set for before/after comparison.
+Document any manually labeled expected matches.
 ```
 
-## BR-088 — Model Evaluation Rule
+## BR-088 — Similarity Evaluation Rule
 
-Model performance should be reported using more than accuracy.
+Similarity performance should be reported using top-k relevance checks instead of classifier accuracy.
 
 Recommended metrics:
 
 ```text
-ROC-AUC
-precision
-recall
-F1-score
-confusion matrix
-class balance
+precision@k
+hit rate@k
+mean reciprocal rank where applicable
+constraint satisfaction rate
+manual relevance rating
 ```
 
 ---
@@ -1693,11 +1693,11 @@ Required rules:
 
 ```text
 BR-014 High-Rated Game Rule
-BR-084 Modeling Target Rule
-BR-085 Feature Leakage Rule
+BR-084 Similarity Objective Rule
+BR-085 Rating Signal Use Rule
 BR-086 Text Feature Rule
-BR-087 Train/Test Split Rule
-BR-088 Model Evaluation Rule
+BR-087 Similarity Evaluation Set Rule
+BR-088 Similarity Evaluation Rule
 ```
 
 ## Prescriptive Recommendation

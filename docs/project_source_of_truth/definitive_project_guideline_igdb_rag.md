@@ -666,6 +666,27 @@ Recommended objective:
 score how closely a game matches a user preference profile or another reference game
 ```
 
+The primary predictive workflow should be questionnaire-driven:
+
+```text
+User answers recommendation questions
+        |
+        v
+Answers are converted into a user preference profile
+        |
+        v
+The user preference profile is converted into a vector
+        |
+        v
+The user vector is compared against game profile vectors
+        |
+        v
+Cosine similarity produces a predicted match score for each candidate game
+        |
+        v
+Top-ranked games become recommendation candidates
+```
+
 This objective avoids treating `total_rating` as a ground-truth label for personal enjoyment. Ratings can still be used as a supporting quality signal in the final recommendation rank.
 
 ### 15.2 Profile and Feature Engineering
@@ -683,16 +704,40 @@ Recommended profile fields:
 | Text features | summary, storyline, keywords, optional embeddings |
 | Metadata completeness | has_summary, has_storyline, num_genres, num_themes |
 
+Recommended user-question fields:
+
+| Question Area | How It Should Be Used |
+|---|---|
+| Platform | Hard filter when the user requires a platform |
+| Genre preference | User profile vector signal |
+| Theme or mood | User profile vector signal |
+| Vibe words | Text/profile vector signal |
+| Favorite reference games | Game-game similarity or profile expansion signal |
+| Popular vs hidden-gem preference | Ranking adjustment |
+| Rating-quality importance | Ranking adjustment |
+| Session length or playstyle | Profile or filter signal if metadata is available |
+| Multiplayer/single-player preference | Profile or filter signal if metadata is available |
+
+The key rule is:
+
+```text
+Hard constraints filter the candidate pool first.
+All remaining preference answers contribute to the cosine-similarity user profile.
+Ratings, hidden-gem logic, and popularity confidence adjust the final ranking.
+```
+
 ### 15.3 Similarity Method
 
 Use simple, explainable similarity scoring first.
 
 Recommended approach:
 
-1. Build a game profile representation from structured fields and available text.
-2. Transform profiles into comparable vectors.
-3. Use cosine similarity to rank candidate games against a user preference profile or reference game.
-4. Combine the similarity score with structured recommendation rules.
+1. Ask the user a structured set of recommendation questions.
+2. Convert the answers into a user preference profile.
+3. Build a game profile representation from structured fields and available text.
+4. Transform the user profile and game profiles into comparable vectors.
+5. Use cosine similarity to rank candidate games against the user preference profile or a reference game.
+6. Combine the similarity score with structured recommendation rules.
 
 Recommended method selection criteria:
 
@@ -776,11 +821,11 @@ The engine should combine:
 1. **Hard filters**  
    Requirements that must be satisfied.
 
-2. **Soft scores**  
-   Preferences that improve ranking but do not necessarily exclude a game.
+2. **Questionnaire-derived user profile**  
+   The combined answers from the recommendation wizard, converted into a comparable profile vector.
 
-3. **Semantic similarity**  
-   Natural-language match between user prompt and game profile.
+3. **Cosine similarity**  
+   Match score between the user preference profile and each game profile.
 
 4. **Quality score**  
    Rating-based quality signal used as support, not as the only ranking driver.
@@ -804,9 +849,10 @@ Examples:
 - Genre match
 - Theme match
 - Keyword match
-- Similarity to user prompt
+- Similarity to the full user answer profile
+- Similarity to a favorite reference game
+- Mood/vibe match
 - Rating score
-- Cosine similarity match score
 - Hidden gem boost
 - Popularity confidence
 
@@ -816,26 +862,22 @@ A simple MVP scoring formula:
 
 ```text
 final_score =
-    0.40 * semantic_similarity
-  + 0.20 * genre_theme_match_score
+    0.65 * user_profile_cosine_similarity
   + 0.15 * normalized_rating_score
-  + 0.10 * cosine_similarity_score
-  + 0.10 * platform_match_score
-  + 0.05 * hidden_gem_boost
+  + 0.10 * hidden_gem_boost
+  + 0.10 * popularity_confidence_score
 ```
 
-This formula can be adjusted after testing.
+This formula assumes hard filters, such as platform requirements, are applied before scoring. The weights can be adjusted after persona testing and manual relevance review.
 
 ### 16.5 Score Components
 
 | Component | Description |
 |---|---|
-| semantic_similarity | Similarity between user prompt and game profile embedding |
-| genre_theme_match_score | Structured match on extracted genres/themes |
+| user_profile_cosine_similarity | Cosine similarity between the combined user answer vector and each game profile vector |
 | normalized_rating_score | Rating scaled from 0 to 1 |
-| cosine_similarity_score | Profile similarity between the user/reference profile and the candidate game |
-| platform_match_score | 1 if matched, 0 if not, or filtered out if required |
 | hidden_gem_boost | Small boost for high-quality lower-popularity games |
+| popularity_confidence_score | Rating-count or visibility confidence used to avoid over-ranking unreliable records |
 
 ### 16.6 Recommendation Output Format
 
@@ -1021,6 +1063,7 @@ Include:
 
 - Similarity objective
 - Profile fields used for scoring
+- Recommendation questions used to build the user preference profile
 - Cosine similarity method
 - Example user profile or reference-game query
 - Top-k ranked results
@@ -1032,13 +1075,15 @@ Include:
 
 Include:
 
-- Platform selector
-- Genre selector
-- Theme selector
-- Rating preference
-- Hidden gem toggle
+- Step-by-step preference questionnaire
+- Platform selector as a hard-filter question
+- Genre, theme, mood, and vibe questions
+- Optional favorite/reference-game question
+- Rating preference question
+- Popular vs hidden-gem preference question
 - Top-N slider
 - Ranked recommendation output
+- Explanation showing which answers contributed to the match
 
 ### 18.8 RAG Chatbot Page
 

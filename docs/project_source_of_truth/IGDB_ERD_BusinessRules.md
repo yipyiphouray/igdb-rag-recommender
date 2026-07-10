@@ -1125,6 +1125,20 @@ status exclusions where appropriate.
 
 If the user expresses preferences for genre, theme, keyword, game mode, or player perspective, these should be used as soft ranking features unless the user clearly frames them as hard requirements.
 
+For the recommendation wizard, multiple answers should be combined into a single user preference profile. That profile should be converted into a vector and compared against game profile vectors using cosine similarity.
+
+Recommended flow:
+
+```text
+questionnaire answers
+-> user preference profile
+-> user profile vector
+-> cosine similarity against game profile vectors
+-> ranked recommendation candidates
+```
+
+Platform requirements and other explicit "must-have" constraints should be applied before similarity scoring. Preference answers such as genre, theme, mood, vibe, favorite games, and playstyle should contribute to the similarity profile or to documented ranking adjustments.
+
 Examples:
 
 | User Wording                 | Rule                       |

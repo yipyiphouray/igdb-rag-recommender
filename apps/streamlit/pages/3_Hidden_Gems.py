@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app.components.empty_state import render_empty_state
 from src.app.components.game_card import VIEW_MODES, render_game_results
 from src.app.components.ui_style import inject_global_styles

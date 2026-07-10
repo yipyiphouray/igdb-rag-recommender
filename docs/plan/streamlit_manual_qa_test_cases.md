@@ -5,6 +5,7 @@ This checklist is for manually testing the current Streamlit MVP before addition
 Run the app before starting:
 
 ```text
+cd apps/streamlit
 streamlit run streamlit_app.py
 ```
 
@@ -57,7 +58,7 @@ Core trust rules to verify throughout:
 
 Steps:
 
-1. Run `streamlit run streamlit_app.py`.
+1. Run `cd apps/streamlit`, then run `streamlit run streamlit_app.py`.
 2. Open the app in the browser.
 3. Verify the landing page loads.
 

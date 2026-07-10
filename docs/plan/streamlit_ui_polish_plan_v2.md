@@ -70,4 +70,4 @@ I want the entire theme to be like a retro game. Change the colors and the backg
 - Shared cyberpunk styling is handled in `src/app/components/ui_style.py`.
 - Clickable Home menu panels are handled in `src/app/components/menu_card.py`.
 - List/Grid/Detailed game views are handled in `src/app/components/game_card.py`.
-- The Streamlit theme colors are configured in `.streamlit/config.toml`.
+- The Streamlit theme colors are configured in `apps/streamlit/.streamlit/config.toml`.

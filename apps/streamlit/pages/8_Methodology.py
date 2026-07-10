@@ -3,6 +3,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app import config
 from src.app.components.metric_cards import render_metric_row
 from src.app.components.ui_style import inject_global_styles

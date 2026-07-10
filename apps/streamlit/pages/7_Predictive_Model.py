@@ -4,6 +4,7 @@ import json
 
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app.predictive_service import artifact_path, load_predictions, predictive_status
 
 

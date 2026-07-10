@@ -1,18 +1,19 @@
 # Streamlit Page Context
 
-Last updated: 2026-07-02
+Last updated: 2026-07-10
 
 This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page does, what data it uses, and what still needs integration.
 
 Main app entry point:
 
 ```text
-streamlit_app.py
+apps/streamlit/streamlit_app.py
 ```
 
 Run command:
 
 ```text
+cd apps/streamlit
 streamlit run streamlit_app.py
 ```
 
@@ -65,7 +66,7 @@ Technical explanations that were previously visible on discovery pages have been
 File:
 
 ```text
-streamlit_app.py
+apps/streamlit/streamlit_app.py
 ```
 
 Purpose:
@@ -120,12 +121,12 @@ Implementation notes:
 File:
 
 ```text
-pages/1_Home.py
+apps/streamlit/pages/1_Home.py
 ```
 
 Purpose:
 
-This page mirrors the main Home page inside Streamlit's multipage navigation. It exists because Streamlit treats `streamlit_app.py` and files inside `pages/` differently.
+This page mirrors the main Home page inside Streamlit's multipage navigation. It exists because Streamlit treats `apps/streamlit/streamlit_app.py` and files inside `apps/streamlit/pages/` differently.
 
 Primary audience:
 
@@ -152,7 +153,7 @@ Implemented and polished for UI V3.
 
 Implementation note:
 
-This page is intentionally standalone. It should not import `streamlit_app.py` directly because doing so can create blank-page behavior in Streamlit multipage navigation.
+This page is intentionally standalone. It should not import `apps/streamlit/streamlit_app.py` directly because doing so can create blank-page behavior in Streamlit multipage navigation.
 
 ---
 
@@ -161,7 +162,7 @@ This page is intentionally standalone. It should not import `streamlit_app.py` d
 File:
 
 ```text
-pages/2_Explore_Games.py
+apps/streamlit/pages/2_Explore_Games.py
 ```
 
 Purpose:
@@ -259,7 +260,7 @@ Known limitations:
 File:
 
 ```text
-pages/3_Hidden_Gems.py
+apps/streamlit/pages/3_Hidden_Gems.py
 ```
 
 Purpose:
@@ -348,7 +349,7 @@ Known limitations:
 File:
 
 ```text
-pages/4_Recommendations.py
+apps/streamlit/pages/4_Recommendations.py
 ```
 
 Purpose:
@@ -444,7 +445,7 @@ Known limitations:
 File:
 
 ```text
-pages/5_Chatbot.py
+apps/streamlit/pages/5_Chatbot.py
 ```
 
 Purpose:
@@ -503,7 +504,7 @@ Known limitations:
 File:
 
 ```text
-pages/6_Insights.py
+apps/streamlit/pages/6_Insights.py
 ```
 
 Purpose:
@@ -577,7 +578,7 @@ Known limitations:
 File:
 
 ```text
-pages/7_Predictive_Model.py
+apps/streamlit/pages/7_Predictive_Model.py
 ```
 
 Purpose:
@@ -640,7 +641,7 @@ Known limitations:
 File:
 
 ```text
-pages/8_Methodology.py
+apps/streamlit/pages/8_Methodology.py
 ```
 
 Purpose:

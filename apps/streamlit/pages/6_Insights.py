@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app import config
 from src.app.components.chart_helpers import render_bar_chart
 from src.app.components.metric_cards import render_metric_row

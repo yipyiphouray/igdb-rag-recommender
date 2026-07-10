@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app.rag_service import answer_game_query, rag_status
 
 

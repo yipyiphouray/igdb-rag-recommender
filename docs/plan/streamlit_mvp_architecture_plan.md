@@ -261,17 +261,24 @@ Games can belong to multiple genres, themes, platforms, and companies.
 ```text
 igdb-rag-recommender/
 |
-|-- streamlit_app.py
+|-- apps/
+|   |-- streamlit/
+|   |   |-- streamlit_app.py
+|   |   |-- pages/
+|   |   |   |-- 1_Home.py
+|   |   |   |-- 2_Explore_Games.py
+|   |   |   |-- 3_Hidden_Gems.py
+|   |   |   |-- 4_Recommendations.py
+|   |   |   |-- 5_Chatbot.py
+|   |   |   |-- 6_Insights.py
+|   |   |   |-- 7_Predictive_Model.py
+|   |   |   `-- 8_Methodology.py
+|   |   `-- .streamlit/
+|   |       `-- config.toml
+|   |
+|   `-- website/
 |
-|-- pages/
-|   |-- 1_Home.py
-|   |-- 2_Explore_Games.py
-|   |-- 3_Hidden_Gems.py
-|   |-- 4_Recommendations.py
-|   |-- 5_Chatbot.py
-|   |-- 6_Insights.py
-|   |-- 7_Predictive_Model.py
-|   `-- 8_Methodology.py
+|-- api/
 |
 |-- src/
 |   |-- app/
@@ -339,9 +346,6 @@ igdb-rag-recommender/
 |   |-- test_filters.py
 |   |-- test_recommendation_service.py
 |   `-- test_app_data_validation.py
-|
-|-- .streamlit/
-|   `-- config.toml
 |
 |-- requirements.txt
 |-- README.md
@@ -1540,7 +1544,7 @@ Private tokens
 Use:
 
 ```text
-.streamlit/secrets.toml locally
+apps/streamlit/.streamlit/secrets.toml locally
 Streamlit Cloud secrets in deployment
 .gitignore for local secret files
 ```

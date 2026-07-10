@@ -1,12 +1,12 @@
 # IGDB Game Discovery & RAG Recommendation System
 
-This project builds a Streamlit-based game discovery and recommendation MVP using IGDB data. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, similarity-based predictive scoring, and placeholder integration pages for similarity/RAG work.
+This project builds a game discovery and recommendation system using IGDB data. It currently includes a Streamlit MVP/internal analytics workbench and is planned to evolve into a custom website final product. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, similarity-based predictive scoring, and placeholder integration pages for similarity/RAG work.
 
 The current project direction is:
 
 ```text
-Local Streamlit MVP first.
-Public deployment and custom website later only if the MVP is stable.
+Streamlit MVP/internal workbench first.
+Custom website final product next, with public deployment optional if it can be done for free without delaying the local demo.
 ```
 
 ## Current Status
@@ -75,12 +75,13 @@ Important caveats:
 Main entry point:
 
 ```text
-streamlit_app.py
+apps/streamlit/streamlit_app.py
 ```
 
 Run locally:
 
 ```bash
+cd apps/streamlit
 streamlit run streamlit_app.py
 ```
 
@@ -154,7 +155,7 @@ Do not commit secrets.
 Local Streamlit secrets should go in:
 
 ```text
-.streamlit/secrets.toml
+apps/streamlit/.streamlit/secrets.toml
 ```
 
 That file is ignored by Git.
@@ -163,7 +164,13 @@ That file is ignored by Git.
 
 ```text
 Community_Project/
-|-- .streamlit/
+|-- api/
+|-- apps/
+|   |-- streamlit/
+|   |   |-- .streamlit/
+|   |   |-- pages/
+|   |   `-- streamlit_app.py
+|   `-- website/
 |-- assets/
 |-- data/
 |   |-- raw/
@@ -180,13 +187,11 @@ Community_Project/
 |   |-- project_source_of_truth/
 |   `-- report/
 |-- notebooks/
-|-- pages/
 |-- src/
 |   |-- app/
 |   |   `-- components/
 |   `-- pipeline/
 |-- tests/
-|-- streamlit_app.py
 |-- requirements.txt
 `-- requirement.txt
 ```
@@ -215,6 +220,7 @@ docs/plan/diagnostic_analytics_pillar_plan.md
 docs/plan/streamlit_mvp_architecture_plan.md
 docs/plan/streamlit_manual_qa_test_cases.md
 docs/plan/streamlit_ui_polish_plan_v1.md
+docs/plan/final_product_website_plan.md
 ```
 
 Findings reports:
@@ -264,7 +270,7 @@ python -m unittest tests/test_app_artifact_schema.py
 Run Python compile checks manually if needed:
 
 ```bash
-python -m compileall streamlit_app.py pages src/app src/pipeline
+python -m compileall apps/streamlit src/app src/pipeline
 ```
 
 Manual Streamlit QA checklist:
@@ -333,6 +339,7 @@ Commands:
 ```bash
 python src/pipeline/build_app_catalog.py
 python -m unittest tests/test_app_data_validation.py
+cd apps/streamlit
 streamlit run streamlit_app.py
 ```
 

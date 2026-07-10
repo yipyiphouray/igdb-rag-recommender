@@ -1,12 +1,19 @@
 # Folder Structure Description
 
-Last updated: 2026-06-25
+Last updated: 2026-07-10
 
 This file describes the high-level folder layout for the IGDB Game Discovery and RAG Recommendation System.
 
 ```text
 Community_Project/
-|-- .streamlit/
+|-- api/
+|-- apps/
+|   |-- streamlit/
+|   |   |-- .streamlit/
+|   |   |-- pages/
+|   |   |-- _path_setup.py
+|   |   `-- streamlit_app.py
+|   `-- website/
 |-- archive/
 |-- assets/
 |-- data/
@@ -25,20 +32,56 @@ Community_Project/
 |   |-- project_source_of_truth/
 |   `-- report/
 |-- notebooks/
-|-- pages/
 |-- src/
 |   |-- app/
 |   |   `-- components/
 |   `-- pipeline/
 |-- tests/
-|-- streamlit_app.py
 |-- requirements.txt
 `-- requirement.txt
 ```
 
-## `.streamlit/`
+## `api/`
 
-Stores local Streamlit configuration. Local secrets should use `.streamlit/secrets.toml`, which is ignored by Git.
+Reserved for the future FastAPI backend that will serve website data from existing SQLite, parquet, JSON, recommendation, similarity, and RAG artifacts.
+
+## `apps/`
+
+Stores user-facing and app-layer interfaces.
+
+### `apps/streamlit/`
+
+Stores the Streamlit MVP, internal analytics workbench, and backup demo.
+
+Current contents:
+
+```text
+streamlit_app.py
+pages/
+.streamlit/
+_path_setup.py
+```
+
+Run locally with:
+
+```text
+cd apps/streamlit
+streamlit run streamlit_app.py
+```
+
+Local Streamlit secrets should use:
+
+```text
+apps/streamlit/.streamlit/secrets.toml
+```
+
+That file is ignored by Git.
+
+### `apps/website/`
+
+Reserved for the future Next.js / React / TypeScript / Tailwind CSS final product website.
+
+The website should become the polished user-facing product. Streamlit remains the MVP, internal analytics workbench, and backup demo.
 
 ## `archive/`
 
@@ -151,7 +194,7 @@ Current major notebooks:
 02_diagnostic_analytics_exploration.ipynb
 ```
 
-## `pages/`
+### `apps/streamlit/pages/`
 
 Stores Streamlit multipage app pages.
 
@@ -193,16 +236,6 @@ build_app_catalog.py
 ## `tests/`
 
 Stores automated tests for extraction logic, app data validation, filtering, recommendation behavior, and future integration checks.
-
-## `streamlit_app.py`
-
-Main Streamlit entry point.
-
-Run locally with:
-
-```text
-streamlit run streamlit_app.py
-```
 
 ## `requirements.txt`
 

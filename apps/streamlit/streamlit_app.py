@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+import _path_setup  # noqa: F401
 from src.app.components.home_menu import render_home_menu
 from src.app.components.ui_style import inject_global_styles
 

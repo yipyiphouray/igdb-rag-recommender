@@ -1338,14 +1338,14 @@ igdb-game-discovery-rag/
 │   │   ├── build_embeddings.py
 │   │   ├── retrieve.py
 │   │   └── chatbot.py
-│   └── app/
-│       ├── streamlit_app.py
-│       └── pages/
-│           ├── 1_catalog_overview.py
-│           ├── 2_hidden_gems.py
-│           ├── 3_similarity_scoring.py
-│           ├── 4_recommendations.py
-│           └── 5_rag_chatbot.py
+│
+├── apps/
+│   ├── streamlit/
+│   │   ├── streamlit_app.py
+│   │   └── pages/
+│   └── website/
+│
+├── api/
 │
 ├── reports/
 │   ├── figures/

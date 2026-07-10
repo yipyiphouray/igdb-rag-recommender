@@ -252,44 +252,51 @@ Community_Project/
 |   |       |-- chatbot.py
 |   |       `-- methodology.py
 |
-|-- website/
-|   |-- package.json
-|   |-- next.config.ts
-|   |-- tailwind.config.ts
-|   |-- tsconfig.json
-|   |-- src/
-|   |   |-- app/
-|   |   |   |-- page.tsx
-|   |   |   |-- explore/
-|   |   |   |   `-- page.tsx
-|   |   |   |-- games/
-|   |   |   |   `-- [gameId]/
-|   |   |   |       `-- page.tsx
-|   |   |   |-- hidden-gems/
-|   |   |   |   `-- page.tsx
-|   |   |   |-- recommendations/
-|   |   |   |   `-- page.tsx
-|   |   |   |-- similarity/
-|   |   |   |   `-- page.tsx
-|   |   |   |-- chatbot/
-|   |   |   |   `-- page.tsx
-|   |   |   `-- methodology/
-|   |   |       `-- page.tsx
-|   |   |-- components/
-|   |   |-- lib/
-|   |   |-- styles/
-|   |   `-- types/
+|-- apps/
+|   |-- streamlit/
+|   |   |-- .streamlit/
+|   |   |-- pages/
+|   |   |-- _path_setup.py
+|   |   `-- streamlit_app.py
+|   |
+|   `-- website/
+|       |-- package.json
+|       |-- next.config.ts
+|       |-- tailwind.config.ts
+|       |-- tsconfig.json
+|       |-- src/
+|       |   |-- app/
+|       |   |   |-- page.tsx
+|       |   |   |-- explore/
+|       |   |   |   `-- page.tsx
+|       |   |   |-- games/
+|       |   |   |   `-- [gameId]/
+|       |   |   |       `-- page.tsx
+|       |   |   |-- hidden-gems/
+|       |   |   |   `-- page.tsx
+|       |   |   |-- recommendations/
+|       |   |   |   `-- page.tsx
+|       |   |   |-- similarity/
+|       |   |   |   `-- page.tsx
+|       |   |   |-- chatbot/
+|       |   |   |   `-- page.tsx
+|       |   |   `-- methodology/
+|       |   |       `-- page.tsx
+|       |   |-- components/
+|       |   |-- lib/
+|       |   |-- styles/
+|       |   `-- types/
 |
 |-- data/
 |-- docs/
 |-- src/
-|-- streamlit_app.py
 `-- requirements.txt
 ```
 
 Reasoning:
 
-- `website/` isolates the frontend dependencies from the Python project.
+- `apps/streamlit/` isolates the Streamlit MVP/internal workbench from the repository root.
+- `apps/website/` isolates the frontend dependencies from the Python project.
 - `api/` isolates the FastAPI layer from the existing pipeline and Streamlit app.
 - Existing `src/` logic can still be reused by the API where appropriate.
 - Existing `data/` artifacts remain the shared source for Streamlit and the website backend.
@@ -304,7 +311,7 @@ cd api
 uvicorn main:app --reload --port 8000
 
 Terminal 2:
-cd website
+cd apps/website
 npm run dev
 ```
 
@@ -972,7 +979,7 @@ Acceptance criteria:
 
 ```text
 api/ folder exists.
-website/ folder exists.
+apps/website/ folder exists.
 Backend can start locally.
 Frontend can start locally.
 Frontend can call GET /health.
@@ -1210,7 +1217,7 @@ The next concrete step is not to immediately rebuild the entire app or design ev
 Recommended next step:
 
 ```text
-Create the website/backend skeleton inside the same repo, then build the smallest working slice:
+Create the apps/website and api skeletons inside the same repo, then build the smallest working slice:
 
 Backend health endpoint -> Next.js shell -> cyberpunk landing page -> backend connection check
 ```

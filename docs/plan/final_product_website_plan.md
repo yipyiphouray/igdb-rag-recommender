@@ -25,10 +25,13 @@ The following decisions are confirmed for the final product direction:
 | Build strategy | Step-by-step vertical slices |
 | Similarity and RAG ownership | Teammate owns core similarity/RAG logic |
 | Predictive workflow | Recommendation questionnaire becomes the main predictive/similarity input |
+| Recommendation positioning | One user-facing Recommendations page; cosine similarity is the matching engine behind it |
 | Streamlit role | Internal analytics workbench and backup demo |
 | Website role | Final polished user-facing product |
 
 The plan should prioritize a working foundation before deep UI polish. Detailed visual design should happen after the first website slice proves that routing, backend communication, and catalog data loading work correctly.
+
+The first website build will use the app-ready parquet/json artifacts as the backend data source and will focus only on Home, Explore, Recommendations, and Methodology.
 
 ---
 
@@ -370,6 +373,300 @@ These sections can remain mostly in Streamlit or be summarized lightly on the we
 
 ---
 
+# 6.4 Website Page / Tab Planning Map
+
+The final website should feel like the polished version of the Streamlit MVP, but it should not copy Streamlit page-for-page without thinking about the user journey.
+
+The planning rule is:
+
+```text
+Streamlit page = proof of concept and analytical workbench
+Website page = polished user-facing product experience
+```
+
+That means each final website page should have a clear purpose, a clear audience, and a clear reason to exist.
+
+## 6.4.1 Recommended Final Navigation
+
+The final website navigation should stay simple.
+
+Recommended top-level tabs:
+
+```text
+Home
+Explore
+Hidden Gems
+Recommendations
+Ask the Guide
+Insights
+Methodology
+```
+
+Optional secondary or nested pages:
+
+```text
+Game Detail
+Similarity Lab / Method Notes
+About the Data
+```
+
+Recommended interpretation:
+
+| Website Area | Purpose | Should Be Main Nav? |
+|---|---|---|
+| Home | Introduce product and route users into key flows | Yes |
+| Explore | Browse the curated catalog | Yes |
+| Hidden Gems | Discover lower-visibility, high-quality games | Yes |
+| Recommendations | Guided preference wizard and ranked results | Yes |
+| Ask the Guide | RAG chatbot / natural-language discovery | Yes |
+| Insights | Descriptive and diagnostic analytics summary | Yes |
+| Methodology | Data, metrics, caveats, and trust layer | Yes |
+| Game Detail | Deep view for one selected game | No, route from cards |
+| Similarity Lab / Method Notes | Technical cosine-similarity explanation, example outputs, and evaluation notes | Optional or nested |
+| About the Data | Dataset summary and source explanation | Optional, can live inside Methodology |
+
+The main navigation should avoid too many technical labels. For example:
+
+```text
+Use: Recommendations
+Avoid: Predictive Model
+
+Use: Ask the Guide
+Avoid: RAG Vector Retrieval Interface
+
+Use: Insights
+Avoid: Descriptive and Diagnostic Analytics Dashboard
+```
+
+The technical terms can still appear inside Methodology or evaluator-facing sections.
+
+## 6.4.2 Streamlit-to-Website Translation Map
+
+The website should translate the Streamlit MVP into a cleaner product flow.
+
+| Current Streamlit Page | Final Website Equivalent | Website Treatment |
+|---|---|---|
+| Home | Home | Keep as polished landing/menu page |
+| Explore Games | Explore | Transfer as a user-facing catalog page |
+| Hidden Gems | Hidden Gems | Transfer as a major discovery feature |
+| Recommendations | Recommendations | Transfer as a polished multi-step wizard |
+| Chatbot | Ask the Guide | Transfer when teammate RAG integration is ready |
+| Insights | Insights | Summarize key findings, avoid overwhelming dashboard density |
+| Predictive / Similarity Scoring | Recommendations first; optional Similarity Lab second | Cosine similarity should power the main recommendation flow, not become a competing user-facing page |
+| Methodology | Methodology | Transfer as concise trust/explanation page |
+
+The website should not make users feel like they are moving through notebooks or internal dashboards. It should feel like a game-discovery product backed by a transparent analytics project.
+
+## 6.4.3 Page Contracts
+
+Each website page should have a lightweight contract before implementation.
+
+The contract should answer:
+
+```text
+1. What user question does this page answer?
+2. What action should the user take on this page?
+3. What data does the page need?
+4. What should the page display when data is missing?
+5. What should stay hidden or simplified?
+6. What route/API endpoint supports it?
+```
+
+Recommended initial page contracts:
+
+| Page | User Question | Main Action | Required Data | Missing-Data Behavior |
+|---|---|---|---|---|
+| Home | What is this product and where should I start? | Start recommendations or explore catalog | None or summary metrics | Page still works without metrics |
+| Explore | What games are in the curated catalog? | Search, filter, open game details | Catalog records and filter options | Show empty/error state |
+| Game Detail | What do we know about this game? | Review metadata and context | One game record | Show unavailable fields clearly |
+| Hidden Gems | What strong games are less obvious? | Browse hidden-gem candidates | Hidden-gem artifact and catalog fields | Explain if artifact is missing |
+| Recommendations | What should I play based on my preferences? | Complete wizard and view ranked results | Catalog, filter options, recommendation service | Use fallback or clear pending state |
+| Ask the Guide | Can I ask naturally for game suggestions or explanations? | Send chat prompt | RAG artifacts and retrieved game context | Show teammate-integration pending state |
+| Insights | What patterns did the project find? | Read key descriptive/diagnostic findings | Analytics exports and reports | Show report summaries if chart data is missing |
+| Methodology | Can I trust how this was built? | Review sample logic, metric definitions, caveats | Methodology metrics and source docs | Show static methodology text |
+
+## 6.4.3.1 Recommendation and Similarity Merge Rule
+
+The final website should not have two competing user-facing recommendation experiences.
+
+Avoid this structure:
+
+```text
+Recommendations
+Cosine Similarity Recommendations
+```
+
+Use this structure instead:
+
+```text
+Recommendations page
+  -> collects user preferences through a guided wizard
+  -> converts answers into a user preference profile
+  -> applies required hard filters such as platform availability
+  -> compares the user profile against game profile vectors using cosine similarity
+  -> applies ranking adjustments such as rating quality, rating evidence, hidden-gem preference, or popularity preference
+  -> returns ranked recommendations with explanations
+```
+
+Final positioning:
+
+```text
+Recommendations = user-facing product feature
+Cosine similarity = technical matching method behind Recommendations
+Rule-based scoring = temporary fallback, hard-filter layer, or ranking-adjustment layer
+Similarity Lab = optional evaluator-facing explanation, not the main user journey
+```
+
+This avoids confusing users with multiple recommendation pages that appear to solve the same problem.
+
+The current Streamlit recommendation wizard remains valuable because it already prototypes the preference-collection flow. The website should preserve the guided flow but eventually replace the core matching score with teammate-owned cosine-similarity artifacts when they are ready.
+
+Recommended internal logic:
+
+```text
+1. Validate user answers from the wizard.
+2. Apply hard filters:
+   - existing catalog games only;
+   - released games;
+   - platform requirement when selected.
+3. Build a user preference vector from:
+   - genres;
+   - themes;
+   - mood/vibe terms;
+   - playstyle preferences;
+   - favorite/reference games if supported.
+4. Compare the user vector against game vectors with cosine similarity.
+5. Re-rank or annotate results using:
+   - total_rating as reception/quality signal;
+   - total_rating_count as rating-evidence signal;
+   - hidden-gem preference;
+   - popularity/visibility preference;
+   - playtime fit when available.
+6. Return ranked games with plain-language explanations.
+```
+
+The user should not need to know which part is filtering, cosine similarity, or ranking adjustment unless they open Methodology or an optional Similarity Lab section.
+
+## 6.4.4 Page Priority Levels
+
+To reduce overwhelm, the website should be built in priority levels.
+
+### Must-Have Website MVP
+
+These pages are required for a credible final website demo:
+
+```text
+Home
+Explore
+Recommendations
+Methodology
+```
+
+Reasoning:
+
+- Home explains the product.
+- Explore proves the website can load real project data.
+- Recommendations demonstrates the main user-facing predictive/similarity experience.
+- Methodology protects academic credibility.
+
+### Strongly Recommended
+
+These pages should be added after the must-have flow works:
+
+```text
+Hidden Gems
+Game Detail
+Insights
+```
+
+Reasoning:
+
+- Hidden Gems is one of the strongest project-specific features.
+- Game Detail makes catalog cards feel like a real product.
+- Insights preserves the descriptive/diagnostic pillar without overwhelming the main user flow.
+
+### Integration-Dependent
+
+These pages depend on teammate artifacts:
+
+```text
+Ask the Guide
+Similarity Lab / Method Notes
+```
+
+Reasoning:
+
+- The chatbot should not be presented as complete until RAG retrieval is actually wired.
+- Cosine similarity should be integrated into Recommendations first.
+- A separate Similarity Lab should only be added if the team wants an evaluator-facing explanation page after the main recommendation flow works.
+
+## 6.4.5 Recommended User Journey
+
+The final demo journey should be planned around one clean path:
+
+```text
+Home
+  -> Recommendations
+  -> Recommendation Results
+  -> Game Detail
+  -> Ask the Guide or Methodology
+```
+
+Secondary discovery path:
+
+```text
+Home
+  -> Explore
+  -> Filter catalog
+  -> Game Detail
+  -> Hidden Gems
+```
+
+Evaluator trust path:
+
+```text
+Home
+  -> Insights
+  -> Methodology
+  -> Recommendations
+```
+
+The final website should support all three paths, but the first path should be the most polished because it represents the main product story.
+
+## 6.4.6 What Each Page Should Avoid
+
+To keep the website focused:
+
+| Page | Avoid |
+|---|---|
+| Home | Too many metrics, long methodology text, technical jargon |
+| Explore | Too many filters at once, raw table-first layout |
+| Hidden Gems | Claiming hidden gems are objectively unknown in the real market |
+| Recommendations | Exposing too much scoring math before the user gets results |
+| Ask the Guide | Pretending RAG is complete before teammate integration is ready |
+| Insights | Rebuilding the full notebooks inside the website |
+| Methodology | Becoming too long for normal users to scan |
+| Game Detail | Showing every database field without prioritization |
+
+The website should be transparent, but transparency does not mean exposing every internal detail on every page.
+
+## 6.4.7 Planning Checklist Before Building Each Page
+
+Before implementing any website page, answer these questions:
+
+- What is the page trying to help the user do?
+- Is this page part of the main demo path or a secondary/supporting path?
+- What API endpoint does the page need?
+- What loading, empty, and error states are required?
+- What fields are useful to users and what fields should stay hidden?
+- Does this page depend on teammate-owned artifacts?
+- Can this page work with a placeholder if teammate artifacts are missing?
+- Does this page need to exist in the main navigation?
+
+If a page cannot answer these questions clearly, it should stay out of the first website build.
+
+---
+
 # 7. Proposed Website Pages
 
 ## 7.1 Landing Page
@@ -422,6 +719,15 @@ Features:
 Purpose:
 
 - Give users a structured, guided recommendation flow that creates a user preference profile for cosine-similarity scoring.
+- Serve as the single main user-facing recommendation experience in the final website.
+
+Positioning:
+
+```text
+The Recommendations page is the product feature.
+Cosine similarity is the matching engine behind the feature.
+The current structured/rule-based scoring logic is a fallback, filter layer, or ranking adjustment layer.
+```
 
 Predictive/similarity role:
 
@@ -431,6 +737,7 @@ The answers are combined into a user preference profile.
 The profile is converted into a vector.
 The vector is compared against game profile vectors using cosine similarity.
 The highest-similarity games become recommendation candidates.
+Hard filters and ranking adjustments refine the final order.
 ```
 
 Recommended UX:
@@ -453,18 +760,20 @@ Hard filters first:
 - platform requirement
 - released games
 - main games when applicable
+- existing catalog games only
 
-Then similarity scoring:
+Then primary similarity scoring:
 - genre answers
 - theme answers
 - mood/vibe answers
 - favorite-game answers
 - playstyle answers
 
-Then ranking adjustments:
+Then optional ranking adjustments:
 - rating quality
 - hidden-gem boost
 - popularity/rating-count confidence
+- playtime fit when available
 ```
 
 Output:
@@ -476,13 +785,30 @@ Output:
 - Genre/theme tags.
 - Caveats where data is missing.
 
-## 7.5 Predictive / Similarity Scoring
+Implementation rule:
+
+```text
+Do not build a separate user-facing "cosine similarity recommendations" page.
+The user should complete one recommendation flow.
+The backend can use cosine similarity internally when teammate artifacts are available.
+```
+
+Fallback rule:
+
+```text
+If teammate similarity artifacts are not ready, the Recommendations page may use the existing structured recommendation logic.
+The UI should stay the same so the user experience does not split into two different recommendation products.
+```
+
+## 7.5 Similarity Method / Optional Similarity Lab
 
 Purpose:
 
-- Present questionnaire-driven cosine-similarity match scoring in a user-understandable way.
+- Explain the cosine-similarity method behind Recommendations when the team needs an evaluator-facing or technical explanation area.
 
-This page should not look like a machine learning classifier dashboard.
+This should not become a second recommendation page.
+
+This section is optional because the main user-facing similarity experience belongs inside Recommendations.
 
 It should show:
 
@@ -493,6 +819,7 @@ It should show:
 - Top-k similar games.
 - Relevance evaluation summary.
 - Limitations.
+- Clear statement that Recommendations is the main user-facing feature.
 
 Expected artifacts:
 
@@ -646,9 +973,9 @@ GET  /methodology/summary
 | `/catalog/games/{game_id}` | Return one game detail record |
 | `/catalog/filter-options` | Return platform/genre/theme options |
 | `/hidden-gems` | Return hidden-gem records |
-| `/recommendations` | Return ranked structured recommendations |
-| `/similarity/games/{game_id}` | Return similar games for a reference game |
-| `/similarity/query` | Return similarity results for a preference profile |
+| `/recommendations` | Return ranked recommendations from the merged questionnaire + cosine-similarity workflow |
+| `/similarity/games/{game_id}` | Optional support endpoint for similar games to a reference game |
+| `/similarity/query` | Optional support endpoint for evaluator-facing similarity experiments |
 | `/chat` | Return grounded RAG chatbot response |
 | `/methodology/summary` | Return methodology metrics and caveats |
 
@@ -765,6 +1092,7 @@ Purpose:
 - Accept the recommendation questionnaire answers and return ranked games.
 
 This endpoint is the main website-facing predictive/similarity workflow.
+It should be the main backend route used by the final Recommendations page.
 
 Recommended request body:
 
@@ -815,7 +1143,9 @@ Rules:
 - Platform requirements should be applied as hard filters.
 - Questionnaire answers should be combined into a user preference profile.
 - The user profile should be compared against game profile vectors using cosine similarity when teammate artifacts are available.
-- Before teammate artifacts are available, the endpoint may return a placeholder or use the existing structured recommendation logic.
+- Before teammate artifacts are available, the endpoint may use the existing structured recommendation logic as a fallback so the user flow remains intact.
+- The current rule-based scoring should not become a separate final recommendation product.
+- Rule-based logic can remain useful as hard filters, ranking adjustments, fallback scoring, and explanation support.
 - The response should never claim a game is available on a platform unless the project data supports it.
 
 ### `GET /similarity/games/{game_id}`
@@ -823,6 +1153,7 @@ Rules:
 Purpose:
 
 - Return games similar to an existing catalog game.
+- Support optional similarity explanation, related-game sections, or evaluator-facing examples.
 
 Owner:
 
@@ -837,12 +1168,13 @@ Initial behavior:
 Purpose:
 
 - Return similarity results for a preference-profile query.
+- Support optional technical validation or evaluator-facing similarity demonstrations.
 
 Owner:
 
 - Teammate-owned logic.
 
-This endpoint can share request structure with `/recommendations`, but it should focus on similarity output rather than full recommendation ranking.
+This endpoint can share request structure with `/recommendations`, but it should not replace `/recommendations` as the main user-facing flow.
 
 ### `POST /chat`
 
@@ -909,7 +1241,8 @@ data/rag/vector_store/
 
 Until those artifacts are ready:
 
-- Similarity pages should show pending status.
+- Recommendations should continue using structured fallback logic or show a clear similarity-integration pending status.
+- Optional similarity method sections should show pending status if they exist.
 - Chatbot page should show placeholder status.
 - Recommendation endpoint can use structured scoring fallback.
 - Missing artifacts should not crash the website.
@@ -942,8 +1275,8 @@ Hidden-gem endpoint -> Hidden Gems page -> caveats and sample definition
 Slice 5: Recommendations
 Questionnaire UI -> POST /recommendations -> ranked result cards -> explanations
 
-Slice 6: Similarity placeholders/integration
-Similarity endpoints -> pending status -> integrate teammate artifacts when ready
+Slice 6: Similarity-backed recommendation integration
+Connect teammate cosine-similarity artifacts to POST /recommendations -> keep the same user-facing recommendation flow
 
 Slice 7: RAG placeholders/integration
 Chatbot UI -> pending status -> integrate teammate RAG artifacts when ready
@@ -999,6 +1332,7 @@ Tasks:
 - Add filter-options endpoint.
 - Add hidden-gems endpoint.
 - Add recommendation endpoint using existing recommendation logic.
+- Design the recommendation endpoint so teammate cosine-similarity artifacts can replace the core match score later without changing the frontend flow.
 - Add methodology summary endpoint.
 
 Deliverable:
@@ -1086,12 +1420,14 @@ Recommendations wizard collects answers and returns ranked output or clear place
 
 Goal:
 
-- Integrate teammate similarity and RAG artifacts.
+- Integrate teammate similarity and RAG artifacts without splitting the user-facing recommendation experience.
 
 Tasks:
 
-- Add similarity endpoints.
-- Add similarity page or similarity section.
+- Connect teammate cosine-similarity artifacts to `/recommendations`.
+- Keep the Recommendations page as the main user-facing predictive/similarity flow.
+- Add optional similarity endpoints only if needed for related-game features or evaluator-facing method examples.
+- Add optional Similarity Lab or methodology section only after the main recommendation flow works.
 - Add chatbot endpoint.
 - Add chatbot UI.
 - Add retrieved evidence display.
@@ -1100,14 +1436,16 @@ Tasks:
 Deliverable:
 
 ```text
-Website supports similarity scoring and grounded chatbot recommendations.
+Website supports similarity-backed Recommendations and grounded chatbot recommendations.
 ```
 
 Acceptance criteria:
 
 ```text
-Similarity page clearly shows artifact status.
-Similarity endpoint handles missing teammate artifacts gracefully.
+Recommendations can use structured fallback logic when similarity artifacts are missing.
+Recommendations can use teammate cosine-similarity artifacts when they are available.
+The user does not see two competing recommendation pages.
+Optional similarity endpoints handle missing teammate artifacts gracefully.
 Chatbot page clearly shows artifact status.
 Chat endpoint handles missing teammate artifacts gracefully.
 When artifacts are available, outputs only reference existing catalog games.
@@ -1175,7 +1513,8 @@ The final website should pass these checks:
 - Hidden Gems page loads hidden-gem records.
 - Recommendation wizard returns ranked results.
 - Recommendation explanations are understandable.
-- Similarity page only uses existing catalog games.
+- Similarity-backed recommendation results only use existing catalog games.
+- Optional similarity method pages or sections only use existing catalog games.
 - Chatbot responses are grounded in retrieved context.
 - Missing artifacts fail gracefully.
 - Backend API errors are handled cleanly in the UI.
@@ -1229,6 +1568,7 @@ Explore Games -> Game Detail -> Hidden Gems -> Recommendations wizard
 ```
 
 Then integrate Similarity Scoring and RAG Chatbot when teammate artifacts are ready.
+Similarity Scoring should integrate into the Recommendations flow first. A separate Similarity Lab should remain optional.
 
 ---
 
@@ -1323,9 +1663,10 @@ Before presentation, manually test:
 5. Navigate to Hidden Gems.
 6. Complete the Recommendations wizard.
 7. Review ranked recommendation output.
-8. Open Similarity page and verify status/results.
-9. Open Chatbot page and verify status/results.
-10. Open Methodology and verify caveats are visible.
+8. Verify similarity-backed status/results inside Recommendations when teammate artifacts are available.
+9. Open optional Similarity Lab or method notes only if the team built that section.
+10. Open Chatbot page and verify status/results.
+11. Open Methodology and verify caveats are visible.
 ```
 
 ---

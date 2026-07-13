@@ -71,6 +71,89 @@ def _valid_platform(options: dict[str, object], platform: str) -> str:
     return platform if platform in set(options.get("platforms", [])) else "No platform preference"
 
 
+def _widget_key(preference_key: str) -> str:
+    return f"{preference_key}_widget"
+
+
+def _sync_preference(preference_key: str) -> None:
+    widget_key = _widget_key(preference_key)
+    if widget_key in st.session_state:
+        st.session_state[preference_key] = st.session_state[widget_key]
+        st.session_state.rec_confirmed = False
+
+
+def _sync_current_step() -> None:
+    step = int(st.session_state.recommendation_step)
+    step_keys = {
+        0: ["rec_platform"],
+        1: ["rec_genres"],
+        2: ["rec_themes"],
+        3: ["rec_discovery"],
+        4: ["rec_rating"],
+        5: ["rec_playtime"],
+        6: ["rec_year_range", "rec_top_n"],
+    }
+    for preference_key in step_keys.get(step, []):
+        _sync_preference(preference_key)
+
+
+def _prepare_single_choice_widget(
+    preference_key: str,
+    allowed_values: list[str],
+    fallback: str,
+) -> str:
+    value = st.session_state.get(preference_key, fallback)
+    if value not in allowed_values:
+        value = fallback if fallback in allowed_values else allowed_values[0]
+    st.session_state[preference_key] = value
+    st.session_state[_widget_key(preference_key)] = value
+    return _widget_key(preference_key)
+
+
+def _prepare_multi_choice_widget(preference_key: str, allowed_values: list[str]) -> str:
+    allowed = set(allowed_values)
+    values = [
+        value
+        for value in st.session_state.get(preference_key, [])
+        if value in allowed
+    ]
+    st.session_state[preference_key] = values
+    st.session_state[_widget_key(preference_key)] = values
+    return _widget_key(preference_key)
+
+
+def _prepare_year_range_widget(preference_key: str, min_year: int, max_year: int) -> str:
+    raw_value = st.session_state.get(preference_key, (min_year, max_year))
+    try:
+        start_year, end_year = raw_value
+        start_year = int(start_year)
+        end_year = int(end_year)
+    except (TypeError, ValueError):
+        start_year, end_year = min_year, max_year
+
+    start_year = min(max(start_year, min_year), max_year)
+    end_year = min(max(end_year, min_year), max_year)
+    if start_year > end_year:
+        start_year, end_year = end_year, start_year
+
+    value = (start_year, end_year)
+    st.session_state[preference_key] = value
+    st.session_state[_widget_key(preference_key)] = value
+    return _widget_key(preference_key)
+
+
+def _prepare_top_n_widget(preference_key: str, minimum: int = 3, maximum: int = 25) -> str:
+    try:
+        value = int(st.session_state.get(preference_key, 10))
+    except (TypeError, ValueError):
+        value = 10
+
+    value = min(max(value, minimum), maximum)
+    st.session_state[preference_key] = value
+    st.session_state[_widget_key(preference_key)] = value
+    return _widget_key(preference_key)
+
+
 def _init_state(min_year: int, max_year: int) -> None:
     defaults = {
         "recommendation_step": 0,
@@ -163,38 +246,84 @@ def _render_current_step(options: dict[str, object], min_year: int, max_year: in
             st.selectbox(
                 "What platform do you play on?",
                 ["No platform preference"] + list(options.get("platforms", [])),
-                key="rec_platform",
+                key=_prepare_single_choice_widget(
+                    "rec_platform",
+                    ["No platform preference"] + list(options.get("platforms", [])),
+                    "No platform preference",
+                ),
+                on_change=_sync_preference,
+                args=("rec_platform",),
             )
         elif step == 1:
             st.multiselect(
                 "What kind of game are you in the mood for?",
                 list(options.get("genres", [])),
-                key="rec_genres",
+                key=_prepare_multi_choice_widget("rec_genres", list(options.get("genres", []))),
+                on_change=_sync_preference,
+                args=("rec_genres",),
             )
         elif step == 2:
             st.multiselect(
                 "What themes or vibes sound right?",
                 list(options.get("themes", [])),
-                key="rec_themes",
+                key=_prepare_multi_choice_widget("rec_themes", list(options.get("themes", []))),
+                on_change=_sync_preference,
+                args=("rec_themes",),
             )
         elif step == 3:
             st.radio(
                 "What discovery style do you want?",
                 ["Balanced", "Hidden gems", "Popular / visible games"],
                 horizontal=True,
-                key="rec_discovery",
+                key=_prepare_single_choice_widget(
+                    "rec_discovery",
+                    ["Balanced", "Hidden gems", "Popular / visible games"],
+                    "Balanced",
+                ),
+                on_change=_sync_preference,
+                args=("rec_discovery",),
             )
         elif step == 4:
-            st.selectbox("How important is rating quality?", list(RATING_LEVELS.keys()), key="rec_rating")
+            st.selectbox(
+                "How important is rating quality?",
+                list(RATING_LEVELS.keys()),
+                key=_prepare_single_choice_widget(
+                    "rec_rating",
+                    list(RATING_LEVELS.keys()),
+                    "Any rating",
+                ),
+                on_change=_sync_preference,
+                args=("rec_rating",),
+            )
         elif step == 5:
             st.selectbox(
                 "Do you want shorter or longer games?",
                 ["Any length", "Shorter games", "Medium games", "Longer games"],
-                key="rec_playtime",
+                key=_prepare_single_choice_widget(
+                    "rec_playtime",
+                    ["Any length", "Shorter games", "Medium games", "Longer games"],
+                    "Any length",
+                ),
+                on_change=_sync_preference,
+                args=("rec_playtime",),
             )
         elif step == 6:
-            st.slider("Release year range", min_year, max_year, key="rec_year_range")
-            st.slider("How many recommendations do you want?", 3, 25, key="rec_top_n")
+            st.slider(
+                "Release year range",
+                min_year,
+                max_year,
+                key=_prepare_year_range_widget("rec_year_range", min_year, max_year),
+                on_change=_sync_preference,
+                args=("rec_year_range",),
+            )
+            st.slider(
+                "How many recommendations do you want?",
+                3,
+                25,
+                key=_prepare_top_n_widget("rec_top_n"),
+                on_change=_sync_preference,
+                args=("rec_top_n",),
+            )
         elif step == 7:
             st.markdown(_preference_summary_html(), unsafe_allow_html=True)
 
@@ -208,16 +337,19 @@ def _navigation_buttons(min_year: int, max_year: int) -> bool:
         back_col, next_col, reset_col = st.columns([1, 1.4, 1])
         with back_col:
             if st.button("Back", disabled=step == 0):
+                _sync_current_step()
                 st.session_state.recommendation_step = max(step - 1, 0)
                 st.session_state.rec_confirmed = False
                 st.rerun()
         with next_col:
             if step < final_step:
                 if st.button("Next"):
+                    _sync_current_step()
                     st.session_state.recommendation_step = min(step + 1, final_step)
                     st.session_state.rec_confirmed = False
                     st.rerun()
             elif st.button("Confirm picks"):
+                _sync_current_step()
                 st.session_state.rec_confirmed = True
         with reset_col:
             if st.button("Reset"):

@@ -267,7 +267,7 @@ user asks for unavailable or historical titles.
 Important distinction:
 
 * In the current extract, `game_statuses` contains `Early Access`, `Offline`,
-  `Cancelled`, `Rumored`, and `Delisted`, and 13,600 of 15,000 games have
+  `Cancelled`, `Rumored`, and `Delisted`, and 42,586 of 47,835 games have
   `game_status_id = NULL`.
 * `NULL` must not automatically be interpreted as either released or
   unreleased.
@@ -1006,12 +1006,13 @@ AND total_rating_count >= 25
 AND normalized_popularity is below the median for comparable games
 ```
 
-Current-sample note:
+Sample-design note:
 
-The current diagnostic-ready pull contains 15,000 released main games: 1,000
-per year from 2010 through 2024. All games meeting the project quality
-selection rule are included, while visibility and comparison records follow
-different selection mechanisms. Hidden-gem analysis must therefore account for
+The current diagnostic-ready pull targeted 50,000 released main games from
+2010 through 2024 and selected 47,835 games because the earliest years did not
+have enough eligible records to fill the configured yearly target. The sample
+contains quality, lower-rated reliable, high-visibility, low-known-visibility,
+and residual comparison cohorts. Hidden-gem analysis must therefore account for
 release year and `extraction_cohorts.cohort`.
 
 ## BR-063A — Extraction Cohort Interpretation Rule
@@ -1020,12 +1021,16 @@ Every selected game must have exactly one row in `extraction_cohorts`.
 
 Rules:
 
-* `quality` means the game met the extraction reception rule.
-* `popularity` means the game was selected using IGDB PopScore visibility after
-  removing quality-selected games.
+* `quality` means the game met the upper reception extraction rule.
+* `lower_rated` means the game met the lower-rated reliable reception rule.
+* `popularity` means the game was selected using high IGDB PopScore visibility
+  after removing higher-priority cohort selections.
+* `low_visibility` means the game was selected from games with low known IGDB
+  visibility. Missing PopScore means unknown visibility, not low visibility.
 * `comparison` means the game was randomly selected from the remaining eligible
   yearly population.
-* Full-sample high-rated or popular shares are not market prevalence estimates.
+* Full-sample high-rated, lower-rated, popular, or low-visibility shares are
+  not market prevalence estimates.
 * Use cohort-stratified reporting, the comparison cohort, or a documented
   sampling-aware method for population-oriented conclusions.
 
@@ -1499,8 +1504,8 @@ companies.status_id
 ```
 
 Treat these as optional source references. Do not assume they can always be
-joined within the local database. In the current 15,000-game extract, 14,446
-games have a selected cover ID and all 14,446 selected cover IDs resolve locally,
+joined within the local database. In the current 47,835-game extract, 45,752
+games have a selected cover ID and all 45,752 selected cover IDs resolve locally,
 but the relationship is not enforced by SQLite.
 
 ## BR-094 — Orphan Record Rule

@@ -36,7 +36,7 @@ metrics = load_json_artifact(config.APP_METHODOLOGY_METRICS_PATH)
 render_metric_row(
     [
         ("Games", f"{int(metrics.get('total_games', 0)):,}", "Current app catalog"),
-        ("Years", f"{metrics.get('release_year_start')}-{metrics.get('release_year_end')}", "Balanced release years"),
+        ("Years", f"{metrics.get('release_year_start')}-{metrics.get('release_year_end')}", "Curated release span"),
         ("Hidden gems", f"{int(metrics.get('hidden_gem_count', 0)):,}", "Balanced rule"),
         ("PopScore coverage", f"{metrics.get('popscore_coverage', 0) * 100:.1f}%", "Known IGDB interest score"),
     ]
@@ -63,19 +63,22 @@ data/app/app_methodology_metrics.json""",
 
 _section(
     "2. Curated sample design",
-    "The current sample selects exactly 1,000 released main games per year from 2010 through 2024. "
-    "The extraction uses quality, popularity, and comparison cohorts to make the sample useful for analytics and "
-    "discovery instead of being a raw IGDB pull.",
+    "The current extraction targeted 50,000 released main games from 2010 through 2024 and selected 47,835 games "
+    "because the earliest years did not have enough eligible records to fill the configured yearly target. "
+    "The extraction uses quality, lower-rated, popularity, low-visibility, and comparison cohorts to make the "
+    "sample useful for analytics and discovery instead of being a raw IGDB pull.",
 )
 st.code(
-    """Final sample:
-15,000 games
+    """Current sample:
+47,835 games
 2010-2024
-1,000 games per year
+50,000-game target design
 
 Cohorts:
 quality
+lower_rated
 popularity
+low_visibility
 comparison""",
     language="text",
 )

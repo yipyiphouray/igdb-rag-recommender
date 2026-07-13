@@ -91,16 +91,16 @@ One row records why a selected game entered the curated analytical sample.
 |---|---|
 | `game_id` | Selected game; primary key and FK to `games`. |
 | `release_year` | Year-specific sampling stratum. |
-| `cohort` | `quality`, `popularity`, or `comparison`. |
+| `cohort` | `quality`, `lower_rated`, `popularity`, `low_visibility`, or `comparison`. |
 | `selection_rank` | Rank within the game’s year and cohort. |
 | `adjusted_quality_score` | Bayesian-adjusted yearly total rating used for quality ranking; nullable outside the quality-eligible population. |
 | `popularity_basis` | PopScore signal used for popularity selection, normally `igdb_interest` or fallback `igdb_visits`. |
 | `popularity_score` | Value of the selected popularity signal. |
 | `random_seed` | Reproducible year-specific seed for comparison selections. |
 
-The cohorts have different selection mechanisms. Full-sample quality or
-popularity shares are not population prevalence estimates unless the analysis
-accounts for the sampling design.
+The cohorts have different selection mechanisms. Full-sample quality,
+lower-rated, popularity, or visibility shares are not population prevalence
+estimates unless the analysis accounts for the sampling design.
 
 ---
 

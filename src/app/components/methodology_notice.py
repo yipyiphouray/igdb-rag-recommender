@@ -5,8 +5,8 @@ def render_sample_caveat() -> None:
     import streamlit as st
 
     st.info(
-        "This app uses a curated 15,000-game IGDB analytical sample, not the full IGDB catalog. "
-        "Quality and visibility cohorts are intentionally oversampled, so full-sample rating or "
+        "This app uses a refreshed curated 47,835-game IGDB analytical sample, not the full IGDB catalog. "
+        "Reception and visibility cohorts are intentionally shaped by the extraction design, so full-sample rating or "
         "visibility shares are not market prevalence estimates."
     )
 
@@ -17,8 +17,8 @@ def render_sample_footnote() -> None:
     st.markdown(
         """
         <div class="small-caveat">
-        * Uses a curated 15,000-game IGDB analytical sample, not the full IGDB catalog.
-        Quality and visibility cohorts are intentionally oversampled, so rating or visibility shares
+        * Uses a refreshed curated 47,835-game IGDB analytical sample, not the full IGDB catalog.
+        Reception and visibility cohorts are intentionally shaped by the extraction design, so rating or visibility shares
         are not market prevalence estimates.
         </div>
         """,

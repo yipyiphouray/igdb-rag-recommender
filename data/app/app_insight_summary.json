@@ -1,17 +1,17 @@
 {
   "dataset": {
-    "total_games": 15000,
+    "total_games": 47835,
     "release_years": "2010-2024",
     "sample_note": "Curated analytical sample; not a full-market prevalence estimate."
   },
   "descriptive": {
     "top_genre": "Indie",
     "top_platform": "PC (Microsoft Windows)",
-    "rating_coverage_pct": 41.85,
-    "summary_coverage_pct": 97.09
+    "rating_coverage_pct": 29.29,
+    "summary_coverage_pct": 96.39
   },
   "diagnostic": {
-    "hidden_gem_count": 229,
+    "hidden_gem_count": 231,
     "quality_popscore_correlation_file": "quality_popscore_correlation.csv",
     "user_critic_agreement_file": "user_critic_agreement_summary.csv",
     "quality_popscore_rows": 14,

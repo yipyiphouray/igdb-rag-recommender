@@ -1483,7 +1483,9 @@ These mappings are not official IGDB categories. They are project-defined labels
 | `extraction_cohorts.cohort` | Meaning |
 |---|---|
 | `quality` | Met `total_rating >= 75` and `total_rating_count >= 25`; ranked by Bayesian-adjusted yearly rating. |
-| `popularity` | Selected by project-defined IGDB interest score or IGDB Visits after removing quality selections. |
+| `lower_rated` | Met `total_rating <= 60` and `total_rating_count >= 25`; ranked by lowest Bayesian-adjusted yearly rating. This means lower-rated reliable reception, not objectively bad games. |
+| `popularity` | Selected by highest project-defined IGDB interest score or IGDB Visits after removing quality and lower-rated selections. |
+| `low_visibility` | Selected by lowest known IGDB interest score or IGDB Visits after removing earlier cohort selections. Missing PopScore means unknown visibility, not low visibility. |
 | `comparison` | Reproducible random sample from the remaining eligible games for the release year. |
 
 These cohorts have different inclusion rules and must be retained in

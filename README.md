@@ -14,7 +14,7 @@ Custom website final product next, with public deployment optional if it can be 
 Completed:
 
 - IGDB extraction pipeline.
-- Curated 15,000-game analytical sample.
+- Refreshed curated 47,835-game analytical sample.
 - Normalized SQLite database.
 - Descriptive analytics notebook and findings report.
 - Diagnostic analytics notebook and findings report.
@@ -46,13 +46,31 @@ data/database/igdb_games.db
 Current analytical sample:
 
 ```text
-Total games:       15,000
+Total games:       47,835
 Release years:     2010-2024
-Games per year:    1,000
-Quality cohort:    1,418
-Popularity cohort: 3,000
-Comparison cohort: 10,582
+Target design:     50,000 games, yearly stratified
+Actual selected:   47,835 games
+Quality cohort:    1,425
+Lower-rated cohort:147
+Popularity cohort: 9,000
+Low visibility:    5,329
+Comparison cohort: 31,934
 ```
+
+Extraction design:
+
+```text
+Target games:      50,000
+Release years:     2010-2024
+Design:            yearly stratified sample
+Current cohorts:   quality, lower_rated, popularity, low_visibility, comparison
+Purpose:           compare top reception, lower reliable reception,
+                   high visibility, low known visibility, and comparison games
+```
+
+The current local database is the refreshed source of truth. It contains 47,835
+games rather than the full 50,000 target because the earliest release years did
+not have enough eligible records to fill the configured yearly target.
 
 Important interpretation rules:
 

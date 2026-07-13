@@ -269,7 +269,15 @@ def create_schema(conn: sqlite3.Connection) -> None:
             game_id INTEGER PRIMARY KEY,
             release_year INTEGER NOT NULL,
             cohort TEXT NOT NULL
-                CHECK (cohort IN ('quality', 'popularity', 'comparison')),
+                CHECK (
+                    cohort IN (
+                        'quality',
+                        'lower_rated',
+                        'popularity',
+                        'low_visibility',
+                        'comparison'
+                    )
+                ),
             selection_rank INTEGER NOT NULL,
             adjusted_quality_score REAL,
             popularity_basis TEXT,

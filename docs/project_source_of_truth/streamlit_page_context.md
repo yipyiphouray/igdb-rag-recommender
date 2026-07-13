@@ -37,8 +37,8 @@ PopScore interest  = visibility / current-interest signal
 
 Important caveats:
 
-- The app uses a curated 15,000-game IGDB analytical sample, not the full IGDB catalog.
-- The sample includes exactly 1,000 released main games per year from 2010 through 2024.
+- The app uses a refreshed curated 47,835-game IGDB analytical sample, not the full IGDB catalog.
+- The extraction targeted 50,000 released main games from 2010 through 2024 and selected 47,835 because the earliest years had fewer eligible records than the configured yearly target.
 - Quality and visibility cohorts are intentionally oversampled.
 - Missing PopScore means unknown visibility, not low visibility.
 - Diagnostic associations should not be interpreted as causal claims.

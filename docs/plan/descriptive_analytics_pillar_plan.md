@@ -494,21 +494,14 @@ This page summarizes the current IGDB game catalog used by the project. It provi
 
 If the current dataset is still a curated sample, clearly state that the results describe the extracted sample, not the full IGDB catalog.
 
-The current extraction contains 15,000 released main games: exactly 1,000
-games from each year from 2010 through 2024. Every selected game has a name,
-release date, genre, and platform.
+The current extraction targeted 50,000 released main games from 2010 through
+2024 and selected 47,835 games because the earliest years did not have enough
+eligible records to fill the configured yearly target. Every selected game has
+a name, release date, genre, and platform.
 
-The sample deliberately combines quality, PopScore visibility, and random
-comparison cohorts. It is balanced by release year but is not a random sample
-of the complete IGDB catalog.
-
-The yearly settings come from `src/fetch_IGDB.py`:
-
-```python
-START_YEAR = 2010
-END_YEAR = 2024
-GAMES_PER_YEAR = 1000
-```
+The sample deliberately combines quality, lower-rated, PopScore visibility,
+low-known-visibility, and random residual comparison cohorts. It is designed
+for analytical contrast but is not a random sample of the complete IGDB catalog.
 
 The current selection applies:
 
@@ -516,21 +509,27 @@ The current selection applies:
 main games only
 name, release date, genre, and platform required
 quality cohort: total_rating >= 75 and total_rating_count >= 25
+lower-rated cohort: total_rating <= 60 and total_rating_count >= 25
 popularity cohort: IGDB PopScore interest / Visits
+low-visibility cohort: low known IGDB interest / Visits
 comparison cohort: reproducible random sample of remaining games
 ```
 
-If `GAME_LIMIT` or the base extraction filters change, rerun the extraction, rebuild the database, rerun this descriptive notebook, and update the caveat in the dashboard/report.
+If the extraction target or base extraction filters change, rerun the
+extraction, rebuild the database, rerun this descriptive notebook, and update
+the caveat in the dashboard/report.
 
 Suggested wording:
 
 ```markdown
-The current descriptive results represent a curated 15,000-game IGDB sample,
-not the full IGDB catalog or video game market. The sample contains exactly
-1,000 released main games per year from 2010 through 2024 and deliberately
-oversamples well-received and PopScore-visible games. Use
-`extraction_cohorts` to report sample composition. Full-sample quality or
-popularity shares must not be interpreted as market prevalence.
+The current descriptive results represent a curated 47,835-game IGDB sample,
+not the full IGDB catalog or video game market. The extraction targeted 50,000
+released main games from 2010 through 2024 and selected 47,835 because the
+earliest years had fewer eligible records than the configured yearly target.
+The sample deliberately includes quality, lower-rated, popularity,
+low-visibility, and comparison cohorts. Use `extraction_cohorts` to report
+sample composition. Full-sample quality, lower-rated, popularity, or
+low-visibility shares must not be interpreted as market prevalence.
 ```
 
 ---
@@ -2053,7 +2052,7 @@ ORDER BY min_relationship_count;
 Important note:
 
 ```text
-A simple yes/no metadata signal score may be too coarse for this 15,000-game
+A simple yes/no metadata signal score may be too coarse for this 47,835-game
 sample. Relationship-count summaries measure linked metadata volume, but their
 thresholds should be derived from the observed distribution rather than assumed
 to represent objective metadata quality.

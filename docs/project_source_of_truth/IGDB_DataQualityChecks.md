@@ -37,24 +37,23 @@ docs/IGDB_relational_ERD.md
 
 ## Current Validation Snapshot
 
-Validated against `data/database/igdb_games.db` on **2026-06-17** after the broader unfiltered IGDB pull.
+Validated against `data/database/igdb_games.db` on **2026-07-13** after the refreshed 50,000-target stratified IGDB pull.
 
 | Result | Current Value |
 | --- | ---: |
 | SQLite tables | 34 |
-| Games | 3,000 |
 | Empty tables | 0 |
 | `PRAGMA integrity_check` | `ok` |
 | `PRAGMA foreign_key_check` failures | 0 |
-| Games | 15,000 |
-| Extraction cohort rows | 15,000 |
-| Games with a platform | 15,000 |
-| Games with a summary | 14,564 |
-| Games with `total_rating` | 6,278 |
-| Games with `total_rating_count >= 25` | 2,498 |
-| Games with a genre | 15,000 |
-| Games with a theme | 10,817 |
-| Games with a cover ID | 14,446 |
+| Games | 47,835 |
+| Extraction cohort rows | 47,835 |
+| Games with a platform | 47,835 |
+| Games with a summary | 46,108 |
+| Games with `total_rating` | 14,009 |
+| Games with `total_rating_count >= 25` | 2,639 |
+| Games with a genre | 47,835 |
+| Games with a theme | 32,240 |
+| Games with a cover ID | 45,752 |
 
 Documented exceptions:
 
@@ -64,11 +63,14 @@ Documented exceptions:
 * Company `9254` (`Blade Games World`) has an IGDB founding timestamp outside
   Python's supported calendar range. The raw `start_date` is preserved and
   `start_date_iso` is intentionally `NULL`.
-* The current extraction selects 15,000 released main games: 1,000 per year
-  from 2010 through 2024. It requires a name, release date, genre, and platform.
-* The sample combines quality, PopScore-visible, and random comparison cohorts.
-  Quality and visibility are deliberately oversampled, so full-sample
-  prevalence estimates require cohort-aware interpretation.
+* The current extraction targeted 50,000 released main games from 2010 through
+  2024 and selected 47,835 games because the earliest years did not have enough
+  eligible records to fill the configured yearly target. It requires a name,
+  release date, genre, and platform.
+* The sample combines `quality`, `lower_rated`, `popularity`, `low_visibility`,
+  and random residual `comparison` cohorts. Reception and visibility cohorts
+  are deliberately shaped by the extraction design, so full-sample prevalence
+  estimates require cohort-aware interpretation.
 * Every game must have exactly one `extraction_cohorts` row. The current
   database satisfies this rule.
 
@@ -1841,11 +1843,15 @@ sample-relative visibility threshold.
 
 **Important Note:**
 
-The current 15,000-game sample deliberately includes all quality-eligible games
-and separate PopScore-visible and random comparison cohorts. Hidden-gem checks
-must retain release year and extraction cohort. Prefer
+The current 47,835-game sample deliberately includes quality, lower-rated,
+high-visibility, low-known-visibility, and random residual comparison cohorts.
+Hidden-gem checks must retain release year and extraction cohort. Prefer
 `vw_game_popscore_igdb_interest` over `total_rating_count` for visibility when
 coverage is available.
+
+Validate the `lower_rated` and `low_visibility` cohorts separately. The
+`low_visibility` cohort should only be interpreted as low known IGDB
+visibility; games with missing PopScore remain unknown visibility.
 
 ---
 

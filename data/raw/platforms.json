@@ -18,10 +18,30 @@
     "platform_type": 1
   },
   {
+    "id": 62,
+    "abbreviation": "Jaguar",
+    "generation": 5,
+    "name": "Atari Jaguar",
+    "slug": "jaguar",
+    "platform_type": 1
+  },
+  {
     "id": 150,
     "name": "Turbografx-16/PC Engine CD",
     "slug": "turbografx-16-slash-pc-engine-cd",
     "platform_type": 6
+  },
+  {
+    "id": 156,
+    "name": "Thomson MO5",
+    "slug": "thomson-mo5",
+    "platform_type": 6
+  },
+  {
+    "id": 389,
+    "name": "AirConsole",
+    "slug": "airconsole",
+    "platform_type": 3
   },
   {
     "id": 13,
@@ -78,6 +98,20 @@
     "platform_type": 5
   },
   {
+    "id": 77,
+    "abbreviation": "x1",
+    "name": "Sharp X1",
+    "slug": "x1",
+    "platform_type": 6
+  },
+  {
+    "id": 120,
+    "generation": 5,
+    "name": "Neo Geo Pocket Color",
+    "slug": "neo-geo-pocket-color",
+    "platform_type": 5
+  },
+  {
     "id": 127,
     "generation": 2,
     "name": "Fairchild Channel F",
@@ -92,6 +126,19 @@
     "platform_type": 3
   },
   {
+    "id": 413,
+    "generation": 7,
+    "name": "Leapster Explorer/LeadPad Explorer",
+    "slug": "leapster-explorer-slash-leadpad-explorer",
+    "platform_type": 5
+  },
+  {
+    "id": 153,
+    "name": "Dragon 32/64",
+    "slug": "dragon-32-slash-64",
+    "platform_type": 6
+  },
+  {
     "id": 167,
     "abbreviation": "PS5",
     "generation": 9,
@@ -99,6 +146,13 @@
     "platform_family": 1,
     "slug": "ps5",
     "platform_type": 1
+  },
+  {
+    "id": 154,
+    "abbreviation": "APCW",
+    "name": "Amstrad PCW",
+    "slug": "apcw",
+    "platform_type": 6
   },
   {
     "id": 70,
@@ -165,13 +219,25 @@
     "platform_type": 1
   },
   {
-    "id": 51,
-    "abbreviation": "fds",
-    "generation": 3,
-    "name": "Family Computer Disk System",
-    "platform_family": 5,
-    "slug": "fds",
-    "platform_type": 1
+    "id": 94,
+    "abbreviation": "C+4",
+    "name": "Commodore Plus/4",
+    "slug": "c-plus-4",
+    "platform_type": 6
+  },
+  {
+    "id": 123,
+    "generation": 5,
+    "name": "WonderSwan Color",
+    "slug": "wonderswan-color",
+    "platform_type": 5
+  },
+  {
+    "id": 129,
+    "abbreviation": "ti-99",
+    "name": "Texas Instruments TI-99",
+    "slug": "ti-99",
+    "platform_type": 6
   },
   {
     "id": 3,
@@ -200,6 +266,22 @@
     "platform_type": 1
   },
   {
+    "id": 136,
+    "generation": 4,
+    "name": "Neo Geo CD",
+    "slug": "neo-geo-cd",
+    "platform_type": 1
+  },
+  {
+    "id": 35,
+    "abbreviation": "Game Gear",
+    "generation": 4,
+    "name": "Sega Game Gear",
+    "platform_family": 3,
+    "slug": "gamegear",
+    "platform_type": 5
+  },
+  {
     "id": 39,
     "abbreviation": "iOS",
     "name": "iOS",
@@ -214,10 +296,31 @@
     "platform_type": 4
   },
   {
+    "id": 78,
+    "abbreviation": "Sega CD",
+    "generation": 4,
+    "name": "Sega CD",
+    "platform_family": 3,
+    "slug": "sega-cd",
+    "platform_type": 1
+  },
+  {
     "id": 163,
     "abbreviation": "Steam VR",
     "name": "SteamVR",
     "slug": "steam-vr"
+  },
+  {
+    "id": 373,
+    "name": "Sinclair ZX81",
+    "slug": "sinclair-zx81",
+    "platform_type": 6
+  },
+  {
+    "id": 149,
+    "name": "PC-9800 Series",
+    "slug": "pc-9800-series",
+    "platform_type": 6
   },
   {
     "id": 24,
@@ -235,6 +338,18 @@
     "name": "Ouya",
     "slug": "ouya",
     "platform_type": 1
+  },
+  {
+    "id": 115,
+    "name": "Apple IIGS",
+    "slug": "apple-iigs",
+    "platform_type": 6
+  },
+  {
+    "id": 125,
+    "name": "PC-8800 Series",
+    "slug": "pc-8800-series",
+    "platform_type": 6
   },
   {
     "id": 133,
@@ -325,11 +440,33 @@
     "platform_type": 4
   },
   {
+    "id": 86,
+    "abbreviation": "turbografx16",
+    "generation": 4,
+    "name": "TurboGrafx-16/PC Engine",
+    "slug": "turbografx16--1",
+    "platform_type": 1
+  },
+  {
+    "id": 66,
+    "abbreviation": "Atari5200",
+    "generation": 2,
+    "name": "Atari 5200",
+    "slug": "atari5200",
+    "platform_type": 1
+  },
+  {
     "id": 113,
     "abbreviation": "OnLive",
     "name": "OnLive Game System",
     "slug": "onlive",
     "platform_type": 3
+  },
+  {
+    "id": 121,
+    "name": "Sharp X68000",
+    "slug": "sharp-x68000",
+    "platform_type": 6
   },
   {
     "id": 138,
@@ -339,15 +476,46 @@
     "platform_type": 1
   },
   {
+    "id": 152,
+    "name": "FM-7",
+    "slug": "fm-7",
+    "platform_type": 6
+  },
+  {
+    "id": 155,
+    "name": "Tatung Einstein",
+    "slug": "tatung-einstein",
+    "platform_type": 6
+  },
+  {
+    "id": 157,
+    "name": "NEC PC-6000 Series",
+    "slug": "nec-pc-6000-series",
+    "platform_type": 6
+  },
+  {
     "id": 161,
     "name": "Windows Mixed Reality",
     "slug": "windows-mixed-reality"
+  },
+  {
+    "id": 374,
+    "name": "Sharp MZ-2200",
+    "slug": "sharp-mz-2200",
+    "platform_type": 6
   },
   {
     "id": 377,
     "name": "Plug & Play",
     "slug": "plug-and-play",
     "platform_type": 3
+  },
+  {
+    "id": 379,
+    "generation": 5,
+    "name": "Game.com",
+    "slug": "game-dot-com",
+    "platform_type": 5
   },
   {
     "id": 382,
@@ -374,12 +542,29 @@
     "platform_type": 1
   },
   {
+    "id": 507,
+    "generation": 6,
+    "name": "Advanced Pico Beena",
+    "platform_family": 3,
+    "slug": "advanced-pico-beena",
+    "platform_type": 1
+  },
+  {
     "id": 508,
     "abbreviation": "Switch 2",
     "generation": 9,
     "name": "Nintendo Switch 2",
     "platform_family": 5,
     "slug": "switch-2",
+    "platform_type": 1
+  },
+  {
+    "id": 21,
+    "abbreviation": "NGC",
+    "generation": 6,
+    "name": "Nintendo GameCube",
+    "platform_family": 5,
+    "slug": "ngc",
     "platform_type": 1
   },
   {
@@ -401,6 +586,14 @@
     "platform_type": 5
   },
   {
+    "id": 57,
+    "abbreviation": "WonderSwan",
+    "generation": 5,
+    "name": "WonderSwan",
+    "slug": "wonderswan",
+    "platform_type": 5
+  },
+  {
     "id": 38,
     "abbreviation": "PSP",
     "generation": 7,
@@ -408,6 +601,13 @@
     "platform_family": 1,
     "slug": "psp",
     "platform_type": 5
+  },
+  {
+    "id": 69,
+    "abbreviation": "bbcmicro",
+    "name": "BBC Microcomputer System",
+    "slug": "bbcmicro",
+    "platform_type": 6
   },
   {
     "id": 71,
@@ -448,6 +648,13 @@
     "platform_type": 1
   },
   {
+    "id": 93,
+    "abbreviation": "C16",
+    "name": "Commodore 16",
+    "slug": "c16",
+    "platform_type": 6
+  },
+  {
     "id": 170,
     "abbreviation": "Stadia",
     "name": "Google Stadia",
@@ -474,6 +681,13 @@
     "slug": "daydream"
   },
   {
+    "id": 415,
+    "generation": 4,
+    "name": "Watara/QuickShot Supervision",
+    "slug": "watara-slash-quickshot-supervision",
+    "platform_type": 5
+  },
+  {
     "id": 381,
     "abbreviation": "Playdate",
     "generation": 9,
@@ -487,6 +701,14 @@
     "name": "ZX Spectrum",
     "slug": "zxs",
     "platform_type": 6
+  },
+  {
+    "id": 378,
+    "abbreviation": "Gamate",
+    "generation": 4,
+    "name": "Gamate",
+    "slug": "gamate",
+    "platform_type": 5
   },
   {
     "id": 27,
@@ -532,6 +754,12 @@
     "platform_type": 1
   },
   {
+    "id": 151,
+    "name": "TRS-80 Color Computer",
+    "slug": "trs-80-color-computer",
+    "platform_type": 6
+  },
+  {
     "id": 166,
     "name": "Pokémon mini",
     "platform_family": 5,
@@ -566,6 +794,13 @@
     "platform_type": 1
   },
   {
+    "id": 274,
+    "generation": 5,
+    "name": "PC-FX",
+    "slug": "pc-fx",
+    "platform_type": 1
+  },
+  {
     "id": 411,
     "abbreviation": "Handheld",
     "name": "Handheld Electronic LCD",
@@ -577,6 +812,32 @@
     "name": "Windows Mobile",
     "slug": "windows-mobile",
     "platform_type": 4
+  },
+  {
+    "id": 406,
+    "name": "Sinclair QL",
+    "slug": "sinclair-ql",
+    "platform_type": 6
+  },
+  {
+    "id": 408,
+    "generation": 4,
+    "name": "Mega Duck/Cougar Boy",
+    "slug": "mega-duck-slash-cougar-boy",
+    "platform_type": 5
+  },
+  {
+    "id": 409,
+    "name": "Legacy Computer",
+    "slug": "legacy-computer",
+    "platform_type": 6
+  },
+  {
+    "id": 412,
+    "generation": 6,
+    "name": "Leapster",
+    "slug": "leapster",
+    "platform_type": 5
   },
   {
     "id": 417,
@@ -597,6 +858,12 @@
     "name": "visionOS",
     "slug": "visionos",
     "platform_type": 4
+  },
+  {
+    "id": 481,
+    "name": "Tomy Tutor / Pyuta / Grandstand Tutor",
+    "slug": "tomy-tutor-slash-pyuta-slash-grandstand-tutor",
+    "platform_type": 6
   },
   {
     "id": 34,
@@ -685,6 +952,19 @@
     "platform_type": 5
   },
   {
+    "id": 90,
+    "abbreviation": "cpet",
+    "name": "Commodore PET",
+    "slug": "cpet",
+    "platform_type": 6
+  },
+  {
+    "id": 126,
+    "name": "TRS-80",
+    "slug": "trs-80",
+    "platform_type": 6
+  },
+  {
     "id": 4,
     "abbreviation": "N64",
     "generation": 5,
@@ -718,6 +998,15 @@
     "name": "Xbox One",
     "platform_family": 2,
     "slug": "xboxone",
+    "platform_type": 1
+  },
+  {
+    "id": 58,
+    "abbreviation": "SFAM",
+    "generation": 4,
+    "name": "Super Famicom",
+    "platform_family": 5,
+    "slug": "sfam",
     "platform_type": 1
   },
   {

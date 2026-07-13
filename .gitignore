@@ -9,4 +9,8 @@ data/analytics/descriptive/*
 data/database/igdb_games.db
 data/analytics/diagnostic/*
 apps/streamlit/.streamlit/secrets.toml
+data/database/*.db
+data/raw/*.json
+data/app/*.parquet
+data/app/*.json
 

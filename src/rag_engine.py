@@ -7,7 +7,6 @@ from datetime import datetime
 from pathlib import Path
 
 import chromadb
-import joblib
 import pandas as pd
 from chromadb.utils import embedding_functions
 
@@ -153,79 +152,17 @@ class SimpleBM25:
         return scores
 
 
-def build_model_feature_vector(candidate, user_pace_signature=1.0):
-    platforms = candidate.get("platforms", "") or ""
-    genres = candidate.get("genres", "") or ""
-    themes = candidate.get("themes", "") or ""
-    developers = candidate.get("developers", "") or ""
-    publishers = candidate.get("publishers", "") or ""
-    summary = candidate.get("summary", "") or ""
-    storyline = candidate.get("storyline", "") or ""
-    category_id = _safe_int(candidate.get("category_id", 0), 0)
-
-    feature_map = {
-        "release_year": _safe_float(candidate.get("release_year", 0), 0.0),
-        "playtime_normally": _safe_float(candidate.get("playtime_normally", 0), 0.0),
-        "user_pace_signature": _safe_float(user_pace_signature, 1.0),
-        "mp_campaign_coop": _safe_float(candidate.get("mp_campaign_coop", 0), 0.0),
-        "mp_splitscreen": _safe_float(candidate.get("mp_splitscreen", 0), 0.0),
-        "mp_online_coop": _safe_float(candidate.get("mp_online_coop", 0), 0.0),
-        "mp_offline_coop": _safe_float(candidate.get("mp_offline_coop", 0), 0.0),
-        "mp_max_online_players": _safe_float(candidate.get("mp_max_online_players", 0), 0.0),
-        "summary_length": float(len(summary)),
-        "storyline_length": float(len(storyline)),
-        "category_is_main_game": 1.0 if category_id == 0 else 0.0,
-        "category_is_variant_or_special": 0.0 if category_id == 0 else 1.0,
-        "platform_pc": 1.0 if "pc" in platforms.lower() else 0.0,
-        "platform_playstation_4": 1.0 if "playstation 4" in platforms.lower() else 0.0,
-        "platform_playstation_5": 1.0 if "playstation 5" in platforms.lower() else 0.0,
-        "platform_xbox_one": 1.0 if "xbox one" in platforms.lower() else 0.0,
-        "platform_xbox_series_x_s": 1.0 if "xbox series x|s" in platforms.lower() else 0.0,
-        "platform_nintendo_switch": 1.0 if "nintendo switch" in platforms.lower() else 0.0,
-        "genre_action": 1.0 if "action" in themes.lower() else 0.0,
-        "genre_adventure": 1.0 if "adventure" in genres.lower() else 0.0,
-        "genre_role_playing_rpg": 1.0 if "role-playing (rpg)" in genres.lower() else 0.0,
-        "genre_strategy": 1.0 if "strategy" in genres.lower() else 0.0,
-        "genre_shooter": 1.0 if "shooter" in genres.lower() else 0.0,
-        "genre_indie": 1.0 if "indie" in genres.lower() else 0.0,
-        "genre_simulator": 1.0 if "simulator" in genres.lower() else 0.0,
-        "genre_platform": 1.0 if "platform" in genres.lower() else 0.0,
-        "dev_nintendo": 1.0 if "nintendo" in developers.lower() else 0.0,
-        "dev_ubisoft": 1.0 if "ubisoft" in developers.lower() else 0.0,
-        "dev_electronic_arts": 1.0 if ("electronic arts" in developers.lower() or "ea " in developers.lower()) else 0.0,
-        "dev_sony": 1.0 if ("sony" in developers.lower() or "sony" in publishers.lower()) else 0.0,
-        "dev_square_enix": 1.0 if "square enix" in developers.lower() else 0.0,
-        "dev_capcom": 1.0 if "capcom" in developers.lower() else 0.0,
-        "dev_valve": 1.0 if "valve" in developers.lower() else 0.0,
-    }
-    return feature_map
-
-
 def rank_results(
     candidates,
-    model_bundle=None,
     graphics_preference=None,
-    user_id=None,
-    alpha=0.0,
-    user_pace_signature=1.0,
 ):
     if not candidates:
         return []
-
-    model = None
-    feature_columns = []
-    model_kind = "legacy"
-    if model_bundle:
-        model = model_bundle.get("model")
-        feature_columns = model_bundle.get("feature_columns", [])
-        model_kind = str(model_bundle.get("model_kind", "legacy"))
 
     request_2d = bool((graphics_preference or {}).get("request_2d", False))
     avoid_3d = bool((graphics_preference or {}).get("avoid_3d", False))
     two_d_boost = _safe_float((graphics_preference or {}).get("two_d_boost", 1.5), 1.5)
     three_d_penalty = _safe_float((graphics_preference or {}).get("three_d_penalty", 0.1), 0.1)
-
-    alpha = min(1.0, max(0.0, _safe_float(alpha, 0.0)))
 
     # Step A: relevance score is retrieval relevance + metadata similarity boost.
     for candidate in candidates:
@@ -247,140 +184,22 @@ def rank_results(
 
         candidate["constraint_multiplier"] = multiplier
         candidate["relevance_score"] *= multiplier
-        candidate["personalization_alpha"] = alpha
-        candidate["personalization_user_id"] = user_id
+        candidate["primary_rank_score"] = _safe_float(candidate.get("relevance_score", 0.0), 0.0)
 
-    # Step B: rank all candidates by relevance first.
-    relevance_sorted = sorted(
+    # Step B: rank by semantic + lexical relevance only (RAG is independent from recommendation scoring).
+    return sorted(
         candidates,
         key=lambda x: (
-            -_safe_float(x.get("relevance_score", 0.0), 0.0),
-            _safe_float(x.get("distance", 1.0), 1.0),
-        ),
-    )
-
-    # Step C: apply predictive scoring only to top 20 relevance candidates.
-    top_k = relevance_sorted[:20]
-    remainder = relevance_sorted[20:]
-
-    for i, row in enumerate(top_k[:3], start=1):
-        print(
-            "[RankDebug] "
-            f"{i}. keys={sorted(list(row.keys()))} | "
-            f"total_rating={_safe_float(row.get('total_rating', 0.0), 0.0):.4f} | "
-            f"release_year={_safe_int(row.get('release_year', 0), 0)}"
-        )
-
-    # Global fallback for cold start / missing model artifact.
-    model_ready = bool(model_bundle is not None and model is not None and feature_columns)
-    if not model_ready:
-        print("[RankDebug] model_bundle unavailable. Using baseline ranking by total_rating.")
-        for candidate in relevance_sorted:
-            baseline_quality = _safe_float(candidate.get("total_rating", 0.0), 0.0)
-            if _safe_float(candidate.get("metadata_boost", 0.0), 0.0) <= 0.0:
-                baseline_quality *= 0.5
-            baseline_quality *= _safe_float(candidate.get("constraint_multiplier", 1.0), 1.0)
-            baseline_quality = _safe_float(baseline_quality, _safe_float(candidate.get("total_rating", 0.0), 0.0))
-
-            candidate["global_quality_score"] = baseline_quality
-            candidate["base_predicted_rating"] = baseline_quality
-            candidate["predicted_quality_score"] = baseline_quality
-            candidate["personalized_preference_score"] = baseline_quality
-            candidate["personalized_pace_compatibility_score"] = baseline_quality
-            candidate["predicted_pace_rpi"] = baseline_quality
-            candidate["primary_rank_score"] = baseline_quality
-
-        return sorted(
-            relevance_sorted,
-            key=lambda x: (
-                -_safe_float(x.get("primary_rank_score", 0.0), 0.0),
-                -_safe_float(x.get("relevance_score", 0.0), 0.0),
-                _safe_float(x.get("distance", 1.0), 1.0),
-            ),
-        )
-
-    pace_predictions = [_safe_float(c.get("total_rating", 0.0), 0.0) for c in top_k]
-    try:
-        rows = []
-        for candidate in top_k:
-            feature_map = build_model_feature_vector(candidate, user_pace_signature=user_pace_signature)
-            rows.append({col: feature_map.get(col, 0.0) for col in feature_columns})
-
-        x = pd.DataFrame(rows, columns=feature_columns).fillna(0)
-        preds = model.predict(x).tolist()
-        pace_predictions = [
-            _safe_float(v, _safe_float(top_k[idx].get("total_rating", 0.0), 0.0))
-            for idx, v in enumerate(preds)
-        ]
-    except Exception as exc:
-        print(f"[RankDebug] model.predict failed. Falling back to total_rating baseline: {exc}")
-
-    # Convert pace predictions into a comparable compatibility score in [0, 100].
-    if top_k:
-        pace_min = min(pace_predictions)
-        pace_max = max(pace_predictions)
-    else:
-        pace_min, pace_max = 0.0, 0.0
-
-    for idx, candidate in enumerate(top_k):
-        total_rating_fallback = _safe_float(candidate.get("total_rating", 0.0), 0.0)
-        global_quality_score = total_rating_fallback
-        raw_pace_prediction = _safe_float(pace_predictions[idx], total_rating_fallback)
-        if pace_max > pace_min:
-            pace_compatibility = 100.0 * ((raw_pace_prediction - pace_min) / (pace_max - pace_min))
-        elif model_kind == "pace_compatibility":
-            # If all pace predictions are equal for this query, keep a neutral compatibility.
-            pace_compatibility = 50.0
-        else:
-            # Legacy / no-model fallback: use total rating as a neutral proxy.
-            pace_compatibility = global_quality_score
-
-        if _safe_float(candidate.get("metadata_boost", 0.0), 0.0) <= 0.0:
-            global_quality_score *= 0.5
-            pace_compatibility *= 0.5
-
-        global_quality_score *= _safe_float(candidate.get("constraint_multiplier", 1.0), 1.0)
-        pace_compatibility *= _safe_float(candidate.get("constraint_multiplier", 1.0), 1.0)
-        global_quality_score = _safe_float(global_quality_score, total_rating_fallback)
-        pace_compatibility = _safe_float(pace_compatibility, total_rating_fallback)
-
-        candidate["predicted_pace_rpi"] = _safe_float(raw_pace_prediction, total_rating_fallback)
-        candidate["personalized_pace_compatibility_score"] = pace_compatibility
-        candidate["global_quality_score"] = global_quality_score
-        candidate["base_predicted_rating"] = global_quality_score
-        candidate["predicted_quality_score"] = _safe_float(global_quality_score, total_rating_fallback)
-        candidate["personalized_preference_score"] = _safe_float(pace_compatibility, total_rating_fallback)
-
-        final_score = (global_quality_score * (1.0 - alpha)) + (pace_compatibility * alpha)
-        candidate["primary_rank_score"] = _safe_float(final_score, total_rating_fallback)
-
-    # Keep remainder below top-20 ranked set.
-    for candidate in remainder:
-        fallback = _safe_float(candidate.get("total_rating", 0.0), 0.0)
-        candidate["predicted_quality_score"] = fallback
-        candidate["global_quality_score"] = fallback
-        candidate["personalized_preference_score"] = fallback
-        candidate["personalized_pace_compatibility_score"] = fallback
-        candidate["predicted_pace_rpi"] = fallback
-        candidate["primary_rank_score"] = -1.0
-
-    # Step D: final display order is predictive score on top-20 with relevance as tiebreak.
-    top_k_sorted = sorted(
-        top_k,
-        key=lambda x: (
             -_safe_float(x.get("primary_rank_score", 0.0), 0.0),
-            -_safe_float(x.get("relevance_score", 0.0), 0.0),
             _safe_float(x.get("distance", 1.0), 1.0),
         ),
     )
-    return top_k_sorted + remainder
 
 
 class RAGAgent:
     def __init__(self):
         self.root_dir = Path(__file__).resolve().parent.parent
         self.db_path = self.root_dir / "data" / "database" / "igdb_games.db"
-        self.model_path = self.root_dir / "models" / "recommender_model.pkl"
 
         self.client = chromadb.PersistentClient(path=str(self.root_dir / "data" / "vector_store"))
         self.embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
@@ -391,27 +210,12 @@ class RAGAgent:
             embedding_function=self.embedding_fn,
         )
 
-        self.model_bundle = self._load_model_bundle()
         self.analytics_columns = self._get_analytics_columns()
         self.catalog_by_id = {}
         self.bm25_doc_ids = []
         self.bm25_index = None
         self.dimension_keyword_sets = self._load_dimension_keyword_sets()
         self._build_bm25_index_from_analytics_view()
-
-    def _load_model_bundle(self):
-        if not self.model_path.exists():
-            print(f"[WARN] Model not found at {self.model_path}. Using heuristic ranking.")
-            return None
-
-        try:
-            artifact = joblib.load(self.model_path)
-            if isinstance(artifact, dict) and "model" in artifact and "feature_columns" in artifact:
-                return artifact
-            return {"model": artifact, "feature_columns": []}
-        except Exception as exc:
-            print(f"[WARN] Could not load model ({exc}). Using heuristic ranking.")
-            return None
 
     def _get_analytics_columns(self):
         conn = sqlite3.connect(self.db_path)
@@ -1047,6 +851,36 @@ class RAGAgent:
                 return row.to_dict()
         return None
 
+    def _find_seed_game_by_id(self, seed_game_id):
+        if seed_game_id is None:
+            return None
+
+        normalized_seed_id = str(seed_game_id).strip()
+        if not normalized_seed_id:
+            return None
+
+        conn = sqlite3.connect(self.db_path)
+        try:
+            sql = """
+            SELECT
+                game_id,
+                name,
+                platforms,
+                genres,
+                themes,
+                developers
+            FROM analytics_ready_games
+            WHERE CAST(game_id AS TEXT) = ?
+            LIMIT 1
+            """
+            df = pd.read_sql_query(sql, conn, params=[normalized_seed_id])
+        finally:
+            conn.close()
+
+        if df.empty:
+            return None
+        return df.iloc[0].to_dict()
+
     def _parse_csv_values(self, raw_value):
         if raw_value is None:
             return []
@@ -1062,42 +896,20 @@ class RAGAgent:
         seed_themes = self._parse_csv_values(seed_game.get("themes"))
         seed_developers = self._parse_csv_values(seed_game.get("developers"))
 
-        if not seed_platforms or len(seed_genres) < 2 or len(seed_themes) < 1:
-            return None, {}
+        if not seed_genres and not seed_themes:
+            return set(), {}
 
-        platform_clause_parts = []
-        platform_params = []
-        for p in seed_platforms:
-            platform_clause_parts.append("LOWER(platforms) LIKE ?")
-            platform_params.append(f"%{p.lower()}%")
-        platform_clause = "(" + " OR ".join(platform_clause_parts) + ")"
-
-        genre_case_parts = []
-        genre_params = []
-        for g in seed_genres:
-            genre_case_parts.append("CASE WHEN LOWER(genres) LIKE ? THEN 1 ELSE 0 END")
-            genre_params.append(f"%{g.lower()}%")
-        genre_match_expr = " + ".join(genre_case_parts)
-
-        theme_case_parts = []
-        theme_params = []
-        for t in seed_themes:
-            theme_case_parts.append("CASE WHEN LOWER(themes) LIKE ? THEN 1 ELSE 0 END")
-            theme_params.append(f"%{t.lower()}%")
-        theme_match_expr = " + ".join(theme_case_parts)
-
-        sql = f"""
+        sql = """
         SELECT
             game_id,
+            platforms,
             genres,
             themes,
-            developers,
-            ({genre_match_expr}) AS genre_match_count,
-            ({theme_match_expr}) AS theme_match_count
+            developers
         FROM analytics_ready_games
-        WHERE game_id != ? AND {platform_clause}
+        WHERE CAST(game_id AS TEXT) != ?
         """
-        params = genre_params + theme_params + [seed_game_id] + platform_params
+        params = [seed_game_id]
 
         conn = sqlite3.connect(self.db_path)
         try:
@@ -1108,29 +920,39 @@ class RAGAgent:
         if df.empty:
             return set(), {}
 
-        filtered = df[(df["genre_match_count"] >= 2) & (df["theme_match_count"] >= 1)]
-        if filtered.empty:
-            return set(), {}
-
+        seed_platforms_set = {x.lower() for x in seed_platforms}
         seed_genres_set = {x.lower() for x in seed_genres}
         seed_themes_set = {x.lower() for x in seed_themes}
         seed_developers_set = {x.lower() for x in seed_developers}
 
+        similar_ids = set()
         similarity_boosts = {}
-        for _, row in filtered.iterrows():
+        for _, row in df.iterrows():
             game_id = str(row["game_id"])
+            candidate_platforms = {x.lower() for x in self._parse_csv_values(row.get("platforms"))}
             candidate_genres = {x.lower() for x in self._parse_csv_values(row.get("genres"))}
             candidate_themes = {x.lower() for x in self._parse_csv_values(row.get("themes"))}
             candidate_developers = {x.lower() for x in self._parse_csv_values(row.get("developers"))}
 
+            if seed_platforms_set and len(seed_platforms_set.intersection(candidate_platforms)) == 0:
+                continue
+
             shared_genres = len(seed_genres_set.intersection(candidate_genres))
             shared_themes = len(seed_themes_set.intersection(candidate_themes))
+            if seed_genres_set and shared_genres == 0:
+                continue
+            if seed_themes_set and shared_themes == 0:
+                continue
+
             same_developer = len(seed_developers_set.intersection(candidate_developers)) > 0
 
-            boost = float(shared_genres) + float(shared_themes) + (2.0 if same_developer else 0.0)
+            # Explicit developer overlap bonus to elevate seed-studio continuity in relevance scoring.
+            developer_overlap_bonus = 3.0 if same_developer else 0.0
+            boost = float(shared_genres) + float(shared_themes) + developer_overlap_bonus
+            similar_ids.add(game_id)
             similarity_boosts[game_id] = boost
 
-        return set(filtered["game_id"].astype(str).tolist()), similarity_boosts
+        return similar_ids, similarity_boosts
 
     def _get_management_filter_ids(self, domain_keywords):
         if not domain_keywords:
@@ -1366,6 +1188,7 @@ class RAGAgent:
         bm25_k=100,
         debug_scores=False,
         user_id=None,
+        seed_game_id=None,
     ):
         hard_constraints = self._extract_hard_constraints(query)
         graphics_preference = self._extract_graphics_preference(query, hard_constraints)
@@ -1373,30 +1196,12 @@ class RAGAgent:
         effective_min_year = min_year if min_year is not None else parsed_min_year
         seed_filter_ids = None
         management_filter_ids = None
-        games_played = 0
-        personalization_alpha = 0.0
-        user_preference_scores = {}
-        user_interactions = []
-        user_pace_signature = 1.0
-        user_pace_profile = "Balanced"
-
-        if user_id is not None:
-            (
-                games_played,
-                personalization_alpha,
-                user_preference_scores,
-                user_interactions,
-                user_pace_signature,
-                user_pace_profile,
-            ) = self._get_user_personalization_profile(user_id)
 
         print(
             "[Trace] search:start | "
             f"query='{query}' | top_n={top_n} | min_year_input={min_year} | parsed_min_year={parsed_min_year} | "
             f"effective_min_year={effective_min_year} | platforms={platforms} | multiplayer_mode={multiplayer_mode} | "
-            f"user_id={user_id} | games_played={games_played} | alpha={personalization_alpha:.2f} | "
-            f"user_interactions={len(user_interactions)} | user_pace_signature={user_pace_signature:.4f} | "
-            f"user_pace_profile={user_pace_profile}"
+            f"user_id={user_id} | seed_game_id={seed_game_id}"
         )
 
         allowed_ids, requirements = self._get_prefilter_ids(
@@ -1409,30 +1214,53 @@ class RAGAgent:
         print(f"[Trace] prefilter:first_pass | allowed_ids={allowed_count}")
 
         seed_similarity_boosts = {}
+        seed_game = None
+        if seed_game_id is not None:
+            seed_game = self._find_seed_game_by_id(seed_game_id)
+            if not seed_game:
+                print(f"[Trace] search:return [] | reason=seed_game_id_not_found | seed_game_id={seed_game_id}")
+                return []
+            seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
+            if not seed_filter_ids:
+                print(
+                    "[Trace] search:return [] | reason=seed_game_similarity_empty | "
+                    f"seed_game_id={seed_game_id}"
+                )
+                return []
 
-        seed_title = self._extract_similarity_seed_title(query)
-        if seed_title:
-            seed_game = self._find_seed_game(seed_title)
-            if seed_game:
-                seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
-                if seed_filter_ids is not None:
-                    seed_name = seed_game.get("name", seed_title)
-                    seed_attrs = [
-                        f"platforms={seed_game.get('platforms', '')}",
-                        f"genres={seed_game.get('genres', '')}",
-                        f"themes={seed_game.get('themes', '')}",
-                        f"developers={seed_game.get('developers', '')}",
-                    ]
-                    print(
-                        f"Retrieving games similar to {seed_name} using attributes: "
-                        + "; ".join(seed_attrs)
-                    )
-                    if allowed_ids is None:
-                        allowed_ids = seed_filter_ids
-                    else:
-                        allowed_ids = allowed_ids.intersection(seed_filter_ids)
+            seed_name = seed_game.get("name", str(seed_game_id))
+            print(
+                f"Seed Game Filter Active (ID={seed_game_id}): {seed_name} | "
+                f"similar_candidates={len(seed_filter_ids)}"
+            )
+            if allowed_ids is None:
+                allowed_ids = seed_filter_ids
             else:
-                print(f"[INFO] Seed game '{seed_title}' not found. Falling back to Hybrid Vector+BM25.")
+                allowed_ids = allowed_ids.intersection(seed_filter_ids)
+        else:
+            seed_title = self._extract_similarity_seed_title(query)
+            if seed_title:
+                seed_game = self._find_seed_game(seed_title)
+                if seed_game:
+                    seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
+                    if seed_filter_ids is not None:
+                        seed_name = seed_game.get("name", seed_title)
+                        seed_attrs = [
+                            f"platforms={seed_game.get('platforms', '')}",
+                            f"genres={seed_game.get('genres', '')}",
+                            f"themes={seed_game.get('themes', '')}",
+                            f"developers={seed_game.get('developers', '')}",
+                        ]
+                        print(
+                            f"Retrieving games similar to {seed_name} using attributes: "
+                            + "; ".join(seed_attrs)
+                        )
+                        if allowed_ids is None:
+                            allowed_ids = seed_filter_ids
+                        else:
+                            allowed_ids = allowed_ids.intersection(seed_filter_ids)
+                else:
+                    print(f"[INFO] Seed game '{seed_title}' not found. Falling back to Hybrid Vector+BM25.")
 
         management_domain, domain_keywords = self._detect_management_domain(query)
         if management_domain:
@@ -1536,7 +1364,6 @@ class RAGAgent:
                     "hybrid_score": _safe_float(hit.get("hybrid_score"), 0.0),
                     "vector_similarity": _safe_float(hit.get("vector_similarity"), 0.0),
                     "bm25_score_raw": _safe_float(hit.get("bm25_score_raw"), 0.0),
-                    "personalized_preference_score": _safe_float(user_preference_scores.get(game_id), 0.0),
                     "keyword_boost_applied": bool(hit.get("keyword_boost_applied", False)),
                     "is_2d_detected": bool(dimension_tags.get("is_2d_detected", False)),
                     "is_3d_detected": bool(dimension_tags.get("is_3d_detected", False)),
@@ -1571,11 +1398,7 @@ class RAGAgent:
 
         ranked = rank_results(
             candidates,
-            model_bundle=self.model_bundle,
             graphics_preference=graphics_preference,
-            user_id=user_id,
-            alpha=personalization_alpha,
-            user_pace_signature=user_pace_signature,
         )
         if debug_scores:
             self._log_top_hybrid_scores(ranked, top_k=5)
@@ -1587,7 +1410,7 @@ if __name__ == "__main__":
     agent = RAGAgent()
     print("Agent initialized. Testing hybrid query...")
 
-    test_query = "i want a car race game that i can play on switch."
+    test_query = "i want a game similar to 'It takes two'."
     results = agent.search(
         test_query,
         top_n=5,
@@ -1601,6 +1424,6 @@ if __name__ == "__main__":
     for i, match in enumerate(results, start=1):
         print(f"\n{i}. Name: {match.get('name', 'Not Listed')}")
         print(f"   Release Year: {match.get('release_year', 'Unknown')}")
-        print(f"   Predicted Rating: {match.get('predicted_quality_score', 0.0):.2f}")
+        print(f"   Relevance Score: {match.get('primary_rank_score', 0.0):.4f}")
         print(f"   Platforms: {match.get('platforms', 'Not Listed')}")
         print(f"   Summary: {(match.get('summary', '') or '').strip()}")

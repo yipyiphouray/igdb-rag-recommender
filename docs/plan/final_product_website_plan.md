@@ -264,7 +264,7 @@ Community_Project/
 |   |
 |   `-- website/
 |       |-- package.json
-|       |-- next.config.ts
+|       |-- next.config.mjs
 |       |-- tailwind.config.ts
 |       |-- tsconfig.json
 |       |-- src/

@@ -13,4 +13,9 @@ data/database/*.db
 data/raw/*.json
 data/app/*.parquet
 data/app/*.json
+node_modules/
+.next/
+apps/website/node_modules/
+apps/website/.next/
+apps/website/.env.local
 

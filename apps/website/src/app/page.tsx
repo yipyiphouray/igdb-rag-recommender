@@ -1,93 +1,137 @@
 import Link from "next/link";
-import { getHealth } from "@/lib/api";
 
 const featureCards = [
   {
-    title: "Explore",
-    href: "/explore",
-    description: "Browse the curated IGDB catalog with searchable, app-ready data.",
-  },
-  {
-    title: "Recommendations",
+    section: "SEC_01 //",
+    title: "RECOMMEND ME_",
     href: "/recommendations",
-    description: "Answer a guided wizard and receive ranked game suggestions.",
+    active: true,
+    description: "Get personalized game picks.",
   },
   {
-    title: "Methodology",
-    href: "/methodology",
-    description: "Review the sample design, metric definitions, and caveats.",
+    section: "SEC_02 //",
+    title: "EXPLORE GAMES_",
+    href: "/explore",
+    active: true,
+    description: "Search and browse the curated game catalog.",
   },
-];
+  {
+    section: "SEC_03 //",
+    title: "ASK THE GUIDE_",
+    href: null,
+    active: false,
+    description: "A future chatbot for natural-language game discovery.",
+  },
+  {
+    section: "SEC_04 //",
+    title: "HIDDEN GEMS_",
+    href: null,
+    active: false,
+    description: "Find strong games that may be easier to miss.",
+  },
+  {
+    section: "SEC_05 //",
+    title: "INSIGHTS_",
+    href: null,
+    active: false,
+    description: "See the main patterns found in the project data.",
+  },
+  {
+    section: "SEC_06 //",
+    title: "METHOD_",
+    href: "/methodology",
+    active: true,
+    description: "Understand the data, signals, and limitations.",
+  },
+] as const;
 
-export default async function HomePage() {
-  const health = await getHealth();
+function StatusLight({ active }: { active: boolean }) {
+  return (
+    <span
+      aria-label={active ? "active module" : "pending module"}
+      className={`home-v3-status-light ${active ? "is-active" : "is-pending"}`}
+    />
+  );
+}
+
+function FeatureCard({ card }: { card: (typeof featureCards)[number] }) {
+  const content = (
+    <div className={`home-v3-card ${card.active ? "" : "is-disabled"}`}>
+      <div className="flex items-center justify-between">
+        <p className="home-v3-micro">{card.section}</p>
+        <StatusLight active={card.active} />
+      </div>
+
+      <div className="flex flex-1 items-center justify-center py-10 text-center">
+        <h3 className="home-v3-card-title">{card.title}</h3>
+      </div>
+
+      <p className="home-v3-card-description">{card.description}</p>
+    </div>
+  );
+
+  if (!card.href) {
+    return <div aria-disabled="true">{content}</div>;
+  }
 
   return (
-    <>
-      <section className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-        <div className="cyber-panel rounded-3xl p-8 sm:p-10">
-          <p className="text-sm uppercase tracking-[0.4em] text-cyan-200/80">
-            Final website foundation
+    <Link href={card.href} className="block h-full">
+      {content}
+    </Link>
+  );
+}
+
+export default async function HomePage() {
+  return (
+    <div className="home-v3-bleed">
+      <section className="home-v3-hero">
+        <div className="home-v3-hero-main">
+          <p className="home-v3-micro text-[#FF3E00]">
+            INDEX_ // IGDB GAME DISCOVERY
           </p>
-          <h2 className="neon-text mt-4 max-w-4xl text-5xl font-black tracking-tight text-white sm:text-6xl">
-            Find the next game worth your time.
+          <h2 className="home-v3-title home-v7-glitch">
+            <span>FIND YOUR</span>
+            <span>NEXT GAME_</span>
           </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            This website is the polished user-facing layer for the IGDB
-            analytics project. It starts with catalog exploration,
-            questionnaire-based recommendations, and a transparent methodology
-            page built on the existing app-ready artifacts.
+          <p className="home-v9-hero-subtitle mx-auto mt-8 max-w-2xl text-xl leading-9">
+            Browse the catalog, tune your preferences, and find games that
+            actually match what you want to play.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/recommendations"
-              className="rounded-full bg-cyan-300 px-6 py-3 font-bold text-slate-950 shadow-neon transition hover:bg-white"
-            >
-              Start recommendations
+
+          <div className="mx-auto mt-10 grid max-w-4xl gap-px border border-white bg-white sm:grid-cols-3">
+            <Link href="/recommendations" className="home-v3-cta">
+              RECOMMEND ME
             </Link>
-            <Link
-              href="/explore"
-              className="rounded-full border border-cyan-200/40 px-6 py-3 font-bold text-cyan-100 transition hover:bg-cyan-200/10"
-            >
-              Explore catalog
+            <Link href="/explore" className="home-v3-cta">
+              EXPLORE
             </Link>
+            <span className="home-v3-cta is-disabled">ASK GUIDE</span>
           </div>
         </div>
-
-        <aside className="cyber-panel-magenta rounded-3xl p-7">
-          <p className="text-sm uppercase tracking-[0.32em] text-fuchsia-200/80">
-            API status
-          </p>
-          <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-5">
-            <p className="text-3xl font-black text-white">
-              {health?.status === "ok" ? "Online" : "Offline"}
-            </p>
-            <p className="mt-2 text-sm text-slate-300">
-              {health
-                ? `${health.service} v${health.version}`
-                : "Start the FastAPI backend to connect live data."}
-            </p>
-          </div>
-        </aside>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
-        {featureCards.map((card) => (
-          <Link
-            key={card.href}
-            href={card.href}
-            className="cyber-panel group rounded-2xl p-6 transition hover:-translate-y-1 hover:border-cyan-200/70"
-          >
-            <p className="text-xs uppercase tracking-[0.3em] text-cyan-200/70">
-              MVP page
-            </p>
-            <h3 className="mt-3 text-2xl font-black text-white group-hover:text-cyan-100">
-              {card.title}
-            </h3>
-            <p className="mt-3 leading-7 text-slate-300">{card.description}</p>
-          </Link>
-        ))}
+      <section className="home-v3-menu">
+        <div className="home-v3-section-label">
+          <p className="home-v3-micro text-[#FF3E00]">SELECT MODULE_</p>
+        </div>
+
+        <div className="grid gap-px border-y border-white bg-white md:grid-cols-2 xl:grid-cols-3">
+          {featureCards.map((card) => (
+            <FeatureCard key={card.title} card={card} />
+          ))}
+        </div>
       </section>
-    </>
+
+      <footer className="home-v3-footer">
+        <p>QUEST ACCEPTED // BUSA 649</p>
+        <a
+          href="https://github.com/yipyiphouray/igdb-rag-recommender"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GITHUB REFERENCE
+        </a>
+      </footer>
+    </div>
   );
 }

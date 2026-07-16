@@ -1,6 +1,7 @@
 import type {
   CatalogResponse,
   FilterOptions,
+  GameDetail,
   HealthResponse,
   MethodologySummary,
   RecommendationRequest,
@@ -42,6 +43,10 @@ export async function getFilterOptions(): Promise<FilterOptions> {
 export async function getCatalogGames(query = ""): Promise<CatalogResponse> {
   const path = query ? `/catalog/games?${query}` : "/catalog/games";
   return apiFetch<CatalogResponse>(path);
+}
+
+export async function getCatalogGame(gameId: number | string): Promise<GameDetail> {
+  return apiFetch<GameDetail>(`/catalog/games/${gameId}`);
 }
 
 export async function getMethodologySummary(): Promise<MethodologySummary> {

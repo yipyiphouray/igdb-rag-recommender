@@ -215,6 +215,10 @@ a {
   display: block;
 }
 
+.home-v7-glitch span:nth-child(2) {
+  letter-spacing: -0.055em;
+}
+
 .home-v9-hero-subtitle {
   position: relative;
   color: rgba(255, 255, 255, 0.96);
@@ -456,6 +460,51 @@ a {
 
 .home-v3-footer a:hover {
   color: #ff3e00;
+}
+
+.explore-v4-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  width: 100vw;
+  min-height: calc(100vh - 72px);
+  margin: -2rem 0 -2rem -50vw;
+  padding: 2rem 1.25rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 62, 0, 0.12), transparent 18rem),
+    #000;
+  background-size:
+    34px 34px,
+    34px 34px,
+    auto;
+}
+
+.explore-v4-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 1)),
+    #000;
+  pointer-events: none;
+}
+
+.explore-v4-content {
+  display: flex;
+  width: min(100%, 80rem);
+  margin-inline: auto;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .explore-v4-shell {
+    padding-inline: 2rem;
+  }
 }
 
 @keyframes home-v8-glitch-body {

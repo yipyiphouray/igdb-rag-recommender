@@ -29,6 +29,17 @@ export type CatalogResponse = {
   total_pages: number;
 };
 
+export type GameDetail = GameSummary & {
+  storyline?: string | null;
+  keywords: string[];
+  developers: string[];
+  publishers: string[];
+  rating_band?: string | null;
+  rating_reliable_flag: boolean;
+  main_game_flag: boolean;
+  data_caveats: string[];
+};
+
 export type FilterOptions = {
   release_years?: number[];
   genres?: string[];

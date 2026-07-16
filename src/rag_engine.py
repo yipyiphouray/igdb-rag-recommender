@@ -1,12 +1,12 @@
 import math
 import re
-import sqlite3
 from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
 import chromadb
+import numpy as np
 import pandas as pd
 from chromadb.utils import embedding_functions
 
@@ -199,7 +199,12 @@ def rank_results(
 class RAGAgent:
     def __init__(self):
         self.root_dir = Path(__file__).resolve().parent.parent
-        self.db_path = self.root_dir / "data" / "database" / "igdb_games.db"
+        self.catalog_path = self.root_dir / "data" / "app" / "app_game_catalog.parquet"
+        self.COLUMN_MAP = {
+            "platforms": "platforms_list",
+            "genres": "genres_list",
+            "playtime": "normal_playtime_hours",
+        }
 
         self.client = chromadb.PersistentClient(path=str(self.root_dir / "data" / "vector_store"))
         self.embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
@@ -210,6 +215,9 @@ class RAGAgent:
             embedding_function=self.embedding_fn,
         )
 
+        self.catalog_df = self._load_catalog_df()
+        self._warn_if_index_mismatch()
+
         self.analytics_columns = self._get_analytics_columns()
         self.catalog_by_id = {}
         self.bm25_doc_ids = []
@@ -218,45 +226,29 @@ class RAGAgent:
         self._build_bm25_index_from_analytics_view()
 
     def _get_analytics_columns(self):
-        conn = sqlite3.connect(self.db_path)
-        try:
-            rows = pd.read_sql_query("PRAGMA table_info(analytics_ready_games)", conn)
-        finally:
-            conn.close()
-        if rows.empty:
+        if self.catalog_df is None or self.catalog_df.empty:
             return set()
-        return set(rows["name"].astype(str).tolist())
+        return set(self.catalog_df.columns.astype(str).tolist())
+
+    def _load_catalog_df(self):
+        df = pd.read_parquet(self.catalog_path)
+        for canonical_col, mapped_col in self.COLUMN_MAP.items():
+            if canonical_col not in df.columns and mapped_col in df.columns:
+                df[canonical_col] = df[mapped_col]
+        return df
+
+    def _warn_if_index_mismatch(self):
+        catalog_count = len(self.catalog_df)
+        index_count = self.collection.count()
+        if catalog_count != index_count:
+            print(
+                "[WARN] Catalog and vector index size mismatch "
+                f"(catalog={catalog_count}, index={index_count}). "
+                "Run src/initialize_vector_db.py to rebuild the vector index."
+            )
 
     def _build_bm25_index_from_analytics_view(self):
-        query = """
-        SELECT
-            game_id,
-            name,
-            release_year,
-            platforms,
-            summary,
-            storyline,
-            total_rating,
-            playtime_normally,
-            genres,
-            themes,
-            developers,
-            publishers,
-            rag_text_profile,
-            category_id,
-            mp_campaign_coop,
-            mp_splitscreen,
-            mp_online_coop,
-            mp_offline_coop,
-            mp_max_online_players
-        FROM analytics_ready_games
-        """
-
-        conn = sqlite3.connect(self.db_path)
-        try:
-            df = pd.read_sql_query(query, conn)
-        finally:
-            conn.close()
+        df = self.catalog_df.copy()
 
         self.catalog_by_id = {}
         tokenized_corpus = []
@@ -290,28 +282,35 @@ class RAGAgent:
             print(f"[WARN] rank_bm25 not installed. Using SimpleBM25 fallback for {len(tokenized_corpus)} games.")
 
     def _load_dimension_keyword_sets(self):
-        sql = """
-        SELECT
-            gk.game_id,
-            LOWER(k.name) AS keyword_name
-        FROM game_keywords gk
-        JOIN keywords k ON gk.keyword_id = k.keyword_id
-        WHERE LOWER(k.name) IN ('2d', '2.5d', '3d')
-        """
-        conn = sqlite3.connect(self.db_path)
-        try:
-            rows = pd.read_sql_query(sql, conn)
-        finally:
-            conn.close()
-
         two_d_ids = set()
         three_d_ids = set()
-        for _, row in rows.iterrows():
-            game_id = str(row.get("game_id"))
-            keyword_name = str(row.get("keyword_name", "") or "")
-            if keyword_name in {"2d", "2.5d"}:
+
+        if self.catalog_df is None or self.catalog_df.empty:
+            return {"2d": two_d_ids, "3d": three_d_ids}
+
+        # Build text from fields that may contain dimension clues.
+        text_columns = ["keywords", "genres", "themes", "summary", "storyline", "rag_text_profile"]
+
+        for _, row in self.catalog_df.iterrows():
+            game_id = str(row.get("game_id", "")).strip()
+            if not game_id:
+                continue
+
+            haystack_parts = []
+            for col in text_columns:
+                value = row.get(col, "")
+                if value is None:
+                    continue
+                haystack_parts.append(str(value).lower())
+
+            haystack = " ".join(haystack_parts)
+
+            # 2D detection
+            if ("2d" in haystack) or ("2.5d" in haystack):
                 two_d_ids.add(game_id)
-            if keyword_name == "3d":
+
+            # 3D detection
+            if "3d" in haystack:
                 three_d_ids.add(game_id)
 
         return {"2d": two_d_ids, "3d": three_d_ids}
@@ -420,109 +419,60 @@ class RAGAgent:
         if not normalized_user_id:
             return 0, 0.0, {}, [], 1.0, "Balanced"
 
-        conn = sqlite3.connect(self.db_path)
-        try:
-            cursor = conn.cursor()
-            cursor.execute(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name='user_interactions'"
-            )
-            if cursor.fetchone() is None:
-                print("[INFO] user_interactions table not found. Personalization disabled.")
-                return 0, 0.0, {}, [], 1.0, "Balanced"
-
-            games_played_sql = """
-            SELECT COUNT(DISTINCT game_id)
-            FROM user_interactions
-            WHERE user_id = ?
-            """
-            cursor.execute(games_played_sql, [normalized_user_id])
-            games_played = _safe_int((cursor.fetchone() or [0])[0], 0)
-            if games_played <= 0:
-                return 0, 0.0, {}, [], 1.0, "Balanced"
-
-            schema_rows = pd.read_sql_query("PRAGMA table_info(user_interactions)", conn)
-            available_columns = set(schema_rows["name"].astype(str).tolist()) if not schema_rows.empty else set()
-            has_game_name = "game_name" in available_columns
-            has_time_played = "time_played" in available_columns
-
-            game_name_select = "COALESCE(MAX(game_name), '') AS game_name" if has_game_name else "'' AS game_name"
-            time_played_expr = (
-                "SUM(COALESCE(time_played, 0.0))"
-                if has_time_played
-                else "COUNT(*)"
-            )
-
-            interactions_sql = f"""
-            SELECT
-                CAST(user_id AS TEXT) AS user_id,
-                CAST(game_id AS TEXT) AS game_id,
-                {game_name_select},
-                {time_played_expr} AS time_played
-            FROM user_interactions
-            WHERE user_id = ? AND game_id IS NOT NULL
-            GROUP BY user_id, game_id
-            """
-            cursor.execute(interactions_sql, [normalized_user_id])
-            raw_interactions = cursor.fetchall()
-
-            interactions = []
-            for row in raw_interactions:
-                interactions.append(
-                    UserInteraction(
-                        user_id=str(row[0] or normalized_user_id),
-                        game_id=str(row[1] or ""),
-                        game_name=str(row[2] or ""),
-                        time_played=_safe_float(row[3], 0.0),
-                    )
-                )
-
-            if not interactions:
-                return games_played, 0.0, {}, [], 1.0, "Balanced"
-
-            max_time_played = max([_safe_float(i.time_played, 0.0) for i in interactions] + [1.0])
-            preference_scores = {
-                interaction.game_id: (_safe_float(interaction.time_played, 0.0) / max_time_played) * 100.0
-                for interaction in interactions
-                if interaction.game_id
-            }
-
-            user_pace_signature = 1.0
-            pace_profile_label = "Balanced"
-            if has_time_played:
-                pace_sql = """
-                SELECT
-                    ui.time_played,
-                    gtb.normally
-                FROM user_interactions ui
-                JOIN game_time_to_beats gtb ON CAST(ui.game_id AS TEXT) = CAST(gtb.game_id AS TEXT)
-                WHERE ui.user_id = ?
-                  AND ui.time_played IS NOT NULL
-                  AND COALESCE(ui.time_played, 0) > 0
-                  AND gtb.normally IS NOT NULL
-                  AND COALESCE(gtb.normally, 0) > 0
-                """
-                pace_rows = pd.read_sql_query(pace_sql, conn, params=[normalized_user_id])
-                if not pace_rows.empty:
-                    pace_rows["time_played"] = pd.to_numeric(pace_rows["time_played"], errors="coerce")
-                    pace_rows["normally"] = pd.to_numeric(pace_rows["normally"], errors="coerce")
-                    pace_rows = pace_rows.dropna(subset=["time_played", "normally"])
-                    pace_rows = pace_rows[(pace_rows["time_played"] > 0) & (pace_rows["normally"] > 0)]
-                    if not pace_rows.empty:
-                        pace_rows["rpi"] = pace_rows["time_played"] / pace_rows["normally"]
-                        user_pace_signature = _safe_float(pace_rows["rpi"].median(), 1.0)
-
-            if user_pace_signature > 1.2:
-                pace_profile_label = "Deep/Extended"
-            elif user_pace_signature < 0.8:
-                pace_profile_label = "Snackable/Fast"
-
-            alpha = get_alpha(games_played)
-            return games_played, alpha, preference_scores, interactions, user_pace_signature, pace_profile_label
-        except Exception as exc:
-            print(f"[WARN] Could not load personalization profile for user_id={normalized_user_id}: {exc}")
+        interactions_df = self.catalog_df.copy()
+        if interactions_df.empty or "user_id" not in interactions_df.columns:
             return 0, 0.0, {}, [], 1.0, "Balanced"
-        finally:
-            conn.close()
+
+        user_rows = interactions_df[
+            interactions_df["user_id"].astype(str).str.strip() == normalized_user_id
+        ].copy()
+        if user_rows.empty:
+            return 0, 0.0, {}, [], 1.0, "Balanced"
+
+        games_played = int(user_rows["game_id"].astype(str).nunique()) if "game_id" in user_rows.columns else len(user_rows)
+
+        has_time_played = "time_played" in user_rows.columns
+        interactions = []
+        for _, row in user_rows.iterrows():
+            interactions.append(
+                UserInteraction(
+                    user_id=str(row.get("user_id", normalized_user_id) or normalized_user_id),
+                    game_id=str(row.get("game_id", "") or ""),
+                    game_name=str(row.get("game_name", row.get("name", "")) or ""),
+                    time_played=_safe_float(row.get("time_played", 1.0 if not has_time_played else 0.0), 0.0),
+                )
+            )
+
+        if not interactions:
+            return games_played, 0.0, {}, [], 1.0, "Balanced"
+
+        max_time_played = max([_safe_float(i.time_played, 0.0) for i in interactions] + [1.0])
+        preference_scores = {
+            interaction.game_id: (_safe_float(interaction.time_played, 0.0) / max_time_played) * 100.0
+            for interaction in interactions
+            if interaction.game_id
+        }
+
+        user_pace_signature = 1.0
+        pace_profile_label = "Balanced"
+        if has_time_played and "normally" in user_rows.columns:
+            pace_rows = user_rows[["time_played", "normally"]].copy()
+            pace_rows = pace_rows.dropna(subset=["time_played", "normally"])
+            pace_rows = pace_rows[(pd.to_numeric(pace_rows["time_played"], errors="coerce") > 0)]
+            pace_rows = pace_rows[(pd.to_numeric(pace_rows["normally"], errors="coerce") > 0)]
+            if not pace_rows.empty:
+                pace_rows["rpi"] = pd.to_numeric(pace_rows["time_played"], errors="coerce") / pd.to_numeric(
+                    pace_rows["normally"], errors="coerce"
+                )
+                user_pace_signature = _safe_float(pace_rows["rpi"].median(), 1.0)
+
+        if user_pace_signature > 1.2:
+            pace_profile_label = "Deep/Extended"
+        elif user_pace_signature < 0.8:
+            pace_profile_label = "Snackable/Fast"
+
+        alpha = get_alpha(games_played)
+        return games_played, alpha, preference_scores, interactions, user_pace_signature, pace_profile_label
 
     def _detect_dimension_tags(self, game_id, row):
         two_d_keywords = self.dimension_keyword_sets.get("2d", set())
@@ -590,153 +540,109 @@ class RAGAgent:
             deduped.append(item)
         return deduped
 
+    def _get_series(self, column_name, default_value=0):
+        df = self.catalog_df
+        if df is None or df.empty:
+            return pd.Series(dtype="object")
+
+        candidates = [column_name]
+
+        mapped = self.COLUMN_MAP.get(column_name)
+        if mapped and mapped not in candidates:
+            candidates.append(mapped)
+
+        reverse_mapped = None
+        for canonical, mapped_name in self.COLUMN_MAP.items():
+            if mapped_name == column_name:
+                reverse_mapped = canonical
+                break
+        if reverse_mapped and reverse_mapped not in candidates:
+            candidates.append(reverse_mapped)
+
+        for candidate in candidates:
+            if candidate in df.columns:
+                return df[candidate]
+
+        return pd.Series(default_value, index=df.index)
+
+
     def _get_prefilter_ids(self, query, min_year=None, platforms=None, multiplayer_mode=None):
         req = self._extract_explicit_requirements(query)
-        where_parts = []
-        params = []
-        min_year_value = None
+        df = self.catalog_df.copy()
+        if df.empty:
+            return set(), req
+
+        mask = pd.Series(True, index=df.index)
 
         platform_constraints = self._detect_platform_terms(query, platforms)
-        if req["needs_switch"] and ("platform_nintendo_switch", "nintendo switch") not in platform_constraints:
+        if req.get("needs_switch") and ("platform_nintendo_switch", "nintendo switch") not in platform_constraints:
             platform_constraints.append(("platform_nintendo_switch", "nintendo switch"))
 
-        platform_clauses = []
-        platform_params = []
         if platform_constraints:
+            platform_mask = pd.Series(False, index=df.index)
             for col_name, fallback_term in platform_constraints:
-                if col_name and col_name in self.analytics_columns:
-                    platform_clauses.append(f"IFNULL({col_name}, 0) = 1")
+                if col_name:
+                    col_series = pd.to_numeric(self._get_series(col_name, 0), errors="coerce").fillna(0).astype(int)
+                    platform_mask = platform_mask | (col_series == 1)
                 else:
-                    platform_clauses.append("LOWER(platforms) LIKE ?")
-                    like_value = f"%{fallback_term}%"
-                    params.append(like_value)
-                    platform_params.append(like_value)
-            where_parts.append("(" + " OR ".join(platform_clauses) + ")")
+                    platforms_text = self._get_series("platforms", "").astype(str).str.lower()
+                    platform_mask = platform_mask | platforms_text.str.contains(str(fallback_term).lower(), na=False)
+            mask = mask & platform_mask
 
-        if req["needs_coop"] or (
-            multiplayer_mode and str(multiplayer_mode).strip().lower() in {"online", "offline", "both"}
-        ):
-            where_parts.append(
-                "("
-                "IFNULL(mp_online_coop, 0) = 1 "
-                "OR IFNULL(mp_offline_coop, 0) = 1 "
-                "OR IFNULL(mp_splitscreen, 0) = 1 "
-                "OR IFNULL(mp_campaign_coop, 0) = 1"
-                ")"
-            )
+        mode = str(multiplayer_mode).strip().lower() if multiplayer_mode else ""
+        needs_multiplayer_filter = req.get("needs_coop") or mode in {"online", "offline", "both"}
 
-        if req["needs_fishing"]:
-            where_parts.append(
-                "("
-                "LOWER(genres) LIKE ? "
-                "OR LOWER(themes) LIKE ? "
-                "OR LOWER(name) LIKE ? "
-                "OR LOWER(summary) LIKE ?"
-                ")"
-            )
-            params.extend(["%fishing%", "%fishing%", "%fishing%", "%fishing%"])
+        if needs_multiplayer_filter:
+            mp_online_coop = pd.to_numeric(self._get_series("mp_online_coop", 0), errors="coerce").fillna(0).astype(int)
+            mp_max_online_players = pd.to_numeric(self._get_series("mp_max_online_players", 0), errors="coerce").fillna(0)
+            mp_offline_coop = pd.to_numeric(self._get_series("mp_offline_coop", 0), errors="coerce").fillna(0).astype(int)
+            mp_splitscreen = pd.to_numeric(self._get_series("mp_splitscreen", 0), errors="coerce").fillna(0).astype(int)
+            mp_campaign_coop = pd.to_numeric(self._get_series("mp_campaign_coop", 0), errors="coerce").fillna(0).astype(int)
+
+            online = (mp_online_coop == 1) | (mp_max_online_players > 0)
+            offline = (mp_offline_coop == 1) | (mp_splitscreen == 1) | (mp_campaign_coop == 1)
+
+            if req.get("needs_coop") and not mode:
+                mask = mask & (online | offline)
+            elif mode == "online":
+                mask = mask & online
+            elif mode == "offline":
+                mask = mask & offline
+            elif mode == "both":
+                mask = mask & (online & offline)
+
+        if req.get("needs_fishing"):
+            fishing_mask = pd.Series(False, index=df.index)
+            for col in ["genres", "themes", "name", "summary"]:
+                col_text = self._get_series(col, "").astype(str).str.lower()
+                fishing_mask = fishing_mask | col_text.str.contains("fishing", na=False)
+            mask = mask & fishing_mask
 
         if min_year is not None:
             min_year_value = _safe_int(min_year, 0)
             if min_year_value > 0:
-                where_parts.append("IFNULL(release_year, 0) >= ?")
-                params.append(min_year_value)
+                release_years = pd.to_numeric(self._get_series("release_year", 0), errors="coerce").fillna(0).astype(int)
+                mask = mask & (release_years >= min_year_value)
 
-        if multiplayer_mode:
-            mode = str(multiplayer_mode).strip().lower()
-            if mode == "online":
-                where_parts.append("(IFNULL(mp_online_coop, 0) = 1 OR IFNULL(mp_max_online_players, 0) > 0)")
-            elif mode == "offline":
-                where_parts.append(
-                    "(IFNULL(mp_offline_coop, 0) = 1 OR IFNULL(mp_splitscreen, 0) = 1 OR IFNULL(mp_campaign_coop, 0) = 1)"
-                )
-            elif mode == "both":
-                where_parts.append(
-                    "("
-                    "(IFNULL(mp_online_coop, 0) = 1 OR IFNULL(mp_max_online_players, 0) > 0) "
-                    "AND "
-                    "(IFNULL(mp_offline_coop, 0) = 1 OR IFNULL(mp_splitscreen, 0) = 1 OR IFNULL(mp_campaign_coop, 0) = 1)"
-                    ")"
-                )
+        filtered = df[mask]
+        if filtered.empty:
+            print(
+                "[WARN] Prefilter constraints were too strict (0 matches). "
+                "Falling back to broad catalog search."
+            )
+            broad_mask = pd.Series(True, index=df.index)
+            if min_year is not None:
+                min_year_value = _safe_int(min_year, 0)
+                if min_year_value > 0:
+                    release_years = pd.to_numeric(self._get_series("release_year", 0), errors="coerce").fillna(0).astype(int)
+                    broad_mask = broad_mask & (release_years >= min_year_value)
+            filtered = df[broad_mask]
+            if filtered.empty:
+                filtered = df
 
-        if not where_parts:
-            return None, req
-
-        sql = "SELECT game_id FROM analytics_ready_games WHERE " + " AND ".join(where_parts)
-        conn = sqlite3.connect(self.db_path)
-        try:
-            cursor = conn.cursor()
-
-            # Baseline table population checks.
-            games_table_count = None
-            games_count_sql = "SELECT COUNT(*) FROM games WHERE 1=1"
-            try:
-                cursor.execute(games_count_sql)
-                games_table_count = _safe_int((cursor.fetchone() or [0])[0], 0)
-                print(f"[PrefilterSQL] Baseline Count SQL: {games_count_sql}")
-                print(f"[PrefilterSQL] Baseline Count Result (games): {games_table_count}")
-            except Exception as exc:
-                print(f"[PrefilterSQL] Baseline Count SQL Failed on games: {games_count_sql} | error={exc}")
-
-            analytics_count_sql = "SELECT COUNT(*) FROM analytics_ready_games WHERE 1=1"
-            cursor.execute(analytics_count_sql)
-            analytics_total_count = _safe_int((cursor.fetchone() or [0])[0], 0)
-            print(f"[PrefilterSQL] Baseline Count SQL: {analytics_count_sql}")
-            print(f"[PrefilterSQL] Baseline Count Result (analytics_ready_games): {analytics_total_count}")
-
-            # Count rows matching platform-only constraints.
-            if platform_clauses:
-                platform_only_sql = "SELECT COUNT(*) FROM analytics_ready_games WHERE " + "(" + " OR ".join(platform_clauses) + ")"
-                print(f"[PrefilterSQL] Platform-Only Count SQL: {platform_only_sql}")
-                print(f"[PrefilterSQL] Platform-Only Params: {platform_params}")
-                cursor.execute(platform_only_sql, platform_params)
-                platform_only_count = _safe_int((cursor.fetchone() or [0])[0], 0)
-                print(f"[PrefilterSQL] Platform-Only Count Result: {platform_only_count}")
-
-            # Count rows matching year-only constraints.
-            if min_year_value and min_year_value > 0:
-                year_only_sql = "SELECT COUNT(*) FROM analytics_ready_games WHERE IFNULL(release_year, 0) >= ?"
-                year_only_params = [min_year_value]
-                print(f"[PrefilterSQL] Year-Only Count SQL: {year_only_sql}")
-                print(f"[PrefilterSQL] Year-Only Params: {year_only_params}")
-                cursor.execute(year_only_sql, year_only_params)
-                year_only_count = _safe_int((cursor.fetchone() or [0])[0], 0)
-                print(f"[PrefilterSQL] Year-Only Count Result: {year_only_count}")
-
-            # Platform value inspection for PC-style entries.
-            platform_profile_sql = """
-            SELECT
-                COALESCE(platforms, '') AS platforms_value,
-                COUNT(*) AS row_count
-            FROM analytics_ready_games
-            WHERE LOWER(COALESCE(platforms, '')) LIKE '%pc%'
-               OR LOWER(COALESCE(platforms, '')) LIKE '%personal computer%'
-               OR LOWER(COALESCE(platforms, '')) LIKE '%steam%'
-            GROUP BY COALESCE(platforms, '')
-            ORDER BY row_count DESC
-            LIMIT 15
-            """
-            print("[PrefilterSQL] Platform Profile SQL:")
-            print(platform_profile_sql.strip())
-            cursor.execute(platform_profile_sql)
-            platform_profile_rows = cursor.fetchall()
-            if platform_profile_rows:
-                print("[PrefilterSQL] Platform Profile Top Values (platforms, count):")
-                for platform_value, row_count in platform_profile_rows:
-                    print(f"  - {platform_value} | {row_count}")
-            else:
-                print("[PrefilterSQL] Platform Profile Top Values: none")
-
-            params_dict = {f"p{i + 1}": value for i, value in enumerate(params)}
-            print(f"[PrefilterSQL] Final Query SQL: {sql}")
-            print(f"[PrefilterSQL] Final Query Params List: {params}")
-            print(f"[PrefilterSQL] Final Query Params Dict: {params_dict}")
-            cursor.execute(sql, params)
-            result_rows = cursor.fetchall()
-        finally:
-            conn.close()
-
-        return {str(row[0]) for row in result_rows if row and row[0] is not None}, req
+        game_id_series = self._get_series("game_id", "").astype(str).str.strip()
+        fallback_mask = filtered.index
+        return set(game_id_series.loc[fallback_mask][game_id_series.loc[fallback_mask] != ""].tolist()), req
 
     def _detect_concrete_keywords(self, query):
         query_lower = (query or "").lower()
@@ -805,45 +711,17 @@ class RAGAgent:
         if not seed_title:
             return None
 
-        conn = sqlite3.connect(self.db_path)
-        try:
-            sql = """
-            SELECT
-                game_id,
-                name,
-                platforms,
-                genres,
-                themes,
-                developers
-            FROM analytics_ready_games
-            WHERE LOWER(name) LIKE ?
-            LIMIT 1
-            """
-            df = pd.read_sql_query(sql, conn, params=[f"%{seed_title.lower()}%"])
-        finally:
-            conn.close()
-
-        if not df.empty:
-            return df.iloc[0].to_dict()
-
-        # Fuzzy fallback for compact aliases like "gta5" -> "Grand Theft Auto V".
-        conn = sqlite3.connect(self.db_path)
-        try:
-            all_games = pd.read_sql_query(
-                """
-                SELECT game_id, name, platforms, genres, themes, developers
-                FROM analytics_ready_games
-                """,
-                conn,
-            )
-        finally:
-            conn.close()
-
-        if all_games.empty:
+        df = self.catalog_df.copy()
+        if df.empty or "name" not in df.columns:
             return None
 
+        seed_title_lower = str(seed_title).strip().lower()
+        direct = df[df["name"].astype(str).str.lower().str.contains(seed_title_lower, na=False)]
+        if not direct.empty:
+            return direct.iloc[0].to_dict()
+
         seed_key = self._normalize_seed_key(seed_title)
-        for _, row in all_games.iterrows():
+        for _, row in df.iterrows():
             name = str(row.get("name", ""))
             name_key = self._normalize_seed_key(name)
             name_acronym = self._acronym_key(name)
@@ -859,27 +737,14 @@ class RAGAgent:
         if not normalized_seed_id:
             return None
 
-        conn = sqlite3.connect(self.db_path)
-        try:
-            sql = """
-            SELECT
-                game_id,
-                name,
-                platforms,
-                genres,
-                themes,
-                developers
-            FROM analytics_ready_games
-            WHERE CAST(game_id AS TEXT) = ?
-            LIMIT 1
-            """
-            df = pd.read_sql_query(sql, conn, params=[normalized_seed_id])
-        finally:
-            conn.close()
-
-        if df.empty:
+        df = self.catalog_df.copy()
+        if df.empty or "game_id" not in df.columns:
             return None
-        return df.iloc[0].to_dict()
+
+        matches = df[df["game_id"].astype(str) == normalized_seed_id]
+        if matches.empty:
+            return None
+        return matches.iloc[0].to_dict()
 
     def _parse_csv_values(self, raw_value):
         if raw_value is None:
@@ -899,23 +764,11 @@ class RAGAgent:
         if not seed_genres and not seed_themes:
             return set(), {}
 
-        sql = """
-        SELECT
-            game_id,
-            platforms,
-            genres,
-            themes,
-            developers
-        FROM analytics_ready_games
-        WHERE CAST(game_id AS TEXT) != ?
-        """
-        params = [seed_game_id]
-
-        conn = sqlite3.connect(self.db_path)
-        try:
-            df = pd.read_sql_query(sql, conn, params=params)
-        finally:
-            conn.close()
+        df = self.catalog_df.copy()
+        if df.empty:
+            return set(), {}
+        if "game_id" in df.columns:
+            df = df[df["game_id"].astype(str) != seed_game_id]
 
         if df.empty:
             return set(), {}
@@ -928,7 +781,7 @@ class RAGAgent:
         similar_ids = set()
         similarity_boosts = {}
         for _, row in df.iterrows():
-            game_id = str(row["game_id"])
+            game_id = str(row.get("game_id", ""))
             candidate_platforms = {x.lower() for x in self._parse_csv_values(row.get("platforms"))}
             candidate_genres = {x.lower() for x in self._parse_csv_values(row.get("genres"))}
             candidate_themes = {x.lower() for x in self._parse_csv_values(row.get("themes"))}
@@ -945,8 +798,6 @@ class RAGAgent:
                 continue
 
             same_developer = len(seed_developers_set.intersection(candidate_developers)) > 0
-
-            # Explicit developer overlap bonus to elevate seed-studio continuity in relevance scoring.
             developer_overlap_bonus = 3.0 if same_developer else 0.0
             boost = float(shared_genres) + float(shared_themes) + developer_overlap_bonus
             similar_ids.add(game_id)
@@ -958,31 +809,31 @@ class RAGAgent:
         if not domain_keywords:
             return None
 
-        clauses = []
-        params = []
+        df = self.catalog_df.copy()
+        if df.empty or "summary" not in df.columns or "game_id" not in df.columns:
+            return set()
+
+        summary = df["summary"].astype(str).str.lower()
+        mask = pd.Series(False, index=df.index)
         for keyword in domain_keywords:
-            clauses.append("LOWER(summary) LIKE ?")
-            params.append(f"%{keyword.lower()}%")
+            kw = str(keyword).strip().lower()
+            if kw:
+                mask = mask | summary.str.contains(kw, na=False)
 
-        sql = (
-            "SELECT game_id FROM analytics_ready_games WHERE "
-            + "("
-            + " OR ".join(clauses)
-            + ")"
-        )
-
-        conn = sqlite3.connect(self.db_path)
-        try:
-            rows = pd.read_sql_query(sql, conn, params=params)
-        finally:
-            conn.close()
-
+        rows = df[mask]
         return set(rows["game_id"].astype(str).tolist())
 
     def _vector_search(self, query, n_results=100, allowed_ids=None):
         requested = n_results
-        if allowed_ids is not None and len(allowed_ids) > 0:
-            requested = min(max(n_results * 5, 500), max(len(self.catalog_by_id), 500))
+        if allowed_ids is not None:
+            allowed_size = len(allowed_ids)
+            if allowed_size == 0:
+                return []
+            requested = max(
+                n_results * 20,
+                min(max(allowed_size * 10, 1000), max(len(self.catalog_by_id), 1000)),
+            )
+        requested = min(requested, 2000)
         results = self.collection.query(query_texts=[query], n_results=requested)
         ids = results.get("ids", [[]])[0]
         distances = results.get("distances", [[]])[0]
@@ -1004,6 +855,33 @@ class RAGAgent:
             )
             if len(vector_hits) >= n_results:
                 break
+
+        if allowed_ids is not None and not vector_hits:
+            sample_ids = list(allowed_ids)[: min(len(allowed_ids), 5000)]
+            direct = self.collection.get(ids=sample_ids, include=["embeddings"])
+            emb_list = direct.get("embeddings") if direct.get("embeddings") is not None else []
+            id_list = direct.get("ids") if direct.get("ids") is not None else []
+            if len(emb_list) > 0 and len(id_list) > 0:
+                q_emb = self.embedding_fn([query])[0]
+                q = np.array(q_emb, dtype=float)
+                q_norm = np.linalg.norm(q) + 1e-12
+
+                scored = []
+                for gid, emb in zip(id_list, emb_list):
+                    v = np.array(emb, dtype=float)
+                    sim = float(np.dot(q, v) / (q_norm * (np.linalg.norm(v) + 1e-12)))
+                    scored.append((str(gid), sim))
+
+                scored.sort(key=lambda x: x[1], reverse=True)
+                vector_hits = [
+                    {
+                        "game_id": gid,
+                        "distance": 1.0 - sim,
+                        "similarity": sim,
+                        "vector_rank": idx + 1,
+                    }
+                    for idx, (gid, sim) in enumerate(scored[:n_results])
+                ]
         return vector_hits
 
     def _bm25_search(self, query, n_results=100, allowed_ids=None):
@@ -1090,92 +968,86 @@ class RAGAgent:
         vector_hits,
         bm25_hits,
         rrf_k=60,
-        vector_weight=0.8,
-        bm25_weight=0.2,
+        vector_weight=0.9,
+        bm25_weight=0.1,
     ):
         merged = {}
         vector_rank_map = {h["game_id"]: h["vector_rank"] for h in vector_hits}
         bm25_rank_map = {h["game_id"]: h["bm25_rank"] for h in bm25_hits}
-        vector_sim_map = {h["game_id"]: h.get("similarity", 0.0) for h in vector_hits}
-        vector_distance_map = {h["game_id"]: h.get("distance", 1.0) for h in vector_hits}
-        bm25_raw_map = {h["game_id"]: h.get("bm25_score", 0.0) for h in bm25_hits}
+        vector_sim_map = {h["game_id"]: _safe_float(h.get("similarity", 0.0), 0.0) for h in vector_hits}
+        bm25_raw_map = {h["game_id"]: _safe_float(h.get("bm25_score", 0.0), 0.0) for h in bm25_hits}
         query_tokens = _tokenize_text(query)
 
-        for hit in vector_hits:
-            game_id = hit["game_id"]
-            merged[game_id] = {
-                "game_id": game_id,
-                "vector_similarity": hit.get("similarity", 0.0),
-                "distance": hit.get("distance", 1.0),
-                "bm25_score_raw": 0.0,
-            }
+        bm25_vals = list(bm25_raw_map.values())
+        if bm25_vals:
+            bmin, bmax = min(bm25_vals), max(bm25_vals)
+            denom = (bmax - bmin) if (bmax - bmin) > 1e-12 else 1.0
+            bm25_norm_map = {gid: (score - bmin) / denom for gid, score in bm25_raw_map.items()}
+        else:
+            bm25_norm_map = {}
 
-        for hit in bm25_hits:
-            game_id = hit["game_id"]
-            if game_id not in merged:
-                merged[game_id] = {
-                    "game_id": game_id,
-                    "vector_similarity": 0.0,
-                    "distance": 1.0,
-                    "bm25_score_raw": hit.get("bm25_score", 0.0),
-                }
-            else:
-                merged[game_id]["bm25_score_raw"] = hit.get("bm25_score", 0.0)
+        vector_norm_map = {gid: max(0.0, min(1.0, sim)) for gid, sim in vector_sim_map.items()}
+        all_ids = set(vector_norm_map.keys()) | set(bm25_norm_map.keys())
 
-        fused = []
-        for game_id, item in merged.items():
-            rank_vector = vector_rank_map.get(game_id)
-            rank_bm25 = bm25_rank_map.get(game_id)
-            vector_rrf = (vector_weight / (rrf_k + rank_vector)) if rank_vector is not None else 0.0
-            bm25_rrf = (bm25_weight / (rrf_k + rank_bm25)) if rank_bm25 is not None else 0.0
-            hybrid_score = vector_rrf + bm25_rrf
+        for game_id in all_ids:
+            v = vector_norm_map.get(game_id, 0.0)
+            b = bm25_norm_map.get(game_id, 0.0)
+            v_rrf = 1.0 / (rrf_k + vector_rank_map[game_id]) if game_id in vector_rank_map else 0.0
+            b_rrf = 1.0 / (rrf_k + bm25_rank_map[game_id]) if game_id in bm25_rank_map else 0.0
+            fused_score = (vector_weight * v) + (bm25_weight * b) + 0.05 * (v_rrf + b_rrf)
 
             row = self.catalog_by_id.get(game_id, {})
-            name_text = (row.get("name", "") or "").lower()
-            summary_text = (row.get("summary", "") or "").lower()
-            if query_tokens and any(token in name_text or token in summary_text for token in query_tokens):
-                hybrid_score *= 2.0
-                item["keyword_boost_applied"] = True
-            else:
-                item["keyword_boost_applied"] = False
-
-            hybrid_distance = 1.0 - min(1.0, max(0.0, hybrid_score * 10.0))
-            item["hybrid_score"] = hybrid_score
-            item["vector_rrf_score"] = vector_rrf
-            item["bm25_rrf_score"] = bm25_rrf
-            item["vector_similarity"] = vector_sim_map.get(game_id, 0.0)
-            item["bm25_score_raw"] = bm25_raw_map.get(game_id, 0.0)
-            item["distance"] = min(_safe_float(vector_distance_map.get(game_id, 1.0), 1.0), hybrid_distance)
-            fused.append(item)
-
-        fused.sort(key=lambda x: _safe_float(x.get("hybrid_score", 0.0), 0.0), reverse=True)
-        return fused
-
-    def _log_top_hybrid_scores(self, candidates, top_k=5):
-        for i, row in enumerate(candidates[:top_k], start=1):
-            print(
-                f"[HybridDebug] {i}. {row.get('name', 'Unknown')} | "
-                f"Vector Score={_safe_float(row.get('vector_similarity', 0.0), 0.0):.4f} | "
-                f"BM25 Score={_safe_float(row.get('bm25_score_raw', 0.0), 0.0):.4f} | "
-                f"Metadata Boost={_safe_float(row.get('metadata_boost', 0.0), 0.0):.4f} | "
-                f"Hybrid RRF={_safe_float(row.get('hybrid_score', 0.0), 0.0):.6f} | "
-                f"KeywordBoost={row.get('keyword_boost_applied', False)} | "
-                f"PenaltyApplied={row.get('penalty_applied', False)}"
+            lexical_bonus = 0.0
+            searchable_blob = " ".join(
+                [
+                    str(row.get("name", "") or "").lower(),
+                    str(row.get("summary", "") or "").lower(),
+                    str(row.get("storyline", "") or "").lower(),
+                ]
             )
+            for token in query_tokens:
+                if token and token in searchable_blob:
+                    lexical_bonus += 0.01
 
-    def _format_storyline_output(self, summary, storyline, max_len=1000):
-        summary_clean = (summary or "").strip()
-        storyline_clean = (storyline or "").strip()
-        combined = " ".join([part for part in [summary_clean, storyline_clean] if part]).strip()
-        if len(combined) > max_len:
-            return combined[:max_len].strip() + "..."
-        return combined
+            merged[game_id] = {
+                "game_id": game_id,
+                "hybrid_score": fused_score + lexical_bonus,
+                "distance": 1.0 - v,
+                "vector_similarity": v,
+                "bm25_score_raw": _safe_float(bm25_raw_map.get(game_id, 0.0), 0.0),
+                "keyword_boost_applied": lexical_bonus > 0.0,
+            }
+
+        return sorted(merged.values(), key=lambda x: x["hybrid_score"], reverse=True)
 
     def _format_text_output(self, text, max_len=1000):
         cleaned = (text or "").strip()
         if len(cleaned) > max_len:
             return cleaned[:max_len].strip() + "..."
         return cleaned
+
+    def _format_storyline_output(self, summary, storyline, max_len=1000):
+        summary_text = (summary or "").strip()
+        storyline_text = (storyline or "").strip()
+        if summary_text and storyline_text:
+            combined = f"{summary_text}\n\n{storyline_text}"
+        else:
+            combined = summary_text or storyline_text
+        if len(combined) > max_len:
+            return combined[:max_len].strip() + "..."
+        return combined
+
+    def _log_top_hybrid_scores(self, ranked, top_k=5):
+        for idx, item in enumerate(ranked[:top_k], start=1):
+            print(
+                "[HybridDebug] "
+                f"{idx}. {item.get('name', 'Unknown')} | "
+                f"Vector Score={_safe_float(item.get('vector_similarity', 0.0), 0.0):.4f} | "
+                f"BM25 Score={_safe_float(item.get('bm25_score_raw', 0.0), 0.0):.4f} | "
+                f"Metadata Boost={_safe_float(item.get('metadata_boost', 0.0), 0.0):.4f} | "
+                f"Hybrid Score={_safe_float(item.get('hybrid_score', 0.0), 0.0):.4f} | "
+                f"KeywordBoost={bool(item.get('keyword_boost_applied', False))}"
+            )
 
     def search(
         self,
@@ -1212,6 +1084,7 @@ class RAGAgent:
         )
         allowed_count = "ALL" if allowed_ids is None else len(allowed_ids)
         print(f"[Trace] prefilter:first_pass | allowed_ids={allowed_count}")
+        print(f"Prefilter found {len(allowed_ids) if allowed_ids is not None else len(self.catalog_df)} games.")
 
         seed_similarity_boosts = {}
         seed_game = None
@@ -1308,13 +1181,21 @@ class RAGAgent:
             relaxed_allowed_count = "ALL" if allowed_ids is None else len(allowed_ids)
             print(f"[Trace] prefilter:relaxed_pass | allowed_ids={relaxed_allowed_count}")
             if allowed_ids is not None and not allowed_ids:
-                print("[Trace] search:return [] | reason=relaxed_prefilter_empty")
-                return []
+                print("[WARN] Relaxed prefilter still empty; falling back to full catalog for retrieval.")
+                allowed_ids = set(self.catalog_by_id.keys())
 
         print("Retrieval Mode: Semantic Theme")
+        if allowed_ids is not None and not allowed_ids:
+            print("[WARN] Prefilter produced empty set; falling back to full catalog for retrieval.")
+            allowed_ids = set(self.catalog_by_id.keys())
         allowed_count_for_retrieval = "ALL" if allowed_ids is None else len(allowed_ids)
         print(f"[Trace] retrieval:starting | allowed_ids={allowed_count_for_retrieval}")
+        print("Searching with vector index...")
         vector_hits = self._vector_search(query=query, n_results=vector_k, allowed_ids=allowed_ids)
+        if not vector_hits and allowed_ids is not None and len(allowed_ids) > 0:
+            print("[WARN] vector_hits=0 with constrained allowed_ids; retrying vector search without allowed_ids then filtering.")
+            broad_vector_hits = self._vector_search(query=query, n_results=max(vector_k * 10, 500), allowed_ids=None)
+            vector_hits = [h for h in broad_vector_hits if h["game_id"] in allowed_ids][:vector_k]
         bm25_hits = self._bm25_search(query=query, n_results=bm25_k, allowed_ids=allowed_ids)
         print(
             "[Trace] retrieval:fetched | "
@@ -1400,6 +1281,8 @@ class RAGAgent:
             candidates,
             graphics_preference=graphics_preference,
         )
+        top3_names = [c.get("name", "Not Listed") for c in ranked[:3]]
+        print(f"Top 3 matches found: {top3_names}")
         if debug_scores:
             self._log_top_hybrid_scores(ranked, top_k=5)
         print(f"[Trace] search:return results | count={min(len(ranked), top_n)}")
@@ -1408,9 +1291,12 @@ class RAGAgent:
 
 if __name__ == "__main__":
     agent = RAGAgent()
-    print("Agent initialized. Testing hybrid query...")
+    print("Agent initialized. Running sanity checks...")
+    print(f"Catalog rows: {len(agent.catalog_df)}")
+    print(f"Current year: {datetime.now().year}")
+    print("Catalog columns:", sorted(agent.catalog_df.columns.tolist()))
 
-    test_query = "i want a game similar to 'It takes two'."
+    test_query = "I want a game similar to Stardew Valley with multiplayer co-op and farming elements."
     results = agent.search(
         test_query,
         top_n=5,

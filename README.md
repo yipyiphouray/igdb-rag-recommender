@@ -1,100 +1,85 @@
-# IGDB Game Discovery and Recommender (WIP)
-An advanced video game discovery and recommendation platform. This system integrates a cleaned relational database of IGDB (Internet Game Database) metadata, a four-pillar analytics pipeline, and a Retrieval-Augmented Generation (RAG) conversational chatbot to help players find games matching their unique "vibe," platform, and playstyle.
+# IGDB Game Discovery and Hybrid RAG Recommender
 
-## 🚀 Key Features
+A portfolio-grade game discovery system that combines structured metadata filtering with semantic retrieval. The stack has been migrated from legacy SQLite-first retrieval to a modern **Parquet + Vector Store** architecture optimized for scale and relevance.
 
-Data Normalization: Automates extraction from the IGDB API into a fully normalized, local SQLite database.
+## Architecture Overview
 
-Four Pillars of Analytics:
+The recommender now uses a hybrid retrieval pipeline with clear separation of concerns:
 
-- Descriptive: Visualizes the gaming landscape (genres, platform share, developer networks).
+- **Parquet Metadata Layer (`data/app/app_game_catalog.parquet`)**
+  - Single source of truth for game catalog attributes.
+  - Powers deterministic filtering (platform, release year, multiplayer flags, etc.).
+  - Enables fast schema-normalized access through pandas.
 
-- Diagnostic: Explores game quality metrics and isolates "hidden gems" (highly-rated, low-popularity titles).
+- **Vector Index Layer (`data/vector_store/`)**
+  - Embeddings are generated from game text profiles and indexed in Chroma (FAISS-class ANN behavior via vector index).
+  - Powers semantic retrieval for natural-language intent (e.g., *"open world RPG with co-op"*).
 
-- Predictive: Classifies whether games are likely to be highly-rated based on metadata features.
+- **Hybrid Ranking Engine (`src/rag_engine.py`)**
+  - Executes metadata prefiltering from Parquet.
+  - Runs vector retrieval + lexical retrieval (BM25).
+  - Fuses scores into a final ranked recommendation list.
 
-- Prescriptive: Leverages a hybrid recommendation engine combining strict metadata filters with semantic similarity.
+In short: **Parquet handles exact constraints, vectors handle meaning, and hybrid fusion balances both.**
 
-Conversational RAG Chatbot: Utilizes vector embeddings to parse natural language queries (e.g., "I want a cozy, low-stress sci-fi game on Nintendo Switch") and returns grounded, explainable game suggestions.
+## Setup Instructions
 
-Interactive Dashboard: A multi-page Streamlit UI hosting the analytics, model evaluation metrics, and the chatbot interface.
+### 1) Install dependencies
 
-## 🛠️ Technical Stack
-
-- Language: Python 3.9+
-
-- Data & Storage: pandas, SQLite, ChromaDB / FAISS (Vector Database)
-
-- Modeling & RAG: scikit-learn, Gemini 2.5 API (or open-source sentence-transformers)
-
-- Front-End: Streamlit
-
-- Source API: Twitch Developer / IGDB API
-
-## 📁 Project Structure
-
-├── archive/
-│   └── Project_Guideline.md       # Original guidelines archive
-├── data/
-│   └── raw/                       # Raw JSON metadata schemas from IGDB API
-│       ├── companies.json
-│       ├── covers.json
-│       ├── external_games.json
-│       ├── game_modes.json
-│       ├── games.json
-│       ├── genres.json
-│       ├── involved_companies.json
-│       ├── keywords.json
-│       ├── platforms.json
-│       ├── player_perspectives.json
-│       ├── release_dates.json
-│       ├── screenshots.json
-│       └── themes.json
-├── docs/                          # Project contextual design documentations
-│   ├── definitive_project_guideline_igdb_rag.md
-│   ├── folder_structure.md
-│   └── IGDB_context.md
-├── src/                           # Source scripts directory
-│   ├── API_Connection_Test.py     # Connection testing module for credentials
-│   ├── config.py                  # API config and credential loader
-│   ├── fetch_IGDB.py              # Main raw endpoint retrieval pipeline
-│   └── query_test.py              # Local testing suite for parsing metadata
-├── .env.example                   # Dummy environment credential keys configuration
-├── .gitignore                     # Git configuration ignore file
-├── LICENSE                        # Project licensing terms
-├── README.md                      # Primary project documentation hub
-└── requirement.txt                # Python installation dependency packages
-
-
-## ⚙️ Getting Started
-
-1. Prerequisites
-
-Get an IGDB API Client ID and Secret by registering an application on the Twitch Developer Portal.
-
-2. Installation
-
-# Clone the repository
-git clone [https://github.com/your-username/pixelrag-analytics.git](https://github.com/your-username/pixelrag-analytics.git)
-cd pixelrag-analytics
-
-# Install dependencies
+```bash
 pip install -r requirement.txt
+```
 
+### 2) Build/Rebuild the vector index
 
-3. Setup Environment Variables
+After refreshing `data/app/app_game_catalog.parquet`, initialize the vector database:
 
-Create a .env file in the root directory:
+```bash
+python src/initialize_vector_db.py
+```
 
-IGDB_CLIENT_ID=your_twitch_client_id
-IGDB_CLIENT_SECRET=your_twitch_client_secret
-GEMINI_API_KEY=your_gemini_api_key
+This script reads the full Parquet catalog, prepares embedding text, clears stale vector data, and writes a fresh index.
 
+## Validation Suite (Post-Deployment)
 
-4. Run the Pipeline & App
+After indexing, run these checks before shipping:
 
-# 1. Fetch, clean, and populate the database
-python src/fetch_IGDB.py
+- `src/validate_vector_store.py`
+  - Performs vector health auditing: content sampling, semantic diversity, self-similarity, and variance checks.
+- `src/debug_engine.py`
+  - Smoke-tests end-to-end retrieval by initializing `RAGAgent` and executing a real query.
 
-# 2. Run the connection testing script
-python src/API_Connection_Test.py
+Recommended sequence:
+
+```bash
+python src/validate_vector_store.py
+python src/debug_engine.py
+```
+
+## Project Structure (Key Paths)
+
+- `data/app/app_game_catalog.parquet`
+  - **Primary catalog source of truth** for retrieval metadata.
+- `data/vector_store/`
+  - Persisted embedding index used by semantic retrieval.
+- `src/initialize_vector_db.py`
+  - Vector index build/rebuild pipeline.
+- `src/rag_engine.py`
+  - Hybrid retrieval and ranking engine used by the recommender.
+- `src/validate_vector_store.py`
+  - Automated vector quality and collapse detection checks.
+- `src/debug_engine.py`
+  - Runtime sanity check for query execution.
+
+## Current System Capabilities
+
+- Natural-language game discovery with semantic intent matching.
+- Deterministic filtering over catalog attributes from Parquet.
+- Hybrid ranking that combines vector relevance with lexical signals.
+- Operational validation scripts to guard against vector collapse and runtime regressions.
+
+## Notes
+
+- If catalog row count and vector index count diverge, rebuild the index with:
+  - `python src/initialize_vector_db.py`
+- Keep Parquet and vector store in sync for stable search quality.

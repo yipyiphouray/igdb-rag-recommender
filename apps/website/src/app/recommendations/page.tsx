@@ -18,6 +18,32 @@ const ratingOptions = [
 
 const discoveryOptions = ["Balanced", "Hidden gems", "Popular / visible games"];
 
+function splitTextList(value: FormDataEntryValue | null, maxItems = 8): string[] {
+  return String(value ?? "")
+    .split(/[\n,]/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .slice(0, maxItems);
+}
+
+function formatPercent(value: number | null | undefined): string {
+  if (value === null || value === undefined) {
+    return "Unknown";
+  }
+  return `${Math.round(value * 100)}%`;
+}
+
+function summaryList(
+  summary: Record<string, unknown>,
+  key: string,
+): string[] {
+  const value = summary[key];
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.map(String).filter(Boolean);
+}
+
 function RecommendationCard({ item }: { item: RecommendationResult }) {
   return (
     <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
@@ -31,23 +57,15 @@ function RecommendationCard({ item }: { item: RecommendationResult }) {
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-cyan-200/10 bg-black/20 p-3">
             <p className="text-xs text-slate-400">Match score</p>
-            <p className="font-bold text-cyan-100">
-              {item.match_score !== null && item.match_score !== undefined
-                ? `${Math.round(item.match_score * 100)}%`
-                : "Pending"}
-            </p>
+            <p className="font-bold text-cyan-100">{formatPercent(item.match_score)}</p>
           </div>
           <div className="rounded-xl border border-cyan-200/10 bg-black/20 p-3">
-            <p className="text-xs text-slate-400">Fallback score</p>
-            <p className="font-bold text-cyan-100">
-              {item.recommendation_score ?? "Unknown"}
-            </p>
+            <p className="text-xs text-slate-400">Similarity</p>
+            <p className="font-bold text-cyan-100">{formatPercent(item.similarity_score)}</p>
           </div>
           <div className="rounded-xl border border-cyan-200/10 bg-black/20 p-3">
-            <p className="text-xs text-slate-400">Hidden gem boost</p>
-            <p className="font-bold text-cyan-100">
-              {item.hidden_gem_boost ?? 0}
-            </p>
+            <p className="text-xs text-slate-400">Discovery fit</p>
+            <p className="font-bold text-cyan-100">{formatPercent(item.hidden_gem_boost)}</p>
           </div>
         </div>
         {item.caveats.length > 0 && (
@@ -85,6 +103,9 @@ export default function RecommendationsPage() {
       platform: String(formData.get("platform") ?? "") || null,
       genres: formData.getAll("genres").map(String),
       themes: formData.getAll("themes").map(String),
+      mood_words: splitTextList(formData.get("mood_words")),
+      favorite_games: splitTextList(formData.get("favorite_games"), 5),
+      playstyle_preferences: splitTextList(formData.get("playstyle_preferences")),
       discovery_preference: String(formData.get("discovery_preference") ?? "Balanced"),
       rating_quality_importance: String(formData.get("rating_quality_importance") ?? "Any rating"),
       desired_playtime: String(formData.get("desired_playtime") ?? "Any length"),
@@ -112,8 +133,8 @@ export default function RecommendationsPage() {
         </h2>
         <p className="mt-4 max-w-3xl text-slate-300">
           This page keeps the final product direction clear: users complete one
-          wizard, while the backend can use structured fallback scoring now and
-          teammate cosine-similarity artifacts later.
+          flow, while the backend turns preferences and recent games into
+          metadata-based cosine similarity matches.
         </p>
       </section>
 
@@ -198,6 +219,53 @@ export default function RecommendationsPage() {
           </label>
         </div>
 
+        <div className="grid gap-4 lg:grid-cols-3">
+          <label className="grid gap-2 lg:col-span-1">
+            <span className="text-sm font-semibold text-cyan-100">
+              Recent games
+            </span>
+            <textarea
+              name="favorite_games"
+              rows={5}
+              placeholder={"Baldur's Gate 3\nDisco Elysium\nStardew Valley"}
+              className="rounded-xl border border-cyan-200/20 bg-black/30 px-4 py-3 text-white placeholder:text-slate-500"
+            />
+            <span className="text-xs text-slate-400">
+              Add up to 5 games you played recently. Use one per line or commas.
+            </span>
+          </label>
+
+          <label className="grid gap-2">
+            <span className="text-sm font-semibold text-cyan-100">
+              Mood words
+            </span>
+            <textarea
+              name="mood_words"
+              rows={5}
+              placeholder="immersive, cozy, story-rich, strategic"
+              className="rounded-xl border border-cyan-200/20 bg-black/30 px-4 py-3 text-white placeholder:text-slate-500"
+            />
+            <span className="text-xs text-slate-400">
+              These help the model understand the feeling you want.
+            </span>
+          </label>
+
+          <label className="grid gap-2">
+            <span className="text-sm font-semibold text-cyan-100">
+              Playstyle
+            </span>
+            <textarea
+              name="playstyle_preferences"
+              rows={5}
+              placeholder="single-player, turn-based, exploration, co-op"
+              className="rounded-xl border border-cyan-200/20 bg-black/30 px-4 py-3 text-white placeholder:text-slate-500"
+            />
+            <span className="text-xs text-slate-400">
+              Use simple phrases describing how you like to play.
+            </span>
+          </label>
+        </div>
+
         <button
           type="submit"
           disabled={loading}
@@ -225,6 +293,29 @@ export default function RecommendationsPage() {
             <p className="mt-2 text-slate-300">
               Similarity status: {response.similarity_status}
             </p>
+            {(summaryList(response.request_summary, "matched_seed_games").length > 0 ||
+              summaryList(response.request_summary, "unmatched_seed_games").length > 0) && (
+              <div className="mt-5 grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl border border-cyan-200/10 bg-black/20 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">
+                    Matched recent games
+                  </p>
+                  <p className="mt-2 text-sm text-slate-300">
+                    {summaryList(response.request_summary, "matched_seed_games").join(", ") ||
+                      "None matched"}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-cyan-200/10 bg-black/20 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/70">
+                    Unmatched recent games
+                  </p>
+                  <p className="mt-2 text-sm text-slate-300">
+                    {summaryList(response.request_summary, "unmatched_seed_games").join(", ") ||
+                      "None"}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
           {response.items.map((item) => (
             <RecommendationCard key={item.game_id} item={item} />

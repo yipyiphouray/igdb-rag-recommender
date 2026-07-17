@@ -31,7 +31,8 @@ The current website already has:
 - a structured recommendation fallback in `api/app/services/recommendation_service.py`;
 - app-ready catalog data in `data/app/app_game_catalog.parquet`;
 - teammate-owned hybrid retrieval and similarity/RAG work merged into `dev`;
-- active RAG/hybrid retrieval documentation under `docs/project_source_of_truth/`.
+- active RAG/hybrid retrieval documentation under `docs/project_source_of_truth/`;
+- an older SQLite-based cosine recommender in `src/recommender_engine.py`, which should not be the primary website integration path because the final website backend is Parquet-first.
 
 The current recommendation endpoint returns usable ranked recommendations, but it still reports:
 
@@ -47,6 +48,8 @@ similarity_artifacts_available_not_integrated
 
 when similarity artifacts exist but are not yet wired into the endpoint.
 
+For this implementation, the first cosine-similarity version should not depend on missing predictive parquet artifacts. It should build metadata-based vectors directly from `data/app/app_game_catalog.parquet`.
+
 ---
 
 ## 3. Target Direction
@@ -55,11 +58,11 @@ The target recommendation flow is:
 
 ```text
 1. User answers recommendation wizard questions.
-2. User optionally enters recent games they played or enjoyed.
+2. User optionally enters games they played recently.
 3. Backend validates the request.
 4. Backend applies hard filters such as platform availability.
-5. Backend builds a user preference profile.
-6. Backend uses cosine similarity to compare that profile against game profiles.
+5. Backend builds a metadata-based user preference profile.
+6. Backend uses cosine similarity to compare that profile against metadata-based game profiles.
 7. Backend applies ranking adjustments for quality, evidence, hidden-gem preference, visibility, and playtime.
 8. Backend returns ranked recommendations with explanations.
 ```
@@ -72,22 +75,22 @@ The final user should not need to know whether the score came from filtering, co
 
 Adding recent games is a strong direction because it provides concrete behavioral evidence.
 
-Questionnaire answers such as genre, theme, and mood are useful, but recent games tell the system what the user has actually played, liked, or wants something similar to.
+Questionnaire answers such as genre, theme, and mood are useful, but recent games tell the system what the user has actually played. In the first implementation, recently played games should be interpreted as taste signals for finding similar games.
 
 Recommended wizard question:
 
 ```text
 Recently played games
-Tell us up to 5 games you recently played, liked, or want something similar to.
+Tell us up to 5 games you played recently.
 ```
 
-Optional follow-up:
+Optional later enhancement:
 
 ```text
 Do you want something similar to these games, or something different?
 ```
 
-This is important because a user may say they recently played a difficult game but now want something less stressful.
+For the first implementation, assume the user wants recommendations similar to the recent games they provide. The "similar versus different" question can be added later if time allows.
 
 ---
 
@@ -119,7 +122,7 @@ Recommended request body:
 UI wording can call `favorite_games`:
 
 ```text
-Recent games you played or enjoyed
+Recent games you played
 ```
 
 The backend can keep the field name for compatibility unless the API schema is intentionally changed later.
@@ -133,7 +136,7 @@ Cosine similarity should be implemented in the shared backend/service layer firs
 Recommended layering:
 
 ```text
-src/app/recommendation_service.py or teammate similarity module
+metadata-based cosine adapter using app_game_catalog.parquet
         |
         v
 api/app/services/recommendation_service.py
@@ -155,9 +158,20 @@ Reasoning:
 
 Streamlit can consume the same backend later if needed, but it should not be the first integration target.
 
+The first website implementation should use metadata-based cosine similarity from `app_game_catalog.parquet`. It should not call the older SQLite-based `ContentBasedRecommender` directly unless the team later decides to refactor that code to be Parquet-native.
+
 ---
 
 ## 7. Similarity Logic Design
+
+Confirmed implementation decisions:
+
+- Use metadata-based cosine similarity.
+- Use `data/app/app_game_catalog.parquet` as the authoritative game profile source.
+- Interpret recent games as "games the user played recently" and use them as similar-taste seed signals.
+- Match recent-game titles with exact matching first and fuzzy matching second.
+- Exclude matched seed games from returned recommendations by default.
+- Keep the existing structured fallback if cosine scoring cannot produce reliable results.
 
 ## 7.1 Hard Filters
 
@@ -187,6 +201,22 @@ The backend should build a user preference profile from:
 
 Structured answers and recent-game seeds should be combined into one profile.
 
+The first version should create vectors from available catalog metadata instead of relying on a separate precomputed profile artifact.
+
+Candidate metadata fields:
+
+- platforms;
+- genres;
+- themes;
+- game modes;
+- player perspectives;
+- keywords if available and lightweight enough;
+- developers or publishers only if useful and not too sparse;
+- rating-quality bucket or normalized rating as a small numeric feature;
+- playtime band when available.
+
+The exact feature set should be limited to fields already present in `app_game_catalog.parquet` so the backend does not depend on SQLite joins during recommendation-time execution.
+
 ## 7.3 Recent-Game Seed Matching
 
 For each recent game entered by the user:
@@ -203,6 +233,7 @@ Rules:
 - Do not recommend the same seed games back by default.
 - If multiple recent games are matched, average or otherwise combine their game vectors.
 - Recent-game similarity should influence the result, but should not completely override explicit platform or preference constraints.
+- Treat the seed-game vector as a similar-taste signal for v1.
 
 ## 7.4 Candidate Similarity
 
@@ -213,6 +244,13 @@ similarity_score = cosine(user_profile_vector, game_profile_vector)
 ```
 
 The similarity score should be normalized to a user-readable `0.0` to `1.0` range.
+
+Implementation note:
+
+```text
+No separate `game_similarity_profiles.parquet` artifact is required for v1.
+Game vectors can be generated in memory from `app_game_catalog.parquet` and cached by the backend process.
+```
 
 ## 7.5 Ranking Adjustments
 
@@ -254,7 +292,7 @@ Recommended response:
 ```json
 {
   "mode": "cosine_similarity",
-  "similarity_status": "cosine_similarity_active",
+  "similarity_status": "metadata_cosine_similarity_active",
   "request_summary": {
     "hard_filters": ["PC"],
     "profile_terms": ["RPG", "Adventure", "Fantasy", "story-rich"],
@@ -291,6 +329,14 @@ Fallback response should remain supported:
 mode = structured_fallback
 similarity_status = structured_fallback_active
 ```
+
+Recommended active-mode labels:
+
+| Situation | `mode` | `similarity_status` |
+|---|---|---|
+| Metadata cosine succeeds | `cosine_similarity` | `metadata_cosine_similarity_active` |
+| Not enough usable preference input | `structured_fallback` | `structured_fallback_active` |
+| Required catalog columns unavailable | `structured_fallback` | `metadata_cosine_unavailable_fallback_active` |
 
 ---
 
@@ -349,7 +395,7 @@ Recommended copy:
 
 ```text
 Recent games
-Add up to 5 games you recently played, liked, or want something similar to.
+Add up to 5 games you played recently.
 ```
 
 Helper text:
@@ -362,41 +408,42 @@ These help the recommender understand your taste beyond genre filters.
 
 ## 11. Implementation Phases
 
-## Phase 1: Audit Teammate Similarity Code
+## Phase 1: Confirm Metadata Feature Inputs
 
 Goal:
 
-- Identify the exact callable function or class that produces similarity rankings.
+- Confirm which `app_game_catalog.parquet` columns should be used for metadata-based cosine similarity.
 
 Tasks:
 
-- Review teammate similarity files.
-- Identify expected input fields.
-- Identify required artifacts.
-- Confirm whether vectors are precomputed or generated at runtime.
-- Confirm whether the logic supports user-profile vectors, game-to-game vectors, or both.
+- Inspect available app catalog columns.
+- Choose stable vector fields for platforms, genres, themes, game modes, perspectives, and playtime.
+- Avoid columns that are too sparse or expensive for the first implementation.
+- Confirm seed games can be resolved from the catalog title field.
+- Confirm the older SQLite-based recommender is not required for v1.
 
 Deliverable:
 
 ```text
-Clear function contract for backend integration.
+Confirmed metadata vector feature list.
 ```
 
 ## Phase 2: Backend Adapter
 
 Goal:
 
-- Wrap teammate similarity logic inside the FastAPI recommendation service.
+- Add metadata-based cosine similarity inside the FastAPI recommendation service.
 
 Tasks:
 
 - Add a cosine-similarity adapter function.
-- Load required artifacts lazily and cache them.
-- Convert `RecommendationRequest` into the expected similarity input.
+- Load the app catalog lazily and cache metadata vectors in memory.
+- Convert `RecommendationRequest` into a metadata-based user vector.
 - Match recent/favorite game titles to catalog records.
 - Apply platform and year hard filters.
+- Exclude matched seed games from returned recommendations by default.
 - Return ranked games using the existing `RecommendationResponse` schema.
-- Keep structured fallback active when artifacts are missing.
+- Keep structured fallback active when cosine scoring has insufficient input or required catalog columns are unavailable.
 
 Deliverable:
 
@@ -451,7 +498,7 @@ Goal:
 Required checks:
 
 - API returns fallback results when similarity artifacts are missing.
-- API returns cosine-similarity results when artifacts exist.
+- API returns metadata cosine-similarity results using `app_game_catalog.parquet`.
 - Platform hard filters are respected.
 - Recent game seed titles are matched correctly.
 - Unmatched seed titles are reported cleanly.
@@ -476,8 +523,8 @@ Recommended test cases:
 
 The implementation is complete when:
 
-- `POST /recommendations` can use cosine similarity when artifacts are available.
-- `POST /recommendations` still falls back gracefully when artifacts are missing.
+- `POST /recommendations` uses metadata-based cosine similarity from `app_game_catalog.parquet`.
+- `POST /recommendations` still falls back gracefully when cosine scoring cannot run.
 - The website wizard asks for recent games.
 - Recent games are sent to the backend.
 - Matched recent games influence ranking.
@@ -502,30 +549,32 @@ Do not:
 
 ---
 
-## 14. Open Questions for Implementation
+## 14. Confirmed Decisions and Remaining Engineering Checks
 
-These questions should be answered before coding the integration:
+These questions have been answered for the first implementation:
 
-1. What exact teammate function/class should the backend call for cosine similarity?
-2. Which artifact is the authoritative game profile vector source?
-3. Are vectors already precomputed for all games in `app_game_catalog.parquet`?
-4. Does the teammate logic support user preference vectors, or only game-to-game similarity?
-5. How should recent games be matched: exact title only, fuzzy title, or both?
-6. Should users be allowed to request games similar to recent games, different from recent games, or both?
-7. Should seed games be excluded from recommendations by default?
-8. What final weights should be used for similarity, rating quality, rating evidence, hidden-gem preference, and playtime fit?
+| Question | Confirmed Decision |
+|---|---|
+| Similarity approach | Use metadata-based cosine similarity |
+| Authoritative source | `data/app/app_game_catalog.parquet` |
+| Recent games meaning | Games the user played recently |
+| Similar or different | Similar taste signal for v1 |
+| Title matching | Exact match first, fuzzy match second |
+| Seed games in results | Exclude by default |
+| Missing/unmatched seeds | Report in request summary or caveats |
+| Older SQLite recommender | Do not use directly for v1 |
 
-Recommended default answers if the team needs to move quickly:
+Remaining engineering decisions:
 
-- Use fuzzy title matching after exact matching fails.
-- Exclude seed games from results by default.
+- Confirm exact metadata columns available in `app_game_catalog.parquet`.
+- Confirm fuzzy-match threshold after testing real game titles.
 - Start with conservative weights:
   - 65% similarity;
   - 15% rating quality;
   - 10% rating evidence;
   - 5% discovery preference;
   - 5% playtime fit.
-- Add "similar vs different" as a later enhancement if time is limited.
+- Add "similar versus different" as a later enhancement if time allows.
 
 ---
 
@@ -538,4 +587,3 @@ Relevant documents:
 - `docs/project_source_of_truth/hybrid_retrieval_methodology.md`
 - `docs/project_source_of_truth/hybrid_search_technical_journey.md`
 - `docs/project_source_of_truth/definitive_project_guideline_igdb_rag.md`
-

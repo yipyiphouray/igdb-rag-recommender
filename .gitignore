@@ -8,14 +8,5 @@ docs/session_log.md
 data/analytics/descriptive/*
 data/database/igdb_games.db
 data/analytics/diagnostic/*
-apps/streamlit/.streamlit/secrets.toml
-data/database/*.db
-data/raw/*.json
-data/app/*.parquet
-data/app/*.json
-node_modules/
-.next/
-apps/website/node_modules/
-apps/website/.next/
-apps/website/.env.local
-
+data/vector_store/*.sqlite3
+models/*.pkl

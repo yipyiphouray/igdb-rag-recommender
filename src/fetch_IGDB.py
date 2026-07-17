@@ -19,23 +19,19 @@ from config import RAW_DATA_DIR
 IGDB_BASE_URL = "https://api.igdb.com/v4"
 TWITCH_TOKEN_URL = "https://id.twitch.tv/oauth2/token"
 
-# Final analytical sample: exactly 50,000 released main games across completed years
-# when enough eligible candidates exist. The yearly target is distributed as
-# evenly as possible across START_YEAR..END_YEAR.
+# Final analytical sample: up to 1,000 released main games per completed year.
 START_YEAR = 2010
 END_YEAR = 2024
-TARGET_TOTAL_GAMES = 50_000
+GAMES_PER_YEAR = 1000
 
 # Target composition within each year. If a cohort is undersupplied, the
 # comparison cohort fills the remaining yearly capacity.
-QUALITY_QUOTA = 800
-LOWER_RATED_QUOTA = 400
-POPULARITY_QUOTA = 600
-LOW_VISIBILITY_QUOTA = 400
+QUALITY_QUOTA = 600
+POPULARITY_QUOTA = 200
+COMPARISON_QUOTA = 200
 
 # "Well received" is an operational reception proxy, not objective quality.
 QUALITY_RATING_THRESHOLD = 75.0
-LOWER_RATING_THRESHOLD = 60.0
 MIN_TOTAL_RATING_COUNT = 25
 BAYESIAN_PRIOR_COUNT = 25
 
@@ -124,19 +120,7 @@ def year_bounds(year: int) -> tuple[int, int]:
     return start, end
 
 
-def target_games_for_year(year: int) -> int:
-    """Return this year's share of the total target sample size."""
-    if year < START_YEAR or year > END_YEAR:
-        raise ValueError(f"Year {year} is outside configured extraction range.")
-
-    year_count = END_YEAR - START_YEAR + 1
-    base_target = TARGET_TOTAL_GAMES // year_count
-    extra_years = TARGET_TOTAL_GAMES % year_count
-    year_index = year - START_YEAR
-    return base_target + (1 if year_index < extra_years else 0)
-
-
-def build_year_candidate_query(year: int, min_game_id: int = 0) -> str:
+def build_year_candidate_query(year: int) -> str:
     """
     Build a candidate query for released main games in one completed year.
 
@@ -144,48 +128,14 @@ def build_year_candidate_query(year: int, min_game_id: int = 0) -> str:
     before selection.
     """
     start_timestamp, end_timestamp = year_bounds(year)
-    id_cursor_filter = f"\n          & id > {min_game_id}" if min_game_id > 0 else ""
     return f"""
         fields {GAME_CANDIDATE_FIELDS};
         where first_release_date >= {start_timestamp}
           & first_release_date < {end_timestamp}
           & game_type = {MAIN_GAME_TYPE_ID}
-          & version_parent = null{id_cursor_filter};
+          & version_parent = null;
         sort id asc;
     """
-
-
-def fetch_year_candidates(year: int, headers: Dict[str, str]) -> List[Dict[str, Any]]:
-    """
-    Fetch all candidate games for a year using id-cursor pagination.
-
-    The larger 50,000-game extraction can require large yearly candidate pools.
-    Cursor pagination avoids relying on high offsets for the candidate pull.
-    """
-    records: List[Dict[str, Any]] = []
-    last_game_id = 0
-
-    while True:
-        base_query = build_year_candidate_query(year, min_game_id=last_game_id)
-        query = f"""
-            {base_query.strip()}
-            limit {IGDB_MAX_LIMIT};
-        """
-        page = query_endpoint(endpoint="games", query=query, headers=headers)
-        records.extend(page)
-
-        if len(page) < IGDB_MAX_LIMIT:
-            break
-
-        next_last_game_id = max(int(game["id"]) for game in page)
-        if next_last_game_id <= last_game_id:
-            raise RuntimeError(
-                f"Candidate cursor did not advance for {year}; "
-                f"last id stayed at {last_game_id}."
-            )
-        last_game_id = next_last_game_id
-
-    return records
 
 
 LOOKUP_ENDPOINTS = {
@@ -760,78 +710,12 @@ def adjusted_quality_scores(
     return scores
 
 
-def select_popularity_cohort(
-    candidates: Sequence[Dict[str, Any]],
-    popularity_signals: Dict[int, Dict[str, float]],
-    quota: int,
-    selected_ids: Set[int],
-    *,
-    reverse: bool,
-) -> tuple[List[Dict[str, Any]], Dict[int, str], Dict[int, float]]:
-    """Select high- or low-visibility games using IGDB interest, then visits."""
-    selected: List[Dict[str, Any]] = []
-    basis_by_game: Dict[int, str] = {}
-    score_by_game: Dict[int, float] = {}
-
-    if quota <= 0:
-        return selected, basis_by_game, score_by_game
-
-    interest_candidates = [
-        game
-        for game in candidates
-        if int(game["id"]) not in selected_ids
-        and "igdb_interest" in popularity_signals.get(int(game["id"]), {})
-    ]
-    interest_candidates.sort(
-        key=lambda game: (
-            popularity_signals[int(game["id"])]["igdb_interest"],
-            -int(game["id"]),
-        ),
-        reverse=reverse,
-    )
-
-    for game in interest_candidates[:quota]:
-        game_id = int(game["id"])
-        selected.append(game)
-        selected_ids.add(game_id)
-        basis_by_game[game_id] = "igdb_interest"
-        score_by_game[game_id] = popularity_signals[game_id]["igdb_interest"]
-
-    shortfall = quota - len(selected)
-    if shortfall <= 0:
-        return selected, basis_by_game, score_by_game
-
-    visit_candidates = [
-        game
-        for game in candidates
-        if int(game["id"]) not in selected_ids
-        and "visits" in popularity_signals.get(int(game["id"]), {})
-    ]
-    visit_candidates.sort(
-        key=lambda game: (
-            popularity_signals[int(game["id"])]["visits"],
-            -int(game["id"]),
-        ),
-        reverse=reverse,
-    )
-
-    for game in visit_candidates[:shortfall]:
-        game_id = int(game["id"])
-        selected.append(game)
-        selected_ids.add(game_id)
-        basis_by_game[game_id] = "igdb_visits"
-        score_by_game[game_id] = popularity_signals[game_id]["visits"]
-
-    return selected, basis_by_game, score_by_game
-
-
 def select_year_cohorts(
     year: int,
     candidates: Sequence[Dict[str, Any]],
     popularity_signals: Dict[int, Dict[str, float]],
 ) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Any]]:
-    """Select stratified quality, lower-rated, visibility, and comparison cohorts."""
-    yearly_target = target_games_for_year(year)
+    """Select quality, PopScore-visible, and comparison cohorts for one year."""
     eligible = [game for game in candidates if is_eligible_candidate(game, year)]
     quality_scores = adjusted_quality_scores(eligible)
 
@@ -853,55 +737,51 @@ def select_year_cohorts(
     quality_selected = quality_candidates[:QUALITY_QUOTA]
     selected_ids = {int(game["id"]) for game in quality_selected}
 
-    lower_rated_candidates = [
+    remaining = [game for game in eligible if int(game["id"]) not in selected_ids]
+    interest_candidates = [
         game
-        for game in eligible
-        if int(game["id"]) not in selected_ids
-        and game.get("total_rating") is not None
-        and float(game["total_rating"]) <= LOWER_RATING_THRESHOLD
-        and int(game.get("total_rating_count") or 0) >= MIN_TOTAL_RATING_COUNT
+        for game in remaining
+        if "igdb_interest" in popularity_signals.get(int(game["id"]), {})
     ]
-    lower_rated_candidates.sort(
+    interest_candidates.sort(
         key=lambda game: (
-            quality_scores.get(int(game["id"]), float("inf")),
-            -int(game.get("total_rating_count") or 0),
-            int(game["id"]),
+            popularity_signals[int(game["id"])]["igdb_interest"],
+            -int(game["id"]),
         ),
-    )
-    lower_rated_selected = lower_rated_candidates[:LOWER_RATED_QUOTA]
-    selected_ids.update(int(game["id"]) for game in lower_rated_selected)
-
-    (
-        popularity_selected,
-        popularity_basis_by_game,
-        popularity_scores_by_game,
-    ) = select_popularity_cohort(
-        eligible,
-        popularity_signals,
-        POPULARITY_QUOTA,
-        selected_ids,
         reverse=True,
     )
+    popularity_selected = interest_candidates[:POPULARITY_QUOTA]
+    selected_ids.update(int(game["id"]) for game in popularity_selected)
 
-    low_visibility_selected, low_visibility_basis, low_visibility_scores = (
-        select_popularity_cohort(
-            eligible,
-            popularity_signals,
-            LOW_VISIBILITY_QUOTA,
-            selected_ids,
-            reverse=False,
+    popularity_shortfall = POPULARITY_QUOTA - len(popularity_selected)
+    if popularity_shortfall > 0:
+        visit_candidates = [
+            game
+            for game in eligible
+            if int(game["id"]) not in selected_ids
+            and "visits" in popularity_signals.get(int(game["id"]), {})
+        ]
+        visit_candidates.sort(
+            key=lambda game: (
+                popularity_signals[int(game["id"])]["visits"],
+                -int(game["id"]),
+            ),
+            reverse=True,
         )
-    )
+        visit_fill = visit_candidates[:popularity_shortfall]
+        popularity_selected.extend(visit_fill)
+        selected_ids.update(int(game["id"]) for game in visit_fill)
 
     remaining = [game for game in eligible if int(game["id"]) not in selected_ids]
     comparison_target = max(
-        yearly_target
-        - len(quality_selected)
-        - len(lower_rated_selected)
-        - len(popularity_selected)
-        - len(low_visibility_selected),
-        0,
+        COMPARISON_QUOTA,
+        GAMES_PER_YEAR - len(quality_selected) - len(popularity_selected),
     )
+    comparison_target = min(
+        comparison_target,
+        GAMES_PER_YEAR - len(quality_selected) - len(popularity_selected),
+    )
+    comparison_target = max(comparison_target, 0)
 
     rng = random.Random(RANDOM_SEED + year)
     comparison_selected = (
@@ -911,31 +791,27 @@ def select_year_cohorts(
     )
 
     selected_games = (
-        quality_selected
-        + lower_rated_selected
-        + popularity_selected
-        + low_visibility_selected
-        + comparison_selected
-    )[:yearly_target]
+        quality_selected + popularity_selected + comparison_selected
+    )[:GAMES_PER_YEAR]
 
     cohort_rows: List[Dict[str, Any]] = []
     for cohort_name, cohort_games in (
         ("quality", quality_selected),
-        ("lower_rated", lower_rated_selected),
         ("popularity", popularity_selected),
-        ("low_visibility", low_visibility_selected),
         ("comparison", comparison_selected),
     ):
         for rank, game in enumerate(cohort_games, start=1):
             game_id = int(game["id"])
+            signals = popularity_signals.get(game_id, {})
             popularity_basis = None
             popularity_score = None
             if cohort_name == "popularity":
-                popularity_basis = popularity_basis_by_game.get(game_id)
-                popularity_score = popularity_scores_by_game.get(game_id)
-            elif cohort_name == "low_visibility":
-                popularity_basis = low_visibility_basis.get(game_id)
-                popularity_score = low_visibility_scores.get(game_id)
+                if "igdb_interest" in signals:
+                    popularity_basis = "igdb_interest"
+                    popularity_score = signals["igdb_interest"]
+                elif "visits" in signals:
+                    popularity_basis = "igdb_visits"
+                    popularity_score = signals["visits"]
 
             cohort_rows.append(
                 {
@@ -956,9 +832,7 @@ def select_year_cohorts(
         "release_year": year,
         "candidate_count": len(candidates),
         "eligible_count": len(eligible),
-        "target_selected_count": yearly_target,
         "quality_eligible_count": len(quality_candidates),
-        "lower_rated_eligible_count": len(lower_rated_candidates),
         "popscore_interest_available_count": sum(
             1
             for game in eligible
@@ -970,9 +844,7 @@ def select_year_cohorts(
             if "visits" in popularity_signals.get(int(game["id"]), {})
         ),
         "quality_selected_count": len(quality_selected),
-        "lower_rated_selected_count": len(lower_rated_selected),
         "popularity_selected_count": len(popularity_selected),
-        "low_visibility_selected_count": len(low_visibility_selected),
         "comparison_selected_count": len(comparison_selected),
         "total_selected_count": len(selected_games),
     }
@@ -990,7 +862,7 @@ def fetch_selected_endpoints() -> None:
     The extraction is intentionally game-first:
     1. Fetch eligible main-game candidates separately for each year.
     2. Fetch candidate PopScore primitives for visibility selection.
-    3. Select quality, lower-rated, visibility, and comparison cohorts per year.
+    3. Select quality, popularity, and comparison cohorts per year.
     4. Fetch full game records and related data only for selected games.
     """
     load_dotenv()
@@ -1003,7 +875,6 @@ def fetch_selected_endpoints() -> None:
     print(
         "\nFetching yearly main-game candidate pools: "
         f"{START_YEAR}-{END_YEAR}\n"
-        f"Target sample size: {TARGET_TOTAL_GAMES:,} games\n"
         "Progress bars report ETA for the current phase; the final line reports "
         "total pipeline time.",
         flush=True,
@@ -1017,7 +888,11 @@ def fetch_selected_endpoints() -> None:
         start=1,
     ):
         print(f"\nFetching candidate games for {year}")
-        year_candidates = fetch_year_candidates(year, headers)
+        year_candidates = fetch_paginated(
+            endpoint="games",
+            base_query=build_year_candidate_query(year),
+            headers=headers,
+        )
         year_candidates = dedupe_records(year_candidates)
         candidates_by_year[year] = year_candidates
         all_candidates.extend(year_candidates)
@@ -1058,11 +933,8 @@ def fetch_selected_endpoints() -> None:
         yearly_summaries.append(summary)
         print(
             f"Selected {year}: {summary['total_selected_count']} games "
-            f"(target={summary['target_selected_count']}, "
-            f"quality={summary['quality_selected_count']}, "
-            f"lower_rated={summary['lower_rated_selected_count']}, "
+            f"(quality={summary['quality_selected_count']}, "
             f"popularity={summary['popularity_selected_count']}, "
-            f"low_visibility={summary['low_visibility_selected_count']}, "
             f"comparison={summary['comparison_selected_count']})"
         )
 
@@ -1081,13 +953,7 @@ def fetch_selected_endpoints() -> None:
     cohort_order = {
         int(row["game_id"]): (
             int(row["release_year"]),
-            {
-                "quality": 0,
-                "lower_rated": 1,
-                "popularity": 2,
-                "low_visibility": 3,
-                "comparison": 4,
-            }[row["cohort"]],
+            {"quality": 0, "popularity": 1, "comparison": 2}[row["cohort"]],
             int(row["selection_rank"]),
         )
         for row in extraction_cohorts
@@ -1108,7 +974,7 @@ def fetch_selected_endpoints() -> None:
     }
 
     extraction_manifest = {
-        "schema_version": 2,
+        "schema_version": 1,
         "extraction_timestamp": extraction_timestamp,
         "extraction_timestamp_iso": datetime.fromtimestamp(
             extraction_timestamp,
@@ -1123,16 +989,10 @@ def fetch_selected_endpoints() -> None:
             "version_parent_must_be_null": True,
         },
         "yearly_target": {
-            "target_total_games": TARGET_TOTAL_GAMES,
-            "target_years": year_count,
-            "base_games_per_year": TARGET_TOTAL_GAMES // year_count,
-            "extra_year_count": TARGET_TOTAL_GAMES % year_count,
-            "extra_year_rule": "first configured release years receive one additional game",
+            "games_per_year": GAMES_PER_YEAR,
             "quality_quota": QUALITY_QUOTA,
-            "lower_rated_quota": LOWER_RATED_QUOTA,
             "popularity_quota": POPULARITY_QUOTA,
-            "low_visibility_quota": LOW_VISIBILITY_QUOTA,
-            "comparison_rule": "fills remaining yearly target after other cohorts",
+            "comparison_quota": COMPARISON_QUOTA,
         },
         "quality_rule": {
             "total_rating_minimum": QUALITY_RATING_THRESHOLD,
@@ -1140,21 +1000,10 @@ def fetch_selected_endpoints() -> None:
             "ranking_method": "Bayesian-adjusted total_rating within release year",
             "bayesian_prior_count": BAYESIAN_PRIOR_COUNT,
         },
-        "lower_rated_rule": {
-            "total_rating_maximum": LOWER_RATING_THRESHOLD,
-            "total_rating_count_minimum": MIN_TOTAL_RATING_COUNT,
-            "ranking_method": "lowest Bayesian-adjusted total_rating within release year",
-            "interpretation": "lower-rated reliable reception, not objectively bad games",
-        },
         "popularity_rule": {
             "primary": "0.60 * IGDB Want to Play + 0.40 * IGDB Playing",
             "fallback": "IGDB Visits",
             "cross_source_values_are_not_averaged": True,
-        },
-        "low_visibility_rule": {
-            "primary": "lowest project-defined IGDB interest score among games with known visibility",
-            "fallback": "lowest IGDB Visits among games with known visits",
-            "missing_popscore_interpretation": "unknown visibility, not low visibility",
         },
         "comparison_rule": {
             "method": "random sample from remaining eligible games",

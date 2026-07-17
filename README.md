@@ -1,363 +1,85 @@
-# IGDB Game Discovery & RAG Recommendation System
+# IGDB Game Discovery and Hybrid RAG Recommender
 
-This project builds a game discovery and recommendation system using IGDB data. It currently includes a Streamlit MVP/internal analytics workbench and is planned to evolve into a custom website final product. It combines a normalized SQLite database, descriptive analytics, diagnostic analytics, hidden-gem logic, structured recommendation rules, similarity-based predictive scoring, and placeholder integration pages for similarity/RAG work.
+A portfolio-grade game discovery system that combines structured metadata filtering with semantic retrieval. The stack has been migrated from legacy SQLite-first retrieval to a modern **Parquet + Vector Store** architecture optimized for scale and relevance.
 
-The current project direction is:
+## Architecture Overview
 
-```text
-Streamlit MVP/internal workbench first.
-Custom website final product next, with public deployment optional if it can be done for free without delaying the local demo.
-```
+The recommender now uses a hybrid retrieval pipeline with clear separation of concerns:
 
-## Current Status
+- **Parquet Metadata Layer (`data/app/app_game_catalog.parquet`)**
+  - Single source of truth for game catalog attributes.
+  - Powers deterministic filtering (platform, release year, multiplayer flags, etc.).
+  - Enables fast schema-normalized access through pandas.
 
-Completed:
+- **Vector Index Layer (`data/vector_store/`)**
+  - Embeddings are generated from game text profiles and indexed in Chroma (FAISS-class ANN behavior via vector index).
+  - Powers semantic retrieval for natural-language intent (e.g., *"open world RPG with co-op"*).
 
-- IGDB extraction pipeline.
-- Refreshed curated 47,835-game analytical sample.
-- Normalized SQLite database.
-- Descriptive analytics notebook and findings report.
-- Diagnostic analytics notebook and findings report.
-- Streamlit MVP foundation.
-- Streamlit UI polish V3.
-- App-ready data layer.
-- Explore Games page.
-- Hidden Gems page.
-- Guided structured Recommendations page.
-- Insights page.
-- Methodology page.
-- Predictive/similarity and RAG placeholder pages.
+- **Hybrid Ranking Engine (`src/rag_engine.py`)**
+  - Executes metadata prefiltering from Parquet.
+  - Runs vector retrieval + lexical retrieval (BM25).
+  - Fuses scores into a final ranked recommendation list.
 
-Pending / teammate-owned:
+In short: **Parquet handles exact constraints, vectors handle meaning, and hybrid fusion balances both.**
 
-- Similarity-scoring artifact integration.
-- RAG/vector-store integration.
-- Final chatbot behavior.
-- Final demo flow and presentation polish.
+## Setup Instructions
 
-## Current Dataset
-
-Primary database:
-
-```text
-data/database/igdb_games.db
-```
-
-Current analytical sample:
-
-```text
-Total games:       47,835
-Release years:     2010-2024
-Target design:     50,000 games, yearly stratified
-Actual selected:   47,835 games
-Quality cohort:    1,425
-Lower-rated cohort:147
-Popularity cohort: 9,000
-Low visibility:    5,329
-Comparison cohort: 31,934
-```
-
-Extraction design:
-
-```text
-Target games:      50,000
-Release years:     2010-2024
-Design:            yearly stratified sample
-Current cohorts:   quality, lower_rated, popularity, low_visibility, comparison
-Purpose:           compare top reception, lower reliable reception,
-                   high visibility, low known visibility, and comparison games
-```
-
-The current local database is the refreshed source of truth. It contains 47,835
-games rather than the full 50,000 target because the earliest release years did
-not have enough eligible records to fill the configured yearly target.
-
-Important interpretation rules:
-
-```text
-total_rating       = quality / reception signal
-total_rating_count = rating evidence / rating activity signal
-PopScore interest  = visibility / current-interest signal
-```
-
-Important caveats:
-
-- The dataset is a curated project sample, not the full IGDB catalog.
-- Quality and visibility cohorts are intentionally oversampled.
-- Full-sample high-rating or popularity shares should not be interpreted as market prevalence.
-- Missing PopScore means unknown visibility, not low visibility.
-- Diagnostic associations are not causal claims.
-
-## Streamlit App
-
-Main entry point:
-
-```text
-apps/streamlit/streamlit_app.py
-```
-
-Run locally:
+### 1) Install dependencies
 
 ```bash
-cd apps/streamlit
-streamlit run streamlit_app.py
+pip install -r requirement.txt
 ```
 
-Current pages:
+### 2) Build/Rebuild the vector index
 
-```text
-Home
-Explore Games
-Hidden Gems
-Recommendations
-Chatbot
-Insights
-Predictive / Similarity Scoring
-Methodology
-```
-
-Current UI direction:
-
-- Home is a cyberpunk game-menu landing page with a 3-column clickable hover-panel grid.
-- Explore Games and Hidden Gems support Grid View and Detailed View.
-- Recommendations uses a minimal step-by-step wizard with quick-start personas and review/confirm.
-- Insights is split into clear Descriptive and Diagnostic sections.
-- Methodology is a continuous trust page with definitions, formulas, caveats, and artifact audits.
-
-Current app-ready artifacts:
-
-```text
-data/app/app_game_catalog.parquet
-data/app/app_hidden_gems.parquet
-data/app/app_filter_options.json
-data/app/app_insight_summary.json
-data/app/app_methodology_metrics.json
-```
-
-Rebuild app-ready artifacts:
+After refreshing `data/app/app_game_catalog.parquet`, initialize the vector database:
 
 ```bash
-python src/pipeline/build_app_catalog.py
+python src/initialize_vector_db.py
 ```
 
-## Setup
+This script reads the full Parquet catalog, prepares embedding text, clears stale vector data, and writes a fresh index.
 
-Recommended Python environment:
+## Validation Suite (Post-Deployment)
 
-```text
-Python 3.10+
-```
+After indexing, run these checks before shipping:
 
-Install Streamlit MVP dependencies:
+- `src/validate_vector_store.py`
+  - Performs vector health auditing: content sampling, semantic diversity, self-similarity, and variance checks.
+- `src/debug_engine.py`
+  - Smoke-tests end-to-end retrieval by initializing `RAGAgent` and executing a real query.
+
+Recommended sequence:
 
 ```bash
-pip install -r requirements.txt
+python src/validate_vector_store.py
+python src/debug_engine.py
 ```
 
-The older `requirement.txt` file is retained for legacy pipeline dependencies. Prefer `requirements.txt` for the Streamlit MVP.
+## Project Structure (Key Paths)
 
-## Environment Variables
+- `data/app/app_game_catalog.parquet`
+  - **Primary catalog source of truth** for retrieval metadata.
+- `data/vector_store/`
+  - Persisted embedding index used by semantic retrieval.
+- `src/initialize_vector_db.py`
+  - Vector index build/rebuild pipeline.
+- `src/rag_engine.py`
+  - Hybrid retrieval and ranking engine used by the recommender.
+- `src/validate_vector_store.py`
+  - Automated vector quality and collapse detection checks.
+- `src/debug_engine.py`
+  - Runtime sanity check for query execution.
 
-Create a `.env` file only if you need to run IGDB extraction or future API-backed RAG features.
+## Current System Capabilities
 
-Example:
+- Natural-language game discovery with semantic intent matching.
+- Deterministic filtering over catalog attributes from Parquet.
+- Hybrid ranking that combines vector relevance with lexical signals.
+- Operational validation scripts to guard against vector collapse and runtime regressions.
 
-```text
-IGDB_CLIENT_ID=your_twitch_client_id
-IGDB_CLIENT_SECRET=your_twitch_client_secret
-GEMINI_API_KEY=your_gemini_api_key
-```
+## Notes
 
-Do not commit secrets.
-
-Local Streamlit secrets should go in:
-
-```text
-apps/streamlit/.streamlit/secrets.toml
-```
-
-That file is ignored by Git.
-
-## Project Structure
-
-```text
-Community_Project/
-|-- api/
-|-- apps/
-|   |-- streamlit/
-|   |   |-- .streamlit/
-|   |   |-- pages/
-|   |   `-- streamlit_app.py
-|   `-- website/
-|-- assets/
-|-- data/
-|   |-- raw/
-|   |-- database/
-|   |-- analytics/
-|   |   |-- descriptive/
-|   |   |-- diagnostic/
-|   |   `-- predictive/
-|   |-- app/
-|   |-- recommendations/
-|   `-- rag/
-|-- docs/
-|   |-- plan/
-|   |-- project_source_of_truth/
-|   `-- report/
-|-- notebooks/
-|-- src/
-|   |-- app/
-|   |   `-- components/
-|   `-- pipeline/
-|-- tests/
-|-- requirements.txt
-`-- requirement.txt
-```
-
-More detail:
-
-```text
-docs/folder_structure.md
-```
-
-## Key Documentation
-
-Project source of truth:
-
-```text
-docs/project_source_of_truth/definitive_project_guideline_igdb_rag.md
-docs/project_source_of_truth/streamlit_page_context.md
-docs/project_source_of_truth/IGDB_API_Documentation.md
-```
-
-Plans:
-
-```text
-docs/plan/descriptive_analytics_pillar_plan.md
-docs/plan/diagnostic_analytics_pillar_plan.md
-docs/plan/streamlit_mvp_architecture_plan.md
-docs/plan/streamlit_manual_qa_test_cases.md
-docs/plan/streamlit_ui_polish_plan_v1.md
-docs/plan/final_product_website_plan.md
-```
-
-Findings reports:
-
-```text
-docs/report/descriptive_pillar_findings.md
-docs/report/diagnostic_pillar_findings.md
-```
-
-Session log:
-
-```text
-docs/session_log.md
-```
-
-## Notebooks
-
-```text
-notebooks/01_descriptive_analytics_exploration.ipynb
-notebooks/02_diagnostic_analytics_exploration.ipynb
-```
-
-The notebooks generate exported analytics tables under:
-
-```text
-data/analytics/descriptive/
-data/analytics/diagnostic/
-```
-
-## Tests
-
-Run the full project unit test suite:
-
-```bash
-python -m unittest tests/test_app_data_validation.py tests/test_fetch_igdb_selection.py tests/test_app_filters.py tests/test_recommendation_service.py tests/test_hidden_gem_service.py tests/test_app_artifact_schema.py
-```
-
-Focused app/service tests:
-
-```bash
-python -m unittest tests/test_app_filters.py
-python -m unittest tests/test_recommendation_service.py
-python -m unittest tests/test_hidden_gem_service.py
-python -m unittest tests/test_app_artifact_schema.py
-```
-
-Run Python compile checks manually if needed:
-
-```bash
-python -m compileall apps/streamlit src/app src/pipeline
-```
-
-Manual Streamlit QA checklist:
-
-```text
-docs/plan/streamlit_manual_qa_test_cases.md
-```
-
-## Current Hidden-Gem Definition
-
-The default Balanced hidden-gem rule is:
-
-```text
-quality cohort
-AND total_rating >= 80
-AND total_rating_count >= 25
-AND main game
-AND PopScore available
-AND within-year quality-cohort visibility percentile <= 40%
-```
-
-The app's Hidden Gems page uses:
-
-```text
-data/app/app_hidden_gems.parquet
-```
-
-This artifact is generated from the finalized diagnostic hidden-gem definition.
-
-## Teammate Integration Contracts
-
-Predictive/similarity scoring expected artifacts:
-
-```text
-data/analytics/predictive/similarity_config.json
-data/analytics/predictive/game_similarity_profiles.parquet
-data/analytics/predictive/similarity_neighbors.parquet
-data/analytics/predictive/persona_similarity_results.parquet
-data/analytics/predictive/similarity_evaluation.json
-```
-
-RAG expected artifacts:
-
-```text
-data/rag/game_profiles.parquet
-data/rag/retrieval_metadata.parquet
-data/rag/vector_store/
-```
-
-The current Predictive / Similarity Scoring and Chatbot pages are designed to load safely even when these artifacts are not yet available.
-
-## Typical Development Flow
-
-```text
-1. Rebuild app artifacts if database or analytics exports changed.
-2. Run validation tests.
-3. Run Streamlit locally.
-4. Complete manual QA checklist.
-5. Fix page-specific issues.
-6. Integrate teammate similarity/RAG artifacts when ready.
-7. Polish final demo flow.
-```
-
-Commands:
-
-```bash
-python src/pipeline/build_app_catalog.py
-python -m unittest tests/test_app_data_validation.py
-cd apps/streamlit
-streamlit run streamlit_app.py
-```
-
+- If catalog row count and vector index count diverge, rebuild the index with:
+  - `python src/initialize_vector_db.py`
+- Keep Parquet and vector store in sync for stable search quality.

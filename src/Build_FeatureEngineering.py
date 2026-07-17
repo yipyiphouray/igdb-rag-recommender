@@ -173,6 +173,8 @@ def build_analytics_tables():
     
     ml_features = df[[
         "game_id", "name", "slug", "first_release_date_iso", "release_year",
+        # Keep as-is (NULL/NaN allowed) so downstream regression can impute by year.
+        "total_rating",
         "category_decoded", "status_decoded", "is_high_rated", 
         "rating_confidence", "playtime_length",
         "genres", "themes", "platforms", "developers", "publishers",
@@ -209,6 +211,9 @@ def build_analytics_tables():
     
     train_df.to_csv(OUTPUT_DIR / "modeling_train_features.csv", index=False)
     test_df.to_csv(OUTPUT_DIR / "modeling_test_features.csv", index=False)
+
+    if "total_rating" not in train_df.columns or "total_rating" not in test_df.columns:
+        raise ValueError("Pipeline integrity check failed: `total_rating` missing from exported modeling CSVs.")
     
     print(f"Gold processing executed successfully! Generated {len(ml_features.columns)} total layout metrics.")
     conn.close()

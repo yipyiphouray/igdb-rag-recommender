@@ -1,0 +1,37 @@
+{
+    "StrategyFan": {
+        "user_id": "strategy_fan_001",
+        "interactions": [
+            {"game_id": "105049", "time_played": 240.0},
+            {"game_id": "1020", "time_played": 180.0},
+            {"game_id": "1942", "time_played": 165.0},
+            {"game_id": "13536", "time_played": 140.0},
+            {"game_id": "7346", "time_played": 120.0},
+            {"game_id": "392", "time_played": 115.0},
+            {"game_id": "7344", "time_played": 110.0},
+            {"game_id": "121", "time_played": 105.0},
+            {"game_id": "7342", "time_played": 102.0},
+            {"game_id": "136", "time_played": 98.0},
+            {"game_id": "109", "time_played": 96.0},
+            {"game_id": "14593", "time_played": 92.0}
+        ]
+    },
+    "ActionJunkie": {
+        "user_id": "action_junkie_001",
+        "interactions": [
+            {"game_id": "1022", "time_played": 180.0},
+            {"game_id": "7346", "time_played": 160.0},
+            {"game_id": "25076", "time_played": 140.0},
+            {"game_id": "16769", "time_played": 125.0},
+            {"game_id": "1026", "time_played": 110.0},
+            {"game_id": "7344", "time_played": 100.0}
+        ]
+    },
+    "CasualPlayer": {
+        "user_id": "casual_player_001",
+        "interactions": [
+            {"game_id": "2064", "time_played": 22.0},
+            {"game_id": "1009", "time_played": 18.0}
+        ]
+    }
+}

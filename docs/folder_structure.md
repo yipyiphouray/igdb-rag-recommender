@@ -1,6 +1,6 @@
 # Folder Structure Description
 
-Last updated: 2026-06-16
+Last updated: 2026-07-17
 
 This file describes the high-level folder layout for the IGDB Game Discovery and RAG Recommendation System.
 
@@ -14,6 +14,12 @@ Community_Project/
 |   `-- analytics/
 |       `-- descriptive/
 |-- docs/
+|   |-- plan/
+|   |-- project_source_of_truth/
+|   `-- report/
+|-- apps/
+|   |-- streamlit/
+|   `-- website/
 |-- models/
 |-- notebooks/
 |-- outputs/
@@ -27,6 +33,8 @@ Community_Project/
 ## `archive/`
 
 Stores older reference material or project files that are no longer part of the active workflow.
+
+Current examples include legacy project guidelines and older RAG/SQLite-era documentation that should be preserved for history but should not be treated as the active implementation source of truth.
 
 ## `data/`
 
@@ -55,6 +63,35 @@ Stores exported descriptive analytics tables from the descriptive exploration no
 ## `docs/`
 
 Stores project documentation, planning notes, schema documentation, session logs, and pillar-specific planning files.
+
+### `docs/plan/`
+
+Stores forward-looking implementation plans, UI improvement plans, page plans, and pillar execution plans.
+
+### `docs/project_source_of_truth/`
+
+Stores active source-of-truth documentation that should guide implementation decisions. This includes the definitive project guideline, ERD/data dictionary documents, website style guide, page context, and current retrieval/RAG methodology documents.
+
+Current retrieval/RAG source-of-truth documents include:
+
+- `hybrid_retrieval_methodology.md`
+- `hybrid_search_technical_journey.md`
+
+### `docs/report/`
+
+Stores written findings and report-ready summaries for the analytics pillars.
+
+## `apps/`
+
+Stores user-facing application layers.
+
+### `apps/streamlit/`
+
+Stores the Streamlit MVP/prototype app.
+
+### `apps/website/`
+
+Stores the Next.js final-product website frontend. Generated folders such as `.next/` and `node_modules/` should remain ignored by Git.
 
 ## `models/`
 

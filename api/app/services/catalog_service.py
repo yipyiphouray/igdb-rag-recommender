@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+from collections.abc import Iterable
 from functools import lru_cache
 from typing import Any
 
@@ -92,6 +93,8 @@ def _row_value(row: pd.Series | dict[str, Any], key: str, default: Any = None) -
 
 
 def serialize_game(row: pd.Series | dict[str, Any], *, detail: bool = False) -> dict[str, Any]:
+    summary = _safe_str(_row_value(row, "summary")) if detail else compact_text(_row_value(row, "summary"), max_chars=280)
+
     game: dict[str, Any] = {
         "game_id": int(_row_value(row, "game_id")),
         "name": _safe_str(_row_value(row, "name")) or "Unknown title",
@@ -99,7 +102,7 @@ def serialize_game(row: pd.Series | dict[str, Any], *, detail: bool = False) -> 
         "release_year": _safe_int(_row_value(row, "release_year")),
         "cover_url": _safe_str(_row_value(row, "cover_url")),
         "screenshot_url": _safe_str(_row_value(row, "screenshot_url")),
-        "summary": compact_text(_row_value(row, "summary"), max_chars=280) or None,
+        "summary": summary or None,
         "total_rating": _safe_float(_row_value(row, "total_rating")),
         "total_rating_count": _safe_int(_row_value(row, "total_rating_count")),
         "custom_interest_score": _safe_float(_row_value(row, "custom_interest_score")),
@@ -143,11 +146,14 @@ def serialize_game(row: pd.Series | dict[str, Any], *, detail: bool = False) -> 
 def list_games(
     *,
     search: str = "",
-    platform: str | None = None,
-    genre: str | None = None,
-    theme: str | None = None,
+    platform: Iterable[str] | None = None,
+    genre: Iterable[str] | None = None,
+    theme: Iterable[str] | None = None,
     release_year_min: int | None = None,
     release_year_max: int | None = None,
+    min_rating: float | None = None,
+    min_reviews: int | None = None,
+    hidden_gems_only: bool = False,
     sort: str = "highest_rating",
     page: int = 1,
     page_size: int = 24,
@@ -161,9 +167,12 @@ def list_games(
         catalog,
         search_text=search,
         release_year_range=release_year_range,
-        platforms=[platform] if platform else None,
-        genres=[genre] if genre else None,
-        themes=[theme] if theme else None,
+        platforms=platform,
+        genres=genre,
+        themes=theme,
+        min_rating=min_rating,
+        min_rating_count=min_reviews,
+        hidden_gems_only=hidden_gems_only,
     )
 
     sorted_games = sort_catalog(filtered, SORT_OPTIONS.get(sort, sort))

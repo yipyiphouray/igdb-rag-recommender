@@ -29,6 +29,17 @@ export type CatalogResponse = {
   total_pages: number;
 };
 
+export type GameDetail = GameSummary & {
+  storyline?: string | null;
+  keywords: string[];
+  developers: string[];
+  publishers: string[];
+  rating_band?: string | null;
+  rating_reliable_flag: boolean;
+  main_game_flag: boolean;
+  data_caveats: string[];
+};
+
 export type FilterOptions = {
   release_years?: number[];
   genres?: string[];
@@ -80,6 +91,20 @@ export type MethodologySummary = {
   insight_summary: Record<string, unknown>;
   caveats: string[];
   implementation_notes: string[];
+};
+
+export type DashboardRow = Record<string, string | number | boolean | null>;
+
+export type InsightsDashboard = {
+  descriptive?: Record<string, DashboardRow[]>;
+  diagnostic?: Record<string, DashboardRow[]>;
+};
+
+export type InsightsSummary = {
+  dataset: Record<string, unknown>;
+  descriptive: Record<string, unknown>;
+  diagnostic: Record<string, unknown>;
+  dashboard?: InsightsDashboard;
 };
 
 export type HealthResponse = {

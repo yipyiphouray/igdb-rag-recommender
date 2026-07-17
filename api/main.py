@@ -14,7 +14,7 @@ for path in (API_DIR, ROOT_DIR):
     if path_text not in sys.path:
         sys.path.insert(0, path_text)
 
-from app.routers import catalog, health, methodology, recommendations  # noqa: E402
+from app.routers import catalog, health, insights, methodology, recommendations  # noqa: E402
 
 
 app = FastAPI(
@@ -38,3 +38,4 @@ app.include_router(health.router)
 app.include_router(catalog.router)
 app.include_router(recommendations.router)
 app.include_router(methodology.router)
+app.include_router(insights.router)

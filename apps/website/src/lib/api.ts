@@ -1,7 +1,9 @@
 import type {
   CatalogResponse,
   FilterOptions,
+  GameDetail,
   HealthResponse,
+  InsightsSummary,
   MethodologySummary,
   RecommendationRequest,
   RecommendationResponse,
@@ -44,8 +46,16 @@ export async function getCatalogGames(query = ""): Promise<CatalogResponse> {
   return apiFetch<CatalogResponse>(path);
 }
 
+export async function getCatalogGame(gameId: number | string): Promise<GameDetail> {
+  return apiFetch<GameDetail>(`/catalog/games/${gameId}`);
+}
+
 export async function getMethodologySummary(): Promise<MethodologySummary> {
   return apiFetch<MethodologySummary>("/methodology/summary");
+}
+
+export async function getInsightsSummary(): Promise<InsightsSummary> {
+  return apiFetch<InsightsSummary>("/insights/summary");
 }
 
 export async function postRecommendations(

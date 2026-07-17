@@ -6,14 +6,14 @@ import { useState } from "react";
 const links = [
   { href: "/", label: "HOME_", status: "ACTIVE" },
   { href: "/explore", label: "EXPLORE_", status: "ACTIVE" },
+  { href: "/hidden-gems", label: "HIDDEN GEMS_", status: "ACTIVE" },
   { href: "/recommendations", label: "RECOMMEND_", status: "ACTIVE" },
+  { href: "/insights", label: "INSIGHTS_", status: "ACTIVE" },
   { href: "/methodology", label: "METHOD_", status: "ACTIVE" },
 ];
 
 const pendingLinks = [
   { label: "ASK THE GUIDE_", status: "PENDING" },
-  { label: "HIDDEN GEMS_", status: "SOON" },
-  { label: "INSIGHTS_", status: "SOON" },
 ];
 
 export function SiteHeader() {

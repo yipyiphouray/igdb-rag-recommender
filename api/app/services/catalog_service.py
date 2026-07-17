@@ -153,6 +153,7 @@ def list_games(
     release_year_max: int | None = None,
     min_rating: float | None = None,
     min_reviews: int | None = None,
+    hidden_gems_only: bool = False,
     sort: str = "highest_rating",
     page: int = 1,
     page_size: int = 24,
@@ -171,6 +172,7 @@ def list_games(
         themes=theme,
         min_rating=min_rating,
         min_rating_count=min_reviews,
+        hidden_gems_only=hidden_gems_only,
     )
 
     sorted_games = sort_catalog(filtered, SORT_OPTIONS.get(sort, sort))

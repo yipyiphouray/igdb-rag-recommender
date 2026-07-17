@@ -93,6 +93,20 @@ export type MethodologySummary = {
   implementation_notes: string[];
 };
 
+export type DashboardRow = Record<string, string | number | boolean | null>;
+
+export type InsightsDashboard = {
+  descriptive?: Record<string, DashboardRow[]>;
+  diagnostic?: Record<string, DashboardRow[]>;
+};
+
+export type InsightsSummary = {
+  dataset: Record<string, unknown>;
+  descriptive: Record<string, unknown>;
+  diagnostic: Record<string, unknown>;
+  dashboard?: InsightsDashboard;
+};
+
 export type HealthResponse = {
   status: string;
   service: string;

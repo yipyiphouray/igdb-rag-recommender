@@ -221,9 +221,12 @@ export default async function GameDetailPage({
 
             <div className="mt-8 flex flex-wrap gap-2">
               {game.hidden_gem_balanced_flag && (
-                <span className="border border-[#FF3E00] bg-[#FF3E00] px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-black">
+                <Link
+                  href="/hidden-gems"
+                  className="border border-[#FF3E00] bg-[#FF3E00] px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-black hover:bg-black hover:text-[#FF3E00]"
+                >
                   Hidden gem
-                </span>
+                </Link>
               )}
               {game.rag_ready_flag && (
                 <span className="border border-white px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-white">

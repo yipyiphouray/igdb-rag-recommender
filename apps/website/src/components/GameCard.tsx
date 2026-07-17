@@ -129,9 +129,12 @@ export function GameCard({
 
       <div className="flex flex-wrap gap-2 border-t border-white/24 p-5">
         {game.hidden_gem_balanced_flag && (
-          <span className="border border-[#FF3E00] bg-[#FF3E00] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-black">
+          <Link
+            href="/hidden-gems"
+            className="border border-[#FF3E00] bg-[#FF3E00] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-black hover:bg-black hover:text-[#FF3E00]"
+          >
             Hidden gem
-          </span>
+          </Link>
         )}
         {topItems(game.genres).map((genre) => (
           <Link

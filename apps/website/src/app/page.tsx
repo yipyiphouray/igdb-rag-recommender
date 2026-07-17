@@ -25,15 +25,15 @@ const featureCards = [
   {
     section: "SEC_04 //",
     title: "HIDDEN GEMS_",
-    href: null,
-    active: false,
+    href: "/hidden-gems",
+    active: true,
     description: "Find strong games that may be easier to miss.",
   },
   {
     section: "SEC_05 //",
     title: "INSIGHTS_",
-    href: null,
-    active: false,
+    href: "/insights",
+    active: true,
     description: "See the main patterns found in the project data.",
   },
   {

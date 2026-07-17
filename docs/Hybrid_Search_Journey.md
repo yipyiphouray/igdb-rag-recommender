@@ -40,9 +40,34 @@ The engine now uses a robust hybrid retrieval strategy:
 
 - **Semantic channel**: embedding-based nearest-neighbor retrieval.
 - **Lexical channel**: BM25 keyword retrieval for exact-term resilience.
-- **Fusion layer**: hybrid score composition with normalized signals and metadata-aware adjustments.
+- **Lexical fallback**: automatic `SimpleBM25` fallback when `rank_bm25` is unavailable.
+- **Fusion layer**: weighted semantic/lexical scoring (`0.9 / 0.1`) plus secondary rank shaping.
+- **Soft metadata boosting**: seed-derived metadata is used as a post-retrieval boost, not a hard inclusion filter.
+- **Auto-relaxation fallback**: if strict prefiltering yields zero candidates, the engine falls back to broad retrieval instead of returning an empty result set.
+- **Post-fusion multipliers**: preference-based adjustments (e.g., 2D request boost and 3D avoidance penalty).
 
-This design improves robustness for both intent-heavy queries and exact-title keyword queries.
+This design improves robustness for both intent-heavy queries and exact-title keyword queries while preventing cold-start style zero-result failures.
+
+## Log Interpretation Guide
+
+When `debug_scores=True`, each `[HybridDebug]` line exposes score arithmetic for each ranked result:
+
+- `RawVec`, `RawBM25`: raw channel signals.
+- `NormVec`, `NormBM25`: normalized channel signals used in weighted fusion.
+- `Weights=(0.90,0.10)`: semantic and lexical constants.
+- `Weighted`: `(0.9 * NormVec) + (0.1 * NormBM25)`.
+- `RRF`: reciprocal-rank based blending component.
+- `LexicalBonus`: token-overlap additive bonus.
+- `MetadataBoost`: similarity boost from shared seed attributes (`genres_list`, `themes_list`, `developers_list`, `platforms_list`) using weighted Jaccard-style overlap.
+- `Final`: final ranking score.
+
+Arithmetic interpretation:
+
+```text
+Final = Weighted + RRF + LexicalBonus + MetadataBoost
+```
+
+Reviewers should verify that the weighted component adheres to `0.9/0.1`, then interpret rank movements from secondary adjustments (`RRF`, lexical bonus, metadata boost).
 
 ## Validation as a Standard Practice
 
@@ -58,11 +83,24 @@ A formal validation suite is now part of the RAG workflow and should be treated 
 
 - `src/debug_engine.py`
   - End-to-end runtime smoke test for `RAGAgent.search(...)`.
-  - Confirms that retrieval, fusion, and ranking execute without runtime exceptions.
+  - Confirms retrieval, fusion, soft metadata boosting, and ranking execute without runtime exceptions.
+  - Provides telemetry required for score-audit interpretation.
 
 ### Operational Rule
 
 **No deployment of updated vector data is considered complete unless both scripts pass.**
+
+## Code-to-Documentation Mapping
+
+| Code Function | Documented Purpose | Validation Command |
+|---|---|---|
+| `RAGAgent._get_prefilter_ids(...)` | Metadata/DataFrame prefilter and fallback broadening when constraints over-restrict candidates | `python src/debug_engine.py` |
+| `RAGAgent._vector_search(...)` | Semantic candidate retrieval from vector index | `python src/debug_engine.py` |
+| `RAGAgent._bm25_search(...)` | Lexical BM25 candidate retrieval for exact-term resilience | `python src/debug_engine.py` |
+| `SimpleBM25.get_scores(...)` | Lexical fallback scoring when `rank_bm25` is unavailable | `python src/debug_engine.py` |
+| `RAGAgent._get_similar_by_seed_attributes(...)` | Soft metadata similarity boost using list-field overlap (`*_list`) | `python src/debug_engine.py` |
+| `rank_results(...)` | Fusion-aware ranking with metadata boosts and post-fusion multipliers | `python src/debug_engine.py` |
+| `src/validate_vector_store.py` suite | Vector stability and collapse detection checks | `python src/validate_vector_store.py` |
 
 ## Lessons Learned
 
@@ -75,4 +113,5 @@ A formal validation suite is now part of the RAG workflow and should be treated 
 - Parquet-native retrieval: active
 - Full-catalog vector index: active and validated
 - Hybrid semantic + lexical fusion: active
+- Soft metadata boosting + auto-relaxation fallback: active
 - Post-deployment validation suite: integrated into standard operating procedure

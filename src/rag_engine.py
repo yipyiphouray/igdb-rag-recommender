@@ -16,6 +16,10 @@ except Exception:
     BM25Okapi = None
 
 
+
+SEMANTIC_WEIGHT = 0.9
+LEXICAL_WEIGHT = 0.1
+
 def _contains_any(text, options):
     text = (text or "").lower()
     return any(str(opt).lower() in text for opt in options)
@@ -156,6 +160,18 @@ def rank_results(
     candidates,
     graphics_preference=None,
 ):
+    """Apply final ranking with metadata-aware adjustments.
+
+    Fallback and prefilter order across the retrieval pipeline:
+    1) Metadata/DataFrame prefilter constraints
+    2) Semantic vector retrieval
+    3) BM25 lexical retrieval (or SimpleBM25 fallback)
+    4) Fusion scoring (weighted normalized vector/BM25 + metadata boosts)
+    5) Post-fusion multipliers/penalties (e.g., 2D preference, 3D avoidance)
+
+    Note: upstream fusion may use RRF-style candidate blending; the weighted
+    semantic/lexical score is preserved as an interpretable secondary signal.
+    """
     if not candidates:
         return []
 
@@ -168,8 +184,14 @@ def rank_results(
     for candidate in candidates:
         candidate["total_rating"] = _safe_float(candidate.get("total_rating", 0.0), 0.0)
         metadata_boost = _safe_float(candidate.get("metadata_boost", 0.0), 0.0)
+        normalized_vec = _safe_float(candidate.get("normalized_vec", candidate.get("semantic_score", 0.0)), 0.0)
+        normalized_bm25 = _safe_float(candidate.get("normalized_bm25", candidate.get("bm25_score_norm", 0.0)), 0.0)
+
+        weighted_hybrid = (SEMANTIC_WEIGHT * normalized_vec) + (LEXICAL_WEIGHT * normalized_bm25)
+
         hybrid_rrf = _safe_float(candidate.get("hybrid_score", 0.0), 0.0)
-        candidate["relevance_score"] = metadata_boost + hybrid_rrf
+        candidate["weighted_hybrid_score"] = weighted_hybrid
+        candidate["relevance_score"] = metadata_boost + max(hybrid_rrf, weighted_hybrid)
         candidate["constraint_multiplier"] = 1.0
         candidate["penalty_applied"] = False
         candidate["boost_applied"] = False
@@ -667,14 +689,26 @@ class RAGAgent:
 
     def _extract_similarity_seed_title(self, query):
         q = (query or "").strip()
+        if not q:
+            return None
+
         patterns = [
-            r"similar to\s+(.+?)(?:\s+on\s+|\s+for\s+|$)",
-            r"like\s+(.+?)(?:\s+on\s+|\s+for\s+|$)",
+            r"similar to\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|$)",
+            r"like\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|$)",
         ]
         for pattern in patterns:
             match = re.search(pattern, q, flags=re.IGNORECASE)
-            if match:
-                return match.group(1).strip(" .,!?:;\"'")
+            if not match:
+                continue
+            raw = match.group(1).strip(" .,!?:;\"'")
+            raw = re.split(
+                r"\b(with|and|plus|featuring|including|multiplayer|co-?op|farming|elements?)\b",
+                raw,
+                maxsplit=1,
+                flags=re.IGNORECASE,
+            )[0].strip(" .,!?:;\"'")
+            if raw:
+                return raw
         return None
 
     def _normalize_seed_key(self, text):
@@ -756,13 +790,10 @@ class RAGAgent:
 
     def _get_similar_by_seed_attributes(self, seed_game):
         seed_game_id = str(seed_game.get("game_id"))
-        seed_platforms = self._parse_csv_values(seed_game.get("platforms"))
-        seed_genres = self._parse_csv_values(seed_game.get("genres"))
-        seed_themes = self._parse_csv_values(seed_game.get("themes"))
-        seed_developers = self._parse_csv_values(seed_game.get("developers"))
-
-        if not seed_genres and not seed_themes:
-            return set(), {}
+        seed_platforms = self._parse_csv_values(seed_game.get("platforms_list", seed_game.get("platforms")))
+        seed_genres = self._parse_csv_values(seed_game.get("genres_list", seed_game.get("genres")))
+        seed_themes = self._parse_csv_values(seed_game.get("themes_list", seed_game.get("themes")))
+        seed_developers = self._parse_csv_values(seed_game.get("developers_list", seed_game.get("developers")))
 
         df = self.catalog_df.copy()
         if df.empty:
@@ -773,35 +804,41 @@ class RAGAgent:
         if df.empty:
             return set(), {}
 
-        seed_platforms_set = {x.lower() for x in seed_platforms}
-        seed_genres_set = {x.lower() for x in seed_genres}
-        seed_themes_set = {x.lower() for x in seed_themes}
-        seed_developers_set = {x.lower() for x in seed_developers}
+        seed_platforms_set = {x.lower() for x in seed_platforms if str(x).strip()}
+        seed_genres_set = {x.lower() for x in seed_genres if str(x).strip()}
+        seed_themes_set = {x.lower() for x in seed_themes if str(x).strip()}
+        seed_developers_set = {x.lower() for x in seed_developers if str(x).strip()}
+
+        def _jaccard(a, b):
+            if not a or not b:
+                return 0.0
+            inter = len(a.intersection(b))
+            union = len(a.union(b))
+            if union == 0:
+                return 0.0
+            return inter / union
 
         similar_ids = set()
         similarity_boosts = {}
         for _, row in df.iterrows():
             game_id = str(row.get("game_id", ""))
-            candidate_platforms = {x.lower() for x in self._parse_csv_values(row.get("platforms"))}
-            candidate_genres = {x.lower() for x in self._parse_csv_values(row.get("genres"))}
-            candidate_themes = {x.lower() for x in self._parse_csv_values(row.get("themes"))}
-            candidate_developers = {x.lower() for x in self._parse_csv_values(row.get("developers"))}
+            candidate_platforms = {x.lower() for x in self._parse_csv_values(row.get("platforms_list", row.get("platforms"))) if str(x).strip()}
+            candidate_genres = {x.lower() for x in self._parse_csv_values(row.get("genres_list", row.get("genres"))) if str(x).strip()}
+            candidate_themes = {x.lower() for x in self._parse_csv_values(row.get("themes_list", row.get("themes"))) if str(x).strip()}
+            candidate_developers = {x.lower() for x in self._parse_csv_values(row.get("developers_list", row.get("developers"))) if str(x).strip()}
 
-            if seed_platforms_set and len(seed_platforms_set.intersection(candidate_platforms)) == 0:
-                continue
+            genre_j = _jaccard(seed_genres_set, candidate_genres)
+            theme_j = _jaccard(seed_themes_set, candidate_themes)
+            developer_j = _jaccard(seed_developers_set, candidate_developers)
+            platform_j = _jaccard(seed_platforms_set, candidate_platforms)
 
-            shared_genres = len(seed_genres_set.intersection(candidate_genres))
-            shared_themes = len(seed_themes_set.intersection(candidate_themes))
-            if seed_genres_set and shared_genres == 0:
-                continue
-            if seed_themes_set and shared_themes == 0:
-                continue
+            # Weighted metadata similarity score for soft boosting only.
+            boost = (1.4 * genre_j) + (0.8 * theme_j) + (0.5 * developer_j) + (0.3 * platform_j)
 
-            same_developer = len(seed_developers_set.intersection(candidate_developers)) > 0
-            developer_overlap_bonus = 3.0 if same_developer else 0.0
-            boost = float(shared_genres) + float(shared_themes) + developer_overlap_bonus
-            similar_ids.add(game_id)
-            similarity_boosts[game_id] = boost
+            # Keep candidate ids for optional soft overlap telemetry, but avoid hard gating.
+            if boost > 0.0:
+                similar_ids.add(game_id)
+                similarity_boosts[game_id] = boost
 
         return similar_ids, similarity_boosts
 
@@ -1009,11 +1046,24 @@ class RAGAgent:
                 if token and token in searchable_blob:
                     lexical_bonus += 0.01
 
+            weighted_component = (vector_weight * v) + (bm25_weight * b)
+            rrf_component = 0.05 * (v_rrf + b_rrf)
+            final_score = weighted_component + rrf_component + lexical_bonus
+
             merged[game_id] = {
                 "game_id": game_id,
-                "hybrid_score": fused_score + lexical_bonus,
+                "hybrid_score": final_score,
                 "distance": 1.0 - v,
                 "vector_similarity": v,
+                "normalized_vec": v,
+                "normalized_bm25": b,
+                "weighted_component": weighted_component,
+                "rrf_component": rrf_component,
+                "lexical_bonus": lexical_bonus,
+                "vector_rrf": v_rrf,
+                "bm25_rrf": b_rrf,
+                "vector_weight": vector_weight,
+                "bm25_weight": bm25_weight,
                 "bm25_score_raw": _safe_float(bm25_raw_map.get(game_id, 0.0), 0.0),
                 "keyword_boost_applied": lexical_bonus > 0.0,
             }
@@ -1042,10 +1092,17 @@ class RAGAgent:
             print(
                 "[HybridDebug] "
                 f"{idx}. {item.get('name', 'Unknown')} | "
-                f"Vector Score={_safe_float(item.get('vector_similarity', 0.0), 0.0):.4f} | "
-                f"BM25 Score={_safe_float(item.get('bm25_score_raw', 0.0), 0.0):.4f} | "
-                f"Metadata Boost={_safe_float(item.get('metadata_boost', 0.0), 0.0):.4f} | "
-                f"Hybrid Score={_safe_float(item.get('hybrid_score', 0.0), 0.0):.4f} | "
+                f"RawVec={_safe_float(item.get('vector_similarity', 0.0), 0.0):.4f} | "
+                f"RawBM25={_safe_float(item.get('bm25_score_raw', 0.0), 0.0):.4f} | "
+                f"NormVec={_safe_float(item.get('normalized_vec', item.get('vector_similarity', 0.0)), 0.0):.4f} | "
+                f"NormBM25={_safe_float(item.get('normalized_bm25', 0.0), 0.0):.4f} | "
+                f"Weights=({_safe_float(item.get('vector_weight', SEMANTIC_WEIGHT), SEMANTIC_WEIGHT):.2f},"
+                f"{_safe_float(item.get('bm25_weight', LEXICAL_WEIGHT), LEXICAL_WEIGHT):.2f}) | "
+                f"Weighted={_safe_float(item.get('weighted_component', 0.0), 0.0):.4f} | "
+                f"RRF={_safe_float(item.get('rrf_component', 0.0), 0.0):.4f} | "
+                f"LexicalBonus={_safe_float(item.get('lexical_bonus', 0.0), 0.0):.4f} | "
+                f"MetadataBoost={_safe_float(item.get('metadata_boost', 0.0), 0.0):.4f} | "
+                f"Final={_safe_float(item.get('hybrid_score', 0.0), 0.0):.4f} | "
                 f"KeywordBoost={bool(item.get('keyword_boost_applied', False))}"
             )
 
@@ -1094,7 +1151,7 @@ class RAGAgent:
                 print(f"[Trace] search:return [] | reason=seed_game_id_not_found | seed_game_id={seed_game_id}")
                 return []
             seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
-            if not seed_filter_ids:
+            if not seed_similarity_boosts:
                 print(
                     "[Trace] search:return [] | reason=seed_game_similarity_empty | "
                     f"seed_game_id={seed_game_id}"
@@ -1106,10 +1163,14 @@ class RAGAgent:
                 f"Seed Game Filter Active (ID={seed_game_id}): {seed_name} | "
                 f"similar_candidates={len(seed_filter_ids)}"
             )
-            if allowed_ids is None:
-                allowed_ids = seed_filter_ids
-            else:
-                allowed_ids = allowed_ids.intersection(seed_filter_ids)
+            # Seed metadata is a soft signal by default: retain as metadata boosts,
+            # avoid hard candidate gating that can collapse to zero results.
+            if seed_filter_ids:
+                seed_overlap = allowed_ids.intersection(seed_filter_ids) if allowed_ids is not None else set(seed_filter_ids)
+                if seed_overlap:
+                    print(f"[Trace] seed_filter:soft_overlap | overlap_candidates={len(seed_overlap)}")
+                else:
+                    print("[Trace] seed_filter:soft_only | overlap_candidates=0 | using metadata boost without hard filter")
         else:
             seed_title = self._extract_similarity_seed_title(query)
             if seed_title:
@@ -1128,10 +1189,14 @@ class RAGAgent:
                             f"Retrieving games similar to {seed_name} using attributes: "
                             + "; ".join(seed_attrs)
                         )
-                        if allowed_ids is None:
-                            allowed_ids = seed_filter_ids
-                        else:
-                            allowed_ids = allowed_ids.intersection(seed_filter_ids)
+                        # Keep seed-derived similarities as a post-retrieval boost.
+                        # Only intersect if it is non-empty; otherwise fall back to soft boost only.
+                        if seed_filter_ids:
+                            seed_overlap = allowed_ids.intersection(seed_filter_ids) if allowed_ids is not None else set(seed_filter_ids)
+                            if seed_overlap:
+                                print(f"[Trace] seed_filter:soft_overlap | overlap_candidates={len(seed_overlap)}")
+                            else:
+                                print("[Trace] seed_filter:soft_only | overlap_candidates=0 | using metadata boost without hard filter")
                 else:
                     print(f"[INFO] Seed game '{seed_title}' not found. Falling back to Hybrid Vector+BM25.")
 
@@ -1153,8 +1218,8 @@ class RAGAgent:
         if allowed_ids is not None and not allowed_ids:
             if requirements.get("needs_fishing"):
                 print("No matching fishing games found with these constraints")
-            print("[Trace] search:return [] | reason=prefilter_empty")
-            return []
+            print("[WARN] Prefilter empty after strict constraints; auto-relaxing to broad retrieval.")
+            allowed_ids = set(self.catalog_by_id.keys())
         if allowed_ids is not None and len(allowed_ids) < 5 and effective_min_year is not None:
             print("[INFO] Constraint too tight, relaxing year filter...")
             relaxed_allowed_ids, requirements = self._get_prefilter_ids(
@@ -1244,6 +1309,15 @@ class RAGAgent:
                     "metadata_boost": _safe_float(seed_similarity_boosts.get(game_id), 0.0),
                     "hybrid_score": _safe_float(hit.get("hybrid_score"), 0.0),
                     "vector_similarity": _safe_float(hit.get("vector_similarity"), 0.0),
+                    "normalized_vec": _safe_float(hit.get("normalized_vec"), 0.0),
+                    "normalized_bm25": _safe_float(hit.get("normalized_bm25"), 0.0),
+                    "weighted_component": _safe_float(hit.get("weighted_component"), 0.0),
+                    "rrf_component": _safe_float(hit.get("rrf_component"), 0.0),
+                    "lexical_bonus": _safe_float(hit.get("lexical_bonus"), 0.0),
+                    "vector_rrf": _safe_float(hit.get("vector_rrf"), 0.0),
+                    "bm25_rrf": _safe_float(hit.get("bm25_rrf"), 0.0),
+                    "vector_weight": _safe_float(hit.get("vector_weight"), SEMANTIC_WEIGHT),
+                    "bm25_weight": _safe_float(hit.get("bm25_weight"), LEXICAL_WEIGHT),
                     "bm25_score_raw": _safe_float(hit.get("bm25_score_raw"), 0.0),
                     "keyword_boost_applied": bool(hit.get("keyword_boost_applied", False)),
                     "is_2d_detected": bool(dimension_tags.get("is_2d_detected", False)),

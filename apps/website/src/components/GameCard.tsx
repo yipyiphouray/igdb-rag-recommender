@@ -26,9 +26,11 @@ function upgradedImageUrl(value?: string | null, size: "cover" | "wide" = "cover
 export function GameCard({
   game,
   variant = "grid",
+  openInNewTab = false,
 }: {
   game: GameSummary;
   variant?: "grid" | "list";
+  openInNewTab?: boolean;
 }) {
   const isList = variant === "list";
   const imageUrl = upgradedImageUrl(game.cover_url, "cover");
@@ -37,6 +39,8 @@ export function GameCard({
     <article className="group flex h-full flex-col overflow-hidden border border-white bg-black text-white transition hover:border-[#FF3E00]">
       <Link
         href={`/explore/${game.game_id}`}
+        target={openInNewTab ? "_blank" : undefined}
+        rel={openInNewTab ? "noreferrer" : undefined}
         className={`flex flex-1 ${isList ? "flex-col md:flex-row" : "flex-col"}`}
       >
         {imageUrl ? (

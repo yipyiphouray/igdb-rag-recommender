@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeFeatureCard } from "@/components/HomeFeatureCard";
 
 const featureCards = [
   {
@@ -45,42 +46,6 @@ const featureCards = [
   },
 ] as const;
 
-function StatusLight({ active }: { active: boolean }) {
-  return (
-    <span
-      aria-label={active ? "active module" : "pending module"}
-      className={`home-v3-status-light ${active ? "is-active" : "is-pending"}`}
-    />
-  );
-}
-
-function FeatureCard({ card }: { card: (typeof featureCards)[number] }) {
-  const content = (
-    <div className={`home-v3-card ${card.active ? "" : "is-disabled"}`}>
-      <div className="flex items-center justify-between">
-        <p className="home-v3-micro">{card.section}</p>
-        <StatusLight active={card.active} />
-      </div>
-
-      <div className="flex flex-1 items-center justify-center py-10 text-center">
-        <h3 className="home-v3-card-title">{card.title}</h3>
-      </div>
-
-      <p className="home-v3-card-description">{card.description}</p>
-    </div>
-  );
-
-  if (!card.href) {
-    return <div aria-disabled="true">{content}</div>;
-  }
-
-  return (
-    <Link href={card.href} className="block h-full">
-      {content}
-    </Link>
-  );
-}
-
 export default async function HomePage() {
   return (
     <div className="home-v3-bleed">
@@ -117,7 +82,7 @@ export default async function HomePage() {
 
         <div className="grid gap-px border-y border-white bg-white md:grid-cols-2 xl:grid-cols-3">
           {featureCards.map((card) => (
-            <FeatureCard key={card.title} card={card} />
+            <HomeFeatureCard key={card.title} card={card} />
           ))}
         </div>
       </section>

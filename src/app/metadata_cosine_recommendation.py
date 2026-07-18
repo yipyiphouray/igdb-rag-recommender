@@ -585,13 +585,13 @@ class MetadataCosineRecommender:
 
         if seed_matches:
             reasons.append(
-                f"shares metadata similarity with recently played game(s): {_format_names([seed.name for seed in seed_matches])}"
+                f"feels close to games you recently played: {_format_names([seed.name for seed in seed_matches])}"
             )
 
         if "hidden" in discovery_preference.lower() and _safe_int(row.get("hidden_gem_balanced_flag")) == 1:
-            reasons.append("is a documented hidden-gem candidate")
+            reasons.append("may be a hidden gem")
         elif ("popular" in discovery_preference.lower() or "visible" in discovery_preference.lower()) and _safe_float(row.get("custom_interest_percentile")) > 0:
-            reasons.append("has a stronger known visibility signal")
+            reasons.append("has stronger popularity and visibility signals")
 
         desired_band = _desired_playtime_band(desired_playtime)
         if desired_band and _playtime_band(row.get("normal_playtime_hours")) == desired_band:
@@ -601,7 +601,7 @@ class MetadataCosineRecommender:
             reasons.append(f"has a {float(row['total_rating']):.1f}/100 total rating")
 
         if not reasons:
-            return "Recommended because it is one of the closest metadata matches in the current catalog."
+            return "This is one of the closest matches based on your answers."
         return "Recommended because it " + ", ".join(reasons) + "."
 
     def _caveats(self, row: pd.Series, unmatched_seed_games: list[str]) -> list[str]:

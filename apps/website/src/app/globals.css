@@ -416,6 +416,25 @@ a {
   word-break: keep-all;
 }
 
+.home-scramble-title {
+  font-variant-ligatures: none;
+  text-rendering: geometricPrecision;
+}
+
+.home-scramble-title span {
+  display: inline-block;
+  min-width: 100%;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.home-v3-card:hover .home-scramble-title span,
+.home-v3-card:focus-within .home-scramble-title span {
+  color: currentColor;
+  transform: translateY(-0.04em);
+}
+
 .home-v3-card-description {
   max-height: 0;
   overflow: hidden;

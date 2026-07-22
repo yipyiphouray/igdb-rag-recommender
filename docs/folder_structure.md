@@ -1,126 +1,134 @@
 # Folder Structure Description
 
-Last updated: 2026-07-17
+Last updated: 2026-07-22
 
-This file describes the high-level folder layout for the IGDB Game Discovery and RAG Recommendation System.
+This file describes the active folder layout for the IGDB Game Discovery and Hybrid RAG Recommender project.
 
 ```text
 Community_Project/
+|-- api/
+|-- apps/
+|   |-- streamlit/
+|   `-- website/
 |-- archive/
+|-- assets/
 |-- data/
-|   |-- raw/
+|   |-- analytics/
+|   |   |-- descriptive/
+|   |   |-- diagnostic/
+|   |   `-- plots/
+|   |-- app/
 |   |-- database/
+|   |-- predictive/
 |   |-- processed/
-|   `-- analytics/
-|       `-- descriptive/
+|   |-- raw/
+|   |-- recommendations/
+|   `-- vector_store/
 |-- docs/
 |   |-- plan/
 |   |-- project_source_of_truth/
 |   `-- report/
-|-- apps/
-|   |-- streamlit/
-|   `-- website/
-|-- models/
 |-- notebooks/
-|-- outputs/
-|   |-- figures/
-|   |-- model_results/
-|   `-- tables/
-|-- sql/
-`-- src/
+|-- scripts/
+|   `-- manual_checks/
+|-- src/
+|   |-- app/
+|   `-- pipeline/
+`-- tests/
 ```
 
-## `archive/`
+## `api/`
 
-Stores older reference material or project files that are no longer part of the active workflow.
-
-Current examples include legacy project guidelines and older RAG/SQLite-era documentation that should be preserved for history but should not be treated as the active implementation source of truth.
-
-## `data/`
-
-Stores project data at different stages of the pipeline.
-
-### `data/raw/`
-
-Stores raw IGDB API extracts before transformation.
-
-### `data/database/`
-
-Stores the normalized SQLite database created from the raw IGDB extracts.
-
-### `data/processed/`
-
-Reserved for cleaned or intermediate processed datasets.
-
-### `data/analytics/`
-
-Stores analysis-ready datasets and exported outputs used by notebooks, scripts, dashboards, or later project layers.
-
-### `data/analytics/descriptive/`
-
-Stores exported descriptive analytics tables from the descriptive exploration notebook.
-
-## `docs/`
-
-Stores project documentation, planning notes, schema documentation, session logs, and pillar-specific planning files.
-
-### `docs/plan/`
-
-Stores forward-looking implementation plans, UI improvement plans, page plans, and pillar execution plans.
-
-### `docs/project_source_of_truth/`
-
-Stores active source-of-truth documentation that should guide implementation decisions. This includes the definitive project guideline, ERD/data dictionary documents, website style guide, page context, and current retrieval/RAG methodology documents.
-
-Current retrieval/RAG source-of-truth documents include:
-
-- `hybrid_retrieval_methodology.md`
-- `hybrid_search_technical_journey.md`
-
-### `docs/report/`
-
-Stores written findings and report-ready summaries for the analytics pillars.
+FastAPI backend for the final website. It exposes catalog browsing, game details, recommendations, insights, methodology, and health endpoints.
 
 ## `apps/`
 
-Stores user-facing application layers.
+User-facing application layers.
 
 ### `apps/streamlit/`
 
-Stores the Streamlit MVP/prototype app.
+Streamlit MVP and internal analytics workbench.
 
 ### `apps/website/`
 
-Stores the Next.js final-product website frontend. Generated folders such as `.next/` and `node_modules/` should remain ignored by Git.
+Next.js final-product website frontend. Generated folders such as `.next/` and `node_modules/` should remain ignored by Git.
 
-## `models/`
+## `archive/`
 
-Reserved for saved model artifacts created during the predictive analytics layer.
+Older reference material that should be preserved for history but should not guide active implementation decisions.
+
+## `assets/`
+
+Shared visual assets such as screenshots, diagrams, logos, and style references.
+
+## `data/`
+
+Project data at different stages of the pipeline.
+
+### `data/raw/`
+
+Raw IGDB API extracts before transformation.
+
+### `data/database/`
+
+Local SQLite database output from the relational database build process. The database file is ignored by Git because it can become too large to push.
+
+### `data/app/`
+
+App-ready Parquet and JSON artifacts used by Streamlit, FastAPI, and the website.
+
+### `data/analytics/`
+
+Notebook-exported descriptive, diagnostic, and plot artifacts.
+
+### `data/predictive/`
+
+Predictive/recommendation-related feature outputs and modeling artifacts when needed.
+
+### `data/vector_store/`
+
+Local vector-store output used by RAG/hybrid retrieval. Generated vector-store files should remain ignored by Git.
+
+## `docs/`
+
+Project documentation, planning notes, source-of-truth docs, reports, and the session log.
+
+### `docs/plan/`
+
+Forward-looking implementation plans, pillar plans, website plans, and UI improvement plans.
+
+### `docs/project_source_of_truth/`
+
+Active source-of-truth documentation that should guide implementation decisions.
+
+### `docs/report/`
+
+Written findings and report-ready summaries for the project pillars.
 
 ## `notebooks/`
 
-Stores exploration and analysis notebooks.
+Exploration and analysis notebooks.
 
-## `outputs/`
+## `scripts/`
 
-Stores final or presentation-ready outputs.
+Utility scripts that are not part of the main app runtime.
 
-### `outputs/figures/`
+### `scripts/manual_checks/`
 
-Reserved for exported charts and visual assets.
-
-### `outputs/model_results/`
-
-Reserved for model evaluation outputs and prediction results.
-
-### `outputs/tables/`
-
-Reserved for final tables used in reports, dashboards, or presentations.
-
-## `sql/`
-
-Reserved for reusable SQL queries, views, or database scripts.
+Small manual inspection scripts used during development.
 
 ## `src/`
 
-Stores reusable Python scripts for API extraction, database creation, quality checks, feature engineering, and other project workflows.
+Reusable Python source code.
+
+### `src/app/`
+
+Shared app logic used by Streamlit and the FastAPI backend, including data loading, filtering, hidden-gem logic, recommendation logic, RAG helpers, and UI helper functions for Streamlit.
+
+### `src/pipeline/`
+
+Data pipeline scripts for building app-ready artifacts.
+
+## `tests/`
+
+Automated tests for selection logic, app artifacts, services, API recommendation integration, hidden-gem logic, and recommendation behavior.

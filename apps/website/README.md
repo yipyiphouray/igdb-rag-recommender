@@ -1,22 +1,20 @@
 # Website App
 
-This folder contains the first Next.js / React / TypeScript / Tailwind CSS
-foundation for the final user-facing website.
+This folder contains the Next.js / React / TypeScript / Tailwind CSS frontend for the final user-facing website.
 
-Streamlit remains the MVP, internal analytics workbench, and backup demo. This
-website is the polished final-product direction.
+Streamlit remains the MVP/internal workbench. The website is the polished product interface.
 
 ## Setup
 
-```text
+```bash
 cd apps/website
 npm install
 ```
 
 Create a local environment file:
 
-```text
-cp .env.local.example .env.local
+```bash
+copy .env.local.example .env.local
 ```
 
 Expected value:
@@ -29,14 +27,14 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
 
 Terminal 1:
 
-```text
+```bash
 cd api
 uvicorn main:app --reload --port 8000
 ```
 
 Terminal 2:
 
-```text
+```bash
 cd apps/website
 npm run dev
 ```
@@ -47,11 +45,21 @@ Website URL:
 http://localhost:3000
 ```
 
-Implemented first-slice pages:
+## Current Pages
 
 ```text
 /
 /explore
-/recommendations
+/explore/[game_id]
+/hidden-gems
+/insights
 /methodology
+/recommendations
+```
+
+## Validate
+
+```bash
+cd apps/website
+npm run build
 ```

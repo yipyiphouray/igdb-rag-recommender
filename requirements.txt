@@ -1,6 +1,8 @@
-python-dotenv==0.21.0
-requests==2.32.3
+chromadb>=0.5
+numpy>=1.26
 pandas>=2.0
-streamlit>=1.35
 plotly>=5.20
 pyarrow>=15.0
+python-dotenv==0.21.0
+requests==2.32.3
+streamlit>=1.35

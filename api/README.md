@@ -1,26 +1,33 @@
 # FastAPI Backend
 
-This folder contains the first backend slice for the final website.
+This folder contains the backend API used by the final website.
 
 The API reads app-ready artifacts from:
 
 ```text
 data/app/app_game_catalog.parquet
 data/app/app_filter_options.json
+data/app/app_hidden_gems.parquet
 data/app/app_methodology_metrics.json
 data/app/app_insight_summary.json
 ```
 
-## Setup
+It also reads notebook-exported analytics summaries from:
 
 ```text
-cd api
-python -m pip install -r requirements-api.txt
+data/analytics/descriptive/
+data/analytics/diagnostic/
+```
+
+## Setup
+
+```bash
+python -m pip install -r api/requirements-api.txt
 ```
 
 ## Run locally
 
-```text
+```bash
 cd api
 uvicorn main:app --reload --port 8000
 ```
@@ -31,7 +38,7 @@ Local API docs:
 http://localhost:8000/docs
 ```
 
-Implemented first-slice endpoints:
+## Current Endpoints
 
 ```text
 GET  /health
@@ -39,9 +46,10 @@ GET  /catalog/filter-options
 GET  /catalog/games
 GET  /catalog/games/{game_id}
 POST /recommendations
+GET  /insights/summary
 GET  /methodology/summary
 ```
 
-`POST /recommendations` currently uses the existing structured fallback scoring
-so the website flow works before teammate cosine-similarity artifacts are wired
-into the API.
+## Recommendation Behavior
+
+`POST /recommendations` uses the metadata-based cosine similarity recommender when the request contains usable preference inputs. The structured scoring recommender remains available as a fallback when cosine similarity cannot produce usable results.

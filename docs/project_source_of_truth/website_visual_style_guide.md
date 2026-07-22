@@ -255,8 +255,8 @@ Current behavior:
 - white border;
 - orange project label;
 - hamburger menu;
-- active routes listed first;
-- pending routes listed separately;
+- active routes listed as clickable entries;
+- pending routes listed separately only when unfinished modules exist;
 - active links close the menu on click.
 
 Navigation should keep the project structure clear without overcrowding the top bar.
@@ -265,14 +265,15 @@ Current active links:
 
 - `HOME_`
 - `EXPLORE_`
+- `HIDDEN GEMS_`
 - `RECOMMEND_`
+- `ASK THE GUIDE_`
+- `INSIGHTS_`
 - `METHOD_`
 
 Current pending links:
 
-- `ASK THE GUIDE_`
-- `HIDDEN GEMS_`
-- `INSIGHTS_`
+- None in the current website shell.
 
 ## 9. Status and Availability Rules
 
@@ -413,11 +414,13 @@ Style:
 
 This page can use cyberpunk panels but should not sacrifice clarity.
 
-### Future RAG / Ask the Guide Page
+### Ask the Guide Page
 
 Purpose:
 
-- allow users to ask natural-language questions about games and recommendations.
+- allow users to ask natural-language questions about games and recommendations;
+- display catalog-grounded retrieved games;
+- show caveats when RAG artifacts, ratings, or metadata are incomplete.
 
 Style:
 

@@ -8,7 +8,7 @@ from src.app.rag_service import answer_game_query, rag_status
 
 st.set_page_config(page_title="RAG Chatbot", page_icon="💬", layout="wide")
 st.title("RAG Chatbot")
-st.write("Natural-language discovery page. This is ready for teammate RAG/vector-store integration.")
+st.write("Natural-language discovery page backed by the shared RAG service when local vector artifacts are available.")
 
 status = rag_status()
 st.subheader("Integration status")
@@ -27,10 +27,10 @@ if st.button("Ask"):
 
 st.subheader("Expected teammate artifacts")
 st.code(
-    """data/rag/game_profiles.parquet
-data/rag/retrieval_metadata.parquet
-data/rag/vector_store/
-src/app/rag_service.py callable integration""",
+    """data/app/app_game_catalog.parquet
+data/vector_store/
+src/rag_engine.py
+src/app/rag_service.py""",
     language="text",
 )
 

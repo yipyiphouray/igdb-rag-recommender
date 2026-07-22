@@ -1,5 +1,8 @@
 import type {
   CatalogResponse,
+  ChatRequest,
+  ChatResponse,
+  ChatStatusResponse,
   FilterOptions,
   GameDetail,
   HealthResponse,
@@ -62,6 +65,19 @@ export async function postRecommendations(
   payload: RecommendationRequest,
 ): Promise<RecommendationResponse> {
   return apiFetch<RecommendationResponse>("/recommendations", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function getChatStatus(): Promise<ChatStatusResponse> {
+  return apiFetch<ChatStatusResponse>("/chat/status");
+}
+
+export async function postChatMessage(
+  payload: ChatRequest,
+): Promise<ChatResponse> {
+  return apiFetch<ChatResponse>("/chat", {
     method: "POST",
     body: JSON.stringify(payload),
   });

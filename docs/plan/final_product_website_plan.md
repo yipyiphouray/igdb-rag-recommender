@@ -217,7 +217,7 @@ data/app/app_filter_options.json
 data/app/app_insight_summary.json
 data/app/app_methodology_metrics.json
 data/analytics/predictive/
-data/rag/
+data/vector_store/
 ```
 
 The website should not directly rebuild these artifacts. The existing Python scripts and notebooks remain responsible for data generation.
@@ -960,6 +960,7 @@ GET  /hidden-gems
 POST /recommendations
 GET  /similarity/games/{game_id}
 POST /similarity/query
+GET  /chat/status
 POST /chat
 GET  /methodology/summary
 ```
@@ -1234,16 +1235,17 @@ data/analytics/predictive/similarity_evaluation.json
 Minimum RAG artifacts expected:
 
 ```text
-data/rag/game_profiles.parquet
-data/rag/retrieval_metadata.parquet
-data/rag/vector_store/
+data/app/app_game_catalog.parquet
+data/vector_store/
+src/rag_engine.py
+src/app/rag_service.py
 ```
 
 Until those artifacts are ready:
 
 - Recommendations should continue using structured fallback logic or show a clear similarity-integration pending status.
 - Optional similarity method sections should show pending status if they exist.
-- Chatbot page should show placeholder status.
+- Chatbot page should show a controlled unavailable status.
 - Recommendation endpoint can use structured scoring fallback.
 - Missing artifacts should not crash the website.
 

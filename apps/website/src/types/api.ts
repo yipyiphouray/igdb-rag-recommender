@@ -85,6 +85,56 @@ export type RecommendationResponse = {
   items: RecommendationResult[];
 };
 
+export type ChatFilters = {
+  platforms?: string[];
+  release_year_min?: number | null;
+  release_year_max?: number | null;
+  multiplayer_mode?: string | null;
+};
+
+export type ChatHistoryMessage = {
+  role: "user" | "guide";
+  content: string;
+};
+
+export type ChatRequest = {
+  message: string;
+  conversation_id?: string | null;
+  max_results?: number;
+  filters?: ChatFilters | null;
+  history?: ChatHistoryMessage[];
+};
+
+export type ChatRetrievedGame = GameSummary & {
+  rank: number;
+  retrieval_score?: number | null;
+  semantic_score?: number | null;
+  lexical_score?: number | null;
+  evidence: string;
+  caveats: string[];
+};
+
+export type ChatResponse = {
+  answer: string;
+  mode: string;
+  status: string;
+  conversation_id?: string | null;
+  retrieved_games: ChatRetrievedGame[];
+  caveats: string[];
+  applied_filters: Record<string, unknown>;
+  follow_up_prompts: string[];
+  contextual_query?: string | null;
+};
+
+export type ChatStatusResponse = {
+  status: string;
+  catalog_available: boolean;
+  vector_store_available: boolean;
+  collection_available: boolean;
+  engine: string;
+  warnings: string[];
+};
+
 export type MethodologySummary = {
   data_source: string;
   metrics: Record<string, number | string | boolean | null>;

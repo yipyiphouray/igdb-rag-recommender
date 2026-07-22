@@ -19,9 +19,9 @@ const featureCards = [
   {
     section: "SEC_03 //",
     title: "ASK THE GUIDE_",
-    href: null,
-    active: false,
-    description: "A future chatbot for natural-language game discovery.",
+    href: "/guide",
+    active: true,
+    description: "Ask natural-language questions grounded in the game catalog.",
   },
   {
     section: "SEC_04 //",
@@ -70,7 +70,9 @@ export default async function HomePage() {
             <Link href="/explore" className="home-v3-cta">
               EXPLORE
             </Link>
-            <span className="home-v3-cta is-disabled">ASK GUIDE</span>
+            <Link href="/guide" className="home-v3-cta">
+              ASK GUIDE
+            </Link>
           </div>
         </div>
       </section>

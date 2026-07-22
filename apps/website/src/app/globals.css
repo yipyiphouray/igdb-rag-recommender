@@ -520,6 +520,24 @@ a {
   gap: 2rem;
 }
 
+.guide-chat-scroll {
+  scrollbar-color: #ff3e00 rgba(255, 255, 255, 0.08);
+  scrollbar-width: thin;
+}
+
+.guide-chat-scroll::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.guide-chat-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.guide-chat-scroll::-webkit-scrollbar-thumb {
+  border: 1px solid #000;
+  background: #ff3e00;
+}
+
 .methodology-v1-shell {
   position: relative;
   display: flex;

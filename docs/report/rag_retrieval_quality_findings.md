@@ -1,6 +1,6 @@
 # RAG Retrieval Quality Findings
 
-Generated at: `2026-07-22 15:30:10`
+Generated at: `2026-07-22 16:11:29`
 
 ## Purpose
 
@@ -12,8 +12,9 @@ This is a relevance smoke test, not a perfect objective benchmark. It checks whe
 
 - Golden-query file: `C:/Users/calvi/Data Science/Community_Project/tests/rag_golden_queries.json`
 - Top-k reviewed per query: `5`
-- Engine: `src.rag_engine.RAGAgent`
-- Vector store: `data/vector_store/`
+- Backend: `chroma`
+- Engine: `src.rag_engine.RAGAgent` when backend is `chroma`; `src.lightweight_rag_engine.LightweightRAGAgent` when backend is `lightweight`
+- Vector artifacts: `data/vector_store/` for Chroma; `data/rag/lightweight/` for lightweight NumPy retrieval
 
 ## Weight Profile Summary
 

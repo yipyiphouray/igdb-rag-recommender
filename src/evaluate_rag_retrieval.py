@@ -15,8 +15,6 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from src.rag_engine import RAGAgent
-
 
 DEFAULT_QUERY_PATH = ROOT_DIR / "tests" / "rag_golden_queries.json"
 DEFAULT_REPORT_PATH = ROOT_DIR / "docs" / "report" / "rag_retrieval_quality_findings.md"
@@ -104,7 +102,7 @@ def _load_queries(path: Path) -> list[dict[str, Any]]:
 
 
 def _evaluate_one_query(
-    agent: RAGAgent,
+    agent: Any,
     query_spec: dict[str, Any],
     profile: WeightProfile,
     top_k: int,
@@ -170,7 +168,7 @@ def _evaluate_one_query(
 
 
 def _evaluate_profile(
-    agent: RAGAgent,
+    agent: Any,
     queries: list[dict[str, Any]],
     profile: WeightProfile,
     top_k: int,
@@ -236,6 +234,7 @@ def _render_report(
     query_path: Path,
     report_path: Path,
     top_k: int,
+    backend: str,
     profile_reports: list[dict[str, Any]],
     run_error: str = "",
 ) -> str:
@@ -255,8 +254,9 @@ def _render_report(
         "",
         f"- Golden-query file: `{query_path.as_posix()}`",
         f"- Top-k reviewed per query: `{top_k}`",
-        "- Engine: `src.rag_engine.RAGAgent`",
-        "- Vector store: `data/vector_store/`",
+        f"- Backend: `{backend}`",
+        "- Engine: `src.rag_engine.RAGAgent` when backend is `chroma`; `src.lightweight_rag_engine.LightweightRAGAgent` when backend is `lightweight`",
+        "- Vector artifacts: `data/vector_store/` for Chroma; `data/rag/lightweight/` for lightweight NumPy retrieval",
         "",
     ]
 
@@ -361,12 +361,25 @@ def _render_report(
     return "\n".join(lines).strip() + "\n"
 
 
-def run_evaluation(query_path: Path, report_path: Path, top_k: int) -> None:
+def _build_agent(backend: str) -> Any:
+    normalized_backend = str(backend or "").strip().lower()
+    if normalized_backend == "lightweight":
+        from src.lightweight_rag_engine import LightweightRAGAgent
+
+        return LightweightRAGAgent()
+    if normalized_backend == "chroma":
+        from src.rag_engine import RAGAgent
+
+        return RAGAgent()
+    raise ValueError(f"Unsupported RAG backend: {backend}")
+
+
+def run_evaluation(query_path: Path, report_path: Path, top_k: int, backend: str) -> None:
     report_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
         queries = _load_queries(query_path)
-        agent = RAGAgent()
+        agent = _build_agent(backend)
         profile_reports = [
             _evaluate_profile(agent=agent, queries=queries, profile=profile, top_k=top_k)
             for profile in WEIGHT_PROFILES
@@ -375,6 +388,7 @@ def run_evaluation(query_path: Path, report_path: Path, top_k: int) -> None:
             query_path=query_path,
             report_path=report_path,
             top_k=top_k,
+            backend=backend,
             profile_reports=profile_reports,
         )
     except Exception as error:
@@ -382,6 +396,7 @@ def run_evaluation(query_path: Path, report_path: Path, top_k: int) -> None:
             query_path=query_path,
             report_path=report_path,
             top_k=top_k,
+            backend=backend,
             profile_reports=[],
             run_error=f"{type(error).__name__}: {error}",
         )
@@ -395,9 +410,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--queries", type=Path, default=DEFAULT_QUERY_PATH)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH)
     parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument("--backend", choices=["lightweight", "chroma"], default="lightweight")
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    run_evaluation(query_path=args.queries, report_path=args.report, top_k=args.top_k)
+    run_evaluation(query_path=args.queries, report_path=args.report, top_k=args.top_k, backend=args.backend)

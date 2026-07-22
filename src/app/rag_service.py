@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -9,36 +10,79 @@ import pandas as pd
 
 from src.app import config
 from src.app.formatting import compact_text, split_list
+from src.lightweight_rag_engine import (
+    LIGHTWEIGHT_EMBEDDINGS_PATH,
+    LIGHTWEIGHT_GAME_IDS_PATH,
+    LIGHTWEIGHT_MANIFEST_PATH,
+    LIGHTWEIGHT_RAG_DIR,
+)
 
 
 VECTOR_STORE_PATH = config.DATA_DIR / "vector_store"
 VECTOR_STORE_SQLITE_PATH = VECTOR_STORE_PATH / "chroma.sqlite3"
+DEFAULT_RAG_BACKEND = "lightweight"
 
 RAG_ARTIFACTS = {
     "app_catalog": config.APP_CATALOG_PATH,
     "vector_store": VECTOR_STORE_PATH,
     "vector_store_sqlite": VECTOR_STORE_SQLITE_PATH,
+    "lightweight_rag_dir": LIGHTWEIGHT_RAG_DIR,
+    "lightweight_embeddings": LIGHTWEIGHT_EMBEDDINGS_PATH,
+    "lightweight_game_ids": LIGHTWEIGHT_GAME_IDS_PATH,
+    "lightweight_manifest": LIGHTWEIGHT_MANIFEST_PATH,
 }
 
 
+def get_rag_backend() -> str:
+    backend = os.getenv("RAG_BACKEND", DEFAULT_RAG_BACKEND).strip().lower()
+    if backend in {"numpy", "lightweight_numpy", "lightweight_numpy_bm25"}:
+        return "lightweight"
+    if backend in {"chroma", "chromadb", "vector_store"}:
+        return "chroma"
+    return DEFAULT_RAG_BACKEND
+
+
 def rag_status() -> dict[str, bool]:
-    return {name: path.exists() for name, path in RAG_ARTIFACTS.items()}
+    status = {name: path.exists() for name, path in RAG_ARTIFACTS.items()}
+    status["backend"] = get_rag_backend()
+    return status
 
 
-def rag_ready() -> bool:
+def rag_ready(backend: str | None = None) -> bool:
+    backend = backend or get_rag_backend()
     status = rag_status()
-    return bool(
-        status.get("app_catalog")
-        and status.get("vector_store")
-        and status.get("vector_store_sqlite")
-    )
+    if backend == "lightweight":
+        return bool(
+            status.get("app_catalog")
+            and status.get("lightweight_rag_dir")
+            and status.get("lightweight_embeddings")
+            and status.get("lightweight_game_ids")
+            and status.get("lightweight_manifest")
+        )
+    if backend == "chroma":
+        return bool(
+            status.get("app_catalog")
+            and status.get("vector_store")
+            and status.get("vector_store_sqlite")
+        )
+    return False
 
 
-@lru_cache(maxsize=1)
+@lru_cache(maxsize=2)
+def _get_rag_agent_for_backend(backend: str):
+    if backend == "lightweight":
+        from src.lightweight_rag_engine import LightweightRAGAgent
+
+        return LightweightRAGAgent()
+    if backend == "chroma":
+        from src.rag_engine import RAGAgent
+
+        return RAGAgent()
+    raise ValueError(f"Unsupported RAG backend: {backend}")
+
+
 def _get_rag_agent():
-    from src.rag_engine import RAGAgent
-
-    return RAGAgent()
+    return _get_rag_agent_for_backend(get_rag_backend())
 
 
 def _is_missing(value: object) -> bool:
@@ -229,6 +273,7 @@ def _clean_filters(filters: dict | None) -> dict[str, Any]:
 
 def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -> dict:
     status = rag_status()
+    backend = get_rag_backend()
     cleaned_query = str(query or "").strip()
     cleaned_filters = _clean_filters(filters)
     top_k = max(1, min(int(top_k or 5), 10))
@@ -245,7 +290,19 @@ def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -
             "status": "empty_query",
         }
 
-    if not rag_ready():
+    if not rag_ready(backend):
+        if backend == "lightweight":
+            required_artifacts = (
+                "Required artifacts: data/app/app_game_catalog.parquet, "
+                "data/rag/lightweight/game_embeddings.npy, "
+                "data/rag/lightweight/game_ids.json, and "
+                "data/rag/lightweight/manifest.json."
+            )
+        else:
+            required_artifacts = (
+                "Required artifacts: data/app/app_game_catalog.parquet and "
+                "data/vector_store/chroma.sqlite3."
+            )
         return {
             "answer_text": (
                 "RAG retrieval is unavailable because one or more required local artifacts "
@@ -255,9 +312,7 @@ def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -
             "retrieved_games": [],
             "applied_filters": cleaned_filters,
             "retrieval_scores": [],
-            "warnings": [
-                "Required artifacts: data/app/app_game_catalog.parquet and data/vector_store/chroma.sqlite3."
-            ],
+            "warnings": [required_artifacts],
             "artifact_status": status,
             "mode": "rag_unavailable",
             "status": "unavailable",
@@ -322,7 +377,7 @@ def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -
         "retrieval_scores": retrieval_scores,
         "warnings": warnings,
         "artifact_status": status,
-        "mode": "rag_hybrid_retrieval",
+        "mode": f"rag_hybrid_retrieval_{backend}",
         "status": "success" if normalized_games else "no_results",
     }
 

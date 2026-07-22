@@ -5,7 +5,7 @@ import re
 from typing import Any
 
 from app.schemas.chat import ChatRequest
-from src.app.rag_service import VECTOR_STORE_PATH, answer_game_query, rag_status
+from src.app.rag_service import VECTOR_STORE_PATH, answer_game_query, get_rag_backend, rag_status
 
 
 COLLECTION_NAME = "igdb_game_profiles"
@@ -579,37 +579,64 @@ def _collection_available() -> tuple[bool, str | None]:
 
 def get_chat_status() -> dict[str, Any]:
     artifacts = rag_status()
+    backend = get_rag_backend()
     warnings: list[str] = []
 
     if not artifacts.get("app_catalog", False):
         warnings.append("Missing data/app/app_game_catalog.parquet.")
-    if not artifacts.get("vector_store", False):
-        warnings.append("Missing data/vector_store directory.")
-    if not artifacts.get("vector_store_sqlite", False):
-        warnings.append("Missing data/vector_store/chroma.sqlite3.")
-    if not _dependency_available("chromadb"):
-        warnings.append("Missing Python dependency: chromadb.")
-    if not _dependency_available("sentence_transformers"):
-        warnings.append("Missing Python dependency: sentence-transformers.")
 
     collection_available = False
-    if (
-        artifacts.get("vector_store", False)
-        and artifacts.get("vector_store_sqlite", False)
-        and _dependency_available("chromadb")
-    ):
-        collection_available, collection_warning = _collection_available()
-        if collection_warning:
-            warnings.append(collection_warning)
+    retrieval_artifacts_available = False
+
+    if backend == "lightweight":
+        if not artifacts.get("lightweight_rag_dir", False):
+            warnings.append("Missing data/rag/lightweight directory.")
+        if not artifacts.get("lightweight_embeddings", False):
+            warnings.append("Missing data/rag/lightweight/game_embeddings.npy.")
+        if not artifacts.get("lightweight_game_ids", False):
+            warnings.append("Missing data/rag/lightweight/game_ids.json.")
+        if not artifacts.get("lightweight_manifest", False):
+            warnings.append("Missing data/rag/lightweight/manifest.json.")
+        retrieval_artifacts_available = bool(
+            artifacts.get("lightweight_rag_dir", False)
+            and artifacts.get("lightweight_embeddings", False)
+            and artifacts.get("lightweight_game_ids", False)
+            and artifacts.get("lightweight_manifest", False)
+        )
+    else:
+        if not artifacts.get("vector_store", False):
+            warnings.append("Missing data/vector_store directory.")
+        if not artifacts.get("vector_store_sqlite", False):
+            warnings.append("Missing data/vector_store/chroma.sqlite3.")
+        if not _dependency_available("chromadb"):
+            warnings.append("Missing Python dependency: chromadb.")
+        if (
+            artifacts.get("vector_store", False)
+            and artifacts.get("vector_store_sqlite", False)
+            and _dependency_available("chromadb")
+        ):
+            collection_available, collection_warning = _collection_available()
+            if collection_warning:
+                warnings.append(collection_warning)
+        retrieval_artifacts_available = bool(
+            artifacts.get("vector_store", False)
+            and artifacts.get("vector_store_sqlite", False)
+            and collection_available
+        )
+
+    if not _dependency_available("sentence_transformers"):
+        warnings.append("Missing Python dependency: sentence-transformers.")
 
     status = "ready" if not warnings else "unavailable"
 
     return {
         "status": status,
+        "backend": backend,
         "catalog_available": bool(artifacts.get("app_catalog", False)),
         "vector_store_available": bool(artifacts.get("vector_store", False)),
+        "retrieval_artifacts_available": retrieval_artifacts_available,
         "collection_available": collection_available,
-        "engine": "hybrid_vector_bm25",
+        "engine": "hybrid_numpy_bm25" if backend == "lightweight" else "hybrid_chroma_bm25",
         "warnings": warnings,
     }
 

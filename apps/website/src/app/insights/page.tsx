@@ -37,17 +37,17 @@ export default async function InsightsPage() {
   return (
     <div className="insights-v1-shell">
       <div className="insights-v1-content">
-        <section className="relative overflow-hidden border border-white bg-black text-center">
-          <div className="absolute left-0 top-0 h-1 w-full bg-[#FF3E00]" />
-          <div className="relative flex flex-col items-center bg-black p-8 sm:p-10">
-            <h1 className="font-['Arial_Black',Impact,system-ui,sans-serif] text-5xl uppercase leading-[0.86] tracking-[-0.07em] text-white sm:text-7xl">
-              Insights_
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">
-              Review the key descriptive and diagnostic findings from the curated IGDB
-              catalog.
-            </p>
-          </div>
+        <section className="border border-white bg-black p-8 text-white sm:p-10">
+          <p className="font-mono text-xs uppercase tracking-[0.34em] text-[#FF3E00]">
+            INSIGHTS_ // READ THE SIGNALS BEHIND THE CATALOG
+          </p>
+          <h1 className="mt-4 max-w-5xl font-['Arial_Black',Impact,system-ui,sans-serif] text-5xl uppercase leading-[0.88] tracking-[-0.07em] text-white sm:text-7xl">
+            Insights_
+          </h1>
+          <p className="mt-6 max-w-4xl text-lg leading-8 text-white/74">
+            Review the key descriptive and diagnostic findings from the curated IGDB
+            catalog.
+          </p>
         </section>
 
         <InsightsDashboardTabs summary={summary} />

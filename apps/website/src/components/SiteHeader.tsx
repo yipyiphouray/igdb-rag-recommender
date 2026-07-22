@@ -20,8 +20,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white bg-black text-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+    <header className="sticky top-0 z-40 border-b border-white bg-black px-5 text-white sm:px-8">
+      <nav className="mx-auto flex w-full max-w-7xl items-center justify-between py-4">
         <Link href="/" className="group" onClick={() => setOpen(false)}>
           <p className="font-mono text-[10px] uppercase tracking-[0.32em] text-[#FF3E00]">
             QUEST ACCEPTED

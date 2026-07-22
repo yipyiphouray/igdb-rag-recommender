@@ -10,3 +10,9 @@ data/database/igdb_games.db
 data/analytics/diagnostic/*
 data/vector_store/*.sqlite3
 models/*.pkl
+
+# Frontend dependencies and generated build output
+node_modules/
+.next/
+apps/website/node_modules/
+apps/website/.next/

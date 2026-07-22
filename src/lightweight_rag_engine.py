@@ -85,6 +85,21 @@ MANAGEMENT_DOMAINS = {
     "store": ["store", "shop", "market", "retail"],
 }
 
+PLATFORM_MATCH_ALIASES = {
+    "nintendo switch": ("nintendo switch", "switch"),
+    "switch": ("nintendo switch", "switch"),
+    "pc": ("pc", "windows", "microsoft windows", "steam"),
+    "windows": ("pc", "windows", "microsoft windows", "steam"),
+    "steam": ("pc", "windows", "microsoft windows", "steam"),
+    "playstation 5": ("playstation 5", "ps5"),
+    "ps5": ("playstation 5", "ps5"),
+    "playstation 4": ("playstation 4", "ps4"),
+    "ps4": ("playstation 4", "ps4"),
+    "xbox series": ("xbox series", "series x", "series s"),
+    "xbox one": ("xbox one",),
+    "xbox": ("xbox",),
+}
+
 TWO_D_REGEX = re.compile(r"\b2(?:\.5)?d\b", flags=re.IGNORECASE)
 THREE_D_REGEX = re.compile(r"\b3d\b", flags=re.IGNORECASE)
 
@@ -104,7 +119,17 @@ def lightweight_rag_ready() -> bool:
 
 def _contains_any(text: object, options: list[str] | tuple[str, ...]) -> bool:
     text = str(text or "").lower()
-    return any(str(option).lower() in text for option in options)
+    expanded_options: list[str] = []
+    for option in options:
+        normalized_option = str(option or "").lower().strip()
+        if not normalized_option:
+            continue
+        expanded_options.append(normalized_option)
+        for alias_key, aliases in PLATFORM_MATCH_ALIASES.items():
+            if normalized_option == alias_key or normalized_option in aliases:
+                expanded_options.extend(aliases)
+                break
+    return any(option and option in text for option in expanded_options)
 
 
 def _safe_float(value: object, default: float = 0.0) -> float:

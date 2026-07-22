@@ -20,9 +20,36 @@ except Exception:
 SEMANTIC_WEIGHT = 0.9
 LEXICAL_WEIGHT = 0.1
 
+
+PLATFORM_MATCH_ALIASES = {
+    "nintendo switch": ("nintendo switch", "switch"),
+    "switch": ("nintendo switch", "switch"),
+    "pc": ("pc", "windows", "microsoft windows", "steam"),
+    "windows": ("pc", "windows", "microsoft windows", "steam"),
+    "steam": ("pc", "windows", "microsoft windows", "steam"),
+    "playstation 5": ("playstation 5", "ps5"),
+    "ps5": ("playstation 5", "ps5"),
+    "playstation 4": ("playstation 4", "ps4"),
+    "ps4": ("playstation 4", "ps4"),
+    "xbox series": ("xbox series", "series x", "series s"),
+    "xbox one": ("xbox one",),
+    "xbox": ("xbox",),
+}
+
+
 def _contains_any(text, options):
     text = (text or "").lower()
-    return any(str(opt).lower() in text for opt in options)
+    expanded_options = []
+    for option in options:
+        normalized_option = str(option or "").lower().strip()
+        if not normalized_option:
+            continue
+        expanded_options.append(normalized_option)
+        for alias_key, aliases in PLATFORM_MATCH_ALIASES.items():
+            if normalized_option == alias_key or normalized_option in aliases:
+                expanded_options.extend(aliases)
+                break
+    return any(option and option in text for option in expanded_options)
 
 
 def _safe_float(value, default=0.0):

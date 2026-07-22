@@ -111,6 +111,7 @@ export type ChatRetrievedGame = GameSummary & {
   semantic_score?: number | null;
   lexical_score?: number | null;
   evidence: string;
+  match_explanation?: string | null;
   caveats: string[];
 };
 
@@ -124,6 +125,11 @@ export type ChatResponse = {
   applied_filters: Record<string, unknown>;
   follow_up_prompts: string[];
   contextual_query?: string | null;
+  interpreted_preferences: Record<string, unknown>;
+  chat_intent?: string | null;
+  intent_confidence?: number | null;
+  route_source?: string | null;
+  matched_intent_example?: string | null;
 };
 
 export type ChatStatusResponse = {

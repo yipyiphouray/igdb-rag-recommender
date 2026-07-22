@@ -33,6 +33,7 @@ class ChatRetrievedGame(GameSummary):
     semantic_score: float | None = None
     lexical_score: float | None = None
     evidence: str
+    match_explanation: str | None = None
     caveats: list[str] = Field(default_factory=list)
 
 
@@ -46,6 +47,11 @@ class ChatResponse(BaseModel):
     applied_filters: dict[str, Any] = Field(default_factory=dict)
     follow_up_prompts: list[str] = Field(default_factory=list)
     contextual_query: str | None = None
+    interpreted_preferences: dict[str, Any] = Field(default_factory=dict)
+    chat_intent: str | None = None
+    intent_confidence: float | None = None
+    route_source: str | None = None
+    matched_intent_example: str | None = None
 
 
 class ChatStatusResponse(BaseModel):

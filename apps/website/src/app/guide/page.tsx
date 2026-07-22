@@ -11,12 +11,16 @@ import type {
 } from "@/types/api";
 
 const starterPrompts = [
-  "Recommend story-rich RPGs on PC.",
+  "Find games like League of Legends.",
+  "Recommend cozy RPGs on Switch.",
   "Find hidden gems with exploration and fantasy themes.",
-  "What are good co-op games with strong ratings?",
+  "Explain where your answers come from.",
   "Suggest games similar to Stardew Valley but less obvious.",
-  "Find shorter games with atmospheric worlds.",
 ];
+
+const MAX_GUIDE_USER_TURNS = 8;
+const GUIDE_TURN_WARNING_THRESHOLD = 6;
+const HISTORY_TURN_LIMIT = 4;
 
 type GuideTurn = {
   id: string;
@@ -26,6 +30,24 @@ type GuideTurn = {
   isLoading?: boolean;
 };
 
+type ContextItem = {
+  label: string;
+  value: string;
+};
+
+const preferenceLabels: Array<[string, string]> = [
+  ["recent_games", "Recent game"],
+  ["platforms", "Platform"],
+  ["genres", "Genre"],
+  ["themes", "Theme"],
+  ["moods", "Mood"],
+  ["playtime_preference", "Playtime"],
+  ["multiplayer_preference", "Multiplayer"],
+  ["discovery_preference", "Discovery"],
+  ["rating_preference", "Rating signal"],
+  ["avoid_terms", "Avoid"],
+];
+
 function statusTone(status?: string) {
   if (status === "ready" || status === "success") {
     return "border-[#39ff14] text-[#39ff14]";
@@ -34,6 +56,156 @@ function statusTone(status?: string) {
     return "border-[#ffcc00] text-[#ffcc00]";
   }
   return "border-[#ff3e00] text-[#ff3e00]";
+}
+
+function formatPreferenceValue(value: unknown): string {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item ?? "").trim())
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  if (typeof value === "string") {
+    return value.replaceAll("_", " ").trim();
+  }
+
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+
+  return "";
+}
+
+function buildContextItems(response?: ChatResponse): ContextItem[] {
+  const preferences = response?.interpreted_preferences ?? {};
+
+  return preferenceLabels
+    .map(([key, label]) => ({
+      label,
+      value: formatPreferenceValue(preferences[key]),
+    }))
+    .filter((item) => item.value.length > 0);
+}
+
+function ScopePanel() {
+  return (
+    <section className="border border-white/15 bg-black/72 p-5">
+      <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+            Guide scope_
+          </p>
+          <h2 className="mt-2 text-2xl font-black uppercase tracking-[-0.04em] text-white">
+            Catalog search assistant, not a general chatbot
+          </h2>
+        </div>
+        <div className="grid gap-3 text-sm leading-7 text-white/62">
+          <p>
+            Use Ask the Guide for catalog-backed game discovery and project
+            explanation. Strong prompts include a game you liked, platform,
+            genre, mood, playtime, hidden-gem preference, or rating-quality
+            signal.
+          </p>
+          <p>
+            Each search thread is capped at {MAX_GUIDE_USER_TURNS} user
+            messages. If the topic changes or the thread gets noisy, start a
+            fresh search for cleaner recommendations.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SearchContextPanel({
+  response,
+  turnCount,
+  onReset,
+}: {
+  response?: ChatResponse;
+  turnCount: number;
+  onReset: () => void;
+}) {
+  const contextItems = buildContextItems(response);
+  const progressWidth = `${Math.min(
+    100,
+    Math.round((turnCount / MAX_GUIDE_USER_TURNS) * 100),
+  )}%`;
+  const isNearLimit = turnCount >= GUIDE_TURN_WARNING_THRESHOLD;
+
+  return (
+    <section className="border border-white/15 bg-black/75 p-5">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+            Current search_
+          </p>
+          <h3 className="mt-2 text-xl font-black uppercase tracking-[-0.04em] text-white">
+            Active context
+          </h3>
+        </div>
+        <button
+          type="button"
+          onClick={onReset}
+          className="border border-white/20 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white/75 transition hover:border-[#ff3e00] hover:text-white"
+        >
+          Start new
+        </button>
+      </div>
+
+      <div className="mt-4">
+        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
+          <span>Thread length</span>
+          <span>
+            {turnCount}/{MAX_GUIDE_USER_TURNS}
+          </span>
+        </div>
+        <div className="mt-2 h-1 border border-white/15 bg-white/[0.03]">
+          <div
+            className="h-full bg-[#ff3e00] transition-all"
+            style={{ width: progressWidth }}
+          />
+        </div>
+      </div>
+
+      {isNearLimit && (
+        <div className="mt-4 border border-[#ffcc00]/35 bg-[#ffcc00]/10 p-3 text-xs leading-6 text-white/72">
+          This thread is getting long. Start a new search soon if the
+          recommendations begin to feel noisy.
+        </div>
+      )}
+
+      <div className="mt-5 grid gap-2">
+        {contextItems.length > 0 ? (
+          contextItems.map((item) => (
+            <div
+              key={`${item.label}-${item.value}`}
+              className="border border-white/10 bg-white/[0.03] p-3"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
+                {item.label}
+              </p>
+              <p className="mt-1 text-sm font-bold text-white/82">
+                {item.value}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/55">
+            No active preferences yet. Start with a game, platform, genre, or
+            mood.
+          </div>
+        )}
+      </div>
+
+      {response?.chat_intent && (
+        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
+          Intent: {response.chat_intent}
+        </p>
+      )}
+    </section>
+  );
 }
 
 function StatusPanel({
@@ -260,15 +432,17 @@ function buildHistory(turns: GuideTurn[]): ChatHistoryMessage[] {
         content: guideHistoryContent(turn.response as ChatResponse),
       },
     ])
-    .slice(-10);
+    .slice(-(HISTORY_TURN_LIMIT * 2));
 }
 
 function ChatTurnPanel({
   turn,
   onFollowUp,
+  onReset,
 }: {
   turn: GuideTurn;
   onFollowUp: (prompt: string) => void;
+  onReset: () => void;
 }) {
   const response = turn.response;
   const hasRetrievedGames = Boolean(response?.retrieved_games.length);
@@ -351,6 +525,13 @@ function ChatTurnPanel({
                         {prompt}
                       </button>
                     ))}
+                    <button
+                      type="button"
+                      onClick={onReset}
+                      className="border border-[#ff3e00]/55 bg-[#ff3e00]/10 px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.08em] text-[#ff3e00] transition hover:border-[#ff3e00] hover:bg-[#ff3e00] hover:text-black"
+                    >
+                      Start new search
+                    </button>
                   </div>
                 </div>
               )}
@@ -373,6 +554,17 @@ export default function GuidePage() {
   const transcriptRef = useRef<HTMLDivElement | null>(null);
 
   const trimmedMessage = useMemo(() => message.trim(), [message]);
+  const latestResponse = useMemo(
+    () =>
+      turns
+        .slice()
+        .reverse()
+        .find((turn) => turn.response)?.response,
+    [turns],
+  );
+  const userTurnCount = turns.length;
+  const hasReachedTurnLimit = userTurnCount >= MAX_GUIDE_USER_TURNS;
+  const isNearTurnLimit = userTurnCount >= GUIDE_TURN_WARNING_THRESHOLD;
 
   useEffect(() => {
     getChatStatus()
@@ -403,6 +595,13 @@ export default function GuidePage() {
 
     if (!trimmedMessage) {
       setError("Type a game discovery question before asking the guide.");
+      return;
+    }
+
+    if (hasReachedTurnLimit) {
+      setError(
+        "This Guide thread reached its message limit. Start a new search for cleaner recommendations.",
+      );
       return;
     }
 
@@ -462,6 +661,12 @@ export default function GuidePage() {
   }
 
   function useFollowUp(prompt: string) {
+    if (hasReachedTurnLimit) {
+      setError(
+        "This Guide thread reached its message limit. Start a new search before continuing.",
+      );
+      return;
+    }
     setMessage(prompt);
   }
 
@@ -485,6 +690,8 @@ export default function GuidePage() {
         </section>
 
         <StatusPanel status={chatStatus} error={statusError} />
+
+        <ScopePanel />
 
         <section className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
           <section className="border border-white/15 bg-black/75 p-5">
@@ -532,10 +739,31 @@ export default function GuidePage() {
                     key={turn.id}
                     turn={turn}
                     onFollowUp={useFollowUp}
+                    onReset={resetChat}
                   />
                 ))
               )}
             </div>
+
+            {hasReachedTurnLimit && (
+              <div className="mt-5 border border-[#ff3e00]/45 bg-[#ff3e00]/10 p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
+                  Thread limit reached_
+                </p>
+                <p className="mt-2 text-sm leading-6 text-white/72">
+                  This search thread has reached {MAX_GUIDE_USER_TURNS} user
+                  messages. Start a new search to avoid noisy recommendation
+                  context.
+                </p>
+                <button
+                  type="button"
+                  onClick={resetChat}
+                  className="mt-4 bg-[#ff3e00] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
+                >
+                  Start new search
+                </button>
+              </div>
+            )}
 
             <form
               onSubmit={submitQuestion}
@@ -548,9 +776,10 @@ export default function GuidePage() {
                 <textarea
                   value={message}
                   rows={4}
+                  disabled={hasReachedTurnLimit}
                   onChange={(event) => setMessage(event.target.value)}
                   placeholder="Recommend atmospheric RPGs on PC with strong story and exploration."
-                  className="resize-none border border-white/15 bg-black px-4 py-4 text-white placeholder:text-white/35 focus:border-[#ff3e00] focus:outline-none"
+                  className="resize-none border border-white/15 bg-black px-4 py-4 text-white placeholder:text-white/35 focus:border-[#ff3e00] focus:outline-none disabled:cursor-not-allowed disabled:opacity-45"
                 />
               </label>
 
@@ -578,36 +807,55 @@ export default function GuidePage() {
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || hasReachedTurnLimit}
                   className="bg-[#ff3e00] px-6 py-3 text-sm font-black text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {loading ? "Guide is thinking..." : "Send message"}
+                  {loading
+                    ? "Guide is thinking..."
+                    : hasReachedTurnLimit
+                      ? "Thread limit reached"
+                      : "Send message"}
                 </button>
               </div>
             </form>
           </section>
 
-          <aside className="border border-white/15 bg-black/75 p-6">
-            <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-              Prompt starters_
-            </p>
-            <div className="mt-4 grid gap-2">
-              {starterPrompts.map((prompt) => (
-                <button
-                  key={prompt}
-                  type="button"
-                  onClick={() => setMessage(prompt)}
-                  className="border border-white/12 bg-white/[0.03] px-4 py-3 text-left text-sm leading-6 text-white/75 transition hover:border-[#ff3e00] hover:text-white"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-            <p className="mt-5 text-sm leading-7 text-white/55">
-              The guide should only answer from retrieved project data. If the
-              catalog is missing a field, the response should disclose that
-              limitation instead of guessing.
-            </p>
+          <aside className="grid content-start gap-5">
+            <SearchContextPanel
+              response={latestResponse}
+              turnCount={userTurnCount}
+              onReset={resetChat}
+            />
+
+            <section className="border border-white/15 bg-black/75 p-6">
+              <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+                Prompt starters_
+              </p>
+              <div className="mt-4 grid gap-2">
+                {starterPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    disabled={hasReachedTurnLimit}
+                    onClick={() => setMessage(prompt)}
+                    className="border border-white/12 bg-white/[0.03] px-4 py-3 text-left text-sm leading-6 text-white/75 transition hover:border-[#ff3e00] hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              <p className="mt-5 text-sm leading-7 text-white/55">
+                The guide answers from retrieved project data. If the catalog is
+                missing a field, it should disclose that limitation instead of
+                guessing.
+              </p>
+              {isNearTurnLimit && !hasReachedTurnLimit && (
+                <p className="mt-4 border border-[#ffcc00]/30 bg-[#ffcc00]/10 p-3 text-xs leading-6 text-white/68">
+                  You are close to the thread limit. Use Start New when you
+                  switch topics.
+                </p>
+              )}
+            </section>
           </aside>
         </section>
 

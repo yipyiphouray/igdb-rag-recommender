@@ -5,6 +5,13 @@ import re
 from typing import Any
 
 from app.schemas.chat import ChatRequest
+from src.app.chat_intelligence import (
+    analyze_message,
+    build_filter_overrides,
+    enhance_answer_text,
+    enrich_retrieved_games,
+    filter_seed_games,
+)
 from src.app.rag_service import VECTOR_STORE_PATH, answer_game_query, get_rag_backend, rag_status
 
 
@@ -528,30 +535,6 @@ GAME_PREFERENCE_TERMS = {
     "switch",
     "xbox",
 }
-GENERIC_RECOMMENDATION_TARGET_TERMS = {
-    "anything",
-    "game",
-    "games",
-    "me",
-    "one",
-    "recommendation",
-    "recommendations",
-    "something",
-}
-OFF_TOPIC_RECOMMENDATION_TERMS = {
-    "book",
-    "books",
-    "movie",
-    "movies",
-    "music",
-    "restaurant",
-    "restaurants",
-    "song",
-    "songs",
-    "tv",
-}
-
-
 def _dependency_available(module_name: str) -> bool:
     return importlib.util.find_spec(module_name) is not None
 
@@ -665,10 +648,6 @@ def _has_phrase(message: str, phrases: list[str]) -> bool:
     return any(phrase in normalized for phrase in phrases)
 
 
-def _matches_any(message: str, patterns: list[str]) -> bool:
-    return any(re.search(pattern, message, flags=re.IGNORECASE) for pattern in patterns)
-
-
 def _looks_like_question(message: str) -> bool:
     stripped = message.strip()
     tokens = set(_tokenize(stripped))
@@ -705,96 +684,6 @@ def _looks_like_follow_up(message: str) -> bool:
             "show more",
         ],
     )
-
-
-def _has_specific_game_signal(message: str, tokens: set[str]) -> bool:
-    if _has_any(tokens, GAME_PREFERENCE_TERMS):
-        return True
-    return _matches_any(
-        message,
-        [
-            r"\b(similar to|more like|like .+)\b",
-            r"\b(i played|i liked|i loved|i enjoyed)\b",
-            r"\bwith .+\b",
-        ],
-    )
-
-
-def _looks_like_vague_recommendation_request(message: str) -> bool:
-    normalized = _normalized_message(message)
-    tokens = set(_tokenize(message))
-
-    if not tokens or _has_any(tokens, OFF_TOPIC_RECOMMENDATION_TERMS):
-        return False
-
-    asks_for_recommendation = _has_any(tokens, GAME_SEARCH_ACTION_TERMS) or _has_phrase(
-        normalized,
-        [
-            "what should i play",
-            "what game should i play",
-            "anything good",
-            "something good",
-        ],
-    )
-    if not asks_for_recommendation:
-        return False
-
-    if _has_specific_game_signal(normalized, tokens):
-        return False
-
-    return _has_any(tokens, GENERIC_RECOMMENDATION_TARGET_TERMS) or _has_phrase(
-        normalized,
-        [
-            "what should i play",
-            "find me something",
-            "suggest something",
-            "pick something",
-            "recommend me",
-        ],
-    )
-
-
-def _looks_like_game_discovery_query(message: str, request: ChatRequest) -> bool:
-    normalized = _normalized_message(message)
-    tokens = set(_tokenize(message))
-
-    if _has_any(tokens, OFF_TOPIC_RECOMMENDATION_TERMS):
-        return False
-
-    if _looks_like_vague_recommendation_request(message):
-        return False
-
-    if request.history and _looks_like_follow_up(message):
-        return True
-
-    if _matches_any(
-        normalized,
-        [
-            r"\b(i want|i need|i am looking for|i'm looking for|looking for|feel like playing)\b",
-            r"\b(similar to|more like|like .+)\b",
-            r"\b(i played|i liked|i loved|i enjoyed)\b",
-            r"\bwhat should i play\b",
-        ],
-    ):
-        return True
-
-    if _has_any(tokens, GAME_SEARCH_ACTION_TERMS):
-        if _has_specific_game_signal(normalized, tokens):
-            return True
-        if _has_any(tokens, GAME_CONTEXT_TERMS) and _has_phrase(
-            normalized,
-            ["similar to", "more like"],
-        ):
-            return True
-
-    if _looks_like_question(message):
-        if _has_any(tokens, {"what", "which"}) and _has_any(tokens, GAME_CONTEXT_TERMS):
-            return _has_any(tokens, GAME_PREFERENCE_TERMS.union({"good", "best", "quality"}))
-
-    if _has_phrase(normalized, ["tell me about"]):
-        return not _has_any(tokens, PROJECT_CONTEXT_TERMS.union(DATA_CONTEXT_TERMS))
-
-    return False
 
 
 def _build_chat_response(
@@ -1078,32 +967,91 @@ def _build_follow_up_prompts(games: list[dict[str, Any]]) -> list[str]:
     return prompts[:4]
 
 
+def _format_game_names(games: list[dict[str, Any]]) -> str:
+    names = [str(game.get("name") or "").strip() for game in games[:3] if game.get("name")]
+    if not names:
+        return ""
+    if len(names) == 1:
+        return names[0]
+    if len(names) == 2:
+        return f"{names[0]} and {names[1]}"
+    return f"{names[0]}, {names[1]}, and {names[2]}"
+
+
+def _seed_filtered_answer_text(games: list[dict[str, Any]], excluded_seed_games: list[str]) -> str:
+    names_text = _format_game_names(games)
+    excluded_text = ", ".join(excluded_seed_games)
+    pronoun = "them" if len(excluded_seed_games) > 1 else "it"
+    if names_text:
+        return (
+            f"I found catalog-backed alternatives: {names_text}. "
+            f"I excluded {excluded_text} because you already mentioned playing {pronoun}."
+        )
+    return (
+        "I found retrieval matches, but they were mostly games you already mentioned. "
+        "Try adding a genre, mood, platform, or hidden-gem preference so I can broaden the search."
+    )
+
+
+def _chat_intelligence_payload(intelligence: Any) -> dict[str, Any]:
+    return {
+        "interpreted_preferences": intelligence.slots.to_dict(),
+        "chat_intent": intelligence.intent,
+        "intent_confidence": intelligence.confidence,
+        "route_source": intelligence.route_source,
+        "matched_intent_example": intelligence.matched_example,
+    }
+
+
 def answer_chat_request(request: ChatRequest) -> dict[str, Any]:
-    if _looks_like_vague_recommendation_request(request.message):
+    intelligence = analyze_message(request.message, has_history=bool(request.history))
+    intelligence_payload = _chat_intelligence_payload(intelligence)
+
+    if intelligence.should_clarify:
         return {
-            **_vague_recommendation_response(),
+            **_build_chat_response(
+                intent="recommendation_clarification",
+                answer=intelligence.clarification_question or VAGUE_RECOMMENDATION_RESPONSE,
+                prompts=list(intelligence.clarification_prompts) or VAGUE_RECOMMENDATION_PROMPTS,
+                status="needs_clarification",
+            ),
             "conversation_id": request.conversation_id,
+            **intelligence_payload,
         }
 
+    is_game_discovery_query = (
+        intelligence.intent
+        in {
+            "game_recommendation",
+            "seed_game_recommendation",
+            "recommendation_follow_up",
+        }
+        and not intelligence.should_clarify
+    )
+
     predefined = _predefined_response(request.message, request)
-    if predefined is not None:
+    if predefined is not None and not is_game_discovery_query:
         return {
             **predefined,
             "conversation_id": request.conversation_id,
+            **intelligence_payload,
         }
 
-    concept = _concept_response(request.message)
-    if concept is not None:
-        return {
-            **concept,
-            "conversation_id": request.conversation_id,
-        }
+    if not is_game_discovery_query:
+        concept = _concept_response(request.message)
+        if concept is not None:
+            return {
+                **concept,
+                "conversation_id": request.conversation_id,
+                **intelligence_payload,
+            }
 
-    if not _looks_like_game_discovery_query(request.message, request):
+    if not is_game_discovery_query:
         if _looks_ambiguous_supported_message(request.message):
             return {
                 **_clarification_response(),
                 "conversation_id": request.conversation_id,
+                **intelligence_payload,
             }
 
         return {
@@ -1118,15 +1066,21 @@ def answer_chat_request(request: ChatRequest) -> dict[str, Any]:
             "applied_filters": {},
             "follow_up_prompts": DEFAULT_PROMPTS,
             "contextual_query": None,
+            **intelligence_payload,
         }
 
     contextual_query = _build_contextual_query(request)
+    request_filters = _request_filters(request)
+    retrieval_filters = build_filter_overrides(intelligence.slots, request_filters)
+    retrieval_top_k = request.max_results
+    if intelligence.slots.recent_games:
+        retrieval_top_k = min(10, request.max_results + len(intelligence.slots.recent_games))
 
     try:
         rag_response = answer_game_query(
             query=contextual_query,
-            filters=_request_filters(request),
-            top_k=request.max_results,
+            filters=retrieval_filters,
+            top_k=retrieval_top_k,
         )
     except Exception as error:
         return {
@@ -1136,23 +1090,49 @@ def answer_chat_request(request: ChatRequest) -> dict[str, Any]:
             "conversation_id": request.conversation_id,
             "retrieved_games": [],
             "caveats": [f"{type(error).__name__}: {error}"],
-            "applied_filters": _request_filters(request),
+            "applied_filters": retrieval_filters,
             "follow_up_prompts": [],
             "contextual_query": contextual_query,
+            **intelligence_payload,
         }
 
-    retrieved_games = rag_response.get("retrieved_games", [])
+    filtered_games, excluded_seed_games = filter_seed_games(
+        rag_response.get("retrieved_games", []),
+        intelligence.slots,
+        top_k=request.max_results,
+    )
+    retrieved_games = enrich_retrieved_games(
+        filtered_games,
+        intelligence.slots,
+    )
+    base_answer = (
+        _seed_filtered_answer_text(retrieved_games, excluded_seed_games)
+        if excluded_seed_games
+        else rag_response.get("answer_text", "")
+    )
+    answer_text = enhance_answer_text(
+        base_answer,
+        intelligence.slots,
+        retrieved_games,
+    )
+    caveats = rag_response.get("warnings", [])
+    if excluded_seed_games:
+        caveats = [
+            *caveats,
+            "Recent games mentioned by the user were excluded from the displayed recommendations.",
+        ]
 
     return {
-        "answer": rag_response.get("answer_text", ""),
+        "answer": answer_text,
         "mode": "rag_hybrid_conversation"
         if request.history
         else rag_response.get("mode", "rag_hybrid_retrieval"),
         "status": rag_response.get("status", "success"),
         "conversation_id": request.conversation_id,
         "retrieved_games": retrieved_games,
-        "caveats": rag_response.get("warnings", []),
+        "caveats": caveats,
         "applied_filters": rag_response.get("applied_filters", {}),
         "follow_up_prompts": _build_follow_up_prompts(retrieved_games),
         "contextual_query": contextual_query if contextual_query != request.message else None,
+        **intelligence_payload,
     }

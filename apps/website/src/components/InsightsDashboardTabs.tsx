@@ -149,7 +149,13 @@ function metricFromRows(rows: DashboardRow[], key: string): DashboardValue | und
   return rows.find((row) => row.metric === key)?.value;
 }
 
-function InfoTooltip({ definition }: { definition?: string }) {
+function InfoTooltip({
+  definition,
+  variant = "default",
+}: {
+  definition?: string;
+  variant?: "default" | "table";
+}) {
   const [position, setPosition] = useState<TooltipPosition | null>(null);
 
   if (!definition) return null;
@@ -180,7 +186,11 @@ function InfoTooltip({ definition }: { definition?: string }) {
         onMouseEnter={showTooltip}
         onFocus={showTooltip}
         onBlur={() => setPosition(null)}
-        className="grid h-4 w-4 cursor-help place-items-center rounded-full border border-[#FF3E00] bg-black font-mono text-[10px] leading-none text-[#FF3E00] outline-none focus:bg-[#FF3E00] focus:text-black"
+        className={`grid h-5 w-5 cursor-help place-items-center border font-mono text-[0.68rem] font-black leading-none outline-none transition ${
+          variant === "table"
+            ? "border-black/55 bg-white text-black hover:border-black hover:bg-black hover:text-white focus:border-black focus:bg-black focus:text-white"
+            : "border-white/40 bg-black text-white hover:border-[#FF3E00] hover:text-[#FF3E00] focus:border-[#FF3E00] focus:text-[#FF3E00]"
+        }`}
         aria-label={definition}
       >
         ?
@@ -205,14 +215,16 @@ function InfoTooltip({ definition }: { definition?: string }) {
 function LabelWithTooltip({
   children,
   definition,
+  tooltipVariant = "default",
 }: {
   children: ReactNode;
   definition?: string;
+  tooltipVariant?: "default" | "table";
 }) {
   return (
     <span className="inline-flex items-center gap-2">
       <span>{children}</span>
-      <InfoTooltip definition={definition} />
+      <InfoTooltip definition={definition} variant={tooltipVariant} />
     </span>
   );
 }
@@ -220,17 +232,20 @@ function LabelWithTooltip({
 function TerminologyPanel({ activeTab }: { activeTab: TabKey }) {
   return (
     <section className="border border-white bg-black p-5 text-white">
-      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF3E00]">
+      <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#FF3E00]">
         Project terminology_
       </p>
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="mt-4 grid gap-3 md:grid-cols-2">
         {tabTerms[activeTab].map((term) => (
-          <span
+          <p
             key={term.label}
-            className="border border-white/24 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-white/76"
+            className="border border-white/20 bg-black p-3 text-sm leading-6 text-white/70"
           >
-            <LabelWithTooltip definition={term.definition}>{term.label}</LabelWithTooltip>
-          </span>
+            <span className="font-mono text-xs uppercase tracking-[0.16em] text-white">
+              {term.label}:{" "}
+            </span>
+            {term.definition}
+          </p>
         ))}
       </div>
     </section>
@@ -250,7 +265,7 @@ function MetricTile({
 }) {
   return (
     <article className="border border-white bg-black p-5 text-white">
-      <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#FF3E00]">
+      <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#FF3E00]">
         <LabelWithTooltip definition={definition}>{label}</LabelWithTooltip>
       </p>
       <p className="mt-4 font-['Arial_Black',Impact,system-ui,sans-serif] text-3xl uppercase leading-none tracking-[-0.05em] text-white">
@@ -272,7 +287,7 @@ function SectionHeader({
 }) {
   return (
     <div>
-      <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF3E00]">
+      <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#FF3E00]">
         {eyebrow}
       </p>
       <h2 className="mt-2 font-['Arial_Black',Impact,system-ui,sans-serif] text-3xl uppercase leading-none tracking-[-0.05em] text-white">
@@ -316,7 +331,7 @@ function RankedBars({
                 <p className="font-black uppercase tracking-[-0.03em] text-white">
                   {String(row[labelKey] ?? "Unknown")}
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/58">
+                <p className="font-mono text-sm font-semibold uppercase tracking-[0.12em] text-white/68">
                   {format(row[valueKey])} {valueLabel}
                 </p>
               </div>
@@ -349,16 +364,16 @@ function DataTable({
       <div className="p-5">
         <SectionHeader eyebrow={eyebrow} title={title} description={description} />
       </div>
-      <div className="overflow-x-auto border-t border-white">
-        <table className="w-full min-w-[42rem] border-collapse text-left">
+      <div className="border-t border-white">
+        <table className="w-full table-fixed border-collapse text-left">
           <thead>
             <tr className="border-b border-white bg-white text-black">
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em]"
+                  className="px-4 py-4 align-top font-mono text-xs uppercase tracking-[0.12em]"
                 >
-                  <LabelWithTooltip definition={column.definition}>
+                  <LabelWithTooltip definition={column.definition} tooltipVariant="table">
                     {column.label}
                   </LabelWithTooltip>
                 </th>
@@ -369,7 +384,10 @@ function DataTable({
             {rows.map((row, rowIndex) => (
               <tr key={rowIndex} className="border-b border-white/18 last:border-b-0">
                 {columns.map((column) => (
-                  <td key={column.key} className="px-4 py-3 text-sm leading-6 text-white/72">
+                  <td
+                    key={column.key}
+                    className="break-words px-4 py-3 align-top text-sm leading-6 text-white/72"
+                  >
                     {column.format
                       ? column.format(row[column.key], row)
                       : String(row[column.key] ?? "Unknown")}
@@ -400,19 +418,19 @@ function TakeawayCards({ rows }: { rows: DashboardRow[] }) {
               rows.length % 2 === 1 && index === rows.length - 1 ? "md:col-span-2" : ""
             }`}
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#FF3E00]">
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#FF3E00]">
               Finding {row.takeaway_id}
             </p>
             <h3 className="mt-3 text-xl font-bold leading-7 text-white">
               {String(row.finding ?? "Unknown finding")}
             </h3>
-            <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[#FF3E00]">
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.22em] text-[#FF3E00]">
               Evidence_
             </p>
             <p className="mt-2 text-sm leading-7 text-white/76">
               {String(row.evidence ?? "No evidence note available.")}
             </p>
-            <p className="mt-4 border-t border-white/18 pt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[#FF3E00]">
+            <p className="mt-4 border-t border-white/18 pt-4 font-mono text-xs uppercase tracking-[0.22em] text-[#FF3E00]">
               Meaning_
             </p>
             <p className="mt-2 text-sm leading-7 text-white/62">
@@ -755,7 +773,7 @@ function DiagnosticDashboard({ summary }: { summary: InsightsSummary }) {
       />
 
       <section className="border border-white bg-black p-5 text-white">
-        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF3E00]">
+        <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#FF3E00]">
           <LabelWithTooltip definition={definitions.popscore}>PopScore coverage_</LabelWithTooltip>
         </p>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-white/64">

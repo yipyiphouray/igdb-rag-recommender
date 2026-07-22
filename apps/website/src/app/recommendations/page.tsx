@@ -102,6 +102,15 @@ const playtimeOptions = [
   "Longer games (31+ hrs)",
 ];
 
+const loadingSignals = [
+  "Parsing profile",
+  "Scanning catalog",
+  "Comparing metadata",
+  "Ranking matches",
+  "Checking caveats",
+  "Preparing cards",
+];
+
 function splitTextList(value: string | null | undefined, maxItems = 8): string[] {
   return String(value ?? "")
     .split(/[\n,]/)
@@ -336,6 +345,65 @@ function RecommendationCard({ item }: { item: RecommendationResult }) {
         )}
       </div>
     </div>
+  );
+}
+
+function RecommendationLoadingPanel({ progress }: { progress: number }) {
+  const signalLock = Math.min(progress, 95);
+
+  return (
+    <section
+      aria-busy="true"
+      aria-live="polite"
+      className="recommend-loading-panel border border-[#ff3e00]/45 bg-black p-8 text-white"
+    >
+      <div className="relative z-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+            Matching sequence_
+          </p>
+          <h3 className="mt-2 text-2xl font-black uppercase tracking-[-0.03em] text-white">
+            Generating recommendations
+          </h3>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/62">
+            Matching your answers against game metadata, recent-game signals, and
+            catalog quality indicators.
+          </p>
+        </div>
+        <p className="font-mono text-sm font-black uppercase tracking-[0.22em] text-[#ff3e00]">
+          Active scan
+        </p>
+      </div>
+
+      <div className="recommend-loading-track mt-6" aria-hidden="true">
+        <span
+          className="recommend-loading-track-fill"
+          style={{ width: `${signalLock}%` }}
+        />
+        <span className="recommend-loading-track-scan" />
+      </div>
+
+      <div className="mt-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+        <span>Signal start</span>
+        <span>Continuous scan active</span>
+        <span>Finalizing on response</span>
+      </div>
+
+      <div className="mt-6 grid gap-px border border-white/20 bg-white/20 md:grid-cols-3">
+        {loadingSignals.map((signal, index) => (
+          <div
+            key={signal}
+            className="flex items-center gap-3 bg-black px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-white/64"
+          >
+            <span
+              className="recommend-loading-pip"
+              style={{ animationDelay: `${index * 120}ms` }}
+            />
+            {signal}
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -717,34 +785,7 @@ export default function RecommendationsPage() {
           </div>
         </section>
 
-        {loading && (
-          <section className="border border-[#ff3e00]/40 bg-black/80 p-8">
-            <div className="flex flex-wrap items-end justify-between gap-3">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-                  Matching sequence_
-                </p>
-                <h3 className="mt-2 text-2xl font-black text-white">
-                  Finding your recommendations
-                </h3>
-              </div>
-              <p className="font-mono text-4xl font-black text-[#ff3e00]">
-                {loadingProgress}%
-              </p>
-            </div>
-            <div className="mt-5 h-4 border border-white/20 bg-black">
-              <div
-                className="h-full bg-[#ff3e00] transition-all duration-200"
-                style={{ width: `${loadingProgress}%` }}
-              />
-            </div>
-            <div className="mt-2 flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
-              <span>0%</span>
-              <span>Comparing your answers with the catalog</span>
-              <span>100%</span>
-            </div>
-          </section>
-        )}
+        {loading && <RecommendationLoadingPanel progress={loadingProgress} />}
 
         {error && (
           <div className="border border-red-300/30 bg-red-500/10 p-5 text-red-100">

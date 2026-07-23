@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 from typing import List, Tuple
 
 import chromadb
@@ -11,6 +12,11 @@ from chromadb.utils import embedding_functions
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from src.app.embedding_text import build_embedding_text
+
 PARQUET_PATH = ROOT_DIR / "data" / "app" / "app_game_catalog.parquet"
 VECTOR_DB_DIR = ROOT_DIR / "data" / "vector_store"
 COLLECTION_NAME = "igdb_game_profiles"
@@ -25,10 +31,7 @@ class AuditConfig:
 
 
 def _prepare_text_for_embedding(row: pd.Series) -> str:
-    name = str(row.get("name", "") or "").strip()
-    summary = str(row.get("summary", "") or "").strip()
-    genres = str(row.get("genres_list", row.get("genres", "")) or "").strip()
-    return " | ".join([part for part in [name, summary, genres] if part]).strip()
+    return build_embedding_text(row)
 
 
 def _load_catalog() -> pd.DataFrame:

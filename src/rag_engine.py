@@ -9,6 +9,7 @@ import chromadb
 import numpy as np
 import pandas as pd
 from chromadb.utils import embedding_functions
+from src.app.rag_ranking import has_hidden_gem_intent, rank_candidates
 
 try:
     from rank_bm25 import BM25Okapi
@@ -20,9 +21,36 @@ except Exception:
 SEMANTIC_WEIGHT = 0.9
 LEXICAL_WEIGHT = 0.1
 
+
+PLATFORM_MATCH_ALIASES = {
+    "nintendo switch": ("nintendo switch", "switch"),
+    "switch": ("nintendo switch", "switch"),
+    "pc": ("pc", "windows", "microsoft windows", "steam"),
+    "windows": ("pc", "windows", "microsoft windows", "steam"),
+    "steam": ("pc", "windows", "microsoft windows", "steam"),
+    "playstation 5": ("playstation 5", "ps5"),
+    "ps5": ("playstation 5", "ps5"),
+    "playstation 4": ("playstation 4", "ps4"),
+    "ps4": ("playstation 4", "ps4"),
+    "xbox series": ("xbox series", "series x", "series s"),
+    "xbox one": ("xbox one",),
+    "xbox": ("xbox",),
+}
+
+
 def _contains_any(text, options):
     text = (text or "").lower()
-    return any(str(opt).lower() in text for opt in options)
+    expanded_options = []
+    for option in options:
+        normalized_option = str(option or "").lower().strip()
+        if not normalized_option:
+            continue
+        expanded_options.append(normalized_option)
+        for alias_key, aliases in PLATFORM_MATCH_ALIASES.items():
+            if normalized_option == alias_key or normalized_option in aliases:
+                expanded_options.extend(aliases)
+                break
+    return any(option and option in text for option in expanded_options)
 
 
 def _safe_float(value, default=0.0):
@@ -85,6 +113,34 @@ MANAGEMENT_DOMAINS = {
     "restaurant": ["restaurant", "cafe", "cooking", "diner", "kitchen"],
     "hotel": ["hotel", "inn", "resort", "lodging"],
     "store": ["store", "shop", "market", "retail"],
+}
+
+GENERIC_SEED_TITLE_TOKENS = {
+    "action",
+    "adventure",
+    "atmospheric",
+    "cozy",
+    "fantasy",
+    "farming",
+    "game",
+    "games",
+    "horror",
+    "indie",
+    "multiplayer",
+    "pc",
+    "platform",
+    "play",
+    "played",
+    "playstation",
+    "puzzle",
+    "recommend",
+    "rpg",
+    "sci",
+    "similar",
+    "story",
+    "strategy",
+    "switch",
+    "xbox",
 }
 
 TWO_D_REGEX = re.compile(r"\b2(?:\.5)?d\b", flags=re.IGNORECASE)
@@ -159,62 +215,14 @@ class SimpleBM25:
 def rank_results(
     candidates,
     graphics_preference=None,
+    *,
+    hidden_gem_mode=False,
 ):
-    """Apply final ranking with metadata-aware adjustments.
-
-    Fallback and prefilter order across the retrieval pipeline:
-    1) Metadata/DataFrame prefilter constraints
-    2) Semantic vector retrieval
-    3) BM25 lexical retrieval (or SimpleBM25 fallback)
-    4) Fusion scoring (weighted normalized vector/BM25 + metadata boosts)
-    5) Post-fusion multipliers/penalties (e.g., 2D preference, 3D avoidance)
-
-    Note: upstream fusion may use RRF-style candidate blending; the weighted
-    semantic/lexical score is preserved as an interpretable secondary signal.
-    """
-    if not candidates:
-        return []
-
-    request_2d = bool((graphics_preference or {}).get("request_2d", False))
-    avoid_3d = bool((graphics_preference or {}).get("avoid_3d", False))
-    two_d_boost = _safe_float((graphics_preference or {}).get("two_d_boost", 1.5), 1.5)
-    three_d_penalty = _safe_float((graphics_preference or {}).get("three_d_penalty", 0.1), 0.1)
-
-    # Step A: relevance score is retrieval relevance + metadata similarity boost.
-    for candidate in candidates:
-        candidate["total_rating"] = _safe_float(candidate.get("total_rating", 0.0), 0.0)
-        metadata_boost = _safe_float(candidate.get("metadata_boost", 0.0), 0.0)
-        normalized_vec = _safe_float(candidate.get("normalized_vec", candidate.get("semantic_score", 0.0)), 0.0)
-        normalized_bm25 = _safe_float(candidate.get("normalized_bm25", candidate.get("bm25_score_norm", 0.0)), 0.0)
-
-        weighted_hybrid = (SEMANTIC_WEIGHT * normalized_vec) + (LEXICAL_WEIGHT * normalized_bm25)
-
-        hybrid_rrf = _safe_float(candidate.get("hybrid_score", 0.0), 0.0)
-        candidate["weighted_hybrid_score"] = weighted_hybrid
-        candidate["relevance_score"] = metadata_boost + max(hybrid_rrf, weighted_hybrid)
-        candidate["constraint_multiplier"] = 1.0
-        candidate["penalty_applied"] = False
-        candidate["boost_applied"] = False
-
-        multiplier = 1.0
-        if (request_2d or avoid_3d) and bool(candidate.get("is_3d_detected", False)):
-            multiplier *= three_d_penalty
-            candidate["penalty_applied"] = True
-        if request_2d and bool(candidate.get("is_2d_detected", False)):
-            multiplier *= two_d_boost
-            candidate["boost_applied"] = True
-
-        candidate["constraint_multiplier"] = multiplier
-        candidate["relevance_score"] *= multiplier
-        candidate["primary_rank_score"] = _safe_float(candidate.get("relevance_score", 0.0), 0.0)
-
-    # Step B: rank by semantic + lexical relevance only (RAG is independent from recommendation scoring).
-    return sorted(
+    """Apply final multi-objective reranking after hybrid retrieval."""
+    return rank_candidates(
         candidates,
-        key=lambda x: (
-            -_safe_float(x.get("primary_rank_score", 0.0), 0.0),
-            _safe_float(x.get("distance", 1.0), 1.0),
-        ),
+        hidden_gem_mode=hidden_gem_mode,
+        graphics_preference=graphics_preference,
     )
 
 
@@ -602,13 +610,16 @@ class RAGAgent:
 
         if platform_constraints:
             platform_mask = pd.Series(False, index=df.index)
+            platforms_text = self._get_series("platforms", "").astype(str).str.lower()
             for col_name, fallback_term in platform_constraints:
-                if col_name:
+                term = str(fallback_term or "").lower().strip()
+                candidate_mask = pd.Series(False, index=df.index)
+                if col_name and col_name in df.columns:
                     col_series = pd.to_numeric(self._get_series(col_name, 0), errors="coerce").fillna(0).astype(int)
-                    platform_mask = platform_mask | (col_series == 1)
-                else:
-                    platforms_text = self._get_series("platforms", "").astype(str).str.lower()
-                    platform_mask = platform_mask | platforms_text.str.contains(str(fallback_term).lower(), na=False)
+                    candidate_mask = candidate_mask | (col_series == 1)
+                if term:
+                    candidate_mask = candidate_mask | platforms_text.str.contains(term, na=False, regex=False)
+                platform_mask = platform_mask | candidate_mask
             mask = mask & platform_mask
 
         mode = str(multiplayer_mode).strip().lower() if multiplayer_mode else ""
@@ -693,8 +704,10 @@ class RAGAgent:
             return None
 
         patterns = [
-            r"similar to\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|$)",
-            r"like\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|$)",
+            r"similar to\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|\s+but\b|$)",
+            r"more like\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|\s+but\b|$)",
+            r"games?\s+like\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|\s+but\b|$)",
+            r"like\s+(.+?)(?:\s+with\b|\s+that\b|\s+having\b|\s+on\s+|\s+for\s+|\s+but\b|$)",
         ]
         for pattern in patterns:
             match = re.search(pattern, q, flags=re.IGNORECASE)
@@ -710,6 +723,94 @@ class RAGAgent:
             if raw:
                 return raw
         return None
+
+    def _has_seed_reference_intent(self, query):
+        q = (query or "").lower()
+        if not q:
+            return False
+
+        seed_intent_patterns = [
+            r"\bsimilar to\b",
+            r"\bmore like\b",
+            r"\bgames?\s+like\b",
+            r"\bi\s+(recently\s+)?played\b",
+            r"\brecently\s+played\b",
+            r"\bafter\s+playing\b",
+            r"\bi\s+(liked|loved|enjoyed)\b",
+            r"\bbased on\b",
+        ]
+        return any(re.search(pattern, q, flags=re.IGNORECASE) for pattern in seed_intent_patterns)
+
+    def _is_specific_seed_title(self, title_tokens):
+        if not title_tokens:
+            return False
+        if len(title_tokens) >= 2:
+            return len("".join(title_tokens)) >= 5
+
+        token = title_tokens[0]
+        return len(token) >= 5 and token not in GENERIC_SEED_TITLE_TOKENS
+
+    def _find_seed_games_mentioned_in_query(self, query, max_matches=5):
+        if not self._has_seed_reference_intent(query):
+            return []
+
+        query_tokens = _tokenize_text(query)
+        if not query_tokens:
+            return []
+
+        max_window = min(8, len(query_tokens))
+        query_ngrams = set()
+        for size in range(1, max_window + 1):
+            for idx in range(0, len(query_tokens) - size + 1):
+                query_ngrams.add(tuple(query_tokens[idx : idx + size]))
+
+        matches = []
+        for _, row in self.catalog_df.iterrows():
+            name = str(row.get("name", "") or "").strip()
+            game_id = str(row.get("game_id", "") or "").strip()
+            if not name or not game_id:
+                continue
+
+            title_tokens = tuple(_tokenize_text(name))
+            if len(title_tokens) > max_window or not self._is_specific_seed_title(title_tokens):
+                continue
+            if title_tokens not in query_ngrams:
+                continue
+
+            matches.append(
+                (
+                    len(title_tokens),
+                    len(name),
+                    _safe_float(row.get("total_rating_count"), 0.0),
+                    row.to_dict(),
+                )
+            )
+
+        matches.sort(key=lambda item: (item[0], item[1], item[2]), reverse=True)
+
+        selected = []
+        seen_game_ids = set()
+        for _, _, _, row in matches:
+            game_id = str(row.get("game_id", "") or "").strip()
+            if not game_id or game_id in seen_game_ids:
+                continue
+            seen_game_ids.add(game_id)
+            selected.append(row)
+            if len(selected) >= max_matches:
+                break
+
+        return selected
+
+    def _append_seed_game(self, seed_games, seen_seed_ids, seed_game):
+        if not seed_game:
+            return
+
+        game_id = str(seed_game.get("game_id", "") or "").strip()
+        if not game_id or game_id in seen_seed_ids:
+            return
+
+        seen_seed_ids.add(game_id)
+        seed_games.append(seed_game)
 
     def _normalize_seed_key(self, text):
         parts = _tokenize_text(text)
@@ -1113,14 +1214,18 @@ class RAGAgent:
         min_year=None,
         platforms=None,
         multiplayer_mode=None,
+        ranking_mode=None,
         vector_k=100,
         bm25_k=100,
+        semantic_weight=SEMANTIC_WEIGHT,
+        lexical_weight=LEXICAL_WEIGHT,
         debug_scores=False,
         user_id=None,
         seed_game_id=None,
     ):
         hard_constraints = self._extract_hard_constraints(query)
         graphics_preference = self._extract_graphics_preference(query, hard_constraints)
+        hidden_gem_mode = has_hidden_gem_intent(query, ranking_mode)
         parsed_min_year = self._parse_year_constraint(query)
         effective_min_year = min_year if min_year is not None else parsed_min_year
         seed_filter_ids = None
@@ -1144,61 +1249,68 @@ class RAGAgent:
         print(f"Prefilter found {len(allowed_ids) if allowed_ids is not None else len(self.catalog_df)} games.")
 
         seed_similarity_boosts = {}
-        seed_game = None
+        seed_filter_ids = None
+        seed_exclusion_ids = set()
+        seed_games = []
+        seen_seed_ids = set()
+
         if seed_game_id is not None:
             seed_game = self._find_seed_game_by_id(seed_game_id)
             if not seed_game:
                 print(f"[Trace] search:return [] | reason=seed_game_id_not_found | seed_game_id={seed_game_id}")
                 return []
-            seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
-            if not seed_similarity_boosts:
+            self._append_seed_game(seed_games, seen_seed_ids, seed_game)
+        else:
+            seed_title = self._extract_similarity_seed_title(query)
+            if seed_title:
+                seed_game = self._find_seed_game(seed_title)
+                if seed_game:
+                    self._append_seed_game(seed_games, seen_seed_ids, seed_game)
+                else:
+                    print(f"[INFO] Seed game '{seed_title}' not found. Falling back to Hybrid Vector+BM25.")
+
+        for seed_game in self._find_seed_games_mentioned_in_query(query):
+            self._append_seed_game(seed_games, seen_seed_ids, seed_game)
+
+        if seed_games:
+            seed_filter_ids = set()
+            seed_names = []
+            for seed_game in seed_games:
+                seed_id = str(seed_game.get("game_id", "") or "").strip()
+                seed_name = str(seed_game.get("name", seed_id) or seed_id).strip()
+                if seed_id:
+                    seed_exclusion_ids.add(seed_id)
+                if seed_name:
+                    seed_names.append(seed_name)
+
+                current_seed_ids, current_boosts = self._get_similar_by_seed_attributes(seed_game)
+                seed_filter_ids.update(current_seed_ids)
+                for game_id, boost in current_boosts.items():
+                    seed_similarity_boosts[game_id] = max(
+                        _safe_float(seed_similarity_boosts.get(game_id), 0.0),
+                        _safe_float(boost, 0.0),
+                    )
+
+            if seed_game_id is not None and not seed_similarity_boosts:
                 print(
                     "[Trace] search:return [] | reason=seed_game_similarity_empty | "
                     f"seed_game_id={seed_game_id}"
                 )
                 return []
 
-            seed_name = seed_game.get("name", str(seed_game_id))
+            if seed_exclusion_ids and allowed_ids is not None:
+                allowed_ids = allowed_ids.difference(seed_exclusion_ids)
+
+            seed_overlap = allowed_ids.intersection(seed_filter_ids) if allowed_ids is not None else set(seed_filter_ids)
             print(
-                f"Seed Game Filter Active (ID={seed_game_id}): {seed_name} | "
+                "[Trace] seed_context:active | "
+                f"seed_titles={seed_names} | excluded_seed_ids={len(seed_exclusion_ids)} | "
                 f"similar_candidates={len(seed_filter_ids)}"
             )
-            # Seed metadata is a soft signal by default: retain as metadata boosts,
-            # avoid hard candidate gating that can collapse to zero results.
-            if seed_filter_ids:
-                seed_overlap = allowed_ids.intersection(seed_filter_ids) if allowed_ids is not None else set(seed_filter_ids)
-                if seed_overlap:
-                    print(f"[Trace] seed_filter:soft_overlap | overlap_candidates={len(seed_overlap)}")
-                else:
-                    print("[Trace] seed_filter:soft_only | overlap_candidates=0 | using metadata boost without hard filter")
-        else:
-            seed_title = self._extract_similarity_seed_title(query)
-            if seed_title:
-                seed_game = self._find_seed_game(seed_title)
-                if seed_game:
-                    seed_filter_ids, seed_similarity_boosts = self._get_similar_by_seed_attributes(seed_game)
-                    if seed_filter_ids is not None:
-                        seed_name = seed_game.get("name", seed_title)
-                        seed_attrs = [
-                            f"platforms={seed_game.get('platforms', '')}",
-                            f"genres={seed_game.get('genres', '')}",
-                            f"themes={seed_game.get('themes', '')}",
-                            f"developers={seed_game.get('developers', '')}",
-                        ]
-                        print(
-                            f"Retrieving games similar to {seed_name} using attributes: "
-                            + "; ".join(seed_attrs)
-                        )
-                        # Keep seed-derived similarities as a post-retrieval boost.
-                        # Only intersect if it is non-empty; otherwise fall back to soft boost only.
-                        if seed_filter_ids:
-                            seed_overlap = allowed_ids.intersection(seed_filter_ids) if allowed_ids is not None else set(seed_filter_ids)
-                            if seed_overlap:
-                                print(f"[Trace] seed_filter:soft_overlap | overlap_candidates={len(seed_overlap)}")
-                            else:
-                                print("[Trace] seed_filter:soft_only | overlap_candidates=0 | using metadata boost without hard filter")
-                else:
-                    print(f"[INFO] Seed game '{seed_title}' not found. Falling back to Hybrid Vector+BM25.")
+            if seed_overlap:
+                print(f"[Trace] seed_filter:soft_overlap | overlap_candidates={len(seed_overlap)}")
+            else:
+                print("[Trace] seed_filter:soft_only | overlap_candidates=0 | using metadata boost without hard filter")
 
         management_domain, domain_keywords = self._detect_management_domain(query)
         if management_domain:
@@ -1219,7 +1331,7 @@ class RAGAgent:
             if requirements.get("needs_fishing"):
                 print("No matching fishing games found with these constraints")
             print("[WARN] Prefilter empty after strict constraints; auto-relaxing to broad retrieval.")
-            allowed_ids = set(self.catalog_by_id.keys())
+            allowed_ids = set(self.catalog_by_id.keys()).difference(seed_exclusion_ids)
         if allowed_ids is not None and len(allowed_ids) < 5 and effective_min_year is not None:
             print("[INFO] Constraint too tight, relaxing year filter...")
             relaxed_allowed_ids, requirements = self._get_prefilter_ids(
@@ -1247,12 +1359,12 @@ class RAGAgent:
             print(f"[Trace] prefilter:relaxed_pass | allowed_ids={relaxed_allowed_count}")
             if allowed_ids is not None and not allowed_ids:
                 print("[WARN] Relaxed prefilter still empty; falling back to full catalog for retrieval.")
-                allowed_ids = set(self.catalog_by_id.keys())
+                allowed_ids = set(self.catalog_by_id.keys()).difference(seed_exclusion_ids)
 
         print("Retrieval Mode: Semantic Theme")
         if allowed_ids is not None and not allowed_ids:
             print("[WARN] Prefilter produced empty set; falling back to full catalog for retrieval.")
-            allowed_ids = set(self.catalog_by_id.keys())
+            allowed_ids = set(self.catalog_by_id.keys()).difference(seed_exclusion_ids)
         allowed_count_for_retrieval = "ALL" if allowed_ids is None else len(allowed_ids)
         print(f"[Trace] retrieval:starting | allowed_ids={allowed_count_for_retrieval}")
         print("Searching with vector index...")
@@ -1271,13 +1383,15 @@ class RAGAgent:
             vector_hits=vector_hits,
             bm25_hits=bm25_hits,
             rrf_k=60,
-            vector_weight=0.9,
-            bm25_weight=0.1,
+            vector_weight=semantic_weight,
+            bm25_weight=lexical_weight,
         )
 
         candidates = []
         for hit in fused_hits:
             game_id = hit["game_id"]
+            if game_id in seed_exclusion_ids:
+                continue
             row = self.catalog_by_id.get(game_id)
             if not row:
                 continue
@@ -1304,6 +1418,11 @@ class RAGAgent:
                     "storyline": storyline,
                     "storyline_summary": combined_story,
                     "total_rating": _safe_float(row.get("total_rating"), 0.0),
+                    "total_rating_count": _safe_float(row.get("total_rating_count"), 0.0),
+                    "custom_interest_score": _safe_float(row.get("custom_interest_score"), 0.0),
+                    "custom_interest_percentile": _safe_float(row.get("custom_interest_percentile"), 0.0),
+                    "hidden_gem_balanced_flag": _safe_int(row.get("hidden_gem_balanced_flag"), 0),
+                    "extraction_cohort": row.get("extraction_cohort", ""),
                     "playtime_normally": _safe_float(row.get("playtime_normally"), 0.0),
                     "distance": _safe_float(hit.get("distance"), 1.0),
                     "metadata_boost": _safe_float(seed_similarity_boosts.get(game_id), 0.0),
@@ -1354,6 +1473,7 @@ class RAGAgent:
         ranked = rank_results(
             candidates,
             graphics_preference=graphics_preference,
+            hidden_gem_mode=hidden_gem_mode,
         )
         top3_names = [c.get("name", "Not Listed") for c in ranked[:3]]
         print(f"Top 3 matches found: {top3_names}")

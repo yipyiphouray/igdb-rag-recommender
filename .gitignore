@@ -10,7 +10,7 @@ data/analytics/descriptive/*
 data/*.db
 data/database/igdb_games.db
 data/analytics/diagnostic/*
-data/vector_store/*.sqlite3
+data/vector_store/
 models/*.pkl
 
 # Frontend dependencies and generated build output

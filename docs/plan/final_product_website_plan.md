@@ -217,7 +217,7 @@ data/app/app_filter_options.json
 data/app/app_insight_summary.json
 data/app/app_methodology_metrics.json
 data/analytics/predictive/
-data/rag/
+data/vector_store/
 ```
 
 The website should not directly rebuild these artifacts. The existing Python scripts and notebooks remain responsible for data generation.
@@ -835,15 +835,18 @@ data/analytics/predictive/similarity_evaluation.json
 
 Purpose:
 
-- Let users ask for game recommendations in natural language.
+- Help users understand the project, dataset, methodology, RAG role, recommendation logic, and how to use `Recommend Me_`.
 
 The chatbot should:
 
-- Use retrieved project game profiles.
+- Use curated guide prompts as the primary interaction.
+- Keep free-text questions as a secondary custom-question path.
+- Use retrieved project/catalog context when explanation requires grounding.
+- Explain why structured recommendation inputs matter.
+- Direct users to `Recommend Me_` for strong personalized recommendations.
 - Avoid unsupported claims.
-- Explain why games were recommended.
 - Mention missing data when relevant.
-- Ask users to clarify when the query is too broad or no match exists.
+- Ask users to clarify when a project/recommendation-methodology question is too broad.
 
 ## 7.7 Methodology
 
@@ -960,6 +963,7 @@ GET  /hidden-gems
 POST /recommendations
 GET  /similarity/games/{game_id}
 POST /similarity/query
+GET  /chat/status
 POST /chat
 GET  /methodology/summary
 ```
@@ -1180,11 +1184,13 @@ This endpoint can share request structure with `/recommendations`, but it should
 
 Purpose:
 
-- Return grounded RAG chatbot responses.
+- Return grounded guide responses for project, dataset, methodology, recommendation-logic, and website-usage questions.
+- Help users understand what information improves recommendations and direct recommendation-seeking users toward `Recommend Me_`.
 
 Owner:
 
 - Teammate-owned RAG logic.
+- Shared recommendation-service integration.
 
 Recommended request body:
 
@@ -1199,7 +1205,8 @@ Recommended response body:
 
 ```json
 {
-  "answer": "Based on the project dataset, you may like ...",
+  "answer": "Based on your preferences, the recommendation engine found these catalog-backed matches.",
+  "mode": "recommendation_service",
   "retrieved_games": [
     {
       "game_id": 123,
@@ -1213,9 +1220,28 @@ Recommended response body:
 
 Rules:
 
-- The chatbot must only recommend games retrieved from project data.
+- `Recommend Me_` is the main recommendation experience.
+- The guide should primarily explain the project, data, methodology, RAG role, cosine-similarity logic, hidden-gem logic, and how users should use the website.
+- The guide should help users prepare better recommendation inputs instead of trying to handle every open-ended recommendation request.
+- If the user asks for strong personalized recommendations, the guide should point them to `Recommend Me_` or use the recommendation service only when an intentionally supported conversational recommendation path is enabled.
+- RAG should be used for project, methodology, data-source, catalog-context, and recommendation-explanation questions.
+- The guide must only mention games returned by project data, the recommendation service, or retrieved context.
 - Unsupported metadata should not be invented.
 - Missing data should be disclosed when relevant.
+
+Guide interaction update:
+
+- The Guide page should make curated question buttons the primary interaction.
+- Free-text input can remain, but it should be framed as a custom project/methodology/recommendation-logic question rather than a general chatbot input.
+- Recommended primary guide topics:
+  - `Explain this project`;
+  - `Explain the data`;
+  - `Explain recommendations`;
+  - `Explain RAG`;
+  - `Explain hidden gems`;
+  - `Help me use Recommend Me`.
+- If mode buttons remain, the strongest default modes should be explanation/guidance modes rather than recommendation modes.
+- If a direct recommendation request is vague, the guide should explain what details are needed and direct the user toward `Recommend Me_`.
 
 ## 8.3 Teammate-Owned Integration Contracts
 
@@ -1234,16 +1260,17 @@ data/analytics/predictive/similarity_evaluation.json
 Minimum RAG artifacts expected:
 
 ```text
-data/rag/game_profiles.parquet
-data/rag/retrieval_metadata.parquet
-data/rag/vector_store/
+data/app/app_game_catalog.parquet
+data/vector_store/
+src/rag_engine.py
+src/app/rag_service.py
 ```
 
 Until those artifacts are ready:
 
 - Recommendations should continue using structured fallback logic or show a clear similarity-integration pending status.
 - Optional similarity method sections should show pending status if they exist.
-- Chatbot page should show placeholder status.
+- Chatbot page should show a controlled unavailable status.
 - Recommendation endpoint can use structured scoring fallback.
 - Missing artifacts should not crash the website.
 

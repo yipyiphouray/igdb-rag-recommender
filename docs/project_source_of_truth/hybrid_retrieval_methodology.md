@@ -10,6 +10,27 @@ The discovery stack emphasizes **semantic retrieval + hybrid ranking** rather th
 
 Game documents are embedded with transformer encoders and indexed in the vector store. Query embeddings are compared using distance-to-similarity transforms where needed.
 
+The vector index should not embed only the title, summary, and genre fields. The active embedding text profile should put high-signal metadata first, then longer descriptive text after it:
+
+- title,
+- genres,
+- themes,
+- keywords,
+- platforms,
+- game modes,
+- player perspectives,
+- developers,
+- rating band,
+- playtime profile,
+- multiplayer profile,
+- hidden-gem flag,
+- high-rated flag,
+- summary,
+- storyline,
+- generated catalog/RAG profile when available.
+
+This structure gives the embedding model more context for natural-language prompts such as “cozy farming game on Switch,” “short atmospheric horror,” “hidden gem fantasy RPG,” or “co-op story game,” while keeping the most important tags near the beginning of the text.
+
 Semantic retrieval captures intent patterns such as:
 
 - mood/style descriptors (e.g., cozy, horror, open-world),
@@ -26,7 +47,7 @@ BM25 runs over textual catalog fields to preserve precision for:
 
 When `rank_bm25` is unavailable, runtime falls back to an in-repo `SimpleBM25` implementation to preserve lexical retrieval continuity.
 
-Seed-based metadata is applied as a soft post-retrieval signal (not a hard filter), using overlap from Parquet list fields (`genres_list`, `themes_list`, `developers_list`, `platforms_list`).
+Seed-based metadata is applied as a soft post-retrieval signal (not a hard filter), using overlap from Parquet list fields (`genres_list`, `themes_list`, `developers_list`, `platforms_list`). When the user provides a reference game through wording such as “similar to,” “more like,” or “I played,” the reference title is treated as a seed for similarity context but excluded from final returned recommendations so the guide suggests alternatives instead of repeating the game the user already named.
 
 ## 3. Hybrid Fusion Logic
 
@@ -59,7 +80,8 @@ Runtime order is documented and implemented as:
 3. BM25 lexical retrieval (or `SimpleBM25` fallback).
 4. Fusion scoring (weighted normalized vector/BM25 + metadata boosts).
    - Metadata boosts are similarity-derived (weighted Jaccard-style overlap), not static constants.
-5. Post-fusion multipliers/penalties (e.g., 2D preference boost, 3D avoidance penalty).
+5. Seed-title exclusion for explicitly referenced games.
+6. Post-fusion multipliers/penalties (e.g., 2D preference boost, 3D avoidance penalty).
 
 ## 5. Why This Replaces Legacy SQLite Similarity
 
@@ -86,6 +108,17 @@ The retrieval stack is validated through dedicated operational checks:
 
 - `src/validate_vector_store.py` for vector health and collapse detection.
 - `src/debug_engine.py` for end-to-end execution sanity.
+- `src/evaluate_rag_retrieval.py` for golden-query relevance checks, including seed-title exclusion checks.
+
+After any change to the embedding text profile, the vector store must be rebuilt before testing chatbot quality:
+
+```text
+python src/initialize_vector_db.py
+python src/validate_vector_store.py
+python src/debug_engine.py
+```
+
+The validator must use the same embedding text builder as the indexer so self-similarity checks reflect the actual indexed document representation.
 
 ### Validation Enforcement Boundary
 

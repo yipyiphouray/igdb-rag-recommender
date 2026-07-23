@@ -8,12 +8,9 @@ const links = [
   { href: "/explore", label: "EXPLORE_", status: "ACTIVE" },
   { href: "/hidden-gems", label: "HIDDEN GEMS_", status: "ACTIVE" },
   { href: "/recommendations", label: "RECOMMEND_", status: "ACTIVE" },
+  { href: "/guide", label: "ASK THE GUIDE_", status: "ACTIVE" },
   { href: "/insights", label: "INSIGHTS_", status: "ACTIVE" },
   { href: "/methodology", label: "METHOD_", status: "ACTIVE" },
-];
-
-const pendingLinks = [
-  { label: "ASK THE GUIDE_", status: "PENDING" },
 ];
 
 export function SiteHeader() {
@@ -71,17 +68,6 @@ export function SiteHeader() {
                   </Link>
                 ))}
 
-                {pendingLinks.map((link) => (
-                  <div
-                    key={link.label}
-                    className="flex cursor-not-allowed items-center justify-between border-b border-white px-4 py-4 font-black uppercase tracking-[-0.03em] text-white/42"
-                  >
-                    <span>{link.label}</span>
-                    <span className="font-mono text-[10px] tracking-[0.18em] text-[#FF3E00]">
-                      {link.status}
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           )}

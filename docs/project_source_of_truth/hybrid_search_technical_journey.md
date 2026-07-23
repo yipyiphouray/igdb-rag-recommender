@@ -24,12 +24,13 @@ This shift simplified runtime dependencies and removed SQL coupling from the onl
 
 ### 2) Index Rebuild and Recovery
 
-A major reliability issue during migration was a **collapsed legacy vector index** (uniform results and weak differentiation). We rebuilt indexing logic to improve embedding quality by constructing richer text inputs from catalog attributes (name + summary + genres).
+A major reliability issue during migration was a **collapsed legacy vector index** (uniform results and weak differentiation). We rebuilt indexing logic to improve embedding quality by constructing richer text inputs from catalog attributes. The active embedding profile should include high-signal structured metadata before long text fields so the model sees game identity, genre/theme context, platform context, gameplay mode, hidden-gem signals, and summary/storyline text.
 
 Current indexing flow (`src/initialize_vector_db.py`):
 
 - Loads the full Parquet catalog.
 - Normalizes schema and embedding text fields.
+- Builds a richer embedding document from title, genres, themes, keywords, platforms, game modes, player perspectives, developers, rating band, playtime profile, multiplayer profile, hidden-gem flag, high-rated flag, summary, storyline, and generated catalog/RAG profile when available.
 - Clears stale vector-store artifacts before rebuilding.
 - Indexes the full dataset in deterministic batches.
 - Validates final collection count against catalog count.
@@ -43,6 +44,7 @@ The engine now uses a robust hybrid retrieval strategy:
 - **Lexical fallback**: automatic `SimpleBM25` fallback when `rank_bm25` is unavailable.
 - **Fusion layer**: weighted semantic/lexical scoring (`0.9 / 0.1`) plus secondary rank shaping.
 - **Soft metadata boosting**: seed-derived metadata is used as a post-retrieval boost, not a hard inclusion filter.
+- **Seed-title exclusion**: reference games detected in prompts such as “similar to Stardew Valley” or “I played Hades” are excluded from final results while still shaping similarity boosts.
 - **Auto-relaxation fallback**: if strict prefiltering yields zero candidates, the engine falls back to broad retrieval instead of returning an empty result set.
 - **Post-fusion multipliers**: preference-based adjustments (e.g., 2D request boost and 3D avoidance penalty).
 
@@ -99,19 +101,22 @@ A formal validation suite is now part of the RAG workflow and should be treated 
 | `RAGAgent._bm25_search(...)` | Lexical BM25 candidate retrieval for exact-term resilience | `python src/debug_engine.py` |
 | `SimpleBM25.get_scores(...)` | Lexical fallback scoring when `rank_bm25` is unavailable | `python src/debug_engine.py` |
 | `RAGAgent._get_similar_by_seed_attributes(...)` | Soft metadata similarity boost using list-field overlap (`*_list`) | `python src/debug_engine.py` |
+| `RAGAgent._find_seed_games_mentioned_in_query(...)` | Detects explicit reference titles that should guide similarity but not be returned as recommendations | `python -m src.evaluate_rag_retrieval` |
 | `rank_results(...)` | Fusion-aware ranking with metadata boosts and post-fusion multipliers | `python src/debug_engine.py` |
 | `src/validate_vector_store.py` suite | Vector stability and collapse detection checks | `python src/validate_vector_store.py` |
+| `src/evaluate_rag_retrieval.py` suite | Golden-query relevance checks, weight comparison, and seed-title exclusion validation | `python -m src.evaluate_rag_retrieval` |
 
 ## Lessons Learned
 
 1. Embedding quality is highly sensitive to text preparation; sparse fields can silently degrade semantic retrieval.
 2. Retrieval failures may come from candidate-gating and prefilter logic, not just vector quality.
 3. Validation must include both **index health** and **runtime behavior**; passing one without the other is insufficient.
+4. Health checks confirm the vector store is technically valid, but separate golden-query tests are still needed to judge whether retrieved games feel relevant to users.
 
 ## Current Status
 
 - Parquet-native retrieval: active
 - Full-catalog vector index: active and validated
 - Hybrid semantic + lexical fusion: active
-- Soft metadata boosting + auto-relaxation fallback: active
+- Soft metadata boosting + seed-title exclusion + auto-relaxation fallback: active
 - Post-deployment validation suite: integrated into standard operating procedure

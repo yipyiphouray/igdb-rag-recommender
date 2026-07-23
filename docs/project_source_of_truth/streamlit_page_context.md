@@ -450,19 +450,20 @@ apps/streamlit/pages/5_Chatbot.py
 
 Purpose:
 
-Provides the app shell for future RAG-based natural-language game discovery.
+Provides the Streamlit workbench shell for RAG-based natural-language game discovery through the shared RAG service.
 
 Primary audience:
 
 - Users who will eventually ask for recommendations in natural language.
 - Teammates integrating RAG and vector retrieval.
 
-Expected future data/artifacts:
+Expected data/artifacts:
 
 ```text
-data/rag/game_profiles.parquet
-data/rag/retrieval_metadata.parquet
-data/rag/vector_store/
+data/app/app_game_catalog.parquet
+data/vector_store/
+src/rag_engine.py
+src/app/rag_service.py
 ```
 
 Service-layer dependency:
@@ -476,12 +477,12 @@ Current content:
 - RAG integration status.
 - Example prompt text box.
 - Safe fallback response when retrieval artifacts are missing.
-- Expected teammate artifact list.
+- Expected active artifact list.
 
 Current status:
 
 ```text
-Placeholder / integration-contract page.
+Shared-service RAG page with graceful fallback behavior.
 ```
 
 Required final behavior:
@@ -494,8 +495,9 @@ Required final behavior:
 
 Known limitations:
 
-- No final vector retrieval is currently wired into the app.
-- The page is intentionally non-blocking so Explore, Hidden Gems, Insights, Methodology, and Recommendations can work before RAG is complete.
+- The page is still visually simple compared with the final website `/guide` experience.
+- The page depends on local RAG dependencies and vector-store artifacts being available.
+- The page remains non-blocking so Explore, Hidden Gems, Insights, Methodology, and Recommendations can work even when RAG is unavailable.
 
 ---
 

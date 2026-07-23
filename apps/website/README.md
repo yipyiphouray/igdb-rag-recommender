@@ -52,9 +52,17 @@ http://localhost:3000
 /explore
 /explore/[game_id]
 /hidden-gems
+/guide
 /insights
 /methodology
 /recommendations
+```
+
+`/guide` is the RAG-backed chatbot page. It calls:
+
+```text
+GET  /chat/status
+POST /chat
 ```
 
 ## Validate

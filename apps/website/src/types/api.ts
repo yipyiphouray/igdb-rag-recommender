@@ -85,6 +85,80 @@ export type RecommendationResponse = {
   items: RecommendationResult[];
 };
 
+export type ChatFilters = {
+  platforms?: string[];
+  release_year_min?: number | null;
+  release_year_max?: number | null;
+  multiplayer_mode?: string | null;
+};
+
+export type ChatHistoryMessage = {
+  role: "user" | "guide";
+  content: string;
+};
+
+export type ChatRouteMode =
+  | "custom_question"
+  | "dataset_size"
+  | "dataset_year_range"
+  | "explain_data"
+  | "explain_hidden_gems"
+  | "explain_limitations"
+  | "explain_project"
+  | "explain_rag"
+  | "explain_recommendation"
+  | "recommend_me_guidance"
+  | "recommend_games"
+  | "rating_coverage"
+  | "search_catalog"
+  | "website_navigation";
+
+export type ChatRequest = {
+  message: string;
+  route_mode?: ChatRouteMode | null;
+  conversation_id?: string | null;
+  max_results?: number;
+  filters?: ChatFilters | null;
+  history?: ChatHistoryMessage[];
+};
+
+export type ChatRetrievedGame = GameSummary & {
+  rank: number;
+  retrieval_score?: number | null;
+  semantic_score?: number | null;
+  lexical_score?: number | null;
+  evidence: string;
+  match_explanation?: string | null;
+  caveats: string[];
+};
+
+export type ChatResponse = {
+  answer: string;
+  mode: string;
+  status: string;
+  route_mode?: ChatRouteMode | null;
+  conversation_id?: string | null;
+  retrieved_games: ChatRetrievedGame[];
+  caveats: string[];
+  applied_filters: Record<string, unknown>;
+  follow_up_prompts: string[];
+  contextual_query?: string | null;
+  interpreted_preferences: Record<string, unknown>;
+  chat_intent?: string | null;
+  intent_confidence?: number | null;
+  route_source?: string | null;
+  matched_intent_example?: string | null;
+};
+
+export type ChatStatusResponse = {
+  status: string;
+  catalog_available: boolean;
+  vector_store_available: boolean;
+  collection_available: boolean;
+  engine: string;
+  warnings: string[];
+};
+
 export type MethodologySummary = {
   data_source: string;
   metrics: Record<string, number | string | boolean | null>;

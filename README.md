@@ -8,7 +8,7 @@ A game discovery project that combines IGDB catalog analytics, metadata-based re
   - Next.js, React, TypeScript, and Tailwind frontend.
   - Final user-facing website.
 - `api/`
-  - FastAPI backend for catalog, insights, methodology, and recommendations.
+  - FastAPI backend for catalog, insights, methodology, recommendations, and RAG chat.
 - `apps/streamlit/`
   - Streamlit prototype and internal analytics workbench.
 - `src/`
@@ -82,6 +82,7 @@ streamlit run streamlit_app.py
 - `/explore`
 - `/explore/[game_id]`
 - `/hidden-gems`
+- `/guide`
 - `/insights`
 - `/methodology`
 - `/recommendations`
@@ -108,10 +109,18 @@ python src/validate_vector_store.py
 python src/debug_engine.py
 ```
 
+RAG chatbot API checks:
+
+```text
+GET  http://localhost:8000/chat/status
+POST http://localhost:8000/chat
+```
+
 ## Notes
 
 - Do not commit `.env`, `.DS_Store`, `__pycache__/`, `.next/`, `node_modules/`, local SQLite databases, or generated vector-store files.
 - The main app catalog source is `data/app/app_game_catalog.parquet`.
+- The active RAG vector store path is `data/vector_store/`.
 - Rebuild the vector index after refreshing the app catalog:
 
 ```bash

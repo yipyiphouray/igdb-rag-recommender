@@ -97,8 +97,25 @@ export type ChatHistoryMessage = {
   content: string;
 };
 
+export type ChatRouteMode =
+  | "custom_question"
+  | "dataset_size"
+  | "dataset_year_range"
+  | "explain_data"
+  | "explain_hidden_gems"
+  | "explain_limitations"
+  | "explain_project"
+  | "explain_rag"
+  | "explain_recommendation"
+  | "recommend_me_guidance"
+  | "recommend_games"
+  | "rating_coverage"
+  | "search_catalog"
+  | "website_navigation";
+
 export type ChatRequest = {
   message: string;
+  route_mode?: ChatRouteMode | null;
   conversation_id?: string | null;
   max_results?: number;
   filters?: ChatFilters | null;
@@ -119,6 +136,7 @@ export type ChatResponse = {
   answer: string;
   mode: string;
   status: string;
+  route_mode?: ChatRouteMode | null;
   conversation_id?: string | null;
   retrieved_games: ChatRetrievedGame[];
   caveats: string[];

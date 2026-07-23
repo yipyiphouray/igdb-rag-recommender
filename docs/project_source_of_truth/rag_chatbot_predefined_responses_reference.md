@@ -4,7 +4,7 @@
 
 This document defines the controlled question-and-answer patterns for the `Ask the Guide_` chatbot experience.
 
-The chatbot should feel conversational, but it should not behave like a fully open-ended LLM. Its main job is to guide users through catalog-backed game discovery using the project’s RAG retrieval stack, cosine-similarity recommendation direction, and documented IGDB dataset.
+The chatbot should feel conversational, but it should not behave like a fully open-ended LLM. Its main job is to guide users through the IGDB game-discovery system by routing recommendation requests to the cosine-similarity recommendation engine and routing project, methodology, data-source, catalog-context, and explanation questions to RAG-backed project context.
 
 Predefined responses should handle common user questions, explain the project clearly, and give the guide a consistent personality. If a user asks something outside the supported scope, the chatbot should return a safe fallback response and redirect the user back to game discovery.
 
@@ -75,13 +75,13 @@ Explain the chatbot’s supported use cases.
 
 ### Recommended Answer
 
-You can ask for game recommendations in natural language. Good prompts mention a platform, genre, mood, playstyle, reference game, rating preference, or how broad you want the results to be. I can also refine results if you ask for more, shorter, similar, popular, or hidden-gem options.
+You can ask me to explain the project, the IGDB data, the RAG method, hidden-gem logic, and how the `Recommend Me_` recommendation system works. If you want actual game recommendations, `Recommend Me_` is the strongest path because it collects structured preference signals. I can help you decide what details to enter there.
 
 ### Suggested Follow-Up Prompts
 
-- Recommend atmospheric RPGs on PC.
-- Find games similar to Stardew Valley.
-- Narrow these to hidden gems.
+- Explain how recommendations work.
+- What data does the project use?
+- Help me use Recommend Me.
 
 ## Category 3: Project Identity
 
@@ -128,7 +128,7 @@ The project uses a local game catalog built from IGDB data. The catalog includes
 
 - Show me games with strong rating coverage.
 - Find recent RPGs in the catalog.
-- Recommend games with fantasy themes.
+- Help me use fantasy themes in Recommend Me.
 
 ## Category 5: Recommendation Help
 
@@ -142,17 +142,17 @@ The project uses a local game catalog built from IGDB data. The catalog includes
 
 ### Response Goal
 
-Encourage the user to provide enough preference detail for retrieval.
+Explain that `Recommend Me_` is the main recommendation experience and help the user prepare better inputs.
 
 ### Recommended Answer
 
-Yes. Give me a few clues: platform, genre, mood, recent games you liked, and whether you want popular games or hidden gems. The more specific your prompt is, the better the guide can search the catalog.
+For the strongest recommendations, use `Recommend Me_`. It works better than open chat because it collects structured preference signals. Useful details include platform, genre, mood, recent games you liked, playtime preference, rating-quality preference, and whether you want popular games or hidden gems. I can help you decide what to enter there.
 
 ### Suggested Follow-Up Prompts
 
-- I played Hades and Dead Cells recently. Recommend similar games.
-- Recommend cozy farming games on Switch.
-- Find cinematic single-player games with strong ratings.
+- What details should I enter into Recommend Me?
+- Why do recent games matter?
+- How does cosine similarity use my preferences?
 
 ## Category 6: RAG Methodology Questions
 
@@ -170,7 +170,7 @@ Explain the RAG workflow in simple terms.
 
 ### Recommended Answer
 
-The guide uses a hybrid retrieval workflow. Semantic search finds games with similar meaning, keyword search keeps exact terms precise, and metadata checks keep answers tied to the local IGDB project catalog. The guide does not invent recommendations from memory; it retrieves candidates from the indexed dataset.
+The guide uses RAG for project, methodology, data, catalog-context, and explanation questions. Semantic search finds relevant project or catalog context, keyword search keeps exact terms precise, and metadata checks keep answers tied to the local IGDB project catalog. When you ask what to play, the guide should explain how to use `Recommend Me_` for stronger structured recommendations instead of pretending to be a general AI recommender.
 
 ### Suggested Follow-Up Prompts
 
@@ -388,11 +388,29 @@ The intended routing order is:
 
 1. Match exact/high-confidence predefined responses.
 2. Match concept-based informational questions.
-3. Run RAG retrieval only when the user clearly asks for game discovery.
-4. Ask a clarifying question when the message is project/game-related but unclear.
-5. Use the safe fallback for unsupported off-topic questions.
+3. Route recommendation requests to `Recommend Me_` guidance by default.
+4. Run RAG retrieval when the user asks for project, methodology, data-source, catalog-context, or recommendation-explanation information.
+5. Ask a clarifying question when the message is project/game-related but unclear.
+6. Use the safe fallback for unsupported off-topic questions.
 
-Vague recommendation requests such as “Can you recommend a game?”, “Recommend me something,” or “What should I play?” should not immediately trigger RAG retrieval unless the user provides at least one useful clue. The guide should first ask for a platform, genre, mood, recent game, popularity preference, or hidden-gem preference.
+## Earlier Guided Route Mode Idea Superseded
+
+The earlier route-mode idea reduced some routing mistakes, but the current product direction is to make curated project-guide topics the primary interaction instead.
+
+Deprecated route modes:
+
+| Mode | Purpose |
+|---|---|
+| Recommend games | Superseded by `Recommend Me_` guidance unless a conversational demo route is intentionally enabled. |
+| Explain project | Answer project, data, RAG, cosine similarity, and methodology questions. |
+| Explain recommendation | Explain why a result appeared using recommendation metadata and catalog context. |
+| Search catalog | Secondary to Explore Games and curated project/context questions. |
+
+The user can still type natural sentences. The selected mode should be treated as the primary routing signal, and semantic intent detection should be used as a fallback or conflict checker rather than the only router.
+
+If the selected mode and typed message appear to conflict, the Guide should ask a clarification question instead of guessing.
+
+Vague recommendation requests such as “Can you recommend a game?”, “Recommend me something,” or “What should I play?” should not immediately trigger recommendation or RAG retrieval. The guide should explain that `Recommend Me_` is the main recommendation flow and identify useful inputs such as platform, genre, mood, recent game, popularity preference, or hidden-gem preference.
 
 The website should only show a “no catalog-backed games” message for actual retrieval attempts that return no results. Conversational, predefined, and clarification responses should not display an empty game-results warning.
 
@@ -401,9 +419,35 @@ Future implementation should expand the predefined response layer gradually:
 1. Add one category at a time.
 2. Keep regex patterns simple and testable.
 3. Return consistent suggested prompts.
-4. Route recommendation-like quirky questions into retrieval when enough game preference detail exists.
+4. Route recommendation-like quirky questions into the recommendation service when enough game preference detail exists.
 5. Use predefined answers only when the user is asking about the guide, the project, methodology, help, limitations, or personality.
 6. Do not hard-code fake game recommendations in predefined responses.
+
+## Current Product Direction: Project Guide First
+
+The preferred Guide experience is no longer an open-ended recommendation chatbot. `Ask the Guide_` should be a curated project assistant that explains the system and helps users understand how to use the stronger `Recommend Me_` flow.
+
+Primary response categories should be:
+
+| Category | Purpose |
+|---|---|
+| Project overview | Explain the goal, website pages, and analytics-pillar structure. |
+| Data explanation | Explain IGDB, the local catalog, important fields, and data limitations. |
+| Recommendation explanation | Explain cosine similarity, preference signals, and why structured answers matter. |
+| RAG explanation | Explain retrieval, grounding, and why the guide is not a general LLM. |
+| Hidden-gem explanation | Explain how hidden gems are interpreted and why popularity is handled carefully. |
+| Recommend Me guidance | Help users decide what to enter into the recommendation page. |
+| Scoped fallback | Redirect unsupported or vague requests into supported guide topics. |
+
+Curated buttons should be the primary interaction. Free-text typing can remain as a secondary custom-question option, but the UI should make clear that it is for project, methodology, data, recommendation-logic, and website-usage questions.
+
+If the user asks for recommendations, the guide should usually respond by:
+
+1. explaining that `Recommend Me_` is the main recommendation experience;
+2. listing the useful preference signals to provide;
+3. offering a call-to-action or prompt that helps the user move to `Recommend Me_`.
+
+The guide should only return actual game recommendations when the project intentionally enables a conversational recommendation demo path and the user has provided enough structured preference signal.
 
 ## Recommended Backend Mapping
 
@@ -431,4 +475,4 @@ This reference is ready to implement when:
 - The team confirms the guide personality tone.
 - The backend predefined response layer includes the selected categories.
 - The chatbot still defaults safely for unsupported questions.
-- Recommendation-like questions still use retrieval instead of hard-coded game answers.
+- Recommendation-like questions use the recommendation service instead of hard-coded game answers.

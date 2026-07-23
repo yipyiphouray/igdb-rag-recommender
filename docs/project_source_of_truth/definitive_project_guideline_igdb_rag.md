@@ -4,7 +4,7 @@
 **Course:** BUSA 649  
 **Team:** QUEST ACCEPTED!  
 **Project:** IGDB Game Discovery & RAG Recommendation System  
-**Core Positioning:** A four-pillar analytics project that combines an IGDB-powered relational database, exploratory analytics, similarity-based predictive scoring, hybrid recommendation logic, and a RAG chatbot interface to help users discover games through natural-language preferences.
+**Core Positioning:** A four-pillar analytics project that combines an IGDB-powered relational database, exploratory analytics, cosine-similarity predictive scoring, hybrid recommendation logic, and a RAG-powered project guide. `Recommend Me_` is the primary game recommendation experience, while `Ask the Guide_` supports project explanation, dataset/methodology questions, recommendation guidance, and grounded reasoning about how the system works.
 
 ---
 
@@ -20,7 +20,7 @@ The project should demonstrate the full analytics lifecycle:
 4. **Diagnostic analytics** to uncover patterns behind ratings, popularity, genres, themes, and platforms.
 5. **Predictive analytics** to estimate match potential using cosine similarity instead of supervised machine learning.
 6. **Prescriptive analytics** to recommend games using structured filters, similarity ranking, and grounded explanations.
-7. **RAG chatbot interface** to let users ask for games in natural language.
+7. **RAG-powered guide interface** to help users understand the project, dataset, methodology, recommendation logic, and how to use the system.
 8. **Dashboard/application layer** to present findings, model results, recommendations, and chatbot outputs.
 
 The final project should feel like an end-to-end analytics product, not just a notebook or isolated model.
@@ -51,7 +51,7 @@ The project should intentionally include a **hidden gem** logic so the recommend
 
 Users naturally describe games using language such as “cozy,” “challenging but not stressful,” “dark fantasy,” “story-rich,” “short sessions,” or “similar to Zelda but more relaxing.” These expressions do not map perfectly to rigid database fields.
 
-The RAG chatbot is included to bridge this gap by retrieving relevant game profiles and generating grounded, explainable recommendations.
+The project addresses this gap primarily through the structured `Recommend Me_` flow, where user preferences are collected in a controlled way and converted into cosine-similarity features. The chatbot should not be treated as the main recommender. It should help users understand what details matter, explain the recommendation process, and guide users toward `Recommend Me_` when they want the strongest recommendation results.
 
 ---
 
@@ -115,17 +115,17 @@ Key outputs:
 - Hybrid recommendation scoring function
 - Explainable recommendation outputs
 
-### Objective 4: Build a Dashboard and RAG Chatbot Interface
+### Objective 4: Build a Dashboard and RAG-Powered Guide Interface
 
-Create an interactive application that allows users to explore insights and ask for game recommendations in natural language.
+Create an interactive application that allows users to explore insights, receive structured cosine-similarity recommendations, and ask project/methodology questions through a grounded guide interface.
 
 Key outputs:
 
 - Streamlit or equivalent app
 - Dashboard pages
-- RAG chatbot page
+- RAG-powered project guide page
 - Vector database or vector index
-- Grounded recommendation responses
+- Grounded project, dataset, methodology, and recommendation-explanation responses
 - Evaluation prompt test suite
 
 ---
@@ -149,7 +149,7 @@ The following are core commitments:
 - Hybrid recommendation engine using structured rules, cosine similarity, and explainable ranking.
 - Game profile document generation for embeddings.
 - Vector search for semantic retrieval.
-- RAG chatbot that only uses retrieved game context.
+- RAG-powered guide that uses retrieved project/catalog context for project explanation, methodology answers, recommendation reasoning, and user guidance.
 - Final report and README documentation.
 
 ### 5.2 Out of Scope for MVP
@@ -199,7 +199,7 @@ Recommended build order:
 10. Recommendation scoring function works.
 11. Game profile documents are generated.
 12. Vector search works.
-13. RAG chatbot works.
+13. RAG-powered guide works.
 14. Dashboard integrates all pieces.
 15. Final report documents the full system.
 
@@ -225,23 +225,26 @@ Clean Relational SQLite Database
 Analytics Tables       Game Profile Documents
    |                      |
    v                      v
-Descriptive /          Embeddings + Vector Store
+Descriptive /          Embeddings + Vector Index
 Diagnostic Analysis       |
    |                      v
    v                   RAG Retrieval
 Dashboard Pages           |
                           v
-Similarity Feature    LLM Response Generation
+Similarity Feature    Project / Catalog Context
 Table                     |
    |                      v
-   v                   Chatbot Interface
-Cosine Similarity
-   |
-   v
+   v                   RAG-Powered Guide
+Cosine Similarity          |
+   |                      v
+   v                   Recommendation Explanations
 Recommendation Scoring Engine
    |
    v
 Ranked Game Recommendations
+   |
+   v
+Recommend Me + Guide Recommendation Route
 ```
 
 ---
@@ -905,13 +908,73 @@ Example format:
 
 ---
 
-## 17. RAG Chatbot Design
+## 17. RAG-Powered Guide Design
 
 ### 17.1 Purpose
 
-The chatbot allows users to describe their preferences in natural language and receive grounded recommendations based on retrieved IGDB game profiles.
+The guide allows users to ask natural-language questions about the project, dataset, methodology, recommendation logic, catalog limitations, and how to use the application. It should feel conversational, but it is not the primary recommendation product.
 
-The chatbot should not act as a general gaming encyclopedia. It should only answer based on the project dataset and retrieved context.
+The primary recommendation experience is the `Recommend Me_` flow. `Recommend Me_` collects structured inputs, creates a user preference profile, and uses cosine similarity to rank catalog-backed games. Because this structured flow produces cleaner signals than open-ended text, it should remain the main place where users receive recommendations.
+
+`Ask the Guide_` should explain the system and help users prepare better recommendation inputs. If a user asks for a recommendation inside the guide, the preferred response is to clarify what details matter and direct them toward `Recommend Me_` for the strongest results. The guide may still route to the recommendation service when the project needs a conversational demo path, but this should be secondary to its explanation and guidance role.
+
+The guide should not act as a general gaming encyclopedia. It should only answer based on the project dataset, retrieved project/catalog context, and recommendation outputs produced by the documented engine.
+
+### 17.1.1 Guide Product Boundary
+
+The guide should be treated as a project-aware assistant, not as a ChatGPT replacement and not as a second recommendation engine.
+
+Primary responsibilities:
+
+- explain what the project does;
+- explain the IGDB data source and data limitations;
+- explain descriptive and diagnostic analytics outputs;
+- explain how cosine similarity is used in `Recommend Me_`;
+- explain how RAG/vector retrieval fits into the project;
+- explain what hidden gems mean in this project;
+- help users understand what details to enter on `Recommend Me_`;
+- disclose limitations instead of inventing unsupported facts.
+
+Non-goals:
+
+- replace the `Recommend Me_` page;
+- answer arbitrary gaming questions outside the project;
+- handle every possible natural-language recommendation phrasing;
+- behave like a general LLM assistant;
+- return weak recommendations just because the user typed an open-ended request.
+
+### 17.1.2 Interaction Principle
+
+The guide should prioritize curated prompt buttons and guided choices. Free-text input may remain available, but it should be presented as a secondary custom-question option.
+
+Recommended interaction model:
+
+```text
+Curated guide topic buttons
+-> User selects a supported topic or question
+-> Optional custom typed follow-up
+-> Guide answers from project/RAG context
+-> If user wants recommendations, guide points to Recommend Me_ or helps form better inputs
+```
+
+This makes the chatbot more reliable because most user paths stay within known, testable project questions while still preserving a conversational feel.
+
+### 17.1.3 Chatbot Routing Principle
+
+The guide should route requests by intent:
+
+| User Intent | Primary System |
+|---|---|
+| Project, dataset, methodology, or RAG question | RAG retrieval over project/catalog context or predefined project response |
+| Question about how recommendations work | Recommendation methodology explanation plus project context |
+| Question about what details to enter | Guide response that helps user prepare for `Recommend Me_` |
+| Direct request for strong personalized recommendations | Route or redirect to the `Recommend Me_` page |
+| Optional conversational recommendation demo | Cosine-similarity recommendation engine if enough preference signal exists |
+| Similar-to-a-game request inside the guide | Prefer guiding user to `Recommend Me_`; optionally route to recommendation service if enabled |
+| Why was this game recommended? | Recommendation metadata plus project/catalog context |
+| General catalog lookup or exploratory question | Catalog search or RAG/catalog retrieval, depending on the query |
+| Vague request | Clarifying question |
+| Unsupported off-topic question | Scoped fallback |
 
 ### 17.2 Game Profile Document Creation
 
@@ -945,61 +1008,64 @@ Potential alternative:
 
 ### 17.4 Retrieval Strategy
 
-When a user submits a prompt:
+When a user submits a prompt that needs RAG context:
 
 1. Parse the prompt.
-2. Apply hard filters if obvious, such as platform.
-3. Embed the prompt.
-4. Retrieve top-k similar game profiles.
-5. Apply hybrid recommendation scoring.
-6. Pass the top results as context to the LLM.
-7. Generate grounded recommendations.
+2. Classify intent.
+3. Use RAG retrieval for project, methodology, catalog-context, and explanation questions.
+4. Use predefined project guidance for common questions when that is clearer than retrieval.
+5. For direct recommendation requests, guide the user toward `Recommend Me_` or use the recommendation service only when the conversational demo path is intentionally enabled and enough preference signal exists.
+6. Return grounded, template-based answers with evidence and caveats.
 
 Recommended top-k:
 
 ```text
-Retrieve top 20 candidates → rerank → send top 5 to 8 to chatbot context
+Retrieve top 20 context candidates -> rerank -> expose top evidence snippets or catalog records
 ```
 
 ### 17.5 RAG Guardrails
 
 The chatbot must follow these rules:
 
-- Only recommend games included in retrieved context.
+- Only mention recommended games that came from the recommendation engine or retrieved project/catalog context.
+- Treat `Recommend Me_` as the primary user-facing recommendation workflow.
+- Prefer explaining what details the user should enter into `Recommend Me_` over trying to answer every open-ended recommendation prompt inside the guide.
 - Do not invent platforms, ratings, developers, or summaries.
 - If metadata is missing, say it is missing.
 - If no good match is found, say so and suggest how the user can broaden the request.
 - Explain recommendations using available game metadata.
 - Avoid claiming that a game is available on a platform unless the dataset supports it.
 
-### 17.6 Example Chatbot System Rule
+### 17.6 Example Guide System Rule
 
 ```text
-You are a game recommendation assistant. You must answer only using the retrieved game profiles provided in the context. Do not invent game titles, platforms, ratings, developers, or story details. If the context does not contain enough evidence to answer, say that the dataset does not contain a strong match and ask the user to broaden or clarify their request. For every recommendation, explain why it matches the user's request using only the supplied metadata.
+You are the project guide for the IGDB game-discovery system. Your main job is to explain the project, dataset, methodology, recommendation logic, RAG design, and how users should use the website. Recommend Me_ is the main recommendation experience. When users ask for recommendations, help them understand what details to provide or direct them to Recommend Me_; only use the recommendation service when the guided conversational recommendation path is intentionally enabled and enough preference signal exists. Use retrieved project/catalog context for explanations. Do not invent game titles, platforms, ratings, developers, or story details. If the project data does not contain enough evidence, say so and ask the user to clarify.
 ```
 
 ### 17.7 Chatbot Evaluation
 
-Create a test suite of at least 50 prompts covering different scenarios:
+Create a test suite of prompts covering explanation, guidance, and scoped fallback scenarios:
 
 | Prompt Type | Example |
 |---|---|
-| Platform-specific | “Recommend a good RPG on Nintendo Switch.” |
-| Vibe-based | “I want a cozy game with exploration.” |
-| Genre-specific | “Give me a tactical strategy game.” |
-| Hidden gem | “Find me an underrated indie game.” |
-| Constraint-heavy | “I want a short, relaxing sci-fi game on PC.” |
-| Ambiguous | “I want something fun.” |
-| No-match | “Find me a racing game for a platform not in the data.” |
-| Similarity-based | “Something like Hollow Knight but less stressful.” |
+| Project identity | "What is this project?" |
+| Data source | "What data does the website use?" |
+| Methodology | "How does the guide work?" |
+| Cosine similarity | "How does Recommend Me use my answers?" |
+| RAG role | "What does RAG do in this project?" |
+| Hidden-gem definition | "What does hidden gem mean here?" |
+| Recommendation guidance | "What details should I enter for better recommendations?" |
+| Direct recommendation request | "Recommend a game for me." |
+| Ambiguous | "Help me." |
+| Unsupported | "Recommend a restaurant." |
 
 Evaluate:
 
 - Is the answer grounded?
-- Are all recommended games from retrieved context?
-- Are platforms correct?
-- Are ratings correct?
-- Is the explanation relevant?
+- Does the guide correctly explain or route the request?
+- Does it avoid pretending to be the main recommendation engine?
+- Does it direct recommendation-seeking users toward `Recommend Me_` when appropriate?
+- Is the explanation relevant and supported by project context?
 - Did the chatbot avoid hallucination?
 
 ---
@@ -1019,7 +1085,7 @@ Streamlit is recommended for the MVP because it is fast to build and suitable fo
 | Hidden Gems & Diagnostics | Diagnostic analytics |
 | Predictive / Similarity Scoring | Cosine similarity method, ranking behavior, and interpretation |
 | Recommendation Engine | Structured recommendation filters and ranked results |
-| RAG Chatbot | Natural-language game discovery |
+| RAG-Powered Guide | Project explanation, catalog context, and recommendation reasoning |
 | Data Quality | Missingness, coverage, limitations |
 
 ### 18.3 Home Page Content
@@ -1085,7 +1151,7 @@ Include:
 - Ranked recommendation output
 - Explanation showing which answers contributed to the match
 
-### 18.8 RAG Chatbot Page
+### 18.8 RAG-Powered Guide Page
 
 Include:
 
@@ -1209,7 +1275,7 @@ Evaluate:
 - Are recommendations explainable?
 - Are recommendations too popularity-biased?
 
-### 20.5 RAG Chatbot Evaluation
+### 20.5 RAG-Powered Guide Evaluation
 
 Use a 50-prompt test suite.
 
@@ -1241,7 +1307,7 @@ Assess:
 |---|---|---|---|
 | Data Quality & Integrity | Valid schema, no orphaned relationships, required fields respected | 100% relationship integrity | SQL assertion scripts |
 | Similarity Match Quality | Ability to rank relevant games for user or reference-game profiles | Strong manual/persona relevance with valid top-k results | Persona tests, precision@k, hit rate, and manual review |
-| Recommendation Speed | Time to retrieve and rank recommendations | < 2 seconds excluding LLM response | Execution logs |
+| Recommendation Speed | Time to retrieve and rank recommendations | < 2 seconds for local recommendation response where feasible | Execution logs |
 | Chatbot Grounding Accuracy | Responses do not include unsupported metadata | >= 90% grounded responses | Manual 50-prompt evaluation |
 | Dashboard Completeness | All four pillars represented | 100% required pages completed | Final review checklist |
 | Documentation Quality | README and report explain reproducibility | Complete setup and usage instructions | Reviewer can run project locally |
@@ -1263,7 +1329,7 @@ Assess:
 | Similarity scoring | pandas, numpy, scikit-learn cosine similarity utilities |
 | Embeddings | sentence-transformers or Gemini embeddings |
 | Vector store | FAISS or Chroma |
-| Chatbot/RAG | Custom retrieval + LLM call |
+| Chatbot/RAG | Deterministic intent routing + hybrid retrieval + template-based grounded responses |
 | App | Streamlit MVP |
 | Version control | GitHub |
 | Documentation | Markdown README and final report |
@@ -1424,7 +1490,7 @@ The proposal uses an 8-week plan. The following version adds more specific miles
 | Week 4 | Descriptive and diagnostic analytics | Catalog dashboard visuals, hidden gem logic |
 | Week 5 | Similarity scoring and profile feature table | Game profile vectors, cosine similarity ranking, relevance checks |
 | Week 6 | Recommendation engine and vector store | Hybrid scoring, embeddings, retrieval working |
-| Week 7 | RAG chatbot and dashboard integration | Streamlit app with chatbot and analytics pages |
+| Week 7 | RAG-powered guide and dashboard integration | App with guide and analytics pages |
 | Week 8 | Testing, validation, report, demo polish | Final report, README, test results, final demo |
 
 ---
@@ -1459,7 +1525,7 @@ The final submission should include:
 | Diagnostic analytics | Hidden gems and rating relationship analysis | Dashboard / notebook |
 | Similarity scoring module | Cosine similarity match scoring and top-k ranking | `.py`, notebook/artifacts |
 | Recommendation engine | Hybrid scoring and ranked outputs | `.py` |
-| RAG chatbot | Natural-language grounded recommender | Streamlit page / `.py` |
+| RAG-powered guide | Natural-language project, catalog, and recommendation-explanation assistant | Website / Streamlit page and backend service |
 | Dashboard/app | Integrated user interface | Streamlit app |
 | Evaluation test suite | Data, model, recommendation, and RAG validation | `.md`, `.py`, notebook |
 | Final report | Full methodology, findings, limitations, future work | `.md` / `.pdf` |
@@ -1482,7 +1548,7 @@ Recommended final report outline:
 8. Diagnostic Analytics
 9. Predictive Analytics
 10. Prescriptive Recommendation Engine
-11. RAG Chatbot Design
+11. RAG-Powered Guide Design
 12. Dashboard / Application Design
 13. Evaluation and Validation
 14. Risks, Limitations, and Ethical Considerations
@@ -1559,7 +1625,7 @@ Use this checklist to know whether the project is complete enough.
 - [ ] Recommendation explanations are generated.
 - [ ] Hidden gem boost does not overpower relevance.
 
-### RAG Chatbot
+### RAG-Powered Guide
 
 - [ ] Game profiles are generated.
 - [ ] Embeddings are created.
@@ -1575,7 +1641,7 @@ Use this checklist to know whether the project is complete enough.
 - [ ] Hidden gems/diagnostic page exists.
 - [ ] Predictive / similarity scoring page exists.
 - [ ] Recommendation page exists.
-- [ ] RAG chatbot page exists.
+- [ ] RAG-powered guide page exists.
 
 ### Documentation
 
@@ -1592,7 +1658,7 @@ Use this checklist to know whether the project is complete enough.
 
 Use this as the clean final framing for the project:
 
-> This project builds a four-pillar analytics system for video game discovery using IGDB data. It combines a relational database, descriptive and diagnostic analysis, similarity-based predictive scoring, prescriptive hybrid recommendations, and a RAG chatbot interface to help users find games based on natural-language preferences. The system is designed to reduce choice paralysis, surface hidden gems, and provide explainable, dataset-grounded recommendations.
+> This project builds a four-pillar analytics system for video game discovery using IGDB data. It combines a relational database, descriptive and diagnostic analysis, cosine-similarity predictive scoring, prescriptive hybrid recommendations, and a RAG-powered guide interface. The recommendation engine handles game matching, while the guide explains the project, grounds answers in project data, and helps users understand recommendation reasoning.
 
 ---
 

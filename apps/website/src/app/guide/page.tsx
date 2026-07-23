@@ -1,56 +1,179 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { GameCard } from "@/components/GameCard";
-import { getChatStatus, postChatMessage } from "@/lib/api";
-import type {
-  ChatHistoryMessage,
-  ChatResponse,
-  ChatRetrievedGame,
-  ChatStatusResponse,
-} from "@/types/api";
-
-const starterPrompts = [
-  "Find games like League of Legends.",
-  "Recommend cozy RPGs on Switch.",
-  "Find hidden gems with exploration and fantasy themes.",
-  "Explain where your answers come from.",
-  "Suggest games similar to Stardew Valley but less obvious.",
-];
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { postChatMessage } from "@/lib/api";
+import type { ChatResponse, ChatRouteMode } from "@/types/api";
 
 const MAX_GUIDE_USER_TURNS = 8;
-const GUIDE_TURN_WARNING_THRESHOLD = 6;
-const HISTORY_TURN_LIMIT = 4;
 
 type GuideTurn = {
   id: string;
   question: string;
+  routeMode: ChatRouteMode;
   response?: ChatResponse;
   error?: string;
   isLoading?: boolean;
 };
 
-type ContextItem = {
+type GuideTopic = {
+  id: ChatRouteMode;
   label: string;
-  value: string;
+  eyebrow: string;
+  prompt: string;
+  description: string;
 };
 
-const preferenceLabels: Array<[string, string]> = [
-  ["recent_games", "Recent game"],
-  ["platforms", "Platform"],
-  ["genres", "Genre"],
-  ["themes", "Theme"],
-  ["moods", "Mood"],
-  ["playtime_preference", "Playtime"],
-  ["multiplayer_preference", "Multiplayer"],
-  ["discovery_preference", "Discovery"],
-  ["rating_preference", "Rating signal"],
-  ["avoid_terms", "Avoid"],
+const guideTopics: GuideTopic[] = [
+  {
+    id: "explain_project",
+    label: "Explain this project",
+    eyebrow: "Project map",
+    prompt: "Explain this project",
+    description:
+      "Understand the website goal, analytics pillars, and how the pieces fit together.",
+  },
+  {
+    id: "explain_data",
+    label: "Explain the data",
+    eyebrow: "IGDB catalog",
+    prompt: "Explain the data",
+    description:
+      "Review the IGDB source, catalog fields, data caveats, and metadata limitations.",
+  },
+  {
+    id: "dataset_size",
+    label: "How many games are in the dataset?",
+    eyebrow: "Dataset fact",
+    prompt: "How many games are in the dataset?",
+    description:
+      "Return the current game count from the structured methodology metrics artifact.",
+  },
+  {
+    id: "dataset_year_range",
+    label: "What years does the dataset cover?",
+    eyebrow: "Release span",
+    prompt: "What years does the dataset cover?",
+    description:
+      "Show the current release-year range and extraction target per year.",
+  },
+  {
+    id: "rating_coverage",
+    label: "What is rating coverage?",
+    eyebrow: "Data quality",
+    prompt: "What is rating coverage?",
+    description:
+      "Explain how much of the catalog has usable rating information.",
+  },
+  {
+    id: "explain_recommendation",
+    label: "Explain recommendations",
+    eyebrow: "Cosine logic",
+    prompt: "Explain recommendations",
+    description:
+      "Learn how structured answers become a preference profile and ranked matches.",
+  },
+  {
+    id: "recommend_me_guidance",
+    label: "Help me use Recommend Me",
+    eyebrow: "Better inputs",
+    prompt: "Help me use Recommend Me",
+    description:
+      "Understand what inputs to provide before using the main recommendation workflow.",
+  },
+  {
+    id: "explain_hidden_gems",
+    label: "Explain hidden gems",
+    eyebrow: "Visibility logic",
+    prompt: "Explain hidden gems",
+    description:
+      "Understand how the project balances quality, metadata coverage, and lower visibility.",
+  },
+  {
+    id: "explain_rag",
+    label: "Explain RAG",
+    eyebrow: "Project method",
+    prompt: "Explain RAG",
+    description:
+      "Clarify how RAG fits the project after simplifying the Guide to controlled responses.",
+  },
+  {
+    id: "search_catalog",
+    label: "Where do I browse games?",
+    eyebrow: "Explore Games",
+    prompt: "Where do I browse games?",
+    description:
+      "Point users to the catalog browsing and filtering page.",
+  },
+  {
+    id: "website_navigation",
+    label: "Website navigation",
+    eyebrow: "Site map",
+    prompt: "Website navigation",
+    description:
+      "Explain which website page should be used for each project task.",
+  },
+  {
+    id: "explain_limitations",
+    label: "Explain limitations",
+    eyebrow: "Caveats",
+    prompt: "Explain limitations",
+    description:
+      "Summarize the known dataset, metadata, and recommendation limitations.",
+  },
 ];
 
+const routeByPrompt = new Map<string, ChatRouteMode>(
+  guideTopics.flatMap((topic) => [
+    [topic.prompt.toLowerCase(), topic.id],
+    [topic.label.toLowerCase(), topic.id],
+  ]),
+);
+
+function routeModeLabel(mode?: ChatRouteMode | null): string {
+  return guideTopics.find((topic) => topic.id === mode)?.label ?? "Guide instruction";
+}
+
+function routeModeForPrompt(prompt: string): ChatRouteMode {
+  const exactRoute = routeByPrompt.get(prompt.trim().toLowerCase());
+  if (exactRoute) {
+    return exactRoute;
+  }
+
+  const normalized = prompt.toLowerCase();
+  if (normalized.includes("how many") || normalized.includes("dataset size")) {
+    return "dataset_size";
+  }
+  if (normalized.includes("year")) {
+    return "dataset_year_range";
+  }
+  if (normalized.includes("rating coverage")) {
+    return "rating_coverage";
+  }
+  if (normalized.includes("hidden gem")) {
+    return "explain_hidden_gems";
+  }
+  if (normalized.includes("recommend")) {
+    return "recommend_me_guidance";
+  }
+  if (normalized.includes("rag")) {
+    return "explain_rag";
+  }
+  if (normalized.includes("data")) {
+    return "explain_data";
+  }
+  if (normalized.includes("navigation") || normalized.includes("website")) {
+    return "website_navigation";
+  }
+  if (normalized.includes("limitation")) {
+    return "explain_limitations";
+  }
+  return "explain_project";
+}
+
 function statusTone(status?: string) {
-  if (status === "ready" || status === "success") {
-    return "border-[#39ff14] text-[#39ff14]";
+  if (status === "success") {
+    return "border-white/45 text-white/72";
   }
   if (status === "no_results" || status === "degraded") {
     return "border-[#ffcc00] text-[#ffcc00]";
@@ -58,323 +181,25 @@ function statusTone(status?: string) {
   return "border-[#ff3e00] text-[#ff3e00]";
 }
 
-function formatPreferenceValue(value: unknown): string {
-  if (Array.isArray(value)) {
-    return value
-      .map((item) => String(item ?? "").trim())
-      .filter(Boolean)
-      .join(", ");
-  }
-
-  if (typeof value === "string") {
-    return value.replaceAll("_", " ").trim();
-  }
-
-  if (typeof value === "number" || typeof value === "boolean") {
-    return String(value);
-  }
-
-  return "";
-}
-
-function buildContextItems(response?: ChatResponse): ContextItem[] {
-  const preferences = response?.interpreted_preferences ?? {};
-
-  return preferenceLabels
-    .map(([key, label]) => ({
-      label,
-      value: formatPreferenceValue(preferences[key]),
-    }))
-    .filter((item) => item.value.length > 0);
-}
-
-function ScopePanel() {
+function GuideAvatar() {
   return (
-    <section className="border border-white/15 bg-black/72 p-5">
-      <div className="grid gap-4 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-            Guide scope_
-          </p>
-          <h2 className="mt-2 text-2xl font-black uppercase tracking-[-0.04em] text-white">
-            Catalog search assistant, not a general chatbot
-          </h2>
-        </div>
-        <div className="grid gap-3 text-sm leading-7 text-white/62">
-          <p>
-            Use Ask the Guide for catalog-backed game discovery and project
-            explanation. Strong prompts include a game you liked, platform,
-            genre, mood, playtime, hidden-gem preference, or rating-quality
-            signal.
-          </p>
-          <p>
-            Each search thread is capped at {MAX_GUIDE_USER_TURNS} user
-            messages. If the topic changes or the thread gets noisy, start a
-            fresh search for cleaner recommendations.
-          </p>
-        </div>
+    <div className="ask-guide-avatar" aria-hidden="true">
+      <div className="ask-guide-face-image-wrap">
+        <img
+          src="/images/digital-face-representation.jpg"
+          alt=""
+          className="ask-guide-face-image"
+        />
+        <span className="ask-guide-face-image-glitch ask-guide-face-image-glitch-red" />
+        <span className="ask-guide-face-image-glitch ask-guide-face-image-glitch-white" />
       </div>
-    </section>
-  );
-}
-
-function SearchContextPanel({
-  response,
-  turnCount,
-  onReset,
-}: {
-  response?: ChatResponse;
-  turnCount: number;
-  onReset: () => void;
-}) {
-  const contextItems = buildContextItems(response);
-  const progressWidth = `${Math.min(
-    100,
-    Math.round((turnCount / MAX_GUIDE_USER_TURNS) * 100),
-  )}%`;
-  const isNearLimit = turnCount >= GUIDE_TURN_WARNING_THRESHOLD;
-
-  return (
-    <section className="border border-white/15 bg-black/75 p-5">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-            Current search_
-          </p>
-          <h3 className="mt-2 text-xl font-black uppercase tracking-[-0.04em] text-white">
-            Active context
-          </h3>
-        </div>
-        <button
-          type="button"
-          onClick={onReset}
-          className="border border-white/20 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-white/75 transition hover:border-[#ff3e00] hover:text-white"
-        >
-          Start new
-        </button>
-      </div>
-
-      <div className="mt-4">
-        <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-          <span>Thread length</span>
-          <span>
-            {turnCount}/{MAX_GUIDE_USER_TURNS}
-          </span>
-        </div>
-        <div className="mt-2 h-1 border border-white/15 bg-white/[0.03]">
-          <div
-            className="h-full bg-[#ff3e00] transition-all"
-            style={{ width: progressWidth }}
-          />
-        </div>
-      </div>
-
-      {isNearLimit && (
-        <div className="mt-4 border border-[#ffcc00]/35 bg-[#ffcc00]/10 p-3 text-xs leading-6 text-white/72">
-          This thread is getting long. Start a new search soon if the
-          recommendations begin to feel noisy.
-        </div>
-      )}
-
-      <div className="mt-5 grid gap-2">
-        {contextItems.length > 0 ? (
-          contextItems.map((item) => (
-            <div
-              key={`${item.label}-${item.value}`}
-              className="border border-white/10 bg-white/[0.03] p-3"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
-                {item.label}
-              </p>
-              <p className="mt-1 text-sm font-bold text-white/82">
-                {item.value}
-              </p>
-            </div>
-          ))
-        ) : (
-          <div className="border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-white/55">
-            No active preferences yet. Start with a game, platform, genre, or
-            mood.
-          </div>
-        )}
-      </div>
-
-      {response?.chat_intent && (
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
-          Intent: {response.chat_intent}
-        </p>
-      )}
-    </section>
-  );
-}
-
-function StatusPanel({
-  status,
-  error,
-}: {
-  status: ChatStatusResponse | null;
-  error: string;
-}) {
-  const statusLabel = error ? "unavailable" : status?.status ?? "checking";
-  const warnings = error ? [error] : status?.warnings ?? [];
-
-  return (
-    <section className="grid gap-4 border border-white/15 bg-black/72 p-5 md:grid-cols-[1fr_2fr]">
-      <div>
-        <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-          Guide status_
-        </p>
-        <div
-          className={`mt-3 inline-flex border px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] ${statusTone(
-            statusLabel,
-          )}`}
-        >
-          {statusLabel}
-        </div>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="border border-white/10 bg-white/[0.03] p-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-            Catalog
-          </p>
-          <p className="mt-1 font-black text-white">
-            {status?.catalog_available ? "Available" : "Checking"}
-          </p>
-        </div>
-        <div className="border border-white/10 bg-white/[0.03] p-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-            Vector store
-          </p>
-          <p className="mt-1 font-black text-white">
-            {status?.vector_store_available ? "Available" : "Checking"}
-          </p>
-        </div>
-        <div className="border border-white/10 bg-white/[0.03] p-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-            Engine
-          </p>
-          <p className="mt-1 font-black text-white">
-            {status?.engine ?? "Hybrid RAG"}
-          </p>
-        </div>
-      </div>
-
-      {warnings.length > 0 && (
-        <div className="md:col-span-2 border border-[#ff3e00]/30 bg-[#ff3e00]/10 p-4 text-sm leading-6 text-white/78">
-          {warnings.join(" ")}
-        </div>
-      )}
-    </section>
-  );
-}
-
-function GameTitlePreview({ game }: { game: ChatRetrievedGame }) {
-  const [previewPosition, setPreviewPosition] = useState<{
-    x: number;
-    y: number;
-  } | null>(null);
-
-  function updatePreviewPosition(clientX: number, clientY: number) {
-    const previewWidth = 420;
-    const previewHeight = 620;
-    const offset = 18;
-    const desiredX = clientX + offset;
-    const desiredY = clientY - 96;
-
-    if (typeof window === "undefined") {
-      setPreviewPosition({
-        x: desiredX,
-        y: desiredY,
-      });
-      return;
-    }
-
-    const maxX = Math.max(16, window.innerWidth - previewWidth - 16);
-    const maxY = Math.max(16, window.innerHeight - previewHeight - 16);
-
-    setPreviewPosition({
-      x: Math.min(Math.max(16, desiredX), maxX),
-      y: Math.min(Math.max(16, desiredY), maxY),
-    });
-  }
-
-  return (
-    <div
-      className="group relative"
-      onMouseMove={(event) =>
-        updatePreviewPosition(event.clientX, event.clientY)
-      }
-      onMouseEnter={(event) =>
-        updatePreviewPosition(event.clientX, event.clientY)
-      }
-      onMouseLeave={() => setPreviewPosition(null)}
-    >
-      <button
-        type="button"
-        onFocus={(event) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          updatePreviewPosition(rect.right, rect.top);
-        }}
-        className="flex w-full items-center justify-between gap-4 border border-white/14 bg-white/[0.03] px-4 py-3 text-left transition hover:border-[#ff3e00] focus:border-[#ff3e00] focus:outline-none"
-      >
-        <span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#ff3e00]">
-            Match #{game.rank}
-          </span>
-          <span className="mt-1 block text-lg font-black uppercase tracking-[-0.03em] text-white">
-            {game.name}
-          </span>
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-          Hover preview
-        </span>
-      </button>
-
-      {previewPosition && (
-        <div
-          className="fixed z-50 w-[min(26rem,calc(100vw-2rem))] pointer-events-none"
-          style={{
-            left: previewPosition.x,
-            top: previewPosition.y,
-          }}
-        >
-          <div className="pointer-events-auto border border-[#ff3e00] bg-black p-3 shadow-[0_0_34px_rgba(255,62,0,0.28)]">
-            <GameCard game={game} openInNewTab />
-            <div className="border-x border-b border-white bg-black p-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#ff3e00]">
-                Retrieval evidence_
-              </p>
-              <p className="mt-2 text-sm leading-6 text-white/68">
-                {game.evidence}
-              </p>
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-white/45">
-                Click the card to open the game page in a new tab.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function RetrievedGameTitleList({ games }: { games: ChatRetrievedGame[] }) {
-  return (
-    <div className="grid gap-3">
-      <div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
-          Retrieved titles_
-        </p>
-        <p className="mt-2 text-sm leading-6 text-white/55">
-          Hover over a title to preview the game card. Click the preview card to
-          open the detail page in a new tab.
-        </p>
-      </div>
-      <div className="grid gap-2">
-        {games.map((game) => (
-          <GameTitlePreview key={game.game_id} game={game} />
-        ))}
+      <div className="ask-guide-data-rain">
+        <span>CORTANA</span>
+        <span>AI</span>
+        <span>PROJECTION</span>
+        <span>IGDB</span>
+        <span>GUIDE</span>
+        <span>TRACE</span>
       </div>
     </div>
   );
@@ -388,51 +213,46 @@ function GuideThinkingBubble() {
       className="recommend-loading-panel border border-[#ff3e00]/35 bg-black p-5 text-white"
     >
       <div className="relative z-10">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
-          Guide is searching_
+        <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+          Guide is selecting response_
         </p>
         <p className="mt-2 text-sm leading-6 text-white/62">
-          Searching semantic vectors, keyword matches, catalog metadata, and
-          ranking signals.
+          Reading the selected instruction and returning the matching project
+          explanation.
         </p>
       </div>
 
       <div className="recommend-loading-track mt-4" aria-hidden="true">
-        <span className="recommend-loading-track-fill" style={{ width: "92%" }} />
+        <span className="recommend-loading-track-fill" style={{ width: "88%" }} />
         <span className="recommend-loading-track-scan" />
       </div>
     </div>
   );
 }
 
-function guideHistoryContent(response: ChatResponse): string {
-  const names = response.retrieved_games
-    .slice(0, 5)
-    .map((game) => game.name)
-    .filter(Boolean);
-
-  return [
-    response.answer,
-    names.length > 0 ? `Retrieved games: ${names.join(", ")}` : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function buildHistory(turns: GuideTurn[]): ChatHistoryMessage[] {
-  return turns
-    .filter((turn) => turn.response)
-    .flatMap((turn) => [
-      {
-        role: "user" as const,
-        content: turn.question,
-      },
-      {
-        role: "guide" as const,
-        content: guideHistoryContent(turn.response as ChatResponse),
-      },
-    ])
-    .slice(-(HISTORY_TURN_LIMIT * 2));
+function RecommendMeCallout() {
+  return (
+    <section className="ask-guide-lower-callout">
+      <div>
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff3e00]">
+          Want game recommendations?_
+        </p>
+        <h2 className="mt-2 text-2xl font-black uppercase tracking-[-0.05em] text-white">
+          Go to Recommend Me_
+        </h2>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-white/62">
+          Ask the Guide_ explains the project. Recommend Me_ is the page that
+          turns your preferences into ranked game matches.
+        </p>
+      </div>
+      <Link
+        href="/recommendations"
+        className="inline-flex bg-[#ff3e00] px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition hover:bg-white"
+      >
+        Open Recommend Me
+      </Link>
+    </section>
+  );
 }
 
 function ChatTurnPanel({
@@ -445,24 +265,25 @@ function ChatTurnPanel({
   onReset: () => void;
 }) {
   const response = turn.response;
-  const hasRetrievedGames = Boolean(response?.retrieved_games.length);
-  const shouldShowNoResults =
-    response?.mode.startsWith("rag_") && response.status === "no_results";
+  const shouldShowRecommendMeCta =
+    response?.mode === "recommend_me_guidance" ||
+    response?.chat_intent === "recommend_me_guidance";
 
   return (
-    <div className="grid gap-4">
-      <div className="ml-auto max-w-3xl border border-white bg-white text-black">
-        <div className="border-b border-black px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em]">
-          You_
+    <div className="ask-guide-turn grid gap-4">
+      <div className="ask-guide-user-command ml-auto max-w-3xl bg-white text-black">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black px-4 py-2 font-mono text-xs uppercase tracking-[0.22em]">
+          <span>You selected_</span>
+          <span>{routeModeLabel(turn.routeMode)}_</span>
         </div>
         <p className="px-5 py-4 text-base font-semibold leading-7">
           {turn.question}
         </p>
       </div>
 
-      <div className="max-w-5xl border border-white/22 bg-black">
+      <div className="ask-guide-response max-w-5xl bg-black">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/18 px-4 py-2">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
             Guide_
           </p>
           {response && (
@@ -487,7 +308,7 @@ function ChatTurnPanel({
 
           {response && (
             <div className="grid gap-5">
-              <p className="max-w-4xl text-lg leading-8 text-white/78">
+              <p className="max-w-4xl whitespace-pre-line text-lg leading-8 text-white/78">
                 {response.answer}
               </p>
 
@@ -499,20 +320,16 @@ function ChatTurnPanel({
                 </ul>
               )}
 
-              {hasRetrievedGames && (
-                <RetrievedGameTitleList games={response.retrieved_games} />
-              )}
-
-              {shouldShowNoResults && (
-                <div className="border border-white/15 bg-black/75 p-5 text-white/70">
-                  No catalog-backed games were returned for this question.
+              {shouldShowRecommendMeCta && (
+                <div className="border border-[#ff3e00]/35 bg-[#ff3e00]/10 p-4 text-sm leading-6 text-white/68">
+                  For actual ranked matches, continue on Recommend Me_.
                 </div>
               )}
 
               {response.follow_up_prompts.length > 0 && (
                 <div className="border-t border-white/15 pt-5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
-                    Continue the thread_
+                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                    Continue with_
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {response.follow_up_prompts.map((prompt) => (
@@ -530,7 +347,7 @@ function ChatTurnPanel({
                       onClick={onReset}
                       className="border border-[#ff3e00]/55 bg-[#ff3e00]/10 px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.08em] text-[#ff3e00] transition hover:border-[#ff3e00] hover:bg-[#ff3e00] hover:text-black"
                     >
-                      Start new search
+                      Start new topic
                     </button>
                   </div>
                 </div>
@@ -544,38 +361,26 @@ function ChatTurnPanel({
 }
 
 export default function GuidePage() {
-  const [message, setMessage] = useState("");
-  const [maxResults, setMaxResults] = useState(5);
-  const [chatStatus, setChatStatus] = useState<ChatStatusResponse | null>(null);
-  const [statusError, setStatusError] = useState("");
+  const [selectedTopicId, setSelectedTopicId] =
+    useState<ChatRouteMode>("explain_project");
   const [turns, setTurns] = useState<GuideTurn[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectionPulse, setSelectionPulse] = useState(false);
   const transcriptRef = useRef<HTMLDivElement | null>(null);
 
-  const trimmedMessage = useMemo(() => message.trim(), [message]);
-  const latestResponse = useMemo(
-    () =>
-      turns
-        .slice()
-        .reverse()
-        .find((turn) => turn.response)?.response,
-    [turns],
+  const selectedTopic = useMemo(
+    () => guideTopics.find((topic) => topic.id === selectedTopicId) ?? guideTopics[0],
+    [selectedTopicId],
   );
   const userTurnCount = turns.length;
   const hasReachedTurnLimit = userTurnCount >= MAX_GUIDE_USER_TURNS;
-  const isNearTurnLimit = userTurnCount >= GUIDE_TURN_WARNING_THRESHOLD;
 
-  useEffect(() => {
-    getChatStatus()
-      .then((result) => {
-        setChatStatus(result);
-        setStatusError("");
-      })
-      .catch(() => {
-        setStatusError("Could not reach the FastAPI chatbot status endpoint.");
-      });
-  }, []);
+  function handleTopicChange(nextTopicId: ChatRouteMode) {
+    setSelectedTopicId(nextTopicId);
+    setSelectionPulse(true);
+    window.setTimeout(() => setSelectionPulse(false), 520);
+  }
 
   useEffect(() => {
     const transcript = transcriptRef.current;
@@ -589,18 +394,12 @@ export default function GuidePage() {
     });
   }, [turns]);
 
-  async function submitQuestion(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function sendGuideInstruction(topic: GuideTopic) {
     setError("");
-
-    if (!trimmedMessage) {
-      setError("Type a game discovery question before asking the guide.");
-      return;
-    }
 
     if (hasReachedTurnLimit) {
       setError(
-        "This Guide thread reached its message limit. Start a new search for cleaner recommendations.",
+        "This Guide thread reached its message limit. Start a new topic for cleaner context.",
       );
       return;
     }
@@ -609,25 +408,24 @@ export default function GuidePage() {
       typeof crypto !== "undefined" && "randomUUID" in crypto
         ? crypto.randomUUID()
         : `${Date.now()}`;
-    const question = trimmedMessage;
-    const history = buildHistory(turns);
 
     setLoading(true);
-    setMessage("");
     setTurns((current) => [
       ...current,
       {
         id: turnId,
-        question,
+        question: topic.prompt,
+        routeMode: topic.id,
         isLoading: true,
       },
     ]);
 
     try {
       const result = await postChatMessage({
-        message: question,
-        max_results: maxResults,
-        history,
+        message: topic.prompt,
+        route_mode: topic.id,
+        max_results: 5,
+        history: [],
       });
       setTurns((current) =>
         current.map((turn) =>
@@ -655,208 +453,158 @@ export default function GuidePage() {
   }
 
   function resetChat() {
-    setMessage("");
     setTurns([]);
     setError("");
   }
 
   function useFollowUp(prompt: string) {
-    if (hasReachedTurnLimit) {
-      setError(
-        "This Guide thread reached its message limit. Start a new search before continuing.",
-      );
-      return;
-    }
-    setMessage(prompt);
+    const routeMode = routeModeForPrompt(prompt);
+    const topic =
+      guideTopics.find((guideTopic) => guideTopic.id === routeMode) ??
+      guideTopics[0];
+    void sendGuideInstruction({
+      ...topic,
+      prompt,
+    });
   }
 
   return (
-    <main className="explore-v4-shell">
-      <div className="explore-v4-content">
-        <section className="relative overflow-hidden border border-white bg-black">
-          <div className="absolute left-0 top-0 h-1 w-full bg-[#ff3e00]" />
-          <div className="relative bg-black p-8 sm:p-10">
-            <p className="font-mono text-xs uppercase tracking-[0.34em] text-[#ff3e00]">
-              ASK THE GUIDE_ // CATALOG-GROUNDED DISCOVERY
-            </p>
-            <h1 className="mt-4 max-w-5xl font-['Arial_Black',Impact,system-ui,sans-serif] text-5xl uppercase leading-[0.86] tracking-[-0.07em] text-white sm:text-7xl">
-              Ask the Guide_
-            </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">
-              Ask a natural-language question and get game suggestions grounded
-              in the project catalog, hybrid retrieval, and metadata caveats.
-            </p>
-          </div>
-        </section>
-
-        <StatusPanel status={chatStatus} error={statusError} />
-
-        <ScopePanel />
-
-        <section className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-          <section className="border border-white/15 bg-black/75 p-5">
-            <div className="flex flex-wrap items-start justify-between gap-4 border-b border-white/15 pb-4">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-                  Conversation_
-                </p>
-                <h2 className="mt-2 text-2xl font-black uppercase tracking-[-0.04em] text-white">
-                  Talk to the guide
-                </h2>
-              </div>
-              <button
-                type="button"
-                onClick={resetChat}
-                className="border border-white/20 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white/80 transition hover:border-white hover:text-white"
-              >
-                Clear chat
-              </button>
-            </div>
-
-            <div
-              ref={transcriptRef}
-              className="guide-chat-scroll mt-5 grid max-h-[min(34rem,65vh)] min-h-[22rem] content-start gap-6 overflow-y-auto overflow-x-visible pr-2"
-            >
-              {turns.length === 0 ? (
-                <div className="max-w-4xl border border-white/22 bg-black">
-                  <div className="border-b border-white/18 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
-                    Guide_
-                  </div>
-                  <div className="p-5">
-                    <p className="text-lg leading-8 text-white/78">
-                      Ask me what kind of game you want to find. I will search
-                      the project catalog and reply with grounded suggestions.
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-white/55">
-                      Try mentioning platform, genre, mood, playstyle, or a
-                      recent game you liked.
-                    </p>
-                  </div>
+    <main className="ask-guide-shell">
+      <div className="ask-guide-content">
+        <section className="ask-guide-stage">
+          <div className="ask-guide-stage-grid">
+            <section className="ask-guide-terminal">
+              <div className="ask-guide-terminal-header">
+                <div>
+                  <p className="font-mono text-xs uppercase tracking-[0.28em] text-[#ff3e00]">
+                    AI guide projection_
+                  </p>
+                  <h1 className="mt-2 text-3xl font-black uppercase tracking-[-0.06em] text-white sm:text-5xl">
+                    Ask the Guide_
+                  </h1>
                 </div>
-              ) : (
-                turns.map((turn) => (
-                  <ChatTurnPanel
-                    key={turn.id}
-                    turn={turn}
-                    onFollowUp={useFollowUp}
-                    onReset={resetChat}
-                  />
-                ))
-              )}
-            </div>
+              </div>
 
-            {hasReachedTurnLimit && (
-              <div className="mt-5 border border-[#ff3e00]/45 bg-[#ff3e00]/10 p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#ff3e00]">
-                  Thread limit reached_
+              <div className="ask-guide-welcome-bubble">
+                <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+                  Guide_
                 </p>
-                <p className="mt-2 text-sm leading-6 text-white/72">
-                  This search thread has reached {MAX_GUIDE_USER_TURNS} user
-                  messages. Start a new search to avoid noisy recommendation
-                  context.
+                <p className="mt-3 text-lg leading-8 text-white/78">
+                  I am your controlled project guide. Select an instruction
+                  and I will return the matching explanation from the IGDB
+                  game-discovery system.
                 </p>
+              </div>
+
+              <div className="ask-guide-control-row">
+                <label className="grid flex-1 gap-2">
+                  <span className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                    Supported instructions_
+                  </span>
+                  <select
+                    value={selectedTopicId}
+                    disabled={loading || hasReachedTurnLimit}
+                    onChange={(event) =>
+                      handleTopicChange(event.target.value as ChatRouteMode)
+                    }
+                    className="border border-white/18 bg-black px-4 py-3 font-mono text-xs uppercase tracking-[0.1em] text-white outline-none transition focus:border-[#ff3e00] disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    {guideTopics.map((topic) => (
+                      <option key={topic.id} value={topic.id}>
+                        {topic.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  disabled={loading || hasReachedTurnLimit}
+                  onClick={() => sendGuideInstruction(selectedTopic)}
+                  className="bg-[#ff3e00] px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {loading ? "Transmitting..." : "Run instruction"}
+                </button>
                 <button
                   type="button"
                   onClick={resetChat}
-                  className="mt-4 bg-[#ff3e00] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-black transition hover:bg-white"
+                  className="border border-white/18 px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-white/72 transition hover:border-white hover:text-white"
                 >
-                  Start new search
+                  Clear chat
                 </button>
               </div>
-            )}
 
-            <form
-              onSubmit={submitQuestion}
-              className="mt-6 border-t border-white/15 pt-5"
-            >
-              <label className="grid gap-3">
-                <span className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-                  Message_
-                </span>
-                <textarea
-                  value={message}
-                  rows={4}
-                  disabled={hasReachedTurnLimit}
-                  onChange={(event) => setMessage(event.target.value)}
-                  placeholder="Recommend atmospheric RPGs on PC with strong story and exploration."
-                  className="resize-none border border-white/15 bg-black px-4 py-4 text-white placeholder:text-white/35 focus:border-[#ff3e00] focus:outline-none disabled:cursor-not-allowed disabled:opacity-45"
-                />
-              </label>
-
-              <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
-                <label className="grid gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
-                    Results
-                  </span>
-                  <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    value={maxResults}
-                    onChange={(event) => {
-                      const parsed = Number(event.target.value);
-                      setMaxResults(
-                        Number.isFinite(parsed)
-                          ? Math.min(Math.max(parsed, 1), 10)
-                          : 5,
-                      );
-                    }}
-                    className="w-full border border-white/15 bg-black px-4 py-3 text-white focus:border-[#ff3e00] focus:outline-none sm:w-36"
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  disabled={loading || hasReachedTurnLimit}
-                  className="bg-[#ff3e00] px-6 py-3 text-sm font-black text-black transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {loading
-                    ? "Guide is thinking..."
-                    : hasReachedTurnLimit
-                      ? "Thread limit reached"
-                      : "Send message"}
-                </button>
-              </div>
-            </form>
-          </section>
-
-          <aside className="grid content-start gap-5">
-            <SearchContextPanel
-              response={latestResponse}
-              turnCount={userTurnCount}
-              onReset={resetChat}
-            />
-
-            <section className="border border-white/15 bg-black/75 p-6">
-              <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-                Prompt starters_
-              </p>
-              <div className="mt-4 grid gap-2">
-                {starterPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    disabled={hasReachedTurnLimit}
-                    onClick={() => setMessage(prompt)}
-                    className="border border-white/12 bg-white/[0.03] px-4 py-3 text-left text-sm leading-6 text-white/75 transition hover:border-[#ff3e00] hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-              <p className="mt-5 text-sm leading-7 text-white/55">
-                The guide answers from retrieved project data. If the catalog is
-                missing a field, it should disclose that limitation instead of
-                guessing.
-              </p>
-              {isNearTurnLimit && !hasReachedTurnLimit && (
-                <p className="mt-4 border border-[#ffcc00]/30 bg-[#ffcc00]/10 p-3 text-xs leading-6 text-white/68">
-                  You are close to the thread limit. Use Start New when you
-                  switch topics.
+              <div
+                className={`ask-guide-topic-preview ${
+                  selectionPulse ? "ask-guide-topic-preview-active" : ""
+                }`}
+              >
+                <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                  {selectedTopic.eyebrow}_
                 </p>
+                <p className="mt-2 text-sm leading-6 text-white/58">
+                  {selectedTopic.description}
+                </p>
+              </div>
+
+              <div
+                ref={transcriptRef}
+                className="guide-chat-scroll ask-guide-transcript grid max-h-[min(34rem,65vh)] min-h-[22rem] content-start gap-6 overflow-y-auto overflow-x-visible"
+              >
+                {turns.length === 0 ? (
+                  <div className="ask-guide-terminal-waiting">
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                      terminal idle_
+                    </p>
+                    <p className="ask-guide-terminal-line">
+                      <span>guide@igdb:~$ awaiting selected instruction</span>
+                      <span className="ask-guide-terminal-cursor" />
+                    </p>
+                    <p className="mt-3 text-xs leading-6 text-white/38">
+                      Select an instruction above, then run it to open the next
+                      guide response.
+                    </p>
+                  </div>
+                ) : (
+                  turns.map((turn) => (
+                    <ChatTurnPanel
+                      key={turn.id}
+                      turn={turn}
+                      onFollowUp={useFollowUp}
+                      onReset={resetChat}
+                    />
+                  ))
+                )}
+              </div>
+
+              {hasReachedTurnLimit && (
+                <div className="border border-[#ff3e00]/45 bg-[#ff3e00]/10 p-5">
+                  <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                    Thread limit reached_
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-white/72">
+                    This guide thread has reached {MAX_GUIDE_USER_TURNS} user
+                    selections. Start a new topic to keep the context clean.
+                  </p>
+                </div>
               )}
             </section>
-          </aside>
+
+            <GuideAvatar />
+          </div>
+        </section>
+
+        <RecommendMeCallout />
+
+        <section className="ask-guide-disclaimer">
+          <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
+            Guide boundaries_
+          </p>
+          <p className="mt-3 text-sm leading-7 text-white/58">
+            Ask the Guide_ uses predefined instructions by design. It explains
+            the project, data, methodology, RAG concept, hidden-gem logic,
+            limitations, and navigation. It does not accept open-ended typing
+            or replace the structured Recommend Me_ workflow.
+          </p>
         </section>
 
         {error && (

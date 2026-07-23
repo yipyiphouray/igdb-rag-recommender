@@ -9,6 +9,7 @@ import chromadb
 import numpy as np
 import pandas as pd
 from chromadb.utils import embedding_functions
+from src.app.rag_ranking import has_hidden_gem_intent, rank_candidates
 
 try:
     from rank_bm25 import BM25Okapi
@@ -214,64 +215,14 @@ class SimpleBM25:
 def rank_results(
     candidates,
     graphics_preference=None,
+    *,
+    hidden_gem_mode=False,
 ):
-    """Apply final ranking with metadata-aware adjustments.
-
-    Fallback and prefilter order across the retrieval pipeline:
-    1) Metadata/DataFrame prefilter constraints
-    2) Semantic vector retrieval
-    3) BM25 lexical retrieval (or SimpleBM25 fallback)
-    4) Fusion scoring (weighted normalized vector/BM25 + metadata boosts)
-    5) Post-fusion multipliers/penalties (e.g., 2D preference, 3D avoidance)
-
-    Note: upstream fusion may use RRF-style candidate blending; the weighted
-    semantic/lexical score is preserved as an interpretable secondary signal.
-    """
-    if not candidates:
-        return []
-
-    request_2d = bool((graphics_preference or {}).get("request_2d", False))
-    avoid_3d = bool((graphics_preference or {}).get("avoid_3d", False))
-    two_d_boost = _safe_float((graphics_preference or {}).get("two_d_boost", 1.5), 1.5)
-    three_d_penalty = _safe_float((graphics_preference or {}).get("three_d_penalty", 0.1), 0.1)
-
-    # Step A: relevance score is retrieval relevance + metadata similarity boost.
-    for candidate in candidates:
-        candidate["total_rating"] = _safe_float(candidate.get("total_rating", 0.0), 0.0)
-        metadata_boost = _safe_float(candidate.get("metadata_boost", 0.0), 0.0)
-        normalized_vec = _safe_float(candidate.get("normalized_vec", candidate.get("semantic_score", 0.0)), 0.0)
-        normalized_bm25 = _safe_float(candidate.get("normalized_bm25", candidate.get("bm25_score_norm", 0.0)), 0.0)
-
-        semantic_weight = _safe_float(candidate.get("vector_weight", SEMANTIC_WEIGHT), SEMANTIC_WEIGHT)
-        lexical_weight = _safe_float(candidate.get("bm25_weight", LEXICAL_WEIGHT), LEXICAL_WEIGHT)
-        weighted_hybrid = (semantic_weight * normalized_vec) + (lexical_weight * normalized_bm25)
-
-        hybrid_rrf = _safe_float(candidate.get("hybrid_score", 0.0), 0.0)
-        candidate["weighted_hybrid_score"] = weighted_hybrid
-        candidate["relevance_score"] = metadata_boost + max(hybrid_rrf, weighted_hybrid)
-        candidate["constraint_multiplier"] = 1.0
-        candidate["penalty_applied"] = False
-        candidate["boost_applied"] = False
-
-        multiplier = 1.0
-        if (request_2d or avoid_3d) and bool(candidate.get("is_3d_detected", False)):
-            multiplier *= three_d_penalty
-            candidate["penalty_applied"] = True
-        if request_2d and bool(candidate.get("is_2d_detected", False)):
-            multiplier *= two_d_boost
-            candidate["boost_applied"] = True
-
-        candidate["constraint_multiplier"] = multiplier
-        candidate["relevance_score"] *= multiplier
-        candidate["primary_rank_score"] = _safe_float(candidate.get("relevance_score", 0.0), 0.0)
-
-    # Step B: rank by semantic + lexical relevance only (RAG is independent from recommendation scoring).
-    return sorted(
+    """Apply final multi-objective reranking after hybrid retrieval."""
+    return rank_candidates(
         candidates,
-        key=lambda x: (
-            -_safe_float(x.get("primary_rank_score", 0.0), 0.0),
-            _safe_float(x.get("distance", 1.0), 1.0),
-        ),
+        hidden_gem_mode=hidden_gem_mode,
+        graphics_preference=graphics_preference,
     )
 
 
@@ -1263,6 +1214,7 @@ class RAGAgent:
         min_year=None,
         platforms=None,
         multiplayer_mode=None,
+        ranking_mode=None,
         vector_k=100,
         bm25_k=100,
         semantic_weight=SEMANTIC_WEIGHT,
@@ -1273,6 +1225,7 @@ class RAGAgent:
     ):
         hard_constraints = self._extract_hard_constraints(query)
         graphics_preference = self._extract_graphics_preference(query, hard_constraints)
+        hidden_gem_mode = has_hidden_gem_intent(query, ranking_mode)
         parsed_min_year = self._parse_year_constraint(query)
         effective_min_year = min_year if min_year is not None else parsed_min_year
         seed_filter_ids = None
@@ -1465,6 +1418,11 @@ class RAGAgent:
                     "storyline": storyline,
                     "storyline_summary": combined_story,
                     "total_rating": _safe_float(row.get("total_rating"), 0.0),
+                    "total_rating_count": _safe_float(row.get("total_rating_count"), 0.0),
+                    "custom_interest_score": _safe_float(row.get("custom_interest_score"), 0.0),
+                    "custom_interest_percentile": _safe_float(row.get("custom_interest_percentile"), 0.0),
+                    "hidden_gem_balanced_flag": _safe_int(row.get("hidden_gem_balanced_flag"), 0),
+                    "extraction_cohort": row.get("extraction_cohort", ""),
                     "playtime_normally": _safe_float(row.get("playtime_normally"), 0.0),
                     "distance": _safe_float(hit.get("distance"), 1.0),
                     "metadata_boost": _safe_float(seed_similarity_boosts.get(game_id), 0.0),
@@ -1515,6 +1473,7 @@ class RAGAgent:
         ranked = rank_results(
             candidates,
             graphics_preference=graphics_preference,
+            hidden_gem_mode=hidden_gem_mode,
         )
         top3_names = [c.get("name", "Not Listed") for c in ranked[:3]]
         print(f"Top 3 matches found: {top3_names}")

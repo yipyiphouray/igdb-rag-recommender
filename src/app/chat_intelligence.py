@@ -582,9 +582,16 @@ def _clean_game_title_fragment(fragment: str) -> str | None:
         "anything",
         "game",
         "games",
+        "it",
         "me",
+        "one",
         "something",
+        "that",
+        "them",
+        "these",
         "the",
+        "this",
+        "those",
     }:
         return None
     return cleaned
@@ -824,173 +831,3 @@ def analyze_message(
         clarification_question=clarification_question,
         clarification_prompts=clarification_prompts,
     )
-
-
-def build_filter_overrides(
-    slots: RecommendationSlots,
-    existing_filters: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    filters = dict(existing_filters or {})
-    if slots.platforms and not filters.get("platforms"):
-        filters["platforms"] = list(slots.platforms)
-
-    if slots.multiplayer_preference in {"online", "offline", "both"} and not filters.get(
-        "multiplayer_mode"
-    ):
-        filters["multiplayer_mode"] = slots.multiplayer_preference
-
-    return filters
-
-
-def build_preference_summary(slots: RecommendationSlots) -> str | None:
-    parts: list[str] = []
-    if slots.platforms:
-        parts.append("platform " + ", ".join(slots.platforms))
-    if slots.genres:
-        parts.append("genre " + ", ".join(slots.genres))
-    if slots.themes:
-        parts.append("theme " + ", ".join(slots.themes))
-    if slots.moods:
-        parts.append("mood " + ", ".join(slots.moods))
-    if slots.recent_games:
-        parts.append("recently played " + ", ".join(slots.recent_games))
-    if slots.playtime_preference:
-        parts.append(f"{slots.playtime_preference} playtime")
-    if slots.multiplayer_preference:
-        parts.append(slots.multiplayer_preference.replace("_", " "))
-    if slots.discovery_preference:
-        parts.append(slots.discovery_preference.replace("_", " "))
-    if slots.rating_preference:
-        parts.append("strong rating evidence")
-    if slots.avoid_terms:
-        parts.append("avoid " + ", ".join(slots.avoid_terms))
-
-    if not parts:
-        return None
-    return "I read your request as: " + "; ".join(parts) + "."
-
-
-def _normalized_list(value: object) -> set[str]:
-    if isinstance(value, (list, tuple, set)):
-        return {normalize_message(str(item)) for item in value if str(item).strip()}
-    return {normalize_message(str(value))} if str(value or "").strip() else set()
-
-
-def _title_key(value: object) -> str:
-    normalized = normalize_message(str(value or ""))
-    return re.sub(r"[^a-z0-9]+", "", normalized)
-
-
-def filter_seed_games(
-    games: list[dict[str, Any]],
-    slots: RecommendationSlots,
-    *,
-    top_k: int | None = None,
-) -> tuple[list[dict[str, Any]], list[str]]:
-    if not slots.recent_games:
-        return games[:top_k] if top_k else games, []
-
-    seed_keys = {_title_key(title) for title in slots.recent_games if _title_key(title)}
-    if not seed_keys:
-        return games[:top_k] if top_k else games, []
-
-    filtered: list[dict[str, Any]] = []
-    excluded: list[str] = []
-    for game in games:
-        game_key = _title_key(game.get("name"))
-        if game_key and game_key in seed_keys:
-            excluded.append(str(game.get("name") or "").strip())
-            continue
-        filtered.append(game)
-
-    if top_k:
-        filtered = filtered[:top_k]
-
-    return filtered, list(_dedupe(excluded))
-
-
-def explain_game_match(game: dict[str, Any], slots: RecommendationSlots) -> str:
-    reasons: list[str] = []
-    game_platforms = _normalized_list(game.get("platforms"))
-    game_genres = _normalized_list(game.get("genres"))
-    game_themes = _normalized_list(game.get("themes"))
-    game_summary = normalize_message(game.get("summary") or "")
-
-    if slots.platforms and game_platforms.intersection(
-        {normalize_message(platform) for platform in slots.platforms}
-    ):
-        reasons.append("matches the requested platform")
-    if slots.genres and game_genres.intersection({normalize_message(genre) for genre in slots.genres}):
-        reasons.append("matches the requested genre")
-    if slots.themes and game_themes.intersection({normalize_message(theme) for theme in slots.themes}):
-        reasons.append("matches the requested theme")
-    if slots.moods:
-        mood_hits = [
-            mood
-            for mood in slots.moods
-            if normalize_message(mood) in game_summary
-            or normalize_message(mood) in game_themes
-            or normalize_message(mood) in game_genres
-        ]
-        if mood_hits:
-            reasons.append("contains matching mood or atmosphere signals")
-    if slots.recent_games:
-        reasons.append("was retrieved using your reference-game context")
-    if slots.discovery_preference == "hidden_gems" and game.get("hidden_gem_balanced_flag"):
-        reasons.append("fits the hidden-gem direction")
-    if slots.rating_preference and game.get("total_rating_count"):
-        reasons.append("has rating-count evidence in the catalog")
-    if slots.playtime_preference == "short":
-        playtime = game.get("normal_playtime_hours")
-        if isinstance(playtime, (int, float)) and playtime <= 12:
-            reasons.append("looks compatible with a shorter-playtime request")
-
-    if not reasons:
-        evidence = str(game.get("evidence") or "").strip()
-        if evidence:
-            return evidence
-        return "Retrieved as a catalog-backed match for the request."
-
-    return "This match " + ", ".join(reasons[:4]) + "."
-
-
-def enrich_retrieved_games(
-    games: list[dict[str, Any]],
-    slots: RecommendationSlots,
-) -> list[dict[str, Any]]:
-    enriched: list[dict[str, Any]] = []
-    for game in games:
-        enriched_game = dict(game)
-        explanation = explain_game_match(enriched_game, slots)
-        enriched_game["match_explanation"] = explanation
-        if explanation and explanation not in str(enriched_game.get("evidence") or ""):
-            existing_evidence = str(enriched_game.get("evidence") or "").strip()
-            enriched_game["evidence"] = (
-                f"{explanation} {existing_evidence}".strip()
-                if existing_evidence
-                else explanation
-            )
-        enriched.append(enriched_game)
-    return enriched
-
-
-def enhance_answer_text(
-    base_answer: str,
-    slots: RecommendationSlots,
-    games: list[dict[str, Any]],
-) -> str:
-    parts = [str(base_answer or "").strip()]
-    preference_summary = build_preference_summary(slots)
-    if preference_summary:
-        parts.append(preference_summary)
-
-    if games and slots.has_retrieval_signal():
-        explanations = []
-        for game in games[:3]:
-            name = game.get("name") or "This result"
-            explanation = game.get("match_explanation") or explain_game_match(game, slots)
-            explanations.append(f"{name}: {explanation}")
-        if explanations:
-            parts.append("Why these fit: " + " ".join(explanations))
-
-    return "\n\n".join(part for part in parts if part)

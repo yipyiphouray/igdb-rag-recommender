@@ -35,7 +35,7 @@ The database should support:
 * Diagnostic analytics: rating differences, popularity versus rating, hidden-gem patterns, developer/publisher patterns.
 * Predictive analytics: cosine-similarity scoring for user-game and game-game match potential.
 * Prescriptive analytics: recommendation ranking, filtering, and grounded explanation.
-* RAG chatbot grounding: generating recommendations only from database-backed game records.
+* RAG-powered guide grounding: explaining recommendations, methodology, and catalog context only from database-backed or retrieved project records.
 
 ## BR-002 — Central Entity Rule
 
@@ -1194,7 +1194,7 @@ reason it matches the prompt
 
 ## BR-074 — Database-Only Grounding Rule
 
-The RAG chatbot should only use game facts available in the database or retrieved game profile documents.
+The RAG-powered guide should only use game facts available in the database, recommendation-service output, or retrieved game profile documents.
 
 It should not invent:
 
@@ -1211,9 +1211,15 @@ multiplayer support
 
 ## BR-075 — Retrieved Context Rule
 
-The chatbot should only recommend games that were retrieved from the vector database or selected through structured database filtering.
+The guide should only mention recommended games that were returned by the recommendation service, retrieved from the vector index, or selected through structured database filtering.
 
 If no strong match exists, the chatbot should say that no strong match was found.
+
+## BR-075A — Guide Purpose Boundary Rule
+
+`Recommend Me_` is the primary recommendation workflow. The RAG-powered guide should primarily explain the project, dataset, methodology, RAG role, hidden-gem logic, and recommendation reasoning.
+
+If a user asks the guide for personalized recommendations, the guide should usually direct the user toward `Recommend Me_` or explain which preference details to provide there. The guide should only return actual game recommendations when an intentionally supported conversational recommendation route is enabled and the user provides enough structured signal.
 
 ## BR-076 — Missing Metadata Disclosure Rule
 
@@ -1741,6 +1747,7 @@ Required rules:
 ```text
 BR-074 Database-Only Grounding Rule
 BR-075 Retrieved Context Rule
+BR-075A Guide Purpose Boundary Rule
 BR-076 Missing Metadata Disclosure Rule
 BR-077 RAG Profile Construction Rule
 BR-078 RAG Hallucination Prevention Rule

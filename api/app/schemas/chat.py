@@ -1,10 +1,28 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
 from app.schemas.catalog import GameSummary
+
+
+ChatRouteMode = Literal[
+    "custom_question",
+    "dataset_size",
+    "dataset_year_range",
+    "explain_data",
+    "explain_hidden_gems",
+    "explain_limitations",
+    "explain_project",
+    "explain_rag",
+    "explain_recommendation",
+    "recommend_me_guidance",
+    "recommend_games",
+    "rating_coverage",
+    "search_catalog",
+    "website_navigation",
+]
 
 
 class ChatFilters(BaseModel):
@@ -21,6 +39,7 @@ class ChatHistoryMessage(BaseModel):
 
 class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=1200)
+    route_mode: ChatRouteMode | None = None
     conversation_id: str | None = None
     max_results: int = Field(default=5, ge=1, le=10)
     filters: ChatFilters | None = None
@@ -41,6 +60,7 @@ class ChatResponse(BaseModel):
     answer: str
     mode: str
     status: str
+    route_mode: ChatRouteMode | None = None
     conversation_id: str | None = None
     retrieved_games: list[ChatRetrievedGame] = Field(default_factory=list)
     caveats: list[str] = Field(default_factory=list)

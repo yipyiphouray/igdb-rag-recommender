@@ -176,11 +176,20 @@ def _build_evidence(result: dict[str, Any], row: dict[str, Any]) -> str:
 
     semantic_score = _normalize_score(result.get("normalized_vec", result.get("vector_similarity")))
     lexical_score = _normalize_score(result.get("normalized_bm25"))
+    popularity_score = _normalize_score(result.get("popularity_score"))
+    rating_count_signal = _normalize_score(result.get("rating_count_score"))
+    ranking_profile = _safe_str(result.get("ranking_profile"))
 
     if semantic_score is not None:
         evidence_parts.append(f"semantic retrieval score {semantic_score:.2f}")
     if lexical_score is not None and lexical_score > 0:
         evidence_parts.append(f"keyword retrieval score {lexical_score:.2f}")
+    if popularity_score is not None and popularity_score > 0:
+        evidence_parts.append(f"catalog interest score {popularity_score:.2f}")
+    if rating_count_signal is not None and rating_count_signal > 0:
+        evidence_parts.append(f"rating-count signal {rating_count_signal:.2f}")
+    if ranking_profile:
+        evidence_parts.append(f"ranking profile: {ranking_profile}")
 
     if not evidence_parts:
         return "Retrieved from the project catalog as a relevant match for the question."
@@ -260,6 +269,7 @@ def _clean_filters(filters: dict | None) -> dict[str, Any]:
     min_year = filters.get("release_year_min") or filters.get("min_year")
     max_year = filters.get("release_year_max") or filters.get("max_year")
     multiplayer_mode = filters.get("multiplayer_mode")
+    ranking_mode = filters.get("ranking_mode") or filters.get("discovery_preference")
 
     if min_year is not None:
         cleaned["release_year_min"] = _safe_int(min_year)
@@ -267,6 +277,8 @@ def _clean_filters(filters: dict | None) -> dict[str, Any]:
         cleaned["release_year_max"] = _safe_int(max_year)
     if multiplayer_mode:
         cleaned["multiplayer_mode"] = str(multiplayer_mode).strip()
+    if ranking_mode:
+        cleaned["ranking_mode"] = str(ranking_mode).strip()
 
     return {key: value for key, value in cleaned.items() if value not in (None, "", [])}
 
@@ -327,6 +339,7 @@ def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -
             min_year=cleaned_filters.get("release_year_min"),
             platforms=cleaned_filters.get("platforms"),
             multiplayer_mode=cleaned_filters.get("multiplayer_mode"),
+            ranking_mode=cleaned_filters.get("ranking_mode"),
             debug_scores=False,
         )
     except Exception as error:

@@ -1,15 +1,32 @@
 # RAG Chatbot Implementation on Website Plan
 
+## Current Superseding Decision: Condition-Based Guide
+
+The open-ended chatbot direction has been superseded.
+
+`Ask the Guide_` should now be implemented as a condition-based project guide. Users select predefined guide instructions instead of typing unrestricted questions. The backend maps each selected `route_mode` to a deterministic response or an exact structured fact from project artifacts.
+
+No LLM provider is used for this page. Personalized game ranking remains in `Recommend Me_`.
+
 ## 1. Purpose
 
-This plan defines how the RAG chatbot should be integrated into the final website.
+This plan defines how the `Ask the Guide_` chatbot should be integrated into the final website.
 
-The goal is to turn the current pending `ASK THE GUIDE_` module into a real website page where users can ask natural-language game discovery questions and receive grounded answers based on the project catalog.
+The goal is to turn `ASK THE GUIDE_` into a real website page where users can understand the project, data, methodology, recommendation logic, RAG role, hidden-gem logic, and how to use the website.
 
-The chatbot should not be a separate disconnected experiment. It should reuse the project's current website architecture:
+The updated product direction is:
 
 ```text
-Next.js website -> FastAPI backend -> RAG service adapter -> hybrid retrieval engine -> app catalog/vector store
+Recommend Me_ -> primary game recommendation experience
+Ask the Guide_ -> project explanation and recommendation guidance
+Project / methodology / data questions -> predefined or RAG-backed project context
+Recommendation questions -> explain what details to enter on Recommend Me_
+```
+
+The chatbot should not be a separate disconnected experiment, a general-purpose AI assistant, or a weaker duplicate of the `Recommend Me_` page. It should reuse the project's current website architecture:
+
+```text
+Next.js website -> FastAPI backend -> chat intent router -> recommendation service or RAG service -> app catalog/artifacts
 ```
 
 ---
@@ -101,27 +118,32 @@ Reasoning:
 
 ---
 
-## 4. What The RAG Chatbot Should Do
+## 4. What The Guide Should Do
 
-The chatbot should allow users to ask questions such as:
+The guide should allow users to ask questions such as:
 
 ```text
-Recommend atmospheric RPGs with strong story.
-What are good hidden gems for PC?
-Find co-op games that are not too long.
-I liked Stardew Valley and Hades. What should I try next?
-What are some strong fantasy games with exploration?
+What is this project?
+What data does the website use?
+How does Recommend Me work?
+What does RAG do in this project?
+What does hidden gem mean here?
+What details should I enter for better recommendations?
 ```
+
+For recommendation-seeking prompts, the guide should usually explain that `Recommend Me_` is the main recommendation experience and help the user understand what preference details to enter there.
+
+For project, methodology, dataset, catalog-context, or explanation prompts, the response should come from the RAG/project-context layer.
 
 The response should include:
 
 - a short natural-language answer;
-- retrieved games from the project catalog;
-- clear reasons why those games were retrieved;
+- relevant project, data, methodology, or recommendation-logic context;
+- guidance for using `Recommend Me_` when the user wants actual recommendations;
 - caveats when metadata is incomplete;
-- safe fallback messaging if the RAG artifacts or vector store are unavailable.
+- safe fallback messaging if recommendation or RAG artifacts are unavailable.
 
-The chatbot must not invent games, platforms, ratings, genres, or claims that are not supported by the project data.
+The guide must not invent games, platforms, ratings, genres, or claims that are not supported by the project data.
 
 ---
 
@@ -200,22 +222,20 @@ Possible status values:
 
 Purpose:
 
-- Accept a natural-language game discovery question.
-- Run hybrid retrieval.
-- Return an answer plus retrieved catalog-backed games.
+- Accept a curated guide topic or custom guide message.
+- Classify the topic/question intent.
+- Route project, methodology, data-source, catalog-context, RAG, and recommendation-explanation questions to predefined or RAG/project context.
+- Return `Recommend Me_` guidance when the user asks for personalized recommendations.
+- Return grounded answer text, source/context notes, and caveats when relevant.
 
 Recommended request body:
 
 ```json
 {
-  "message": "Recommend cozy RPGs on PC with good story.",
+  "message": "How does Recommend Me use recent games?",
+  "route_mode": "explain_recommendation",
   "conversation_id": "optional-local-session-id",
-  "max_results": 5,
-  "filters": {
-    "platforms": ["PC"],
-    "release_year_min": 2010,
-    "release_year_max": 2026
-  }
+  "max_results": 5
 }
 ```
 
@@ -223,32 +243,18 @@ Recommended response body:
 
 ```json
 {
-  "answer": "Based on the current catalog, these games are strong matches because they combine RPG structure, story-heavy summaries, and PC availability.",
-  "mode": "rag_hybrid_retrieval",
+  "answer": "Recommend Me uses recent games as taste anchors. It compares your selected platforms, genres, themes, moods, playstyle, and recent-game signals against catalog metadata using cosine similarity.",
+  "mode": "guide_explanation",
   "status": "success",
   "conversation_id": "optional-local-session-id",
-  "retrieved_games": [
-    {
-      "rank": 1,
-      "game_id": 123,
-      "name": "Example Game",
-      "release_year": 2021,
-      "cover_url": "https://...",
-      "summary": "Short catalog-backed summary.",
-      "platforms": ["PC"],
-      "genres": ["Role-playing", "Adventure"],
-      "themes": ["Fantasy"],
-      "total_rating": 84.5,
-      "total_rating_count": 120,
-      "retrieval_score": 0.87,
-      "semantic_score": 0.82,
-      "lexical_score": 0.31,
-      "evidence": "Matched RPG, fantasy, story-focused wording, and PC availability.",
-      "caveats": []
-    }
-  ],
+  "retrieved_games": [],
   "caveats": [
-    "Ratings and platform availability depend on IGDB metadata completeness."
+    "Recommendation quality depends on the metadata available in the local IGDB catalog."
+  ],
+  "follow_up_prompts": [
+    "What details should I enter into Recommend Me?",
+    "Explain cosine similarity",
+    "Explain the data source"
   ]
 }
 ```
@@ -256,6 +262,13 @@ Recommended response body:
 ### 6.3 Response Rules
 
 The API should always return a controlled response shape.
+
+If the message is a recommendation request that should be redirected to the main flow:
+
+```text
+mode = recommend_me_guidance
+status = success
+```
 
 If RAG is available:
 
@@ -569,27 +582,29 @@ Failure states should be user-readable, not raw stack traces.
 
 ## 10. Answer Generation Strategy
 
-The safest first version should be retrieval-grounded and deterministic.
+The safest version should be routed, grounded, and deterministic.
 
-Recommended v1 behavior:
+Recommended behavior:
 
 ```text
-User asks a question
--> RAG engine retrieves ranked games
--> Backend builds a concise answer from the retrieved game metadata
--> Frontend displays answer + evidence cards
+User selects a curated guide topic
+-> Optional custom follow-up is typed
+-> Chat router validates the topic/question
+-> Project/methodology/catalog-context questions use predefined or RAG/project context
+-> Recommendation-seeking questions receive Recommend Me_ guidance by default
+-> Backend builds concise template-based answer text
+-> Frontend displays answer, source/context notes, caveats, and next-step prompts
 ```
 
-This produces a reliable chatbot-like experience without requiring a separate LLM integration immediately.
+This produces a reliable guide-like experience without requiring an LLM and without forcing RAG to act as the main recommender.
 
-The conversational version should preserve recent turns without becoming an LLM-style freeform assistant:
+The conversational version should preserve recent turns only for short follow-up explanation questions:
 
 ```text
 User sends message
 -> Frontend sends bounded recent chat history
 -> Backend detects whether the message is a follow-up
--> Backend builds a contextual retrieval query when needed
--> Hybrid RAG retrieves catalog-backed games
+-> Backend keeps the answer scoped to the selected topic
 -> Backend returns deterministic answer text and follow-up prompts
 ```
 
@@ -602,7 +617,10 @@ Greeting/help/methodology/thanks question
 -> Return predefined guide response and suggested next prompts
 
 Game-discovery question or valid follow-up
--> Run contextual hybrid RAG retrieval
+-> Run cosine-similarity recommendation service
+
+Project, methodology, data, or explanation question
+-> Run RAG/project-context retrieval
 
 Unsupported/off-topic question
 -> Return scoped default response explaining what the guide can answer
@@ -610,7 +628,7 @@ Unsupported/off-topic question
 
 This keeps the page feeling conversational without pretending to be an open-ended LLM assistant.
 
-Retrieved games should appear as compact title rows in the chat response. Hovering over a title should reveal the full game card, and clicking the preview card should open that game's detail page in a new tab.
+Recommended or retrieved games should appear as compact title rows in the chat response. Hovering over a title should reveal the full game card, and clicking the preview card should open that game's detail page in a new tab.
 
 If the team has an LLM generation layer ready, it can be added later behind the same `/chat` endpoint.
 
@@ -631,16 +649,16 @@ The `Recommend Me_` page and `Ask the Guide_` page should serve different user i
 | Page | Purpose |
 |---|---|
 | Recommend Me | Structured guided recommendation wizard using preference fields and cosine similarity. |
-| Ask the Guide | Natural-language discovery assistant using hybrid retrieval/RAG. |
+| Ask the Guide | Conversational router that calls the recommendation engine for game requests and RAG for project/context/explanation requests. |
 
 They should not compete.
 
 Recommended distinction:
 
 - Use `Recommend Me_` when the user wants a guided step-by-step recommendation flow.
-- Use `Ask the Guide_` when the user wants to type a natural-language question.
+- Use `Ask the Guide_` when the user wants to type a natural-language question or ask how the project works.
 
-Both can return catalog-backed game cards.
+Both can return catalog-backed game cards, but they should share the same recommendation backend whenever the user is asking what to play.
 
 ---
 
@@ -700,15 +718,70 @@ Manual website checks:
 The RAG chatbot website integration is complete when:
 
 - `GET /chat/status` returns controlled runtime status.
-- `POST /chat` accepts a natural-language message.
-- `POST /chat` returns catalog-backed retrieved games.
-- The response includes a grounded answer, evidence, and caveats.
+- `POST /chat` accepts a supported guide question or curated prompt selection.
+- `POST /chat` prioritizes project, methodology, data-source, RAG, hidden-gem, and recommendation-logic explanations.
+- `POST /chat` helps users understand what details to provide on `Recommend Me_` when they ask for recommendations.
+- `POST /chat` only routes to the recommendation service when the intentionally supported conversational recommendation path is enabled and enough preference detail exists.
+- The response includes a grounded answer, source/context notes, and caveats when relevant.
 - The website has an active `/guide` page.
 - The top navigation links to `ASK THE GUIDE_`.
 - The Home page no longer marks `ASK THE GUIDE_` as pending.
 - Missing vector-store or backend failures do not crash the website.
-- Retrieved games use the same visual language as Explore Games and Recommend Me.
+- If any game examples are shown, they use the same visual language as Explore Games and Recommend Me.
 - The Methodology or source-of-truth docs explain the RAG/hybrid retrieval method.
+
+Current implementation update:
+
+- Recommendation prompts in `/chat` now call the cosine-similarity recommendation service.
+- Project/methodology/predefined guide prompts remain handled by the guide layer.
+- Guide result wording was adjusted from retrieval-only language to matched-title language.
+- The implementation passed the full Python unit test suite and website production build.
+
+Next refinement: guide-first interaction model.
+
+Testing showed that a no-LLM chatbot feels weak when users expect open-ended ChatGPT-style conversation. The Guide page should therefore become a curated project assistant rather than a second recommendation interface.
+
+Recommended primary actions:
+
+```text
+Explain this project
+Explain the data
+Explain recommendations
+Explain RAG
+Explain hidden gems
+Help me use Recommend Me
+```
+
+Recommended UI flow:
+
+```text
+Curated topic buttons
+-> User selects a supported question
+-> Optional custom typed follow-up
+-> Guide answers from project/RAG context
+-> If the user wants recommendations, guide them to Recommend Me_
+```
+
+Recommended `POST /chat` request extension if topic/mode routing is retained:
+
+```json
+{
+  "message": "How does Recommend Me use recent games?",
+  "route_mode": "explain_recommendation",
+  "conversation_id": "optional-session-id",
+  "max_results": 5
+}
+```
+
+Route behavior:
+
+- `explain_project` should use predefined/RAG project-context responses.
+- `explain_recommendation` should explain cosine similarity, user preference signals, score interpretation, and recommendation caveats.
+- `explain_data` or equivalent topic should explain IGDB, pulled fields, missingness, and catalog limitations.
+- `explain_rag` should explain what retrieval does and what it does not do.
+- `recommendation_guidance` should help users prepare inputs for `Recommend Me_`.
+- `recommend_games` should be secondary, not the main Guide path.
+- Missing mode can still fall back to semantic routing, but the UI should encourage choosing a curated topic first.
 
 ---
 
@@ -719,6 +792,8 @@ Do not:
 - build the chatbot only inside Streamlit;
 - create a second unrelated backend outside the current FastAPI app;
 - hard-code fake chatbot answers;
+- position the Guide as the main recommendation experience;
+- optimize the Guide for unrestricted open-ended chat;
 - allow raw RAG traces to appear as user-facing responses;
 - recommend games outside `data/app/app_game_catalog.parquet`;
 - make the chatbot invent unsupported metadata;

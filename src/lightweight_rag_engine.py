@@ -14,6 +14,7 @@ import pandas as pd
 
 from src.app import config
 from src.app.embedding_text import normalize_embedding_catalog
+from src.app.rag_ranking import has_hidden_gem_intent, rank_candidates
 
 try:
     from rank_bm25 import BM25Okapi
@@ -220,43 +221,16 @@ def _get_embedding_model(model_name: str):
     return SentenceTransformer(model_name)
 
 
-def rank_results(candidates: list[dict[str, Any]], graphics_preference: dict[str, Any] | None = None) -> list[dict[str, Any]]:
-    if not candidates:
-        return []
-
-    graphics_preference = graphics_preference or {}
-    request_2d = bool(graphics_preference.get("request_2d", False))
-    avoid_3d = bool(graphics_preference.get("avoid_3d", False))
-    two_d_boost = _safe_float(graphics_preference.get("two_d_boost", 1.5), 1.5)
-    three_d_penalty = _safe_float(graphics_preference.get("three_d_penalty", 0.1), 0.1)
-
-    for candidate in candidates:
-        metadata_boost = _safe_float(candidate.get("metadata_boost", 0.0), 0.0)
-        normalized_vec = _safe_float(candidate.get("normalized_vec", candidate.get("semantic_score", 0.0)), 0.0)
-        normalized_bm25 = _safe_float(candidate.get("normalized_bm25", candidate.get("bm25_score_norm", 0.0)), 0.0)
-        semantic_weight = _safe_float(candidate.get("vector_weight", SEMANTIC_WEIGHT), SEMANTIC_WEIGHT)
-        lexical_weight = _safe_float(candidate.get("bm25_weight", LEXICAL_WEIGHT), LEXICAL_WEIGHT)
-        weighted_hybrid = (semantic_weight * normalized_vec) + (lexical_weight * normalized_bm25)
-
-        hybrid_rrf = _safe_float(candidate.get("hybrid_score", 0.0), 0.0)
-        candidate["weighted_hybrid_score"] = weighted_hybrid
-        candidate["relevance_score"] = metadata_boost + max(hybrid_rrf, weighted_hybrid)
-
-        multiplier = 1.0
-        if (request_2d or avoid_3d) and bool(candidate.get("is_3d_detected", False)):
-            multiplier *= three_d_penalty
-        if request_2d and bool(candidate.get("is_2d_detected", False)):
-            multiplier *= two_d_boost
-
-        candidate["constraint_multiplier"] = multiplier
-        candidate["primary_rank_score"] = candidate["relevance_score"] * multiplier
-
-    return sorted(
+def rank_results(
+    candidates: list[dict[str, Any]],
+    graphics_preference: dict[str, Any] | None = None,
+    *,
+    hidden_gem_mode: bool = False,
+) -> list[dict[str, Any]]:
+    return rank_candidates(
         candidates,
-        key=lambda item: (
-            -_safe_float(item.get("primary_rank_score", 0.0), 0.0),
-            _safe_float(item.get("distance", 1.0), 1.0),
-        ),
+        hidden_gem_mode=hidden_gem_mode,
+        graphics_preference=graphics_preference,
     )
 
 
@@ -981,6 +955,7 @@ class LightweightRAGAgent:
         min_year: int | None = None,
         platforms: list[str] | None = None,
         multiplayer_mode: str | None = None,
+        ranking_mode: str | None = None,
         vector_k: int = 100,
         bm25_k: int = 100,
         semantic_weight: float = SEMANTIC_WEIGHT,
@@ -991,6 +966,7 @@ class LightweightRAGAgent:
     ) -> list[dict[str, Any]]:
         hard_constraints = self._extract_hard_constraints(query)
         graphics_preference = self._extract_graphics_preference(query, hard_constraints)
+        hidden_gem_mode = has_hidden_gem_intent(query, ranking_mode)
         parsed_min_year = self._parse_year_constraint(query)
         effective_min_year = min_year if min_year is not None else parsed_min_year
 
@@ -1079,6 +1055,11 @@ class LightweightRAGAgent:
                     "storyline": storyline,
                     "storyline_summary": self._format_storyline_output(summary, storyline, max_len=1000),
                     "total_rating": _safe_float(row.get("total_rating"), 0.0),
+                    "total_rating_count": _safe_float(row.get("total_rating_count"), 0.0),
+                    "custom_interest_score": _safe_float(row.get("custom_interest_score"), 0.0),
+                    "custom_interest_percentile": _safe_float(row.get("custom_interest_percentile"), 0.0),
+                    "hidden_gem_balanced_flag": _safe_int(row.get("hidden_gem_balanced_flag"), 0),
+                    "extraction_cohort": row.get("extraction_cohort", ""),
                     "playtime_normally": _safe_float(row.get("playtime_normally", row.get("normal_playtime_hours")), 0.0),
                     "distance": _safe_float(hit.get("distance"), 1.0),
                     "metadata_boost": _safe_float(seed_similarity_boosts.get(game_id), 0.0),
@@ -1124,7 +1105,11 @@ class LightweightRAGAgent:
             if not candidates:
                 return []
 
-        ranked = rank_results(candidates, graphics_preference=graphics_preference)
+        ranked = rank_results(
+            candidates,
+            graphics_preference=graphics_preference,
+            hidden_gem_mode=hidden_gem_mode,
+        )
         if debug_scores:
             for idx, item in enumerate(ranked[:5], start=1):
                 print(

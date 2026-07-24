@@ -509,9 +509,9 @@ class MetadataCosineRecommender:
             for game in candidate_games
         )
 
-        scored_rows: list[pd.Series] = []
+        scored_candidates: list[dict[str, Any]] = []
         for game in candidate_games:
-            row = self.catalog.iloc[game.row_index].copy()
+            row = self.catalog.iloc[game.row_index]
             similarity_score = _cosine(user_vector, user_norm, game.vector, game.norm)
             quality_score = _quality_score(row.get("total_rating"))
             evidence_score = _rating_evidence_score(row.get("total_rating_count"), max_log_count)
@@ -526,12 +526,41 @@ class MetadataCosineRecommender:
                 + RANKING_WEIGHTS["playtime"] * playtime_score
             )
 
-            row["similarity_score_component"] = round(similarity_score, 6)
-            row["quality_score_component"] = round(quality_score, 6)
-            row["rating_evidence_score"] = round(evidence_score, 6)
-            row["discovery_score_component"] = round(discovery_score, 6)
-            row["playtime_score_component"] = round(playtime_score, 6)
-            row["recommendation_score"] = round(final_score, 6)
+            scored_candidates.append(
+                {
+                    "game": game,
+                    "similarity_score_component": round(similarity_score, 6),
+                    "quality_score_component": round(quality_score, 6),
+                    "rating_evidence_score": round(evidence_score, 6),
+                    "discovery_score_component": round(discovery_score, 6),
+                    "playtime_score_component": round(playtime_score, 6),
+                    "recommendation_score": round(final_score, 6),
+                    "total_rating": _safe_float(row.get("total_rating")),
+                    "total_rating_count": _safe_float(row.get("total_rating_count")),
+                }
+            )
+
+        scored_candidates = sorted(
+            scored_candidates,
+            key=lambda item: (
+                item["recommendation_score"],
+                item["similarity_score_component"],
+                item["total_rating"],
+                item["total_rating_count"],
+            ),
+            reverse=True,
+        )[:top_n]
+
+        scored_rows: list[pd.Series] = []
+        for scored_candidate in scored_candidates:
+            game = scored_candidate["game"]
+            row = self.catalog.iloc[game.row_index].copy()
+            row["similarity_score_component"] = scored_candidate["similarity_score_component"]
+            row["quality_score_component"] = scored_candidate["quality_score_component"]
+            row["rating_evidence_score"] = scored_candidate["rating_evidence_score"]
+            row["discovery_score_component"] = scored_candidate["discovery_score_component"]
+            row["playtime_score_component"] = scored_candidate["playtime_score_component"]
+            row["recommendation_score"] = scored_candidate["recommendation_score"]
             row["recommendation_explanation"] = self._explain(
                 row=row,
                 selected_platforms=selected_platforms,
@@ -545,11 +574,6 @@ class MetadataCosineRecommender:
             scored_rows.append(row)
 
         recommendations = pd.DataFrame(scored_rows)
-        recommendations = recommendations.sort_values(
-            ["recommendation_score", "similarity_score_component", "total_rating", "total_rating_count"],
-            ascending=False,
-            na_position="last",
-        ).head(top_n)
 
         return MetadataCosineRecommendationOutput(
             recommendations=recommendations,

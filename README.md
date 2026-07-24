@@ -118,6 +118,14 @@ GET  http://localhost:8000/chat/status
 POST http://localhost:8000/chat
 ```
 
+Hosted recommendation tuning:
+
+```text
+RECOMMENDATION_COSINE_CANDIDATE_LIMIT=2500
+```
+
+Use `2500` for Render free tier. Lower it to `1000` if `POST /recommendations` still returns `502` or times out; raise it only after the hosted endpoint is stable.
+
 ## Notes
 
 - Do not commit `.env`, `.DS_Store`, `__pycache__/`, `.next/`, `node_modules/`, local SQLite databases, or generated vector-store files.

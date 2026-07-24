@@ -19,5 +19,6 @@ APP_HIDDEN_GEMS_PATH = APP_DATA_DIR / "app_hidden_gems.parquet"
 APP_HIDDEN_GEMS_CSV_PATH = APP_DATA_DIR / "app_hidden_gems.csv"
 APP_FILTER_OPTIONS_PATH = APP_DATA_DIR / "app_filter_options.json"
 APP_INSIGHT_SUMMARY_PATH = APP_DATA_DIR / "app_insight_summary.json"
+APP_INSIGHTS_DASHBOARD_PATH = APP_DATA_DIR / "app_insights_dashboard.json"
 APP_METHODOLOGY_METRICS_PATH = APP_DATA_DIR / "app_methodology_metrics.json"
 

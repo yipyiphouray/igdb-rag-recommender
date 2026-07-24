@@ -20,10 +20,10 @@ Community_Project/
 |   |-- app/
 |   |-- predictive/
 |   |-- rag/
-|   |-- raw/
-|   `-- analytics/
+|   `-- raw/
 |-- docs/
 |   |-- plan/
+|   |   `-- UI_Improvement_Plans/
 |   |-- project_source_of_truth/
 |   `-- report/
 |-- notebooks/
@@ -55,6 +55,8 @@ Next.js final-product website frontend. Generated folders such as `.next/` and `
 
 Older reference material that should be preserved for history but should not guide active implementation decisions.
 
+Local-only UI iteration drafts can live under `archive/ui_iteration_plans/`. That folder is ignored by Git so the final repository stays focused on current implementation and final documentation.
+
 ## `assets/`
 
 Shared visual assets such as screenshots, diagrams, logos, and style references.
@@ -65,7 +67,7 @@ Project data at different stages of the pipeline.
 
 ### `data/raw/`
 
-Raw extraction documentation. Large raw IGDB endpoint dumps are ignored because they are not required to run the app and would make the repository harder to clone/deploy. The retained extraction manifest and README explain how to regenerate raw extracts.
+Raw extraction documentation. Large raw IGDB endpoint dumps are ignored because they are not required to run the app and would make the repository harder to clone/deploy. The retained extraction manifest explains how to regenerate raw extracts.
 
 ### `data/app/`
 
@@ -89,7 +91,11 @@ Project documentation, planning notes, source-of-truth docs, reports, and the se
 
 ### `docs/plan/`
 
-Forward-looking implementation plans, pillar plans, website plans, and UI improvement plans.
+Forward-looking implementation plans, pillar plans, website plans, and final consolidated UI improvement plans. Old version-by-version UI drafts should not stay here.
+
+### `docs/plan/UI_Improvement_Plans/`
+
+One consolidated design summary per major website page. This keeps the final product story readable while preserving page-level design decisions.
 
 ### `docs/project_source_of_truth/`
 

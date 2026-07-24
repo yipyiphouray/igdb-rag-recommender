@@ -9,6 +9,12 @@ __pycache__/
 venv/
 .vscode
 docs/session_log.md
+docs/report/final_deliverable_grading_schema.md
+docs/plan/streamlit_ui_polish_plan_v*.md
+docs/plan/UI_Improvement_Plans/*/website_*_plan_v*.md
+docs/plan/UI_Improvement_Plans/**/*-representation.jpg
+docs/plan/UI_Improvement_Plans/**/athena.png
+archive/ui_iteration_plans/
 data/analytics/descriptive/*
 data/*.db
 data/database/igdb_games.db

@@ -4,6 +4,7 @@ from typing import Any
 
 import math
 import os
+import re
 
 import pandas as pd
 
@@ -19,10 +20,8 @@ from src.app.recommendation_service import recommend_games
 
 
 MAX_STRUCTURED_SCORE = 85.0
-DEFAULT_COSINE_CANDIDATE_LIMIT = 12000
-
-_COSINE_RECOMMENDER: MetadataCosineRecommender | None = None
-_COSINE_CATALOG_ID: int | None = None
+DEFAULT_COSINE_CANDIDATE_LIMIT = 2500
+MIN_COSINE_CANDIDATE_LIMIT = 300
 
 
 def _first_platform(request: RecommendationRequest) -> str | None:
@@ -44,7 +43,7 @@ def _cosine_candidate_limit() -> int:
     if not raw_value:
         return DEFAULT_COSINE_CANDIDATE_LIMIT
     try:
-        return max(1000, int(raw_value))
+        return max(MIN_COSINE_CANDIDATE_LIMIT, int(raw_value))
     except ValueError:
         return DEFAULT_COSINE_CANDIDATE_LIMIT
 
@@ -110,6 +109,13 @@ def _normalized_selected(values: list[str]) -> set[str]:
     return {value.strip().lower() for value in values if value and value.strip()}
 
 
+def _normalize_title(value: object) -> str:
+    text = "" if value is None else str(value).strip().lower()
+    text = re.sub(r"[â€™']", "", text)
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    return " ".join(text.split())
+
+
 def _overlap_count(value: object, selected_values: set[str]) -> int:
     if not selected_values:
         return 0
@@ -143,6 +149,32 @@ def _candidate_priority_score(row: pd.Series, request: RecommendationRequest) ->
     return score
 
 
+def _has_preference_overlap(row: pd.Series, request: RecommendationRequest) -> bool:
+    selected_genres = _normalized_selected(request.genres)
+    selected_themes = _normalized_selected(request.themes)
+
+    return bool(
+        _overlap_count(row.get("genres_list"), selected_genres)
+        or _overlap_count(row.get("themes_list"), selected_themes)
+    )
+
+
+def _seed_rows(catalog: pd.DataFrame, request: RecommendationRequest) -> pd.DataFrame:
+    if not request.favorite_games or "name" not in catalog.columns:
+        return catalog.iloc[0:0]
+
+    wanted_titles = {
+        _normalize_title(title)
+        for title in request.favorite_games
+        if _normalize_title(title)
+    }
+    if not wanted_titles:
+        return catalog.iloc[0:0]
+
+    normalized_names = catalog["name"].map(_normalize_title)
+    return catalog[normalized_names.isin(wanted_titles)]
+
+
 def _candidate_catalog_for_cosine(
     catalog: pd.DataFrame,
     request: RecommendationRequest,
@@ -164,35 +196,63 @@ def _candidate_catalog_for_cosine(
         return filtered
 
     limit = _cosine_candidate_limit()
+
+    if request.genres or request.themes:
+        preference_matched = filtered[
+            filtered.apply(lambda row: _has_preference_overlap(row, request), axis=1)
+        ]
+        minimum_preference_pool = max(request.max_results * 30, MIN_COSINE_CANDIDATE_LIMIT)
+        if len(preference_matched) >= minimum_preference_pool:
+            filtered = preference_matched
+
     if len(filtered) <= limit:
-        return filtered
+        limited = filtered
+    else:
+        prioritized = filtered.copy()
+        prioritized["_cosine_candidate_priority"] = prioritized.apply(
+            lambda row: _candidate_priority_score(row, request),
+            axis=1,
+        )
+        limited = prioritized.sort_values(
+            [
+                "_cosine_candidate_priority",
+                "total_rating_count",
+                "total_rating",
+                "custom_interest_percentile",
+            ],
+            ascending=False,
+            na_position="last",
+        ).head(limit)
+        limited = limited.drop(columns=["_cosine_candidate_priority"], errors="ignore")
 
-    prioritized = filtered.copy()
-    prioritized["_cosine_candidate_priority"] = prioritized.apply(
-        lambda row: _candidate_priority_score(row, request),
-        axis=1,
+    seeds = _seed_rows(catalog, request)
+    if not seeds.empty:
+        limited = pd.concat([limited, seeds], axis=0)
+        limited = limited.drop_duplicates(subset=["game_id"], keep="first")
+
+    return limited
+
+
+def _recommend_with_cosine(
+    *,
+    catalog: pd.DataFrame,
+    request: RecommendationRequest,
+    discovery_preference: str,
+) -> MetadataCosineRecommendationOutput:
+    recommender = MetadataCosineRecommender(catalog)
+    return recommender.recommend(
+        platform=request.platform,
+        platforms=request.platforms,
+        genres=request.genres,
+        themes=request.themes,
+        mood_words=request.mood_words,
+        favorite_games=request.favorite_games,
+        playstyle_preferences=request.playstyle_preferences,
+        release_year_range=_release_year_range(request),
+        discovery_preference=discovery_preference,
+        desired_playtime=request.desired_playtime,
+        top_n=request.max_results,
     )
-    prioritized = prioritized.sort_values(
-        [
-            "_cosine_candidate_priority",
-            "total_rating_count",
-            "total_rating",
-            "custom_interest_percentile",
-        ],
-        ascending=False,
-        na_position="last",
-    ).head(limit)
-    return prioritized.drop(columns=["_cosine_candidate_priority"], errors="ignore")
-
-
-def _get_cosine_recommender(catalog: pd.DataFrame) -> MetadataCosineRecommender:
-    global _COSINE_CATALOG_ID, _COSINE_RECOMMENDER
-
-    catalog_id = id(catalog)
-    if _COSINE_RECOMMENDER is None or _COSINE_CATALOG_ID != catalog_id:
-        _COSINE_RECOMMENDER = MetadataCosineRecommender(catalog)
-        _COSINE_CATALOG_ID = catalog_id
-    return _COSINE_RECOMMENDER
 
 
 def _has_cosine_profile_input(request: RecommendationRequest) -> bool:
@@ -347,18 +407,10 @@ def recommend_from_request(request: RecommendationRequest) -> dict[str, Any]:
 
     try:
         cosine_catalog = _candidate_catalog_for_cosine(catalog, request)
-        output = _get_cosine_recommender(cosine_catalog).recommend(
-            platform=request.platform,
-            platforms=request.platforms,
-            genres=request.genres,
-            themes=request.themes,
-            mood_words=request.mood_words,
-            favorite_games=request.favorite_games,
-            playstyle_preferences=request.playstyle_preferences,
-            release_year_range=_release_year_range(request),
+        output = _recommend_with_cosine(
+            catalog=cosine_catalog,
+            request=request,
             discovery_preference=discovery_preference,
-            desired_playtime=request.desired_playtime,
-            top_n=request.max_results,
         )
     except (KeyError, TypeError, ValueError) as error:
         return _structured_fallback_response(

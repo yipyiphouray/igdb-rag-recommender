@@ -111,4 +111,7 @@ LLM_PROVIDER=gemini
 GEMINI_API_KEY=your_gemini_api_key
 GEMINI_MODEL=gemini-3.5-flash-lite
 RAG_BACKEND=lightweight
+RECOMMENDATION_COSINE_CANDIDATE_LIMIT=12000
 ```
+
+`RECOMMENDATION_COSINE_CANDIDATE_LIMIT` controls how many candidate games are vectorized for each hosted cosine-similarity request. The default is `12000`. Lower it to `8000` if Render free tier returns `502` or times out on `POST /recommendations`.

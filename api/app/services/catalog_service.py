@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+from json import JSONDecodeError
 from collections.abc import Iterable
 from functools import lru_cache
 from typing import Any
@@ -34,8 +35,12 @@ def load_catalog() -> pd.DataFrame:
 def load_filter_options() -> dict[str, Any]:
     if not config.APP_FILTER_OPTIONS_PATH.exists():
         return {}
-    with config.APP_FILTER_OPTIONS_PATH.open("r", encoding="utf-8") as file:
-        return json.load(file)
+    try:
+        with config.APP_FILTER_OPTIONS_PATH.open("r", encoding="utf-8-sig") as file:
+            data = json.load(file)
+    except (OSError, JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
 
 
 def _is_missing(value: object) -> bool:

@@ -167,8 +167,8 @@ function optionButtonClass(selected: boolean): string {
     "rounded-sm border px-3 py-2 text-left text-sm font-semibold transition",
     "focus:outline-none focus:ring-2 focus:ring-[#ff3e00]/70",
     selected
-      ? "border-[#ff3e00] bg-[#ff3e00] text-black shadow-[0_0_22px_rgba(255,62,0,0.28)]"
-      : "border-white/15 bg-white/[0.04] text-white hover:border-[#ff3e00]/70 hover:bg-[#ff3e00]/10",
+      ? "border-white bg-[#ff3e00] text-black shadow-[0_0_22px_rgba(255,62,0,0.28)]"
+      : "border-white/35 bg-white/[0.04] text-white hover:border-white hover:bg-[#ff3e00]/10",
   ].join(" ");
 }
 
@@ -258,7 +258,7 @@ function TextPrompt({
         value={value}
         placeholder={placeholder}
         onChange={(event) => onChange(event.target.value)}
-        className="h-52 resize-none rounded-sm border border-white/15 bg-black/60 px-4 py-3 text-white placeholder:text-white/35 focus:border-[#ff3e00] focus:outline-none"
+        className="h-52 resize-none rounded-sm border border-white/35 bg-black/60 px-4 py-3 text-white placeholder:text-white/35 focus:border-white focus:outline-none"
       />
       <span className="min-h-10 text-sm text-white/55">{helper}</span>
     </label>
@@ -267,7 +267,7 @@ function TextPrompt({
 
 function ReviewRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-sm border border-white/10 bg-white/[0.04] p-4">
+    <div className="rounded-sm border border-white/30 bg-white/[0.04] p-4">
       <p className="text-xs uppercase tracking-[0.18em] text-[#ff3e00]">
         {label}
       </p>
@@ -696,9 +696,9 @@ export default function RecommendationsPage() {
           </div>
         </section>
 
-        <section className="border border-white/15 bg-black/75">
+        <section className="border border-white bg-black/75">
           <div className="grid lg:grid-cols-[15rem_1fr]">
-            <aside className="border-b border-white/15 p-4 lg:border-b-0 lg:border-r">
+            <aside className="border-b border-white/35 p-4 lg:border-b-0 lg:border-r">
               <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
                 Wizard menu_
               </p>
@@ -711,10 +711,10 @@ export default function RecommendationsPage() {
                     className={[
                       "border px-3 py-2 text-left text-xs font-black uppercase tracking-[0.14em] transition",
                       index === stepIndex
-                        ? "border-[#ff3e00] bg-[#ff3e00] text-black"
+                        ? "border-white bg-[#ff3e00] text-black"
                         : index < stepIndex
-                          ? "border-white/20 bg-white/[0.06] text-white"
-                          : "border-white/10 bg-white/[0.02] text-white/45",
+                          ? "border-white/55 bg-white/[0.06] text-white"
+                          : "border-white/35 bg-white/[0.02] text-white/58 hover:border-white hover:text-white",
                     ].join(" ")}
                   >
                     {step.label}
@@ -734,7 +734,7 @@ export default function RecommendationsPage() {
                 <p className="mt-3 text-white/60">{currentStep.description}</p>
               </div>
 
-              <div className="border border-white/10 bg-white/[0.03] p-5">
+              <div className="border border-white/35 bg-white/[0.03] p-5">
                 {renderStep()}
               </div>
 

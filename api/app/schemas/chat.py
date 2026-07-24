@@ -56,6 +56,18 @@ class ChatRetrievedGame(GameSummary):
     caveats: list[str] = Field(default_factory=list)
 
 
+class ChatSource(BaseModel):
+    title: str
+    path: str
+    section: str | None = None
+    score: float | None = None
+
+
+class ChatNextAction(BaseModel):
+    label: str
+    href: str
+
+
 class ChatResponse(BaseModel):
     answer: str
     mode: str
@@ -72,6 +84,10 @@ class ChatResponse(BaseModel):
     intent_confidence: float | None = None
     route_source: str | None = None
     matched_intent_example: str | None = None
+    sources: list[ChatSource] = Field(default_factory=list)
+    next_actions: list[ChatNextAction] = Field(default_factory=list)
+    llm_provider: str | None = None
+    llm_model: str | None = None
 
 
 class ChatStatusResponse(BaseModel):
@@ -81,3 +97,9 @@ class ChatStatusResponse(BaseModel):
     collection_available: bool
     engine: str
     warnings: list[str] = Field(default_factory=list)
+    retrieval_artifacts_available: bool | None = None
+    project_context_available: bool | None = None
+    project_context_chunk_count: int | None = None
+    llm_provider: str | None = None
+    llm_model: str | None = None
+    llm_available: bool | None = None

@@ -5,9 +5,12 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 API_DIR = Path(__file__).resolve().parent
 ROOT_DIR = API_DIR.parent
+
+load_dotenv(ROOT_DIR / ".env")
 
 for path in (API_DIR, ROOT_DIR):
     path_text = str(path)

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { HomeFeatureCard } from "@/components/HomeFeatureCard";
+import { HomeHeroActionLink } from "@/components/HomeHeroActionLink";
 
 const featureCards = [
   {
@@ -64,15 +64,9 @@ export default async function HomePage() {
           </p>
 
           <div className="mx-auto mt-10 grid max-w-4xl gap-px border border-white bg-white sm:grid-cols-3">
-            <Link href="/recommendations" className="home-v3-cta">
-              RECOMMEND ME
-            </Link>
-            <Link href="/explore" className="home-v3-cta">
-              EXPLORE
-            </Link>
-            <Link href="/guide" className="home-v3-cta">
-              ASK GUIDE
-            </Link>
+            <HomeHeroActionLink href="/recommendations" label="RECOMMEND ME" />
+            <HomeHeroActionLink href="/explore" label="EXPLORE" />
+            <HomeHeroActionLink href="/guide" label="ASK GUIDE" />
           </div>
         </div>
       </section>

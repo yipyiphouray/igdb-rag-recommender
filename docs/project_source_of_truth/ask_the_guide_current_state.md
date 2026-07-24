@@ -2,88 +2,107 @@
 
 Last updated: July 23, 2026
 
-This document explains the current state of the website chatbot page, now called **Ask the Guide_**. It is intended as a handoff document for improving the page without needing to reverse-engineer the current implementation from scratch.
+This document explains the current state of the website chatbot page, called **Ask the Guide_**. It is intended as a handoff document for future improvements without needing to reverse-engineer the implementation from scratch.
 
 ## 1. Current Product Direction
 
-Ask the Guide_ is no longer designed to behave like ChatGPT. The project previously explored a more open-ended RAG chatbot direction, but that approach became unreliable for the current project scope because user questions could be phrased in many different ways and the system sometimes routed questions incorrectly.
+Ask the Guide_ is now a **scoped RAG + free-LLM project guide**.
 
-The current page is now a **condition-based project guide**. Users do not freely type questions. Instead, they select one predefined instruction from a dropdown, run that instruction, and receive a controlled answer from the backend.
+The page allows users to type natural questions, but the assistant is intentionally bounded to this project. It should answer questions about:
 
-The page’s current purpose is:
+- the IGDB game-discovery project;
+- the app dataset and its limitations;
+- descriptive and diagnostic analytics findings;
+- website navigation;
+- hidden-gem logic;
+- recommendation methodology;
+- cosine similarity;
+- RAG and retrieval;
+- game-discovery questions that can be grounded in project context.
 
-- Explain the project.
-- Explain the IGDB dataset and its limitations.
-- Explain the recommendation methodology.
-- Explain hidden-gem logic.
-- Explain the role of RAG in the project.
-- Answer selected dataset facts such as game count, year range, and rating coverage.
-- Help users navigate to the correct page.
-- Direct users to Recommend Me_ when they want actual game recommendations.
+The page should not behave like a general ChatGPT replacement. If the user asks unrelated questions, the backend returns a scoped refusal and redirects the user toward supported project topics.
 
-The page’s current non-purpose is:
+The Guide voice should be completely analytical, precise, and devoid of human empathy, warmth, or casual pleasantries. It should treat the user as the Subject, use short declarative sentences, avoid friendly assistant wording, and prefer operational labels such as `Assessment:`, `Evidence:`, `Constraint:`, and `Directive:` when useful.
 
-- It is not the main recommendation engine.
-- It is not a free-form chatbot.
-- It is not an LLM-powered assistant.
-- It is not expected to answer every possible user question.
-- It does not return game cards or ranked game recommendations.
+## 2. Current Purpose
 
-## 2. Current UX Behavior
+The current purpose of Ask the Guide_ is:
+
+- Answer project and game-catalog questions directly and factually.
+- Retrieve relevant project context before generating a response.
+- Use structured project facts for exact metrics such as dataset size, year range, rating coverage, and RAG index size.
+- Use a free external LLM only to phrase grounded answers.
+- Show source/context badges so users can see what the answer was based on.
+- Route actual ranked recommendations to Recommend Me_.
+
+Ask the Guide_ is the project explanation layer. Recommend Me_ remains the main recommendation engine.
+
+## 3. Current Non-Purpose
+
+Ask the Guide_ is not:
+
+- the main recommendation engine;
+- a replacement for Recommend Me_;
+- a general-purpose chatbot;
+- a live IGDB browser;
+- a system that should invent unsupported project metrics;
+- a system that should rank games using only LLM knowledge.
+
+When users ask for ranked recommendations, the Guide should explain how to use Recommend Me_ and what inputs improve recommendation quality.
+
+## 4. Current UX Behavior
 
 The user lands on `/guide`.
 
 The page shows:
 
-- A large terminal-style guide panel on the left.
-- A CSS-built futuristic AI face/projection on the right.
-- A welcome bubble from the Guide.
-- A dropdown of supported instructions.
-- A `Run instruction` button.
-- A `Clear chat` button.
-- A terminal-style transcript area.
-- A bottom callout that sends users to Recommend Me_ for ranked recommendations.
-- A bottom disclaimer explaining Guide boundaries.
+- a terminal-style guide panel;
+- a futuristic AI face/projection visual;
+- a welcome message explaining the page scope;
+- a typed question box;
+- starter prompt cards;
+- a scrollable transcript;
+- source/context badges under grounded answers;
+- optional next-action buttons;
+- a Recommend Me_ callout;
+- a scope disclaimer.
 
-When no instruction has been run yet, the transcript area shows an animated terminal idle message:
+When no message has been sent, the transcript shows:
 
 ```text
 terminal idle_
-guide@igdb:~$ awaiting selected instruction
+guide@igdb:~$ awaiting project question
 ```
 
-Once the user runs an instruction, the idle message disappears and the transcript displays the selected instruction and the Guide response.
-
-The chat thread is capped at `8` user selections through:
+The chat thread is capped at `10` user turns through:
 
 ```ts
-const MAX_GUIDE_USER_TURNS = 8;
+const MAX_GUIDE_USER_TURNS = 10;
 ```
 
-Once the limit is reached, the page prevents more instruction submissions until the user clears the chat.
+This keeps long conversations from degrading retrieval quality or becoming confusing.
 
-## 3. Current Visual Direction
+## 5. Current Frontend Files
 
-The visual style is cyberpunk, black/orange/white, and terminal-inspired.
-
-The current design intentionally avoids the earlier green Matrix-style treatment on this page. The current Ask the Guide-specific CSS uses:
-
-- Black page background.
-- White grid/scanline texture.
-- Orange accent color `#ff3e00`.
-- White/orange AI projection effects.
-- A CSS-generated AI face inspired by futuristic AI face references.
-- Homepage-inspired glitch slices and flicker effects.
-
-The AI visual is not an imported image. It is built with HTML spans and CSS so that the project avoids licensing issues and remains easy to deploy.
-
-The relevant frontend component is:
+Main page:
 
 ```text
 apps/website/src/app/guide/page.tsx
 ```
 
-The relevant styling is in:
+Shared API helper:
+
+```text
+apps/website/src/lib/api.ts
+```
+
+Shared API types:
+
+```text
+apps/website/src/types/api.ts
+```
+
+Styling:
 
 ```text
 apps/website/src/app/globals.css
@@ -95,466 +114,54 @@ The main CSS class family is:
 ask-guide-*
 ```
 
-Important visual classes include:
+## 6. Current Frontend Request Flow
 
-- `ask-guide-shell`
-- `ask-guide-stage`
-- `ask-guide-stage-grid`
-- `ask-guide-terminal`
-- `ask-guide-transcript`
-- `ask-guide-terminal-waiting`
-- `ask-guide-avatar`
-- `ask-guide-face`
-- `ask-guide-face-outline`
-- `ask-guide-face-eye`
-- `ask-guide-face-glitch`
-- `ask-guide-data-rain`
-- `ask-guide-lower-callout`
-- `ask-guide-disclaimer`
-
-## 4. Current Frontend Structure
-
-The page is implemented as a client component:
-
-```ts
-"use client";
-```
-
-Main imports:
-
-```ts
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { postChatMessage } from "@/lib/api";
-import type { ChatResponse, ChatRouteMode } from "@/types/api";
-```
-
-The page sends requests through:
-
-```ts
-postChatMessage(...)
-```
-
-which is defined in:
-
-```text
-apps/website/src/lib/api.ts
-```
-
-The frontend request goes to:
+The frontend sends typed user messages to:
 
 ```text
 POST /chat
 ```
 
-with a payload shaped like:
+Request shape:
 
 ```ts
 {
-  message: topic.prompt,
-  route_mode: topic.id,
+  message: cleanedMessage,
+  route_mode: "custom_question",
   max_results: 5,
-  history: []
+  history: buildHistory()
 }
 ```
 
-Important implementation detail: the frontend currently sends `history: []` every time. The Guide is not using conversational memory. It behaves like selected deterministic commands.
+The frontend includes recent chat history so the backend can provide limited context to the LLM. The backend still controls scope and retrieval.
 
-## 5. Current Supported Guide Topics
+## 7. Starter Prompts
 
-The supported instructions are defined in `guideTopics` inside:
+The page keeps starter prompts so users know what the Guide is good at.
 
-```text
-apps/website/src/app/guide/page.tsx
-```
+Current starter prompt topics:
 
-Current topic list:
-
-| Route mode | Dropdown label | Purpose |
-|---|---|---|
-| `explain_project` | Explain this project | Explains the overall project goal and analytics system. |
-| `explain_data` | Explain the data | Explains the IGDB app catalog and metadata fields. |
-| `dataset_size` | How many games are in the dataset? | Returns the current game count from project metrics. |
-| `dataset_year_range` | What years does the dataset cover? | Returns the release-year range from project metrics. |
-| `rating_coverage` | What is rating coverage? | Explains rating coverage using project metrics. |
-| `explain_recommendation` | Explain recommendations | Explains the cosine-similarity recommendation workflow. |
-| `recommend_me_guidance` | Help me use Recommend Me | Explains how users should use the Recommend Me_ page. |
-| `explain_hidden_gems` | Explain hidden gems | Explains hidden-gem logic. |
-| `explain_rag` | Explain RAG | Explains RAG as a project grounding concept. |
-| `search_catalog` | Where do I browse games? | Points users to Explore Games_. |
-| `website_navigation` | Website navigation | Explains what each website page is for. |
-| `explain_limitations` | Explain limitations | Explains dataset and methodology limitations. |
-
-## 6. Current Follow-Up Behavior
-
-Backend responses include `follow_up_prompts`.
-
-The frontend renders those prompts as buttons under a Guide response. When clicked, the frontend tries to infer a route mode from the prompt using:
-
-```ts
-routeModeForPrompt(prompt)
-```
-
-This is a lightweight fallback router on the frontend. It checks whether the follow-up prompt includes keywords such as:
-
-- `how many`
-- `dataset size`
-- `year`
-- `rating coverage`
-- `hidden gem`
-- `recommend`
-- `rag`
-- `data`
-- `navigation`
-- `website`
-- `limitation`
-
-Then it submits another controlled request to the backend.
-
-This is not meant to support free-form user typing. It only helps follow-up buttons continue the controlled guide flow.
-
-## 7. Current Backend Behavior
-
-The backend chat logic is implemented in:
-
-```text
-api/app/services/chat_service.py
-```
-
-The current backend engine identifies itself as:
-
-```text
-condition_based_project_guide
-```
-
-The backend accepts route modes through:
-
-```py
-GUIDED_ROUTE_MODES = {
-    "custom_question",
-    "dataset_size",
-    "dataset_year_range",
-    "explain_data",
-    "explain_hidden_gems",
-    "explain_limitations",
-    "explain_project",
-    "explain_rag",
-    "explain_recommendation",
-    "recommend_games",
-    "recommend_me_guidance",
-    "rating_coverage",
-    "search_catalog",
-    "website_navigation",
-}
-```
-
-Important detail: `custom_question` still exists in the schema/backend route list, but the current frontend does not expose free-form typing. If the user somehow sends an unsupported or non-routed request, the backend returns an unsupported-instruction response.
-
-## 8. Backend Response Types
-
-The backend returns a `ChatResponse`.
-
-The frontend expects this TypeScript shape:
-
-```ts
-export type ChatResponse = {
-  answer: string;
-  mode: string;
-  status: string;
-  route_mode?: ChatRouteMode | null;
-  conversation_id?: string | null;
-  retrieved_games: ChatRetrievedGame[];
-  caveats: string[];
-  applied_filters: Record<string, unknown>;
-  follow_up_prompts: string[];
-  contextual_query?: string | null;
-  interpreted_preferences: Record<string, unknown>;
-  chat_intent?: string | null;
-  intent_confidence?: number | null;
-  route_source?: string | null;
-  matched_intent_example?: string | null;
-};
-```
-
-For the current condition-based Guide, most fields are intentionally empty or static:
-
-- `retrieved_games` is usually `[]`.
-- `applied_filters` is usually `{}`.
-- `interpreted_preferences` is usually `{}`.
-- `contextual_query` is usually `null`.
-- `intent_confidence` is usually `1.0`.
-- `route_source` is usually `selected_route_mode`.
-
-This is expected because the Guide is not currently performing game retrieval.
-
-## 9. Current Project-Fact Logic
-
-Some Guide instructions route through structured project facts instead of hard-coded text.
-
-This logic lives in:
-
-```text
-src/app/project_facts.py
-```
-
-The structured fact routes are:
-
-```py
-FACT_ROUTE_QUESTIONS = {
-    "dataset_size": "How many games does the dataset have?",
-    "dataset_year_range": "What years does the dataset cover?",
-    "rating_coverage": "What is rating coverage?",
-}
-```
-
-These pull from structured artifacts such as:
-
-```text
-data/app/app_methodology_metrics.json
-data/app/app_insight_summary.json
-data/rag/lightweight/manifest.json
-```
-
-This is the strongest part of the current Guide architecture because factual answers can update when the project artifacts update, instead of being only hard-coded copy.
-
-## 10. Current RAG Role
-
-The current Guide explains RAG but does not behave like a full RAG chatbot.
-
-Current project direction:
-
-- RAG is still part of the project as a concept and supporting methodology.
-- The Guide page is currently condition-based for reliability.
-- The Guide does not currently retrieve project documents dynamically.
-- The Guide does not currently call an LLM.
-- The Guide does not currently use vector retrieval to generate natural-language answers.
-
-In short: the current page is a **guided explanation layer**, not a true free-form RAG assistant.
-
-## 11. Current Recommendation Role
-
-Ask the Guide_ is not responsible for recommendations.
-
-The current recommendation workflow lives on:
-
-```text
-/recommendations
-```
-
-Ask the Guide_ only explains how to use Recommend Me_.
-
-When a response has:
-
-```ts
-response.mode === "recommend_me_guidance"
-```
-
-or:
-
-```ts
-response.chat_intent === "recommend_me_guidance"
-```
-
-the frontend shows an extra reminder:
-
-```text
-For actual ranked matches, continue on Recommend Me_.
-```
-
-The page also has a bottom callout:
-
-```text
-Want game recommendations?_
-Go to Recommend Me_
-Ask the Guide_ explains the project. Recommend Me_ is the page that turns your preferences into ranked game matches.
-```
-
-## 12. Current API Status Endpoint
-
-The backend still provides:
-
-```text
-GET /chat/status
-```
-
-The frontend API helper still has:
-
-```ts
-getChatStatus()
-```
-
-However, the current Ask the Guide_ page does not display the status panel anymore. It only uses `postChatMessage`.
-
-The status endpoint may still be useful for future debugging or admin-style diagnostics, but it is not part of the current user-facing Guide page.
-
-## 13. Current Error Behavior
-
-If the frontend cannot reach the chat API, the failed turn displays:
-
-```text
-Chat API is unavailable. Start the FastAPI backend and try again.
-```
-
-If the user reaches the turn limit, the page displays:
-
-```text
-This guide thread has reached 8 user selections. Start a new topic to keep the context clean.
-```
-
-If the backend receives an unsupported route, it returns:
-
-```text
-Ask the Guide_ is now condition-based. Choose one of the predefined guide instructions instead of typing a free-form question.
-```
-
-## 14. Current Known Limitations
-
-The current page is reliable, but limited by design.
-
-Known limitations:
-
-- The user cannot freely type a question.
-- The Guide cannot answer arbitrary project questions unless they are represented by a predefined route or fact artifact.
-- Most answers are still hard-coded in `chat_service.py`.
-- Only a few project facts are dynamically grounded in artifacts.
-- `custom_question` still exists in the backend schema, but the frontend does not use it.
-- `ChatRetrievedGame` types still exist because of the previous RAG/retrieval design, but the current Guide does not render game cards.
-- `getChatStatus()` still exists in the frontend API helper but is unused by the current Guide page.
-- The Guide is not conversational in the LLM sense. It is command-based.
-- Follow-up prompts are clickable, but they are still routed by simple frontend keyword logic.
-- If the project expands, the dropdown could become too long and may need grouping.
-
-## 15. Current Strengths
-
-The current implementation has several strengths:
-
-- It is simple and predictable.
-- It is easier to test than a free-form chatbot.
-- It avoids LLM API costs.
-- It is compatible with free deployment goals.
-- It avoids user frustration from unsupported natural-language routing.
-- It clearly separates explanation from recommendation.
-- It uses structured project artifacts for selected factual answers.
-- It visually matches the cyberpunk website direction.
-- It avoids copyrighted image assets by using CSS-generated AI visuals.
-
-## 16. Suggested Improvement Directions
-
-If improving this page, the most useful improvements are not more random intent patches. The better path is to make the Guide more structured and more artifact-driven.
-
-Recommended next improvements:
-
-### 16.1 Expand project-fact coverage
-
-Move more answers from hard-coded backend strings into structured project artifacts.
-
-Examples:
-
-- Total games.
-- Release-year range.
-- Games per year.
-- Hidden-gem count.
-- Top genre.
-- Top platform.
-- Rating coverage.
-- PopScore coverage.
-- Summary coverage.
-- Recommendation formula summary.
-- Dataset caveats.
-- Extraction logic.
-
-### 16.2 Create grouped instruction categories
-
-Instead of one long dropdown, split instructions into groups:
-
-- Project overview.
-- Dataset facts.
-- Recommendation methodology.
-- RAG and technical architecture.
+- Explain this project.
+- Dataset size.
+- Recommend Me logic.
+- Hidden gems.
+- RAG role.
 - Website navigation.
-- Limitations.
 
-This would make the page easier to use as the number of supported instructions grows.
+These are not hard route locks anymore. They submit normal natural-language questions through the same chat endpoint.
 
-### 16.3 Add a source/citation area for fact answers
+## 8. Current Backend Files
 
-Current fact answers include source artifacts in `caveats`.
-
-The frontend could show a small `Source` section for answers that are grounded in artifacts.
-
-Example:
-
-```text
-Source: data/app/app_methodology_metrics.json
-```
-
-### 16.4 Replace frontend follow-up keyword routing with explicit route metadata
-
-Current follow-up prompts are strings, and the frontend guesses the route from the prompt text.
-
-A cleaner approach would be for the backend to return follow-up objects:
-
-```ts
-{
-  label: "What is rating coverage?",
-  route_mode: "rating_coverage"
-}
-```
-
-This would remove fragile frontend keyword routing.
-
-### 16.5 Decide whether `custom_question` should stay
-
-If the page is strictly condition-based, `custom_question` may be misleading.
-
-Options:
-
-- Keep it only for backend compatibility.
-- Remove it from the schema if no longer used.
-- Reserve it for a future project-document search mode.
-
-### 16.6 Add tests for every route mode
-
-Each route mode should have a backend test verifying:
-
-- status is expected.
-- answer is non-empty.
-- follow-up prompts are returned.
-- route mode is preserved.
-- factual routes use artifacts when available.
-
-### 16.7 Improve the UI copy
-
-The Guide currently explains its own limitations clearly, but some copy could be made more user-centered.
-
-Potential direction:
-
-- Less emphasis on what the Guide cannot do.
-- More emphasis on which project topic the user can quickly learn.
-
-Example:
-
-```text
-Choose what you want explained. The Guide will return a focused project answer.
-```
-
-## 17. Files Most Relevant for Teammate
-
-Frontend:
-
-```text
-apps/website/src/app/guide/page.tsx
-apps/website/src/app/globals.css
-apps/website/src/lib/api.ts
-apps/website/src/types/api.ts
-```
-
-Backend:
+Main chat service:
 
 ```text
 api/app/services/chat_service.py
+```
+
+Chat schemas:
+
+```text
 api/app/schemas/chat.py
-api/main.py
 ```
 
 Project fact layer:
@@ -563,16 +170,203 @@ Project fact layer:
 src/app/project_facts.py
 ```
 
-Current planning docs:
+Project document retrieval layer:
 
 ```text
-docs/plan/rag_chatbot_implementation_plan.md
-docs/plan/rag_chatbot_intelligence_layer_plan.md
-docs/project_source_of_truth/rag_chatbot_predefined_responses_reference.md
-docs/project_source_of_truth/rag_chatbot_scope_and_knowledge_contract.md
-docs/plan/UI_Improvement_Plans/AskTheGuide_Page/
+src/app/project_context_retrieval.py
 ```
 
-## 18. Practical Summary for Teammate
+LLM provider wrapper:
 
-Ask the Guide_ is currently a controlled project-explanation interface, not a natural-language chatbot. The frontend presents predefined guide instructions through a dropdown and sends the selected `route_mode` to the FastAPI backend. The backend returns deterministic responses from `chat_service.py`, with selected factual answers grounded in project artifacts through `src/app/project_facts.py`. The current page is visually styled as a cyberpunk terminal with a CSS-generated AI face, and actual game recommendations are intentionally routed to the separate Recommend Me_ page.
+```text
+src/app/llm_provider.py
+```
+
+## 9. Current Backend Engine
+
+The backend identifies the current chatbot engine as:
+
+```text
+scoped_rag_llm_project_guide
+```
+
+The backend now uses a tool-grounded flow:
+
+```text
+User message
+-> LLM planner chooses an approved tool
+-> backend executes the selected project tool
+-> exact metrics and catalog counts come from Python/project artifacts
+-> explanatory questions use project-context retrieval
+-> LLM phrases grounded answers when needed
+-> fallback routing still works if the planner or API key is unavailable
+```
+
+Approved tools:
+
+- `project_fact`: answers exact project metric questions from structured artifacts.
+- `catalog_count`: computes filtered game counts from `app_game_catalog.parquet`.
+- `catalog_distribution`: summarizes top genres, platforms, themes, game modes, or perspectives.
+- `game_lookup`: answers factual questions about one specific game in `app_game_catalog.parquet` and links to that game's Explore Games_ detail page.
+- `game_compare`: compares two specific games in `app_game_catalog.parquet` using catalog-backed metadata such as release year, genres, platforms, themes, ratings, rating counts, and hidden-gem flags.
+- `recommendation_input_helper`: helps users translate vague preference language into stronger `Recommend Me_` inputs, such as recent games, platform, genre, theme, playstyle, and discovery preference.
+- `term_definition`: explains project-specific terms including PopScore, hidden gem, total_rating_count, rating coverage, RAG, RAG-ready, and cosine similarity.
+- `website_navigation`: gives deterministic page-routing guidance for Home_, Explore Games_, Recommend Me_, Hidden Gems_, Insights_, Methodology_, and Ask the Guide_.
+- `recommendation_redirect`: sends ranked recommendation requests to Recommend Me_.
+- `project_context`: retrieves relevant project context and uses the LLM for grounded explanation.
+- `unsupported`: refuses unrelated questions.
+
+## 10. Structured Fact Layer
+
+Exact metric questions are answered before the LLM is used.
+
+This logic lives in:
+
+```text
+src/app/project_facts.py
+```
+
+It can answer questions such as:
+
+- How many games are in the dataset?
+- What years does the dataset cover?
+- How many hidden gems are there?
+- What is rating coverage?
+- What is reliable rating coverage?
+- What is PopScore coverage?
+- How many games have summaries?
+- What is the top genre?
+- What is the top platform?
+- How many embeddings are in the RAG index?
+
+This is intentional. Exact project metrics should come from structured artifacts, not from the LLM.
+
+## 11. Project Context Retrieval Layer
+
+The project-document retrieval layer lives in:
+
+```text
+src/app/project_context_retrieval.py
+```
+
+It loads and chunks selected project documents and structured JSON artifacts.
+
+Current retrieval sources include:
+
+- `docs/project_source_of_truth/ask_the_guide_knowledge_base.md`
+- `docs/project_source_of_truth/ask_the_guide_current_state.md`
+- `docs/project_source_of_truth/IGDB_ERD_BusinessRules.md`
+- `docs/project_source_of_truth/IGDB_ERD_Data_Dictionary.md`
+- `docs/project_source_of_truth/website_visual_style_guide.md`
+- `docs/report/descriptive_pillar_findings.md`
+- `docs/report/diagnostic_pillar_findings.md`
+- `data/app/app_methodology_metrics.json`
+- `data/app/app_insight_summary.json`
+
+The retriever is lightweight and lexical. It does not require Chroma, a hosted vector database, or GPU infrastructure.
+
+## 12. LLM Provider Layer
+
+The LLM wrapper lives in:
+
+```text
+src/app/llm_provider.py
+```
+
+The current provider direction is Gemini through environment variables:
+
+```text
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_MODEL=gemini-3.5-flash-lite
+```
+
+If `GEMINI_API_KEY` is missing or the provider fails, the chatbot still returns an extractive fallback answer from retrieved project context.
+
+## 13. Response Shape
+
+The backend returns the existing `ChatResponse` fields plus additional fields for grounded answers:
+
+```ts
+sources: {
+  title: string;
+  path: string;
+  section?: string | null;
+  score?: number | null;
+}[];
+
+next_actions: {
+  label: string;
+  href: string;
+}[];
+
+llm_provider?: string | null;
+llm_model?: string | null;
+```
+
+The frontend renders:
+
+- the Guide answer;
+- status;
+- mode/provider/model badges when available;
+- source/context badges;
+- caveats;
+- follow-up prompt buttons;
+- next-action links.
+
+## 14. Recommendation Boundary
+
+Ask the Guide_ can explain recommendations, but it should not replace Recommend Me_.
+
+If a user asks for game recommendations, the backend redirects them toward Recommend Me_ and explains what inputs to provide.
+
+This keeps the project architecture clean:
+
+- Ask the Guide_ = explanation and grounded project Q&A.
+- Recommend Me_ = ranked cosine-similarity recommendations.
+
+## 15. Current API Status Endpoint
+
+The backend provides:
+
+```text
+GET /chat/status
+```
+
+The status response includes:
+
+- catalog availability;
+- lightweight retrieval artifact availability;
+- project-context availability;
+- project-context chunk count;
+- LLM provider;
+- LLM model;
+- whether the LLM API key is available;
+- warnings.
+
+## 16. Deployment Notes
+
+The current design supports free or low-cost deployment because:
+
+- the website can run on Vercel;
+- the backend can run on a free hosted API service;
+- the project-document retriever is local and lightweight;
+- the chatbot does not require Chroma for project Q&A;
+- the chatbot does not self-host an LLM;
+- secrets are environment variables;
+- missing LLM keys degrade gracefully.
+
+## 17. Current Limitations
+
+Known limitations:
+
+- Gemini availability depends on a valid `GEMINI_API_KEY`.
+- Free LLM providers can have rate limits and cold-start latency.
+- The project-document retriever is lexical, not semantic.
+- Exact metric quality depends on the structured project artifacts being current.
+- The chatbot should still avoid producing ranked recommendations directly.
+- Source badges show retrieved context labels, not full citations.
+
+## 18. Practical Summary
+
+Ask the Guide_ is now a scoped RAG + free-LLM project guide. It accepts typed project/game questions, retrieves relevant project context, uses structured fact artifacts for exact metrics, calls Gemini when configured, falls back safely when no LLM key is available, and routes ranked recommendation needs to Recommend Me_.

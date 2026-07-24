@@ -61,3 +61,7 @@ This file consolidates the Explore Games page UI improvement versions into one i
 - Keep the filter section open after Clear Filters is clicked.
 - Refine the game detail `Read more` control so it looks like clickable text instead of a tag.
 
+## v8
+
+right now, when you select a different sorting logic, you need to click apply filters to execute the sorting logic. Can you change this to when the user click a different sorting option, it automatically applies without having to click "apply filters" 
+

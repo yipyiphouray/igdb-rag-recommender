@@ -92,3 +92,6 @@ This file consolidates the Home page UI improvement versions into one implementa
 - Tune the animation through several timing passes.
 - Finalize the current scramble duration at `0.8 seconds` while keeping the motion smooth.
 
+## V12 
+
+- implement the same exact effect of the text-scramble effect as the module but implement it on the 3 selection cards: "Recommend Me" ; "Explore" and "Ask Guide" - i want it exactly like the module's text scramble effect.

@@ -105,11 +105,13 @@ function SelectField({
   label,
   name,
   defaultValue,
+  onChange,
   children,
 }: {
   label: string;
   name: string;
   defaultValue: string;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   children: React.ReactNode;
 }) {
   return (
@@ -121,6 +123,7 @@ function SelectField({
         <select
           name={name}
           defaultValue={defaultValue}
+          onChange={onChange}
           className="w-full appearance-none border border-white/24 bg-black py-3 pl-4 pr-12 text-white outline-none focus:border-[#FF3E00]"
         >
           {children}
@@ -205,10 +208,8 @@ export function ExploreFilterForm({
     currentView,
   ].join("::");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
+  function applyForm(form: HTMLFormElement) {
+    const formData = new FormData(form);
     const params = new URLSearchParams();
 
     [
@@ -233,6 +234,19 @@ export function ExploreFilterForm({
 
     const query = params.toString();
     router.push(query ? `/explore?${query}` : "/explore", { scroll: false });
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    applyForm(event.currentTarget);
+  }
+
+  function handleSortChange() {
+    if (!formRef.current) {
+      return;
+    }
+
+    applyForm(formRef.current);
   }
 
   function clearFilters() {
@@ -264,7 +278,12 @@ export function ExploreFilterForm({
 
         <div className="grid gap-px bg-white sm:grid-cols-2">
           <div className="bg-black p-5">
-            <SelectField label="Sort" name="sort" defaultValue={selectedSort}>
+            <SelectField
+              label="Sort"
+              name="sort"
+              defaultValue={selectedSort}
+              onChange={handleSortChange}
+            >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}

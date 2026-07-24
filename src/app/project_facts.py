@@ -201,18 +201,17 @@ def _estimated_count(total: object, ratio: object) -> int | None:
 
 
 def _unavailable_answer(intent: str, missing_source: Path) -> ProjectFactAnswer:
-    source_name = _source(missing_source)
     return ProjectFactAnswer(
         intent=intent,
         answer=(
-            f"I cannot verify that project fact because `{source_name}` is missing or unreadable."
+            "I cannot verify that project fact because the required project data is unavailable."
         ),
         status="unavailable",
         caveats=[
-            "Exact chatbot facts must come from structured project artifacts."
+            "Exact chatbot facts require available structured project data."
         ],
         prompts=FACT_FOLLOW_UP_PROMPTS,
-        source_files=[source_name],
+        source_files=[],
     )
 
 
@@ -228,9 +227,9 @@ def _metrics_answer(
         answer=answer,
         prompts=prompts or FACT_FOLLOW_UP_PROMPTS,
         caveats=caveats or [
-            "This answer comes from the current app methodology metrics artifact."
+            "This answer is based on the current project dataset."
         ],
-        source_files=[_source(METHODOLOGY_METRICS_PATH)],
+        source_files=[],
     )
 
 
@@ -246,9 +245,9 @@ def _insight_answer(
         answer=answer,
         prompts=prompts or FACT_FOLLOW_UP_PROMPTS,
         caveats=caveats or [
-            "This answer comes from the current website insight summary artifact."
+            "This answer is based on the current website analytics summary."
         ],
-        source_files=[_source(INSIGHT_SUMMARY_PATH)],
+        source_files=[],
     )
 
 
@@ -268,9 +267,9 @@ def _rag_manifest_answer(
             "What data does the guide use?",
         ],
         caveats=caveats or [
-            "This answer comes from the current lightweight RAG manifest artifact."
+            "This answer is based on the current retrieval configuration."
         ],
-        source_files=[_source(LIGHTWEIGHT_RAG_MANIFEST_PATH)],
+        source_files=[],
     )
 
 

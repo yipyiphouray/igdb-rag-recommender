@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { postChatMessage } from "@/lib/api";
 import type { ChatHistoryMessage, ChatResponse } from "@/types/api";
 
@@ -35,7 +35,7 @@ const starterPrompts: StarterPrompt[] = [
     eyebrow: "Dataset fact",
     prompt: "How many games are in the dataset?",
     description:
-      "Return the current game count from the structured methodology metrics artifact.",
+      "Return the current game count from the project dataset.",
   },
   {
     label: "Recommend Me logic",
@@ -136,8 +136,8 @@ function RecommendMeCallout() {
           Go to Recommend Me_
         </h2>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-white/62">
-          Ask the Guide_ explains the project and helps you ask better questions.
-          Recommend Me_ is the page that turns your preferences into ranked game matches.
+          I explain the project and help you ask better questions. Recommend Me_
+          turns your preferences into ranked game matches.
         </p>
       </div>
       <Link
@@ -153,11 +153,9 @@ function RecommendMeCallout() {
 function ChatTurnPanel({
   turn,
   onFollowUp,
-  onReset,
 }: {
   turn: GuideTurn;
   onFollowUp: (prompt: string) => void;
-  onReset: () => void;
 }) {
   const response = turn.response;
   const followUpPrompts = response?.follow_up_prompts.slice(0, 3) ?? [];
@@ -174,7 +172,7 @@ function ChatTurnPanel({
       <div className="ask-guide-user-command ml-auto max-w-3xl bg-white text-black">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black px-4 py-2 font-mono text-xs uppercase tracking-[0.22em]">
           <span>You_</span>
-          <span>Subject input_</span>
+          <span>Your question_</span>
         </div>
         <p className="px-5 py-4 text-base font-semibold leading-7">
           {turn.question}
@@ -252,13 +250,6 @@ function ChatTurnPanel({
                         {action.label}
                       </Link>
                     ))}
-                    <button
-                      type="button"
-                      onClick={onReset}
-                      className="border border-white/18 px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.08em] text-white/58 transition hover:border-white hover:text-white"
-                    >
-                      Start new thread
-                    </button>
                   </div>
                 </div>
               )}
@@ -277,8 +268,13 @@ export default function GuidePage() {
   const [loading, setLoading] = useState(false);
   const [showHelpPrompts, setShowHelpPrompts] = useState(false);
   const transcriptRef = useRef<HTMLDivElement | null>(null);
+  const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
   const userTurnCount = turns.filter((turn) => !turn.isLoading || turn.question).length;
   const hasReachedTurnLimit = userTurnCount >= MAX_GUIDE_USER_TURNS;
+
+  useEffect(() => {
+    messageInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     const transcript = transcriptRef.current;
@@ -378,6 +374,17 @@ export default function GuidePage() {
     void sendGuideMessage(message);
   }
 
+  function handleMessageKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key !== "Enter" || event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+    if (!loading && !hasReachedTurnLimit && message.trim()) {
+      void sendGuideMessage(message);
+    }
+  }
+
   function resetChat() {
     setTurns([]);
     setError("");
@@ -402,43 +409,52 @@ export default function GuidePage() {
                 </div>
               </div>
 
-              <div className="ask-guide-welcome-bubble">
-                <p className="font-mono text-xs uppercase tracking-[0.26em] text-[#ff3e00]">
-                  Guide_
-                </p>
-                <p className="mt-3 text-lg leading-8 text-white/78">
-                  Submit a project-scoped question. I answer only within this
-                  IGDB system: dataset, methodology, analytics findings, RAG
-                  design, recommendation logic, hidden-gem criteria, and website
-                  navigation.
-                </p>
-              </div>
-
               <div
                 ref={transcriptRef}
-                className="guide-chat-scroll ask-guide-transcript grid max-h-[min(36rem,65vh)] min-h-[22rem] content-start gap-6 overflow-y-auto overflow-x-visible"
+                className="guide-chat-scroll ask-guide-transcript grid max-h-[min(42rem,70vh)] min-h-[26rem] content-start gap-6 overflow-y-auto overflow-x-visible"
               >
-                {turns.length === 0 ? (
-                  <div className="ask-guide-terminal-waiting">
+                <div className="ask-guide-response ask-guide-system-intro max-w-5xl bg-black">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/18 px-4 py-2">
                     <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
-                      terminal idle_
+                      Guide_
                     </p>
-                    <p className="ask-guide-terminal-line">
-                      <span>guide@igdb:~$ awaiting project question</span>
-                      <span className="ask-guide-terminal-cursor" />
-                    </p>
-                    <p className="mt-3 text-xs leading-6 text-white/38">
-                      Type /help to reveal supported example prompts. Otherwise,
-                      enter a project-scoped question below.
-                    </p>
+                    <span className="border border-[#ff3e00]/60 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#ff3e00]">
+                      online
+                    </span>
                   </div>
+                  <p className="px-5 py-5 font-mono text-[0.96rem] leading-7 text-white/76">
+                    Ask me a project-scoped question. I answer only within this
+                    IGDB system: dataset, methodology, analytics findings, RAG
+                    design, recommendation logic, hidden-gem criteria, and
+                    website navigation.
+                  </p>
+                </div>
+
+                {turns.length === 0 ? (
+                  <>
+                    <div className="ask-guide-terminal-waiting">
+                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
+                        terminal idle_
+                      </p>
+                      <p className="ask-guide-terminal-line">
+                        <span>guide@igdb:~$ awaiting subject query</span>
+                        <span
+                          className="ask-guide-awaiting-indicator"
+                          aria-hidden="true"
+                        >
+                          <span />
+                          <span />
+                          <span />
+                        </span>
+                      </p>
+                    </div>
+                  </>
                 ) : (
                   turns.map((turn) => (
                     <ChatTurnPanel
                       key={turn.id}
                       turn={turn}
                       onFollowUp={sendGuideMessage}
-                      onReset={resetChat}
                     />
                   ))
                 )}
@@ -473,16 +489,23 @@ export default function GuidePage() {
               <form onSubmit={handleSubmit} className="ask-guide-input-deck">
                 <label className="grid gap-2">
                   <span className="font-mono text-xs uppercase tracking-[0.22em] text-[#ff3e00]">
-                    Subject query_
+                    Your question_
                   </span>
-                  <textarea
-                    value={message}
-                    disabled={loading || hasReachedTurnLimit}
-                    onChange={(event) => setMessage(event.target.value)}
-                    placeholder="Type /help or ask a project-scoped question."
-                    rows={3}
-                    className="ask-guide-terminal-input resize-none px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-white/30 disabled:cursor-not-allowed disabled:opacity-45"
-                  />
+                  <div className="ask-guide-command-input-wrap">
+                    <span className="ask-guide-command-prompt">
+                      subject@igdb:~$
+                    </span>
+                    <textarea
+                      ref={messageInputRef}
+                      value={message}
+                      disabled={loading || hasReachedTurnLimit}
+                      onChange={(event) => setMessage(event.target.value)}
+                      onKeyDown={handleMessageKeyDown}
+                      placeholder="Type /help for examples, or ask a project-scoped question. Press Enter to submit. Shift + Enter adds a line."
+                      rows={3}
+                      className="ask-guide-terminal-input resize-none text-sm leading-6 text-white outline-none transition placeholder:text-white/30 disabled:cursor-not-allowed disabled:opacity-45"
+                    />
+                  </div>
                 </label>
                 <div className="flex flex-wrap gap-3">
                   <button
@@ -526,11 +549,11 @@ export default function GuidePage() {
             Guide boundaries_
           </p>
           <p className="mt-3 text-sm leading-7 text-white/58">
-            Ask the Guide_ answers questions about this IGDB project, its dataset,
-            methodology, analytics findings, recommendation architecture, RAG
-            design, hidden-gem logic, and website navigation. It does not replace
-            the Recommend Me_ engine. Use Recommend Me_ when the objective is a
-            ranked list of games.
+            I answer questions about this IGDB project, its dataset, methodology,
+            analytics findings, recommendation architecture, RAG design,
+            hidden-gem logic, and website navigation. I do not replace the
+            Recommend Me_ engine. Use Recommend Me_ when the objective is a ranked
+            list of games.
           </p>
         </section>
 

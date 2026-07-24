@@ -427,14 +427,14 @@ def answer_catalog_count_with_filters(raw_filters: dict[str, Any]) -> CatalogFac
     if catalog is None:
         return CatalogFactAnswer(
             intent="catalog_count_unavailable",
-            answer="I cannot verify that catalog count because the app catalog artifact is missing or unreadable.",
+            answer="I cannot verify that catalog count because the app catalog is unavailable.",
             prompts=[
                 "How many games are in the dataset?",
                 "What is the top genre?",
                 "Where can I explore games?",
             ],
             status="unavailable",
-            caveats=["Catalog count questions require data/app/app_game_catalog.parquet."],
+            caveats=["Catalog count questions require the app catalog to be available."],
             source_files=[_source(config.APP_CATALOG_PATH)],
             interpreted_filters=filters,
         )
@@ -834,14 +834,14 @@ def answer_catalog_count_question(message: str) -> CatalogFactAnswer | None:
     if catalog is None:
         return CatalogFactAnswer(
             intent="catalog_count_unavailable",
-            answer="I cannot verify that catalog count because the app catalog artifact is missing or unreadable.",
+            answer="I cannot verify that catalog count because the app catalog is unavailable.",
             prompts=[
                 "How many games are in the dataset?",
                 "What is the top genre?",
                 "Where can I explore games?",
             ],
             status="unavailable",
-            caveats=["Catalog count questions require data/app/app_game_catalog.parquet."],
+            caveats=["Catalog count questions require the app catalog to be available."],
             source_files=[_source(config.APP_CATALOG_PATH)],
         )
 

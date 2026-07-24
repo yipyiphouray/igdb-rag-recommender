@@ -75,6 +75,12 @@ DEFAULT_NEXT_ACTIONS = [
     {"label": "View Methodology_", "href": "/methodology"},
 ]
 
+SOURCE_DISCLOSURE_PROMPTS = [
+    "What can you answer?",
+    "How does RAG work here?",
+    "What data does the project use?",
+]
+
 
 def get_chat_status() -> dict[str, Any]:
     artifacts = rag_status()
@@ -83,7 +89,7 @@ def get_chat_status() -> dict[str, Any]:
     warnings: list[str] = []
 
     if not artifacts.get("app_catalog", False):
-        warnings.append("Missing data/app/app_game_catalog.parquet.")
+        warnings.append("The app catalog is unavailable.")
     if not project_context["chunk_count"]:
         warnings.append("No project context chunks are available for chatbot retrieval.")
     if not llm_status["api_key_available"]:
@@ -140,7 +146,10 @@ def _build_chat_response(
         "intent_confidence": confidence,
         "route_source": route_source,
         "matched_intent_example": None,
-        "sources": sources or [],
+        # Source details are intentionally not exposed to the client. The Guide
+        # may use retrieved context internally, but responses must not reveal
+        # document names, file paths, artifact names, or retrieval metadata.
+        "sources": [],
         "next_actions": next_actions or [],
         "llm_provider": llm_provider,
         "llm_model": llm_model,
@@ -149,8 +158,6 @@ def _build_chat_response(
 
 def _project_fact_chat_response(fact: ProjectFactAnswer) -> dict[str, Any]:
     caveats = list(fact.caveats)
-    if fact.source_files:
-        caveats.append(f"Source artifact: {', '.join(fact.source_files)}.")
 
     return _build_chat_response(
         intent=fact.intent,
@@ -159,23 +166,13 @@ def _project_fact_chat_response(fact: ProjectFactAnswer) -> dict[str, Any]:
         status=fact.status,
         caveats=caveats,
         mode=f"project_fact_{fact.intent}",
-        sources=[
-            {
-                "title": "Structured project fact",
-                "path": source_file,
-                "section": fact.intent,
-                "score": None,
-            }
-            for source_file in fact.source_files
-        ],
+        sources=[],
         next_actions=_next_actions_for_intent(fact.intent),
     )
 
 
 def _catalog_fact_chat_response(fact: CatalogFactAnswer) -> dict[str, Any]:
     caveats = list(fact.caveats)
-    if fact.source_files:
-        caveats.append(f"Source artifact: {', '.join(fact.source_files)}.")
 
     next_actions = _next_actions_for_intent(fact.intent)
     if fact.game_ids:
@@ -194,15 +191,7 @@ def _catalog_fact_chat_response(fact: CatalogFactAnswer) -> dict[str, Any]:
         status=fact.status,
         caveats=caveats,
         mode=f"catalog_fact_{fact.intent}",
-        sources=[
-            {
-                "title": "App catalog",
-                "path": source_file,
-                "section": fact.intent,
-                "score": None,
-            }
-            for source_file in fact.source_files
-        ],
+        sources=[],
         next_actions=next_actions,
         interpreted_preferences=fact.interpreted_filters,
     )
@@ -210,8 +199,6 @@ def _catalog_fact_chat_response(fact: CatalogFactAnswer) -> dict[str, Any]:
 
 def _project_tool_chat_response(answer: ProjectToolAnswer) -> dict[str, Any]:
     caveats = list(answer.caveats)
-    if answer.source_files:
-        caveats.append(f"Source artifact: {', '.join(answer.source_files)}.")
 
     next_actions = _next_actions_for_intent(answer.intent)
     if answer.intent == "website_navigation" and answer.interpreted_preferences.get("href"):
@@ -229,15 +216,7 @@ def _project_tool_chat_response(answer: ProjectToolAnswer) -> dict[str, Any]:
         status=answer.status,
         caveats=caveats,
         mode=f"project_tool_{answer.intent}",
-        sources=[
-            {
-                "title": "Project source",
-                "path": source_file,
-                "section": answer.intent,
-                "score": None,
-            }
-            for source_file in answer.source_files
-        ],
+        sources=[],
         next_actions=next_actions,
         interpreted_preferences=answer.interpreted_preferences,
     )
@@ -247,8 +226,8 @@ def _unsupported_route_response() -> dict[str, Any]:
     return _build_chat_response(
         intent="unsupported_question",
         answer=(
-            "Assessment: Unsupported. Scope: IGDB project, game catalog, methodology, recommendations, "
-            "hidden gems, RAG, analytics findings, and website navigation. Directive: Subject must ask a "
+            "I can only answer questions about this IGDB project, the game catalog, methodology, "
+            "recommendations, hidden gems, RAG, analytics findings, or website navigation. Ask me a "
             "project or catalog question."
         ),
         prompts=DEFAULT_PROMPTS,
@@ -258,6 +237,23 @@ def _unsupported_route_response() -> dict[str, Any]:
         ],
         mode="scoped_refusal",
         next_actions=DEFAULT_NEXT_ACTIONS,
+    )
+
+
+def _source_disclosure_response() -> dict[str, Any]:
+    return _build_chat_response(
+        intent="source_disclosure_boundary",
+        answer=(
+            "I strictly use the context available within this website to answer."
+        ),
+        prompts=SOURCE_DISCLOSURE_PROMPTS,
+        mode="source_disclosure_boundary",
+        next_actions=[
+            {"label": "View Methodology_", "href": "/methodology"},
+            {"label": "View Insights_", "href": "/insights"},
+        ],
+        route_source="source_disclosure_boundary",
+        confidence=1.0,
     )
 
 
@@ -286,30 +282,11 @@ def _next_actions_for_intent(intent: str) -> list[dict[str, str]]:
     return DEFAULT_NEXT_ACTIONS
 
 
-def _sources_from_chunks(chunks) -> list[dict[str, Any]]:
-    seen: set[tuple[str, str]] = set()
-    sources: list[dict[str, Any]] = []
-    for chunk in chunks:
-        key = (chunk.path, chunk.section)
-        if key in seen:
-            continue
-        seen.add(key)
-        sources.append(
-            {
-                "title": chunk.title,
-                "path": chunk.path,
-                "section": chunk.section,
-                "score": chunk.score,
-            }
-        )
-    return sources
-
-
 def _context_from_chunks(chunks) -> str:
     context_parts = []
     for index, chunk in enumerate(chunks, start=1):
         context_parts.append(
-            f"[{index}] {chunk.title} | {chunk.section} | {chunk.path}\n{chunk.text}"
+            f"Context block {index}\nSection: {chunk.section}\n{chunk.text}"
         )
     return "\n\n".join(context_parts)
 
@@ -317,22 +294,19 @@ def _context_from_chunks(chunks) -> str:
 def _fallback_answer_from_chunks(message: str, chunks) -> str:
     if not chunks:
         return (
-            "Assessment: No evidence. Constraint: Project context does not provide enough information "
-            "for this question. Directive: Subject should ask about the dataset, methodology, "
-            "Recommend Me_, hidden gems, or website navigation."
+            "I do not have enough project context to answer that question. Ask me about the dataset, "
+            "methodology, Recommend Me_, hidden gems, or website navigation."
         )
 
     lead = chunks[0]
-    answer = (
-        f"Evidence: {lead.text[:700].strip()}"
-    )
+    answer = lead.text[:700].strip()
     if len(lead.text) > 700:
         answer = answer.rstrip() + "…"
 
     if has_recommendation_intent(message):
         answer += (
-            "\n\nDirective: Subject should use Recommend Me_ for ranked game matches. Rationale: "
-            "Recommend Me_ applies the cosine-similarity workflow to structured preferences."
+            "\n\nI use Recommend Me_ for ranked game matches. It applies the cosine-similarity workflow "
+            "to structured preferences."
         )
 
     return answer
@@ -347,6 +321,9 @@ def _history_for_llm(request: ChatRequest) -> list[dict[str, str]]:
 
 def _answer_scoped_rag_question(request: ChatRequest) -> dict[str, Any]:
     message = request.message.strip()
+
+    if _looks_like_source_disclosure_question(message):
+        return _source_disclosure_response()
 
     tool_response = _answer_with_tool_planner(request)
     if tool_response is not None:
@@ -385,11 +362,9 @@ def _answer_with_tool_planner(request: ChatRequest) -> dict[str, Any] | None:
         return _build_chat_response(
             intent=plan.intent or "recommend_me_guidance",
             answer=(
-                "Assessment: Recommendation request detected. Directive: Subject should use Recommend Me_ "
-                "for ranked game matches. Rationale: Recommend Me_ runs the cosine-similarity engine "
-                "against catalog games. "
-                "Input fields: recent games, platform, genre, mood, playstyle, rating-quality preference, "
-                "and hidden-gem preference."
+                "I route ranked game matches through Recommend Me_. That page runs the cosine-similarity "
+                "engine against catalog games. Useful inputs include recent games, platform, genre, mood, "
+                "playstyle, rating-quality preference, and hidden-gem preference."
             ),
             prompts=[
                 "How does Recommend Me work?",
@@ -427,8 +402,7 @@ def _answer_with_tool_planner(request: ChatRequest) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="catalog_count_needs_clarification",
             answer=(
-                "Assessment: Needs clarification. Intent: catalog count. Issue: filters did not map to "
-                "known catalog metadata. Directive: Subject must specify genre, platform, theme, "
+                "I need a clearer catalog filter to count games. Specify a genre, platform, theme, "
                 "game mode, or hidden-gem condition."
             ),
             prompts=[
@@ -487,8 +461,8 @@ def _answer_with_tool_planner(request: ChatRequest) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="game_lookup_no_match",
             answer=(
-                "Assessment: No match. Intent: game lookup. Issue: title not found in the current app "
-                "catalog. Directive: Subject should use the exact title or search on Explore Games_."
+                "I could not find that title in the current app catalog. Use the exact title if you know it, "
+                "or search for the game on Explore Games_."
             ),
             prompts=[
                 "Is Hades in the dataset?",
@@ -529,8 +503,7 @@ def _answer_with_tool_planner(request: ChatRequest) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="game_compare_needs_clarification",
             answer=(
-                "Assessment: Needs clarification. Intent: game comparison. Required input: two exact "
-                "game titles. Example: Compare Hades and Celeste."
+                "I need two exact game titles to compare them. Example: Compare Hades and Celeste."
             ),
             prompts=[
                 "Compare Hades and Celeste",
@@ -593,8 +566,8 @@ def _answer_with_tool_planner(request: ChatRequest) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="term_definition_needs_clarification",
             answer=(
-                "Assessment: Needs clarification. Intent: term definition. Required input: one project "
-                "term. Examples: PopScore, hidden gem, total_rating_count, RAG, cosine similarity."
+                "I need one project term to define. Examples: PopScore, hidden gem, total_rating_count, "
+                "RAG, or cosine similarity."
             ),
             prompts=[
                 "What is PopScore?",
@@ -699,10 +672,8 @@ def _answer_with_fallback_routing(request: ChatRequest) -> dict[str, Any]:
         return _build_chat_response(
             intent="recommend_me_guidance",
             answer=(
-                "Assessment: Recommendation request detected. Directive: Subject should use Recommend Me_ "
-                "for ranked matches. "
-                "Required inputs: recent games, platform, genre, mood, playstyle, rating-quality preference, "
-                "and popular versus hidden-gem preference."
+                "I route ranked matches through Recommend Me_. Strong inputs include recent games, platform, "
+                "genre, mood, playstyle, rating-quality preference, and popular versus hidden-gem preference."
             ),
             prompts=[
                 "How does Recommend Me work?",
@@ -732,7 +703,6 @@ def _answer_project_context_question(
 ) -> dict[str, Any]:
     message = request.message.strip()
     chunks = retrieve_project_context(message, top_k=request.max_results)
-    sources = _sources_from_chunks(chunks)
     llm_status = get_llm_provider_status()
     context = _context_from_chunks(chunks)
 
@@ -759,7 +729,7 @@ def _answer_project_context_question(
         mode="scoped_rag_llm_project_guide"
         if llm_result.status == "success"
         else "scoped_rag_extractive_fallback",
-        sources=sources,
+        sources=[],
         next_actions=_next_actions_for_intent("project_rag_answer"),
         llm_provider=str(llm_status["provider"]),
         llm_model=str(llm_status["model"]),
@@ -800,12 +770,34 @@ def _looks_like_website_navigation_question(message: str) -> bool:
     return any(phrase in normalized for phrase in navigation_phrases)
 
 
+def _looks_like_source_disclosure_question(message: str) -> bool:
+    normalized = " ".join(str(message or "").lower().split())
+    source_phrases = (
+        "what are your sources",
+        "what sources",
+        "which sources",
+        "where do you get your information",
+        "where does your information come from",
+        "where are you getting this",
+        "where did you get this",
+        "what do you use to answer",
+        "what are you using to answer",
+        "show me your sources",
+        "cite your sources",
+        "what documents",
+        "which documents",
+        "what files",
+        "which files",
+    )
+    return any(phrase in normalized for phrase in source_phrases)
+
+
 def _guide_topic_response(route_mode: str) -> dict[str, Any] | None:
     if route_mode == "explain_project":
         return _build_chat_response(
             intent="project_overview",
             answer=(
-                "This project is an IGDB-powered game-discovery analytics website. It uses a curated "
+                "I am the project guide for an IGDB-powered game-discovery analytics website. The system uses a curated "
                 "game catalog to support descriptive analytics, diagnostic analytics, hidden-gem discovery, "
                 "the Recommend Me_ cosine-similarity workflow, and a guided explanation layer. The goal is "
                 "to help users understand the catalog and discover games through structured, evidence-backed "
@@ -822,7 +814,7 @@ def _guide_topic_response(route_mode: str) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="data_source",
             answer=(
-                "The project uses a local app catalog built from IGDB data. The catalog contains game-level "
+                "I use a local app catalog built from IGDB data. The catalog contains game-level "
                 "metadata such as title, release year, genres, themes, platforms, summaries, ratings, rating "
                 "counts, playtime where available, and derived project fields such as hidden-gem indicators. "
                 "The dataset is curated for analysis and the website experience; it is not a complete copy of "
@@ -839,7 +831,7 @@ def _guide_topic_response(route_mode: str) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="recommendation_methodology",
             answer=(
-                "Recommend Me_ is the main recommendation workflow. It collects structured user inputs, such "
+                "I treat Recommend Me_ as the main recommendation workflow. It collects structured user inputs, such "
                 "as recent games, platform, genre, theme, mood, playstyle, playtime, rating preference, and "
                 "hidden-gem preference. Those inputs are converted into a preference profile and compared "
                 "against games in the catalog using cosine similarity."
@@ -855,7 +847,7 @@ def _guide_topic_response(route_mode: str) -> dict[str, Any] | None:
         return _build_chat_response(
             intent="recommend_me_guidance",
             answer=(
-                "Use Recommend Me_ when you want actual game matches. Start by entering recent games you liked, "
+                "I send actual ranked game matches to Recommend Me_. Start by entering recent games you liked, "
                 "then add platform, genre, theme, mood, playstyle, playtime, rating-quality preference, and "
                 "whether you prefer popular games or hidden gems. This is more reliable than asking the Guide "
                 "for open-ended recommendations because the recommender gets structured inputs."

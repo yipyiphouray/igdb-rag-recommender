@@ -303,28 +303,15 @@ def answer_game_query(query: str, filters: dict | None = None, top_k: int = 5) -
         }
 
     if not rag_ready(backend):
-        if backend == "lightweight":
-            required_artifacts = (
-                "Required artifacts: data/app/app_game_catalog.parquet, "
-                "data/rag/lightweight/game_embeddings.npy, "
-                "data/rag/lightweight/game_ids.json, and "
-                "data/rag/lightweight/manifest.json."
-            )
-        else:
-            required_artifacts = (
-                "Required artifacts: data/app/app_game_catalog.parquet and "
-                "data/vector_store/chroma.sqlite3."
-            )
         return {
             "answer_text": (
-                "RAG retrieval is unavailable because one or more required local artifacts "
-                "are missing."
+                "RAG retrieval is unavailable because the required retrieval data is missing."
             ),
             "retrieved_game_ids": [],
             "retrieved_games": [],
             "applied_filters": cleaned_filters,
             "retrieval_scores": [],
-            "warnings": [required_artifacts],
+            "warnings": ["Required retrieval data is unavailable."],
             "artifact_status": status,
             "mode": "rag_unavailable",
             "status": "unavailable",

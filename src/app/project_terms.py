@@ -177,7 +177,7 @@ def answer_term_definition_question(message: str, *, term: str | None = None) ->
         caveats=[
             "This is the project-specific meaning of the term, not a universal industry definition."
         ],
-        source_files=["docs/project_source_of_truth/ask_the_guide_current_state.md"],
+        source_files=[],
         interpreted_preferences={"term": canonical},
     )
 
@@ -198,7 +198,7 @@ def answer_recommendation_input_helper(
     hidden_gems_only = bool(filters.get("hidden_gems_only"))
 
     lines = [
-        "Assessment: Recommendation input guidance. Directive: Use Recommend Me_. Subject should enter structured inputs for ranked results.",
+        "I use Recommend Me_ for ranked results. Enter structured inputs so I can build a clear preference profile.",
     ]
     lines.append(f"- Recent games: {', '.join(game_titles) if game_titles else 'add 1-3 games you recently enjoyed'}")
     lines.append(f"- Platforms: {', '.join(platforms) if platforms else 'choose where you want to play'}")
@@ -209,7 +209,7 @@ def answer_recommendation_input_helper(
         f"- Discovery preference: {'hidden gems' if hidden_gems_only else 'popular, balanced, or hidden gems depending on what you want'}"
     )
     lines.append(
-        "Constraint: Specific inputs usually produce stronger cosine-similarity matches than vague inputs."
+        "Specific inputs usually give me stronger cosine-similarity matches than vague inputs."
     )
 
     return ProjectToolAnswer(
@@ -223,7 +223,7 @@ def answer_recommendation_input_helper(
         caveats=[
             "This helper prepares inputs. It does not run the ranked recommendation engine inside the chatbot."
         ],
-        source_files=["docs/project_source_of_truth/ask_the_guide_current_state.md"],
+        source_files=[],
         interpreted_preferences={
             "filters": filters,
             "game_titles": game_titles,
@@ -252,11 +252,11 @@ def answer_website_navigation_question(
 
     if selected_key and selected_key in PAGE_GUIDANCE:
         page = PAGE_GUIDANCE[selected_key]
-        answer = f"Directive: {page['use']} Target: {page['label']}."
+        answer = f"I would use {page['label']} for that. {page['use']}"
         interpreted = {"page": selected_key, "href": page["href"], "label": page["label"]}
     else:
         page_lines = [page["use"] for page in PAGE_GUIDANCE.values()]
-        answer = "Assessment: Website page map. " + " ".join(page_lines)
+        answer = "Here is the website page map. " + " ".join(page_lines)
         interpreted = {"page": "all"}
 
     return ProjectToolAnswer(
@@ -267,6 +267,6 @@ def answer_website_navigation_question(
             "Where can I browse games?",
             "Where can I see methodology?",
         ],
-        source_files=["docs/project_source_of_truth/ask_the_guide_current_state.md"],
+        source_files=[],
         interpreted_preferences=interpreted,
     )

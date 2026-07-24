@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.schemas.chat import ChatRequest, ChatResponse
 from app.services import chat_service
+from src.app.llm_provider import LLMToolPlan
 from src.app.project_facts import ProjectFactAnswer
 
 
@@ -116,8 +117,8 @@ class ChatServiceIntelligenceTests(unittest.TestCase):
         response = chat_service.answer_chat_request(request)
 
         self.assertEqual(response["route_mode"], "explain_rag")
-        self.assertIn("simplified Guide design", response["answer"])
-        self.assertIn("controlled answers", response["answer"])
+        self.assertIn("grounding layer", response["answer"])
+        self.assertIn("external free-tier LLM", response["answer"])
         self.assert_valid_chat_response(response)
 
     def test_explain_hidden_gems_topic_returns_definition(self):
@@ -205,14 +206,244 @@ class ChatServiceIntelligenceTests(unittest.TestCase):
         self.assertIn("rating sparsity", response["answer"])
         self.assert_valid_chat_response(response)
 
-    def test_custom_question_is_not_supported_in_condition_based_guide(self):
+    def test_custom_question_uses_scoped_rag_fallback_without_llm_key(self):
         request = ChatRequest(message="What is your purpose?", route_mode="custom_question")
 
-        response = chat_service.answer_chat_request(request)
+        with patch.object(chat_service, "generate_grounded_answer") as mock_generate:
+            mock_generate.return_value.answer = ""
+            mock_generate.return_value.provider = "gemini"
+            mock_generate.return_value.model = "gemini-3.5-flash-lite"
+            mock_generate.return_value.status = "unavailable"
+            mock_generate.return_value.error = "Missing GEMINI_API_KEY."
+            response = chat_service.answer_chat_request(request)
 
         self.assertEqual(response["route_mode"], "custom_question")
-        self.assertEqual(response["status"], "unsupported_question")
-        self.assertIn("condition-based", response["answer"])
+        self.assertEqual(response["status"], "success")
+        self.assertIn(response["mode"], {"scoped_rag_extractive_fallback", "scoped_rag_llm_project_guide"})
+        self.assertGreaterEqual(len(response["sources"]), 1)
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_catalog_count_to_catalog_tool(self):
+        request = ChatRequest(
+            message="How many games are in the Indie genre?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="catalog_count",
+            intent="catalog_genre_count",
+            confidence=0.93,
+            filters={"genres": ["Indie"]},
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks for a count filtered by genre.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan), patch.object(
+            chat_service, "answer_catalog_count_with_filters"
+        ) as mock_count:
+            mock_count.return_value = chat_service.CatalogFactAnswer(
+                intent="catalog_filtered_count",
+                answer="The current app catalog contains 12,345 games matching genre = Indie.",
+                prompts=["What genre has the most games?"],
+                source_files=["data/app/app_game_catalog.parquet"],
+                interpreted_filters={"genres": ["Indie"]},
+            )
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "catalog_fact_catalog_filtered_count")
+        self.assertIn("12,345 games", response["answer"])
+        self.assertEqual(response["interpreted_preferences"]["genres"], ["Indie"])
+        self.assertEqual(response["interpreted_preferences"]["tool"], "catalog_count")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_distribution_to_catalog_tool(self):
+        request = ChatRequest(
+            message="What genre has the most games?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="catalog_distribution",
+            intent="catalog_top_genres",
+            confidence=0.91,
+            filters={},
+            distribution_field="genres",
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks for a top category distribution.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan), patch.object(
+            chat_service, "answer_catalog_distribution"
+        ) as mock_distribution:
+            mock_distribution.return_value = chat_service.CatalogFactAnswer(
+                intent="catalog_top_genres",
+                answer="The most common genres are: Indie: 20,000 games.",
+                prompts=["How many Indie games are there?"],
+                source_files=["data/app/app_game_catalog.parquet"],
+            )
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "catalog_fact_catalog_top_genres")
+        self.assertIn("Indie", response["answer"])
+        self.assertEqual(response["interpreted_preferences"]["tool"], "catalog_distribution")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_specific_game_lookup(self):
+        request = ChatRequest(
+            message="What platforms is Hades on?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="game_lookup",
+            intent="game_lookup",
+            confidence=0.95,
+            filters={},
+            game_title="Hades",
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks for metadata about one specific game.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan), patch.object(
+            chat_service, "answer_game_lookup_question"
+        ) as mock_lookup:
+            mock_lookup.return_value = chat_service.CatalogFactAnswer(
+                intent="game_lookup",
+                answer="Hades is in the current app catalog with game_id 1. Platforms include: PC.",
+                prompts=["Where can I explore this game?"],
+                source_files=["data/app/app_game_catalog.parquet"],
+                interpreted_filters={"game_title": "Hades"},
+                game_id=1,
+            )
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "catalog_fact_game_lookup")
+        self.assertIn("Hades", response["answer"])
+        self.assertEqual(response["next_actions"][0]["href"], "/explore/1")
+        self.assertEqual(response["interpreted_preferences"]["tool"], "game_lookup")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_game_compare(self):
+        request = ChatRequest(
+            message="Compare Hades and Celeste",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="game_compare",
+            intent="game_compare",
+            confidence=0.94,
+            filters={},
+            game_titles=["Hades", "Celeste"],
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks to compare two specific games.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan), patch.object(
+            chat_service, "answer_game_compare_question"
+        ) as mock_compare:
+            mock_compare.return_value = chat_service.CatalogFactAnswer(
+                intent="game_compare",
+                answer="Hades and Celeste are compared using catalog metadata.",
+                prompts=["Where can I explore these games?"],
+                source_files=["data/app/app_game_catalog.parquet"],
+                interpreted_filters={"game_titles": ["Hades", "Celeste"], "game_ids": [1, 2]},
+                game_id=1,
+                game_ids=[1, 2],
+            )
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "catalog_fact_game_compare")
+        self.assertEqual(response["next_actions"][0]["href"], "/explore/1")
+        self.assertEqual(response["next_actions"][1]["href"], "/explore/2")
+        self.assertEqual(response["interpreted_preferences"]["tool"], "game_compare")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_recommendation_input_helper(self):
+        request = ChatRequest(
+            message="I like Hades. What should I put in Recommend Me?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="recommendation_input_helper",
+            intent="recommendation_input_helper",
+            confidence=0.9,
+            filters={"platforms": ["Nintendo Switch"], "genres": ["Role-playing (RPG)"]},
+            game_titles=["Hades"],
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user wants help preparing recommender inputs.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan):
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "project_tool_recommendation_input_helper")
+        self.assertIn("Use Recommend Me_", response["answer"])
+        self.assertEqual(response["next_actions"][0]["href"], "/recommendations")
+        self.assertEqual(response["interpreted_preferences"]["tool"], "recommendation_input_helper")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_term_definition(self):
+        request = ChatRequest(
+            message="What is PopScore?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="term_definition",
+            intent="term_definition",
+            confidence=0.92,
+            filters={},
+            term="PopScore",
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks for a project term definition.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan):
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "project_tool_term_definition")
+        self.assertIn("visibility", response["answer"])
+        self.assertEqual(response["next_actions"][0]["href"], "/methodology")
+        self.assertEqual(response["interpreted_preferences"]["tool"], "term_definition")
+        self.assert_valid_chat_response(response)
+
+    def test_llm_tool_planner_routes_website_navigation(self):
+        request = ChatRequest(
+            message="Where can I see the methodology?",
+            route_mode="custom_question",
+        )
+        plan = LLMToolPlan(
+            tool="website_navigation",
+            intent="website_navigation",
+            confidence=0.91,
+            filters={},
+            provider="gemini",
+            model="gemini-3.5-flash-lite",
+            status="success",
+            reason="The user asks which website page to use.",
+        )
+
+        with patch.object(chat_service, "plan_chat_tool", return_value=plan):
+            response = chat_service.answer_chat_request(request)
+
+        self.assertEqual(response["route_source"], "llm_tool_planner")
+        self.assertEqual(response["mode"], "project_tool_website_navigation")
+        self.assertEqual(response["next_actions"][0]["href"], "/methodology")
+        self.assertEqual(response["interpreted_preferences"]["tool"], "website_navigation")
         self.assert_valid_chat_response(response)
 
 

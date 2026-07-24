@@ -1,122 +1,228 @@
-# Technical Journey: Hybrid Search Recommender System
+# Technical Journey: Hybrid Search System
 
-## Overview
+Last updated: July 24, 2026
 
-This project now runs a Parquet-native Hybrid RAG architecture for game discovery and recommendation. The legacy SQLite-first retrieval workflow has been replaced by a modern pipeline where:
+This document records the technical migration path for the project retrieval stack.
 
-- `data/app/app_game_catalog.parquet` is the authoritative metadata source.
-- Chroma vector index (`data/vector_store/`) provides semantic retrieval.
-- `src/rag_engine.py` fuses semantic and lexical retrieval into one ranked output.
+## 1. Current Status
 
-The primary objective of this transition was to eliminate schema drift and retrieval fragility while scaling to the full 47,835-game catalog.
+Status: Active, revised.
 
-## Migration Summary
+The project still uses hybrid search.
 
-### 1) Data Layer Transition (SQLite -> Parquet)
-
-The retrieval layer no longer depends on SQLite table joins during query-time execution. Instead:
-
-- Catalog metadata is loaded directly via pandas from Parquet.
-- Filtering and candidate constraints run with DataFrame operations.
-- Column compatibility is preserved via schema mapping (`COLUMN_MAP`) for canonical fields such as `platforms`, `genres`, and playtime metadata.
-
-This shift simplified runtime dependencies and removed SQL coupling from the online recommendation path.
-
-### 2) Index Rebuild and Recovery
-
-A major reliability issue during migration was a **collapsed legacy vector index** (uniform results and weak differentiation). We rebuilt indexing logic to improve embedding quality by constructing richer text inputs from catalog attributes. The active embedding profile should include high-signal structured metadata before long text fields so the model sees game identity, genre/theme context, platform context, gameplay mode, hidden-gem signals, and summary/storyline text.
-
-Current indexing flow (`src/initialize_vector_db.py`):
-
-- Loads the full Parquet catalog.
-- Normalizes schema and embedding text fields.
-- Builds a richer embedding document from title, genres, themes, keywords, platforms, game modes, player perspectives, developers, rating band, playtime profile, multiplayer profile, hidden-gem flag, high-rated flag, summary, storyline, and generated catalog/RAG profile when available.
-- Clears stale vector-store artifacts before rebuilding.
-- Indexes the full dataset in deterministic batches.
-- Validates final collection count against catalog count.
-
-## Healthy Hybrid Retrieval State
-
-The engine now uses a robust hybrid retrieval strategy:
-
-- **Semantic channel**: embedding-based nearest-neighbor retrieval.
-- **Lexical channel**: BM25 keyword retrieval for exact-term resilience.
-- **Lexical fallback**: automatic `SimpleBM25` fallback when `rank_bm25` is unavailable.
-- **Fusion layer**: weighted semantic/lexical scoring (`0.9 / 0.1`) plus secondary rank shaping.
-- **Soft metadata boosting**: seed-derived metadata is used as a post-retrieval boost, not a hard inclusion filter.
-- **Seed-title exclusion**: reference games detected in prompts such as “similar to Stardew Valley” or “I played Hades” are excluded from final results while still shaping similarity boosts.
-- **Auto-relaxation fallback**: if strict prefiltering yields zero candidates, the engine falls back to broad retrieval instead of returning an empty result set.
-- **Post-fusion multipliers**: preference-based adjustments (e.g., 2D request boost and 3D avoidance penalty).
-
-This design improves robustness for both intent-heavy queries and exact-title keyword queries while preventing cold-start style zero-result failures.
-
-## Log Interpretation Guide
-
-When `debug_scores=True`, each `[HybridDebug]` line exposes score arithmetic for each ranked result:
-
-- `RawVec`, `RawBM25`: raw channel signals.
-- `NormVec`, `NormBM25`: normalized channel signals used in weighted fusion.
-- `Weights=(0.90,0.10)`: semantic and lexical constants.
-- `Weighted`: `(0.9 * NormVec) + (0.1 * NormBM25)`.
-- `RRF`: reciprocal-rank based blending component.
-- `LexicalBonus`: token-overlap additive bonus.
-- `MetadataBoost`: similarity boost from shared seed attributes (`genres_list`, `themes_list`, `developers_list`, `platforms_list`) using weighted Jaccard-style overlap.
-- `Final`: final ranking score.
-
-Arithmetic interpretation:
+The current default backend is now:
 
 ```text
-Final = Weighted + RRF + LexicalBonus + MetadataBoost
+lightweight NumPy embeddings + BM25 lexical retrieval
 ```
 
-Reviewers should verify that the weighted component adheres to `0.9/0.1`, then interpret rank movements from secondary adjustments (`RRF`, lexical bonus, metadata boost).
+The older Chroma implementation remains in the repository as an optional backend. It is not the preferred deployment default.
 
-## Validation as a Standard Practice
+## 2. Why the Retrieval Stack Changed
 
-A formal validation suite is now part of the RAG workflow and should be treated as mandatory after each index rebuild.
+The project originally used a Chroma vector-store workflow for semantic game retrieval.
 
-### Required Checks
+That direction worked locally, but it created deployment risk:
 
-- `src/validate_vector_store.py`
-  - Data-content sampling and embedding sanity checks.
-  - Semantic diversity tests across distinct intent queries.
-  - Self-similarity verification (target title must retrieve itself at top rank).
-  - Statistical variance checks to detect embedding collapse.
+- larger dependency footprint;
+- heavier persistent vector-store artifact;
+- more moving parts for free-hosted deployment;
+- harder debugging when vector-store state became stale or collapsed.
 
-- `src/debug_engine.py`
-  - End-to-end runtime smoke test for `RAGAgent.search(...)`.
-  - Confirms retrieval, fusion, soft metadata boosting, and ranking execute without runtime exceptions.
-  - Provides telemetry required for score-audit interpretation.
+The project moved to a lightweight retrieval backend to reduce deployment complexity while keeping the core retrieval logic.
 
-### Operational Rule
+## 3. Current Runtime Architecture
 
-**No deployment of updated vector data is considered complete unless both scripts pass.**
+Current default runtime:
 
-## Code-to-Documentation Mapping
+```text
+data/app/app_game_catalog.parquet
+-> data/rag/lightweight/game_embeddings.npy
+-> data/rag/lightweight/game_ids.json
+-> data/rag/lightweight/manifest.json
+-> src/lightweight_rag_engine.py
+-> src/app/rag_service.py
+```
 
-| Code Function | Documented Purpose | Validation Command |
-|---|---|---|
-| `RAGAgent._get_prefilter_ids(...)` | Metadata/DataFrame prefilter and fallback broadening when constraints over-restrict candidates | `python src/debug_engine.py` |
-| `RAGAgent._vector_search(...)` | Semantic candidate retrieval from vector index | `python src/debug_engine.py` |
-| `RAGAgent._bm25_search(...)` | Lexical BM25 candidate retrieval for exact-term resilience | `python src/debug_engine.py` |
-| `SimpleBM25.get_scores(...)` | Lexical fallback scoring when `rank_bm25` is unavailable | `python src/debug_engine.py` |
-| `RAGAgent._get_similar_by_seed_attributes(...)` | Soft metadata similarity boost using list-field overlap (`*_list`) | `python src/debug_engine.py` |
-| `RAGAgent._find_seed_games_mentioned_in_query(...)` | Detects explicit reference titles that should guide similarity but not be returned as recommendations | `python -m src.evaluate_rag_retrieval` |
-| `rank_results(...)` | Fusion-aware ranking with metadata boosts and post-fusion multipliers | `python src/debug_engine.py` |
-| `src/validate_vector_store.py` suite | Vector stability and collapse detection checks | `python src/validate_vector_store.py` |
-| `src/evaluate_rag_retrieval.py` suite | Golden-query relevance checks, weight comparison, and seed-title exclusion validation | `python -m src.evaluate_rag_retrieval` |
+The API service uses `src/app/rag_service.py` to select the backend.
 
-## Lessons Learned
+Default backend:
 
-1. Embedding quality is highly sensitive to text preparation; sparse fields can silently degrade semantic retrieval.
-2. Retrieval failures may come from candidate-gating and prefilter logic, not just vector quality.
-3. Validation must include both **index health** and **runtime behavior**; passing one without the other is insufficient.
-4. Health checks confirm the vector store is technically valid, but separate golden-query tests are still needed to judge whether retrieved games feel relevant to users.
+```text
+RAG_BACKEND=lightweight
+```
 
-## Current Status
+Supported backend aliases:
 
-- Parquet-native retrieval: active
-- Full-catalog vector index: active and validated
-- Hybrid semantic + lexical fusion: active
-- Soft metadata boosting + seed-title exclusion + auto-relaxation fallback: active
-- Post-deployment validation suite: integrated into standard operating procedure
+- `lightweight`
+- `numpy`
+- `lightweight_numpy`
+- `lightweight_numpy_bm25`
+
+Optional Chroma aliases:
+
+- `chroma`
+- `chromadb`
+- `vector_store`
+
+## 4. Migration Summary
+
+### Phase 1: SQLite-first retrieval
+
+The early retrieval approach depended more heavily on SQLite/database-oriented lookup behavior.
+
+Limitation: this was useful for deterministic filtering but weaker for natural-language game discovery.
+
+### Phase 2: Chroma semantic retrieval
+
+The project added vector retrieval through Chroma.
+
+Benefit: better semantic matching.
+
+Limitation: vector-store deployment and artifact stability were more complex than necessary for the final website direction.
+
+### Phase 3: Hybrid semantic + lexical retrieval
+
+The project added BM25 lexical retrieval and fused it with semantic similarity.
+
+Benefit: better balance between natural-language intent and exact keyword matching.
+
+### Phase 4: Lightweight deployment backend
+
+The project moved the default backend to NumPy embeddings plus BM25.
+
+Benefit: simpler free-hosted deployment path while preserving hybrid retrieval.
+
+## 5. Current Hybrid Retrieval Behavior
+
+The active lightweight backend performs:
+
+- DataFrame-based metadata prefiltering.
+- Query embedding with sentence-transformers.
+- NumPy cosine similarity against local embedding artifacts.
+- BM25 lexical retrieval over catalog text.
+- Weighted semantic/lexical fusion.
+- Reciprocal-rank style blending.
+- Lexical token bonus.
+- Seed-game metadata boosting.
+- Seed-title exclusion.
+- Hidden-gem ranking adjustment.
+- 2D/3D preference adjustment.
+- Constraint relaxation when filters are too restrictive.
+
+## 6. Current Fusion Constants
+
+The lightweight backend uses:
+
+```text
+SEMANTIC_WEIGHT = 0.8
+LEXICAL_WEIGHT = 0.2
+```
+
+The optional Chroma backend uses:
+
+```text
+SEMANTIC_WEIGHT = 0.9
+LEXICAL_WEIGHT = 0.1
+```
+
+Interpretation:
+
+- semantic score captures conceptual similarity;
+- lexical score protects exact keyword and title relevance;
+- secondary rank shaping adjusts the result after the core retrieval blend.
+
+## 7. Artifact Build Process
+
+Default lightweight build command:
+
+```text
+python -m src.build_lightweight_rag_index
+```
+
+The lightweight build creates:
+
+```text
+data/rag/lightweight/game_embeddings.npy
+data/rag/lightweight/game_ids.json
+data/rag/lightweight/manifest.json
+```
+
+These generated artifacts should not be committed to GitHub if they are large or environment-specific.
+
+## 8. Validation Process
+
+Default lightweight validation:
+
+```text
+python -m src.evaluate_rag_retrieval --backend lightweight
+```
+
+Optional Chroma validation:
+
+```text
+python src/validate_vector_store.py
+python src/debug_engine.py
+python -m src.evaluate_rag_retrieval --backend chroma
+```
+
+Validation should check:
+
+- retrieval runs without runtime errors;
+- semantic and lexical signals are non-collapsed;
+- exact title queries retrieve sensible matches;
+- seed games are excluded from final recommendations;
+- hidden-gem intent affects ranking without overpowering relevance;
+- no-result behavior is handled cleanly.
+
+## 9. Code-to-Documentation Mapping
+
+| Code | Current purpose |
+|---|---|
+| `src/app/rag_service.py` | Backend selector and response normalizer for game retrieval. |
+| `src/lightweight_rag_engine.py` | Default lightweight semantic + BM25 retrieval engine. |
+| `src/build_lightweight_rag_index.py` | Builds lightweight NumPy embedding artifacts. |
+| `src/evaluate_rag_retrieval.py` | Evaluates retrieval quality for lightweight or Chroma backends. |
+| `src/rag_engine.py` | Optional Chroma-based hybrid retrieval engine. |
+| `src/initialize_vector_db.py` | Builds the optional Chroma vector store. |
+| `src/validate_vector_store.py` | Validates optional Chroma vector-store health. |
+| `src/debug_engine.py` | Smoke-tests optional Chroma runtime behavior. |
+
+## 10. Current Product Boundary
+
+The hybrid retrieval stack supports catalog-backed recommendation and game-discovery retrieval.
+
+It is not the same thing as `Ask the Guide_` project-document retrieval.
+
+Current distinction:
+
+- `Recommend Me_` and game retrieval use catalog embeddings and hybrid search.
+- `Ask the Guide_` uses project-document retrieval, structured tools, and an LLM for grounded project answers.
+
+This separation is intentional.
+
+## 11. Deployment Position
+
+Use lightweight retrieval as the default deployment target.
+
+Reason:
+
+- smaller artifact set;
+- fewer dependencies;
+- easier free-hosting path;
+- no required Chroma runtime state;
+- cleaner local/backend startup.
+
+Keep Chroma only as an optional development backend unless the team explicitly decides to deploy it.
+
+## 12. Lessons Learned
+
+Embedding quality depends heavily on text preparation.
+
+Retrieval quality depends on both semantic and lexical signals.
+
+Exact metadata constraints can collapse results if used too aggressively.
+
+Seed games should guide recommendations but should not appear as returned recommendations.
+
+Validation must check both technical health and human-perceived relevance.

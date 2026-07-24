@@ -148,6 +148,18 @@ export type ChatResponse = {
   intent_confidence?: number | null;
   route_source?: string | null;
   matched_intent_example?: string | null;
+  sources: {
+    title: string;
+    path: string;
+    section?: string | null;
+    score?: number | null;
+  }[];
+  next_actions: {
+    label: string;
+    href: string;
+  }[];
+  llm_provider?: string | null;
+  llm_model?: string | null;
 };
 
 export type ChatStatusResponse = {
@@ -157,6 +169,12 @@ export type ChatStatusResponse = {
   collection_available: boolean;
   engine: string;
   warnings: string[];
+  retrieval_artifacts_available?: boolean | null;
+  project_context_available?: boolean | null;
+  project_context_chunk_count?: number | null;
+  llm_provider?: string | null;
+  llm_model?: string | null;
+  llm_available?: boolean | null;
 };
 
 export type MethodologySummary = {

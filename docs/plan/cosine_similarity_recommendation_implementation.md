@@ -586,4 +586,4 @@ Relevant documents:
 - `docs/plan/predictive_analytics_pillar_plan.md`
 - `docs/project_source_of_truth/hybrid_retrieval_methodology.md`
 - `docs/project_source_of_truth/hybrid_search_technical_journey.md`
-- `docs/project_source_of_truth/definitive_project_guideline_igdb_rag.md`
+- `docs/project_source_of_truth/ask_the_guide_knowledge_base.md`

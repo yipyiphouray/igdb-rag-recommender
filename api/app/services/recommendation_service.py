@@ -2,10 +2,15 @@ from __future__ import annotations
 
 from typing import Any
 
+import math
+import os
+
 import pandas as pd
 
 from app.schemas.recommendations import RecommendationRequest
 from app.services.catalog_service import load_catalog, serialize_game
+from src.app.filters import apply_catalog_filters
+from src.app.formatting import split_list
 from src.app.metadata_cosine_recommendation import (
     MetadataCosineRecommendationOutput,
     MetadataCosineRecommender,
@@ -14,6 +19,7 @@ from src.app.recommendation_service import recommend_games
 
 
 MAX_STRUCTURED_SCORE = 85.0
+DEFAULT_COSINE_CANDIDATE_LIMIT = 12000
 
 _COSINE_RECOMMENDER: MetadataCosineRecommender | None = None
 _COSINE_CATALOG_ID: int | None = None
@@ -31,6 +37,16 @@ def _platforms(request: RecommendationRequest) -> list[str]:
         selected.append(request.platform)
     selected.extend(request.platforms)
     return list(dict.fromkeys(value for value in selected if value))
+
+
+def _cosine_candidate_limit() -> int:
+    raw_value = os.getenv("RECOMMENDATION_COSINE_CANDIDATE_LIMIT", "")
+    if not raw_value:
+        return DEFAULT_COSINE_CANDIDATE_LIMIT
+    try:
+        return max(1000, int(raw_value))
+    except ValueError:
+        return DEFAULT_COSINE_CANDIDATE_LIMIT
 
 
 def _release_year_range(request: RecommendationRequest) -> tuple[int, int] | None:
@@ -88,6 +104,85 @@ def _safe_float(value: object) -> float | None:
 def _rounded_float(value: object, digits: int = 3) -> float | None:
     converted = _safe_float(value)
     return None if converted is None else round(converted, digits)
+
+
+def _normalized_selected(values: list[str]) -> set[str]:
+    return {value.strip().lower() for value in values if value and value.strip()}
+
+
+def _overlap_count(value: object, selected_values: set[str]) -> int:
+    if not selected_values:
+        return 0
+    return sum(
+        1
+        for item in split_list(value)
+        if item.strip().lower() in selected_values
+    )
+
+
+def _candidate_priority_score(row: pd.Series, request: RecommendationRequest) -> float:
+    rating = _safe_float(row.get("total_rating")) or 0.0
+    rating_count = max(_safe_float(row.get("total_rating_count")) or 0.0, 0.0)
+    interest_percentile = _safe_float(row.get("custom_interest_percentile")) or 0.0
+
+    selected_genres = _normalized_selected(request.genres)
+    selected_themes = _normalized_selected(request.themes)
+    selected_platforms = _normalized_selected(_platforms(request))
+
+    score = 0.0
+    score += min(max(rating / 100.0, 0.0), 1.0) * 2.0
+    score += math.log1p(rating_count) * 0.35
+    score += min(max(interest_percentile, 0.0), 1.0) * 1.0
+    score += _overlap_count(row.get("genres_list"), selected_genres) * 2.0
+    score += _overlap_count(row.get("themes_list"), selected_themes) * 1.25
+    score += _overlap_count(row.get("platforms_list"), selected_platforms) * 1.0
+
+    if "hidden" in request.discovery_preference.strip().lower():
+        score += 2.0 if _safe_float(row.get("hidden_gem_balanced_flag")) == 1 else 0.0
+
+    return score
+
+
+def _candidate_catalog_for_cosine(
+    catalog: pd.DataFrame,
+    request: RecommendationRequest,
+) -> pd.DataFrame:
+    """Limit cosine vectorization to a deployment-safe candidate pool.
+
+    The full catalog can be large enough to crash or time out a free hosted
+    backend when vectors are built on demand. Hard filters are applied first,
+    then a relevance/quality priority score keeps the best candidate pool for
+    cosine ranking.
+    """
+
+    filtered = apply_catalog_filters(
+        catalog,
+        release_year_range=_release_year_range(request),
+        platforms=_platforms(request),
+    )
+    if filtered.empty:
+        return filtered
+
+    limit = _cosine_candidate_limit()
+    if len(filtered) <= limit:
+        return filtered
+
+    prioritized = filtered.copy()
+    prioritized["_cosine_candidate_priority"] = prioritized.apply(
+        lambda row: _candidate_priority_score(row, request),
+        axis=1,
+    )
+    prioritized = prioritized.sort_values(
+        [
+            "_cosine_candidate_priority",
+            "total_rating_count",
+            "total_rating",
+            "custom_interest_percentile",
+        ],
+        ascending=False,
+        na_position="last",
+    ).head(limit)
+    return prioritized.drop(columns=["_cosine_candidate_priority"], errors="ignore")
 
 
 def _get_cosine_recommender(catalog: pd.DataFrame) -> MetadataCosineRecommender:
@@ -251,7 +346,8 @@ def recommend_from_request(request: RecommendationRequest) -> dict[str, Any]:
         )
 
     try:
-        output = _get_cosine_recommender(catalog).recommend(
+        cosine_catalog = _candidate_catalog_for_cosine(catalog, request)
+        output = _get_cosine_recommender(cosine_catalog).recommend(
             platform=request.platform,
             platforms=request.platforms,
             genres=request.genres,

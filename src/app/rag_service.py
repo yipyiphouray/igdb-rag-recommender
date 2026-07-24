@@ -10,16 +10,14 @@ import pandas as pd
 
 from src.app import config
 from src.app.formatting import compact_text, split_list
-from src.lightweight_rag_engine import (
-    LIGHTWEIGHT_EMBEDDINGS_PATH,
-    LIGHTWEIGHT_GAME_IDS_PATH,
-    LIGHTWEIGHT_MANIFEST_PATH,
-    LIGHTWEIGHT_RAG_DIR,
-)
 
 
 VECTOR_STORE_PATH = config.DATA_DIR / "vector_store"
 VECTOR_STORE_SQLITE_PATH = VECTOR_STORE_PATH / "chroma.sqlite3"
+LIGHTWEIGHT_RAG_DIR = config.RAG_DIR / "lightweight"
+LIGHTWEIGHT_EMBEDDINGS_PATH = LIGHTWEIGHT_RAG_DIR / "game_embeddings.npy"
+LIGHTWEIGHT_GAME_IDS_PATH = LIGHTWEIGHT_RAG_DIR / "game_ids.json"
+LIGHTWEIGHT_MANIFEST_PATH = LIGHTWEIGHT_RAG_DIR / "manifest.json"
 DEFAULT_RAG_BACKEND = "lightweight"
 
 RAG_ARTIFACTS = {

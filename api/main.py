@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -20,6 +21,32 @@ for path in (API_DIR, ROOT_DIR):
 from app.routers import catalog, chat, health, insights, methodology, recommendations  # noqa: E402
 
 
+LOCAL_CORS_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+
+def _cors_origins() -> list[str]:
+    """Return allowed browser origins for local and deployed frontends.
+
+    Deployment usage:
+    - FRONTEND_ORIGIN=https://your-site.vercel.app
+    - CORS_ALLOWED_ORIGINS=https://site-one.vercel.app,https://site-two.vercel.app
+    """
+    configured_origins = []
+    for env_name in ("FRONTEND_ORIGIN", "CORS_ALLOWED_ORIGINS"):
+        raw_value = os.getenv(env_name, "")
+        configured_origins.extend(
+            origin.strip().rstrip("/")
+            for origin in raw_value.split(",")
+            if origin.strip()
+        )
+
+    origins = [*LOCAL_CORS_ORIGINS, *configured_origins]
+    return list(dict.fromkeys(origins))
+
+
 app = FastAPI(
     title="IGDB Game Discovery API",
     description="Backend API for the final IGDB game discovery website.",
@@ -28,10 +55,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

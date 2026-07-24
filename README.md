@@ -42,7 +42,7 @@ https://igdb-rag-recommender.onrender.com/docs
 
 | Area | Website page | Purpose |
 |---|---|---|
-| Home | `/` | Introduces the project and routes users to the main tools. |
+| Home | `/home` | Introduces the project and routes users to the main tools. |
 | Explore Games | `/explore` | Search and filter the app-ready game catalog. |
 | Game Details | `/explore/[game_id]` | Inspect individual catalog records. |
 | Recommend Me | `/recommendations` | Generate cosine-similarity recommendations from structured user preferences. |

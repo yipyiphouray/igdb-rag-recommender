@@ -1,6 +1,20 @@
 .env
+.DS_Store
 __pycache__/
 *.pyc
 .venv/
 venv/
 .vscode
+docs/session_log.md
+data/analytics/descriptive/*
+data/*.db
+data/database/igdb_games.db
+data/analytics/diagnostic/*
+data/vector_store/
+models/*.pkl
+
+# Frontend dependencies and generated build output
+node_modules/
+.next/
+apps/website/node_modules/
+apps/website/.next/

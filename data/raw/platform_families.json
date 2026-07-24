@@ -1,0 +1,27 @@
+[
+  {
+    "id": 5,
+    "name": "Nintendo",
+    "slug": "nintendo"
+  },
+  {
+    "id": 4,
+    "name": "Linux",
+    "slug": "linux"
+  },
+  {
+    "id": 2,
+    "name": "Xbox",
+    "slug": "xbox"
+  },
+  {
+    "id": 3,
+    "name": "Sega",
+    "slug": "sega"
+  },
+  {
+    "id": 1,
+    "name": "PlayStation",
+    "slug": "playstation"
+  }
+]

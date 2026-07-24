@@ -1,0 +1,99 @@
+[
+  {
+    "id": "cozy_farming_switch",
+    "query": "Recommend cozy farming games on Switch.",
+    "expected_terms_any": ["cozy", "farming", "farm", "simulation", "life simulation"],
+    "expected_platforms_any": ["Nintendo Switch", "Switch"],
+    "avoid_terms_any": ["shooter", "horror"]
+  },
+  {
+    "id": "story_rich_rpg_pc",
+    "query": "Find story-rich RPGs on PC.",
+    "expected_terms_any": ["role-playing", "rpg", "story", "fantasy", "adventure"],
+    "expected_platforms_any": ["PC", "Microsoft Windows"],
+    "avoid_terms_any": ["sports"]
+  },
+  {
+    "id": "hades_dead_cells_similarity",
+    "query": "I played Hades and Dead Cells recently. Recommend similar games.",
+    "expected_terms_any": ["roguelike", "rogue", "action", "fast", "combat", "hack and slash"],
+    "avoid_terms_any": ["farming"],
+    "excluded_result_names": ["Hades", "Dead Cells"]
+  },
+  {
+    "id": "hidden_gem_fantasy_exploration",
+    "query": "Find hidden gems with exploration and fantasy themes.",
+    "expected_terms_any": ["hidden gem", "fantasy", "exploration", "adventure"],
+    "avoid_terms_any": ["football", "basketball"]
+  },
+  {
+    "id": "short_atmospheric_horror",
+    "query": "Recommend short atmospheric horror games.",
+    "expected_terms_any": ["horror", "atmospheric", "short", "survival", "mystery"],
+    "avoid_terms_any": ["sports"]
+  },
+  {
+    "id": "coop_strong_ratings",
+    "query": "Suggest co-op games with strong ratings.",
+    "expected_terms_any": ["co-op", "cooperative", "multiplayer", "highly rated", "excellent"],
+    "avoid_terms_any": ["single-player only"]
+  },
+  {
+    "id": "stardew_less_obvious",
+    "query": "Suggest games similar to Stardew Valley but less obvious.",
+    "expected_terms_any": ["farming", "life simulation", "simulation", "cozy", "role-playing"],
+    "avoid_terms_any": ["shooter"],
+    "excluded_result_names": ["Stardew Valley"]
+  },
+  {
+    "id": "neon_scifi",
+    "query": "Find neon sci-fi games.",
+    "expected_terms_any": ["sci-fi", "science fiction", "cyberpunk", "neon", "futuristic"],
+    "avoid_terms_any": ["farming"]
+  },
+  {
+    "id": "relaxing_low_pressure",
+    "query": "Suggest low-pressure relaxing games after a long day.",
+    "expected_terms_any": ["relaxing", "cozy", "casual", "puzzle", "simulation", "short"],
+    "avoid_terms_any": ["horror"]
+  },
+  {
+    "id": "strategic_turn_based_pc",
+    "query": "Recommend strategic turn-based games on PC.",
+    "expected_terms_any": ["strategy", "turn-based", "tactical", "simulation"],
+    "expected_platforms_any": ["PC", "Microsoft Windows"],
+    "avoid_terms_any": ["racing"]
+  },
+  {
+    "id": "mysterious_rainy_night",
+    "query": "Recommend mysterious atmospheric games for a rainy night.",
+    "expected_terms_any": ["mystery", "atmospheric", "narrative", "adventure", "story"],
+    "avoid_terms_any": ["sports"]
+  },
+  {
+    "id": "open_world_adventure_playstation",
+    "query": "Find open-world adventure games on PlayStation 5.",
+    "expected_terms_any": ["open world", "adventure", "exploration", "action"],
+    "expected_platforms_any": ["PlayStation 5", "PS5"],
+    "avoid_terms_any": ["board game"]
+  },
+  {
+    "id": "puzzle_switch",
+    "query": "Recommend puzzle games on Switch.",
+    "expected_terms_any": ["puzzle", "logic", "strategy"],
+    "expected_platforms_any": ["Nintendo Switch", "Switch"],
+    "avoid_terms_any": ["shooter"]
+  },
+  {
+    "id": "cinematic_single_player",
+    "query": "Find cinematic single-player games with strong story.",
+    "expected_terms_any": ["single player", "single-player", "story", "cinematic", "adventure", "narrative"],
+    "avoid_terms_any": ["multiplayer only"]
+  },
+  {
+    "id": "weird_experimental",
+    "query": "Give me weird experimental games.",
+    "expected_terms_any": ["experimental", "weird", "surreal", "indie", "puzzle", "adventure"],
+    "avoid_terms_any": ["sports"]
+  }
+]

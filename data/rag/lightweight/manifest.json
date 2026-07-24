@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-07-22T16:09:16",
+  "catalog_path": "C:/Users/calvi/Data Science/Community_Project/data/app/app_game_catalog.parquet",
+  "row_count": 47835,
+  "embedding_shape": [
+    47835,
+    384
+  ],
+  "embedding_dtype": "float16",
+  "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_text_profile": "src.app.embedding_text.build_embedding_text",
+  "embeddings_path": "C:/Users/calvi/Data Science/Community_Project/data/rag/lightweight/game_embeddings.npy",
+  "game_ids_path": "C:/Users/calvi/Data Science/Community_Project/data/rag/lightweight/game_ids.json",
+  "source": "chroma",
+  "source_collection": "igdb_game_profiles",
+  "source_vector_store": "C:/Users/calvi/Data Science/Community_Project/data/vector_store",
+  "source_collection_count": 47835
+}

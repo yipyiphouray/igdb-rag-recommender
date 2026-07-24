@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "extraction_timestamp": 1781925823,
+  "extraction_timestamp_iso": "2026-06-20T03:23:43+00:00",
+  "population": {
+    "start_year": 2010,
+    "end_year": 2024,
+    "game_type": "Main Game",
+    "required_fields": [
+      "name",
+      "first_release_date",
+      "genres",
+      "platforms"
+    ],
+    "excluded_game_status_ids": [
+      6,
+      7
+    ],
+    "version_parent_must_be_null": true
+  },
+  "yearly_target": {
+    "games_per_year": 1000,
+    "quality_quota": 600,
+    "popularity_quota": 200,
+    "comparison_quota": 200
+  },
+  "quality_rule": {
+    "total_rating_minimum": 75.0,
+    "total_rating_count_minimum": 25,
+    "ranking_method": "Bayesian-adjusted total_rating within release year",
+    "bayesian_prior_count": 25
+  },
+  "popularity_rule": {
+    "primary": "0.60 * IGDB Want to Play + 0.40 * IGDB Playing",
+    "fallback": "IGDB Visits",
+    "cross_source_values_are_not_averaged": true
+  },
+  "comparison_rule": {
+    "method": "random sample from remaining eligible games",
+    "base_random_seed": 649,
+    "year_seed_formula": "base_random_seed + release_year"
+  },
+  "candidate_count": 140332,
+  "selected_game_count": 15000,
+  "yearly_summaries": [
+    {
+      "release_year": 2010,
+      "candidate_count": 3224,
+      "eligible_count": 2663,
+      "quality_eligible_count": 77,
+      "popscore_interest_available_count": 298,
+      "popscore_visits_available_count": 692,
+      "quality_selected_count": 77,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 723,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2011,
+      "candidate_count": 3150,
+      "eligible_count": 2614,
+      "quality_eligible_count": 86,
+      "popscore_interest_available_count": 313,
+      "popscore_visits_available_count": 712,
+      "quality_selected_count": 86,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 714,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2012,
+      "candidate_count": 3187,
+      "eligible_count": 2749,
+      "quality_eligible_count": 95,
+      "popscore_interest_available_count": 356,
+      "popscore_visits_available_count": 694,
+      "quality_selected_count": 95,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 705,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2013,
+      "candidate_count": 3373,
+      "eligible_count": 2991,
+      "quality_eligible_count": 98,
+      "popscore_interest_available_count": 397,
+      "popscore_visits_available_count": 766,
+      "quality_selected_count": 98,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 702,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2014,
+      "candidate_count": 4320,
+      "eligible_count": 3816,
+      "quality_eligible_count": 85,
+      "popscore_interest_available_count": 452,
+      "popscore_visits_available_count": 818,
+      "quality_selected_count": 85,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 715,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2015,
+      "candidate_count": 5493,
+      "eligible_count": 5069,
+      "quality_eligible_count": 104,
+      "popscore_interest_available_count": 540,
+      "popscore_visits_available_count": 860,
+      "quality_selected_count": 104,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 696,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2016,
+      "candidate_count": 7601,
+      "eligible_count": 7056,
+      "quality_eligible_count": 120,
+      "popscore_interest_available_count": 690,
+      "popscore_visits_available_count": 997,
+      "quality_selected_count": 120,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 680,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2017,
+      "candidate_count": 10146,
+      "eligible_count": 9531,
+      "quality_eligible_count": 106,
+      "popscore_interest_available_count": 739,
+      "popscore_visits_available_count": 1193,
+      "quality_selected_count": 106,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 694,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2018,
+      "candidate_count": 11249,
+      "eligible_count": 10574,
+      "quality_eligible_count": 108,
+      "popscore_interest_available_count": 771,
+      "popscore_visits_available_count": 1163,
+      "quality_selected_count": 108,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 692,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2019,
+      "candidate_count": 10626,
+      "eligible_count": 10048,
+      "quality_eligible_count": 120,
+      "popscore_interest_available_count": 824,
+      "popscore_visits_available_count": 1160,
+      "quality_selected_count": 120,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 680,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2020,
+      "candidate_count": 12048,
+      "eligible_count": 11386,
+      "quality_eligible_count": 92,
+      "popscore_interest_available_count": 823,
+      "popscore_visits_available_count": 1207,
+      "quality_selected_count": 92,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 708,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2021,
+      "candidate_count": 14440,
+      "eligible_count": 13562,
+      "quality_eligible_count": 83,
+      "popscore_interest_available_count": 904,
+      "popscore_visits_available_count": 1375,
+      "quality_selected_count": 83,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 717,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2022,
+      "candidate_count": 14666,
+      "eligible_count": 13763,
+      "quality_eligible_count": 88,
+      "popscore_interest_available_count": 878,
+      "popscore_visits_available_count": 1480,
+      "quality_selected_count": 88,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 712,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2023,
+      "candidate_count": 16337,
+      "eligible_count": 15254,
+      "quality_eligible_count": 83,
+      "popscore_interest_available_count": 942,
+      "popscore_visits_available_count": 1602,
+      "quality_selected_count": 83,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 717,
+      "total_selected_count": 1000
+    },
+    {
+      "release_year": 2024,
+      "candidate_count": 20472,
+      "eligible_count": 19297,
+      "quality_eligible_count": 73,
+      "popscore_interest_available_count": 1042,
+      "popscore_visits_available_count": 2093,
+      "quality_selected_count": 73,
+      "popularity_selected_count": 200,
+      "comparison_selected_count": 727,
+      "total_selected_count": 1000
+    }
+  ],
+  "validation_titles": {
+    "Baldur's Gate 3": {
+      "present_in_candidate_pool": false,
+      "selected": false
+    },
+    "Elden Ring": {
+      "present_in_candidate_pool": true,
+      "selected": true
+    },
+    "Hades": {
+      "present_in_candidate_pool": true,
+      "selected": true
+    },
+    "Cyberpunk 2077": {
+      "present_in_candidate_pool": true,
+      "selected": true
+    },
+    "Stardew Valley": {
+      "present_in_candidate_pool": true,
+      "selected": true
+    }
+  }
+}

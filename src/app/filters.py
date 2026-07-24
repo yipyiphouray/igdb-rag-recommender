@@ -31,7 +31,7 @@ def apply_catalog_filters(
     min_rating_count: int | None = None,
     hidden_gems_only: bool = False,
 ) -> pd.DataFrame:
-    filtered = catalog.copy()
+    filtered = catalog
 
     if search_text:
         query = search_text.strip().lower()
@@ -70,7 +70,9 @@ def apply_catalog_filters(
     if hidden_gems_only and "hidden_gem_balanced_flag" in filtered:
         filtered = filtered[filtered["hidden_gem_balanced_flag"] == 1]
 
-    return filtered.drop_duplicates(subset=["game_id"])
+    if "game_id" in filtered.columns and filtered["game_id"].duplicated().any():
+        return filtered.drop_duplicates(subset=["game_id"])
+    return filtered
 
 
 def sort_catalog(catalog: pd.DataFrame, sort_option: str) -> pd.DataFrame:

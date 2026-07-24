@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-import json
 import math
 import re
 from dataclasses import dataclass, field
-from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 
 from src.app import config
+from src.app.data_loader import load_app_catalog, load_filter_options
 from src.app.formatting import split_list
 
 
@@ -118,24 +117,15 @@ def _source(path: Path) -> str:
         return path.as_posix()
 
 
-@lru_cache(maxsize=1)
 def _load_catalog() -> pd.DataFrame | None:
-    if not config.APP_CATALOG_PATH.exists():
-        return None
     try:
-        return pd.read_parquet(config.APP_CATALOG_PATH)
+        return load_app_catalog()
     except Exception:
         return None
 
 
-@lru_cache(maxsize=1)
 def _load_filter_options() -> dict[str, Any]:
-    if not config.APP_FILTER_OPTIONS_PATH.exists():
-        return {}
-    try:
-        return json.loads(config.APP_FILTER_OPTIONS_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return {}
+    return load_filter_options()
 
 
 def _safe_filter_options() -> dict[str, Any]:

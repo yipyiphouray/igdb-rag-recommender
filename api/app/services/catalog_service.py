@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-import json
 import math
-from json import JSONDecodeError
 from collections.abc import Iterable
-from functools import lru_cache
 from typing import Any
 
 import pandas as pd
 
-from app import config
+from src.app.data_loader import load_app_catalog, load_filter_options as load_app_filter_options
 from src.app.filters import apply_catalog_filters, sort_catalog
 from src.app.formatting import compact_text, split_list
 
@@ -24,23 +21,12 @@ SORT_OPTIONS = {
 }
 
 
-@lru_cache(maxsize=1)
 def load_catalog() -> pd.DataFrame:
-    if not config.APP_CATALOG_PATH.exists():
-        raise FileNotFoundError(f"Missing app catalog artifact: {config.APP_CATALOG_PATH}")
-    return pd.read_parquet(config.APP_CATALOG_PATH)
+    return load_app_catalog()
 
 
-@lru_cache(maxsize=1)
 def load_filter_options() -> dict[str, Any]:
-    if not config.APP_FILTER_OPTIONS_PATH.exists():
-        return {}
-    try:
-        with config.APP_FILTER_OPTIONS_PATH.open("r", encoding="utf-8-sig") as file:
-            data = json.load(file)
-    except (OSError, JSONDecodeError):
-        return {}
-    return data if isinstance(data, dict) else {}
+    return load_app_filter_options()
 
 
 def _is_missing(value: object) -> bool:

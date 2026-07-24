@@ -1,23 +1,16 @@
 from __future__ import annotations
 
-import json
 from functools import lru_cache
 from typing import Any
 
 from app import config
-
-
-def _load_json(path) -> dict[str, Any]:
-    if not path.exists():
-        return {}
-    with path.open("r", encoding="utf-8") as file:
-        return json.load(file)
+from src.app.data_loader import load_json_artifact
 
 
 @lru_cache(maxsize=1)
 def get_methodology_summary() -> dict[str, Any]:
-    metrics = _load_json(config.APP_METHODOLOGY_METRICS_PATH)
-    insight_summary = _load_json(config.APP_INSIGHT_SUMMARY_PATH)
+    metrics = load_json_artifact(config.APP_METHODOLOGY_METRICS_PATH)
+    insight_summary = load_json_artifact(config.APP_INSIGHT_SUMMARY_PATH)
 
     return {
         "data_source": "App-ready parquet/json artifacts generated from the curated IGDB analytical sample.",

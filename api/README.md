@@ -12,11 +12,16 @@ data/app/app_methodology_metrics.json
 data/app/app_insight_summary.json
 ```
 
-It also reads notebook-exported analytics summaries from:
+It also reads an app-ready Insights dashboard artifact from:
 
 ```text
-data/analytics/descriptive/
-data/analytics/diagnostic/
+data/app/app_insights_dashboard.json
+```
+
+The app-ready dashboard JSON is generated from notebook CSV outputs with:
+
+```bash
+python src/pipeline/build_insights_dashboard_artifact.py
 ```
 
 The Ask the Guide chatbot layer uses:

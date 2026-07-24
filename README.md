@@ -15,6 +15,8 @@ A game discovery project that combines IGDB catalog analytics, metadata-based re
   - Shared Python logic for data loading, filtering, recommendation logic, RAG utilities, app services, and data pipelines.
 - `data/app/`
   - App-ready Parquet and JSON artifacts used by Streamlit, FastAPI, and the website.
+- `data/analytics/descriptive/` and `data/analytics/diagnostic/`
+  - Notebook-generated analytics CSV outputs. These are local/generated and are condensed into app-ready JSON for deployment.
 - `data/database/`
   - Local SQLite database output from the IGDB relational build pipeline. The database file is intentionally ignored by Git.
 - `docs/`
@@ -120,9 +122,11 @@ POST http://localhost:8000/chat
 
 - Do not commit `.env`, `.DS_Store`, `__pycache__/`, `.next/`, `node_modules/`, local SQLite databases, or generated vector-store files.
 - The main app catalog source is `data/app/app_game_catalog.parquet`.
-- The active RAG vector store path is `data/vector_store/`.
-- Rebuild the vector index after refreshing the app catalog:
+- The deployed Insights page uses `data/app/app_insights_dashboard.json`, which condenses the required descriptive and diagnostic dashboard tables into one app-ready artifact.
+- Large raw IGDB endpoint dumps are not required for deployment. Keep `data/raw/extraction_manifest.json` and regenerate raw extracts with `src/fetch_IGDB.py` when needed.
+- Generated Chroma/vector-store folders should remain ignored. Lightweight RAG artifacts live in `data/rag/lightweight/` when needed.
+- Rebuild retrieval artifacts after refreshing the app catalog:
 
 ```bash
-python src/initialize_vector_db.py
+python src/build_lightweight_rag_index.py
 ```

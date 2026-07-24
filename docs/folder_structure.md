@@ -1,6 +1,6 @@
 # Folder Structure Description
 
-Last updated: 2026-07-22
+Last updated: 2026-07-24
 
 This file describes the active folder layout for the IGDB Game Discovery and Hybrid RAG Recommender project.
 
@@ -18,12 +18,10 @@ Community_Project/
 |   |   |-- diagnostic/
 |   |   `-- plots/
 |   |-- app/
-|   |-- database/
 |   |-- predictive/
-|   |-- processed/
+|   |-- rag/
 |   |-- raw/
-|   |-- recommendations/
-|   `-- vector_store/
+|   `-- analytics/
 |-- docs/
 |   |-- plan/
 |   |-- project_source_of_truth/
@@ -67,27 +65,23 @@ Project data at different stages of the pipeline.
 
 ### `data/raw/`
 
-Raw IGDB API extracts before transformation.
-
-### `data/database/`
-
-Local SQLite database output from the relational database build process. The database file is ignored by Git because it can become too large to push.
+Raw extraction documentation. Large raw IGDB endpoint dumps are ignored because they are not required to run the app and would make the repository harder to clone/deploy. The retained extraction manifest and README explain how to regenerate raw extracts.
 
 ### `data/app/`
 
-App-ready Parquet and JSON artifacts used by Streamlit, FastAPI, and the website.
+App-ready Parquet and JSON artifacts used by Streamlit, FastAPI, and the website. This is the runtime data layer for deployment. It includes the game catalog, filter options, hidden gems, methodology metrics, insights summary, and the consolidated Insights dashboard artifact.
 
 ### `data/analytics/`
 
-Notebook-exported descriptive, diagnostic, and plot artifacts.
+Notebook-exported descriptive, diagnostic, and plot artifacts. Most CSV outputs are treated as generated analysis outputs. The deployed Insights page consumes the consolidated `data/app/app_insights_dashboard.json` artifact instead of reading many CSV files directly.
 
 ### `data/predictive/`
 
 Predictive/recommendation-related feature outputs and modeling artifacts when needed.
 
-### `data/vector_store/`
+### `data/rag/`
 
-Local vector-store output used by RAG/hybrid retrieval. Generated vector-store files should remain ignored by Git.
+RAG/retrieval artifacts. Generated Chroma/vector-store folders should remain ignored. Lightweight deployment-aware retrieval artifacts live under `data/rag/lightweight/` when needed.
 
 ## `docs/`
 

@@ -1,0 +1,1021 @@
+﻿{
+    "descriptive":  {
+                        "top_platforms":  [
+                                              {
+                                                  "platform_name":  "PC (Microsoft Windows)",
+                                                  "platform_abbreviation":  "PC",
+                                                  "game_count":  "33101"
+                                              },
+                                              {
+                                                  "platform_name":  "Mac",
+                                                  "platform_abbreviation":  "Mac",
+                                                  "game_count":  "8249"
+                                              },
+                                              {
+                                                  "platform_name":  "iOS",
+                                                  "platform_abbreviation":  "iOS",
+                                                  "game_count":  "7977"
+                                              },
+                                              {
+                                                  "platform_name":  "Android",
+                                                  "platform_abbreviation":  "Android",
+                                                  "game_count":  "6998"
+                                              },
+                                              {
+                                                  "platform_name":  "Nintendo Switch",
+                                                  "platform_abbreviation":  "Switch",
+                                                  "game_count":  "5460"
+                                              },
+                                              {
+                                                  "platform_name":  "Linux",
+                                                  "platform_abbreviation":  "Linux",
+                                                  "game_count":  "5346"
+                                              },
+                                              {
+                                                  "platform_name":  "PlayStation 4",
+                                                  "platform_abbreviation":  "PS4",
+                                                  "game_count":  "4721"
+                                              },
+                                              {
+                                                  "platform_name":  "Xbox One",
+                                                  "platform_abbreviation":  "XONE",
+                                                  "game_count":  "3895"
+                                              }
+                                          ],
+                        "kpi_snapshot":  [
+                                             {
+                                                 "kpi":  "Total Games",
+                                                 "value":  "47835",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Unique games in games table"
+                                             },
+                                             {
+                                                 "kpi":  "Total Platforms Represented",
+                                                 "value":  "141",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Distinct platforms linked through game_platforms"
+                                             },
+                                             {
+                                                 "kpi":  "Total Genres Represented",
+                                                 "value":  "23",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Distinct genres linked through game_genres"
+                                             },
+                                             {
+                                                 "kpi":  "Total Themes Represented",
+                                                 "value":  "22",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Distinct themes linked through game_themes"
+                                             },
+                                             {
+                                                 "kpi":  "Total Keywords Represented",
+                                                 "value":  "4643",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Distinct keywords linked through game_keywords"
+                                             },
+                                             {
+                                                 "kpi":  "Total Companies Represented",
+                                                 "value":  "18671",
+                                                 "pct_of_games":  "",
+                                                 "note":  "Distinct companies linked through involved_companies"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Total Rating",
+                                                 "value":  "14009",
+                                                 "pct_of_games":  "29.29",
+                                                 "note":  "Coverage for rating distribution and rating-band charts"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Total Rating Count",
+                                                 "value":  "14009",
+                                                 "pct_of_games":  "29.29",
+                                                 "note":  "Coverage for rating evidence and rating-activity charts"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Summaries",
+                                                 "value":  "46108",
+                                                 "pct_of_games":  "96.39",
+                                                 "note":  "Text coverage for RAG/profile readiness"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Storylines",
+                                                 "value":  "7535",
+                                                 "pct_of_games":  "15.75",
+                                                 "note":  "Longer narrative text coverage"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Release Year",
+                                                 "value":  "47835",
+                                                 "pct_of_games":  "100.0",
+                                                 "note":  "Coverage for release timeline charts"
+                                             },
+                                             {
+                                                 "kpi":  "Games With Cover ID",
+                                                 "value":  "45752",
+                                                 "pct_of_games":  "95.65",
+                                                 "note":  "Selected cover reference on games table"
+                                             }
+                                         ],
+                        "popularity_signals":  [
+                                                   {
+                                                       "popularity_source":  "Steam",
+                                                       "popularity_type":  "Total Reviews",
+                                                       "games_with_signal":  "21269",
+                                                       "signal_records":  "21269"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "Steam",
+                                                       "popularity_type":  "Postitive Reviews",
+                                                       "games_with_signal":  "21269",
+                                                       "signal_records":  "21269"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "Steam",
+                                                       "popularity_type":  "Negative Reviews",
+                                                       "games_with_signal":  "21269",
+                                                       "signal_records":  "21269"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "Steam",
+                                                       "popularity_type":  "24hr Peak Players",
+                                                       "games_with_signal":  "21269",
+                                                       "signal_records":  "21269"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "IGDB",
+                                                       "popularity_type":  "Played",
+                                                       "games_with_signal":  "21172",
+                                                       "signal_records":  "21172"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "IGDB",
+                                                       "popularity_type":  "Want to Play",
+                                                       "games_with_signal":  "19253",
+                                                       "signal_records":  "19253"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "IGDB",
+                                                       "popularity_type":  "Visits",
+                                                       "games_with_signal":  "15089",
+                                                       "signal_records":  "15089"
+                                                   },
+                                                   {
+                                                       "popularity_source":  "IGDB",
+                                                       "popularity_type":  "Playing",
+                                                       "games_with_signal":  "11102",
+                                                       "signal_records":  "11102"
+                                                   }
+                                               ],
+                        "playtime_bands":  [
+                                               {
+                                                   "playtime_band":  "Under 5 hours",
+                                                   "game_count":  "805",
+                                                   "median_normally_hours":  "2.0",
+                                                   "p95_normally_hours":  "4.13",
+                                                   "max_normally_hours":  "4.98"
+                                               },
+                                               {
+                                                   "playtime_band":  "5-9 hours",
+                                                   "game_count":  "642",
+                                                   "median_normally_hours":  "7.0",
+                                                   "p95_normally_hours":  "9.05",
+                                                   "max_normally_hours":  "9.97"
+                                               },
+                                               {
+                                                   "playtime_band":  "10-19 hours",
+                                                   "game_count":  "512",
+                                                   "median_normally_hours":  "13.27",
+                                                   "p95_normally_hours":  "18.5",
+                                                   "max_normally_hours":  "19.89"
+                                               },
+                                               {
+                                                   "playtime_band":  "20-39 hours",
+                                                   "game_count":  "373",
+                                                   "median_normally_hours":  "26.0",
+                                                   "p95_normally_hours":  "37.77",
+                                                   "max_normally_hours":  "39.67"
+                                               },
+                                               {
+                                                   "playtime_band":  "40-79 hours",
+                                                   "game_count":  "228",
+                                                   "median_normally_hours":  "50.0",
+                                                   "p95_normally_hours":  "75.0",
+                                                   "max_normally_hours":  "79.0"
+                                               },
+                                               {
+                                                   "playtime_band":  "80+ hours",
+                                                   "game_count":  "163",
+                                                   "median_normally_hours":  "150.0",
+                                                   "p95_normally_hours":  "2991.75",
+                                                   "max_normally_hours":  "277430.5"
+                                               }
+                                           ],
+                        "rating_coverage":  {
+                                                "total_games":  "47835",
+                                                "games_with_total_rating":  "14009",
+                                                "games_with_total_rating_count":  "14009",
+                                                "games_with_user_rating":  "12807",
+                                                "games_with_user_rating_count":  "12807",
+                                                "games_with_critic_rating":  "6383",
+                                                "games_with_critic_rating_count":  "6383"
+                                            },
+                        "rating_bands":  [
+                                             {
+                                                 "rating_band":  "Excellent",
+                                                 "game_count":  "497"
+                                             },
+                                             {
+                                                 "rating_band":  "Highly rated",
+                                                 "game_count":  "2226"
+                                             },
+                                             {
+                                                 "rating_band":  "Good",
+                                                 "game_count":  "4926"
+                                             },
+                                             {
+                                                 "rating_band":  "Mixed / average",
+                                                 "game_count":  "3041"
+                                             },
+                                             {
+                                                 "rating_band":  "Lower rated",
+                                                 "game_count":  "3319"
+                                             },
+                                             {
+                                                 "rating_band":  "Unrated / insufficient data",
+                                                 "game_count":  "33826"
+                                             }
+                                         ],
+                        "metadata_richness":  [
+                                                  {
+                                                      "metadata_richness_band":  "Lean relationship profile (\u003c50 links)",
+                                                      "game_count":  "45117",
+                                                      "min_relationship_count":  "2",
+                                                      "median_relationship_count":  "18.0",
+                                                      "max_relationship_count":  "49"
+                                                  },
+                                                  {
+                                                      "metadata_richness_band":  "Moderate relationship profile (50-99 links)",
+                                                      "game_count":  "2462",
+                                                      "min_relationship_count":  "50",
+                                                      "median_relationship_count":  "60.0",
+                                                      "max_relationship_count":  "99"
+                                                  },
+                                                  {
+                                                      "metadata_richness_band":  "Rich relationship profile (100-149 links)",
+                                                      "game_count":  "206",
+                                                      "min_relationship_count":  "100",
+                                                      "median_relationship_count":  "114.0",
+                                                      "max_relationship_count":  "149"
+                                                  },
+                                                  {
+                                                      "metadata_richness_band":  "Very rich relationship profile (150+ links)",
+                                                      "game_count":  "50",
+                                                      "min_relationship_count":  "150",
+                                                      "median_relationship_count":  "178.5",
+                                                      "max_relationship_count":  "324"
+                                                  }
+                                              ],
+                        "top_genres":  [
+                                           {
+                                               "genre_name":  "Indie",
+                                               "game_count":  "23050"
+                                           },
+                                           {
+                                               "genre_name":  "Adventure",
+                                               "game_count":  "17401"
+                                           },
+                                           {
+                                               "genre_name":  "Simulator",
+                                               "game_count":  "8965"
+                                           },
+                                           {
+                                               "genre_name":  "Strategy",
+                                               "game_count":  "8060"
+                                           },
+                                           {
+                                               "genre_name":  "Role-playing (RPG)",
+                                               "game_count":  "7622"
+                                           },
+                                           {
+                                               "genre_name":  "Puzzle",
+                                               "game_count":  "7441"
+                                           },
+                                           {
+                                               "genre_name":  "Arcade",
+                                               "game_count":  "5088"
+                                           },
+                                           {
+                                               "genre_name":  "Platform",
+                                               "game_count":  "4250"
+                                           }
+                                       ]
+                    },
+    "diagnostic":  {
+                       "takeaways":  [
+                                         {
+                                             "takeaway_id":  "1",
+                                             "finding":  "Rating quality, rating activity, and PopScore visibility are distinct signals.",
+                                             "evidence":  "Quality-PopScore Spearman rho=0.357; quality-activity rho=0.319.",
+                                             "interpretation":  "Keep quality, confidence/activity, and visibility separate."
+                                         },
+                                         {
+                                             "takeaway_id":  "2",
+                                             "finding":  "Low-visibility, high-quality candidates were identified within the quality cohort.",
+                                             "evidence":  "231 quality-cohort games satisfy rating \u003e= 80, reliable evidence, main-game, PopScore-known, and within-year quality-cohort visibility \u003c= 40%.",
+                                             "interpretation":  "The list is an auditable within-sample diagnostic artifact, not a market-wide hidden-gem estimate or prescriptive ranking score."
+                                         },
+                                         {
+                                             "takeaway_id":  "3",
+                                             "finding":  "Some categories are enriched in the quality cohort relative to the residual comparison cohort.",
+                                             "evidence":  "334 enrichment tests are significant after Benjamini-Hochberg correction.",
+                                             "interpretation":  "These reflect the curated extraction design, not direct quality effects, causal effects, or market prevalence estimates."
+                                         },
+                                         {
+                                             "takeaway_id":  "4",
+                                             "finding":  "Platform reach and PopScore visibility can be compared separately from rating quality.",
+                                             "evidence":  "Platform-count versus PopScore-percentile Spearman rho=0.386.",
+                                             "interpretation":  "Platform count is a reach signal and may also reflect commercial visibility or release strategy."
+                                         },
+                                         {
+                                             "takeaway_id":  "5",
+                                             "finding":  "User and critic reception are related but not identical.",
+                                             "evidence":  "User-versus-critic Spearman rho=0.701; disagreement cases are exported separately.",
+                                             "interpretation":  "Retain user-only, critic-only, and combined ratings as separate fields."
+                                         }
+                                     ],
+                       "user_critic_agreement":  [
+                                                     {
+                                                         "metric":  "user_critic_pearson_correlation",
+                                                         "n":  "1329",
+                                                         "value":  "0.7031759934314337",
+                                                         "p_value":  "8.646158181239537e-199",
+                                                         "correlation_status":  "ok"
+                                                     },
+                                                     {
+                                                         "metric":  "user_critic_spearman_correlation",
+                                                         "n":  "1329",
+                                                         "value":  "0.7009406715595795",
+                                                         "p_value":  "5.268288422933134e-197",
+                                                         "correlation_status":  "ok"
+                                                     },
+                                                     {
+                                                         "metric":  "median_user_critic_gap",
+                                                         "n":  "1329",
+                                                         "value":  "-3.0404495763180535",
+                                                         "p_value":  "",
+                                                         "correlation_status":  "not applicable"
+                                                     },
+                                                     {
+                                                         "metric":  "user_critic_gap_iqr",
+                                                         "n":  "1329",
+                                                         "value":  "7.7903149970867105",
+                                                         "p_value":  "",
+                                                         "correlation_status":  "not applicable"
+                                                     }
+                                                 ],
+                       "hidden_gems_by_genre":  [
+                                                    {
+                                                        "genre_name":  "Indie",
+                                                        "hidden_gem_eligible_games":  "604",
+                                                        "hidden_gem_count":  "124",
+                                                        "hidden_gem_share":  "0.2052980132450331",
+                                                        "game_count":  "1131"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Adventure",
+                                                        "hidden_gem_eligible_games":  "863",
+                                                        "hidden_gem_count":  "121",
+                                                        "hidden_gem_share":  "0.14020857473928158",
+                                                        "game_count":  "1598"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Role-playing (RPG)",
+                                                        "hidden_gem_eligible_games":  "425",
+                                                        "hidden_gem_count":  "67",
+                                                        "hidden_gem_share":  "0.15764705882352942",
+                                                        "game_count":  "765"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Puzzle",
+                                                        "hidden_gem_eligible_games":  "317",
+                                                        "hidden_gem_count":  "59",
+                                                        "hidden_gem_share":  "0.1861198738170347",
+                                                        "game_count":  "562"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Simulator",
+                                                        "hidden_gem_eligible_games":  "281",
+                                                        "hidden_gem_count":  "52",
+                                                        "hidden_gem_share":  "0.18505338078291814",
+                                                        "game_count":  "560"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Platform",
+                                                        "hidden_gem_eligible_games":  "235",
+                                                        "hidden_gem_count":  "49",
+                                                        "hidden_gem_share":  "0.20851063829787234",
+                                                        "game_count":  "409"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Strategy",
+                                                        "hidden_gem_eligible_games":  "286",
+                                                        "hidden_gem_count":  "47",
+                                                        "hidden_gem_share":  "0.16433566433566432",
+                                                        "game_count":  "527"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Sport",
+                                                        "hidden_gem_eligible_games":  "97",
+                                                        "hidden_gem_count":  "38",
+                                                        "hidden_gem_share":  "0.3917525773195876",
+                                                        "game_count":  "197"
+                                                    }
+                                                ],
+                       "rating_band_popscore_summary":  [
+                                                            {
+                                                                "rating_band":  "Excellent",
+                                                                "extraction_cohort":  "quality",
+                                                                "game_count":  "53",
+                                                                "popscore_covered_games":  "52",
+                                                                "median_custom_interest_score":  "0.0003639232232016",
+                                                                "median_custom_interest_percentile":  "0.9801093983092988",
+                                                                "median_total_rating_count":  "253.0",
+                                                                "median_total_rating":  "92.416285737469",
+                                                                "popscore_coverage_rate":  "0.9811320754716981"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Good",
+                                                                "extraction_cohort":  "comparison",
+                                                                "game_count":  "3",
+                                                                "popscore_covered_games":  "0",
+                                                                "median_custom_interest_score":  "",
+                                                                "median_custom_interest_percentile":  "",
+                                                                "median_total_rating_count":  "28.0",
+                                                                "median_total_rating":  "74.34354207889035",
+                                                                "popscore_coverage_rate":  "0.0"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Good",
+                                                                "extraction_cohort":  "low_visibility",
+                                                                "game_count":  "5",
+                                                                "popscore_covered_games":  "0",
+                                                                "median_custom_interest_score":  "",
+                                                                "median_custom_interest_percentile":  "",
+                                                                "median_total_rating_count":  "29.0",
+                                                                "median_total_rating":  "71.20301308986592",
+                                                                "popscore_coverage_rate":  "0.0"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Good",
+                                                                "extraction_cohort":  "popularity",
+                                                                "game_count":  "595",
+                                                                "popscore_covered_games":  "572",
+                                                                "median_custom_interest_score":  "7.007187112729999e-05",
+                                                                "median_custom_interest_percentile":  "0.8454997513674789",
+                                                                "median_total_rating_count":  "56.0",
+                                                                "median_total_rating":  "72.66582984684322",
+                                                                "popscore_coverage_rate":  "0.9613445378151261"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Good",
+                                                                "extraction_cohort":  "quality",
+                                                                "game_count":  "650",
+                                                                "popscore_covered_games":  "615",
+                                                                "median_custom_interest_score":  "7.413249935059999e-05",
+                                                                "median_custom_interest_percentile":  "0.8536051715564396",
+                                                                "median_total_rating_count":  "61.5",
+                                                                "median_total_rating":  "77.40442386554167",
+                                                                "popscore_coverage_rate":  "0.9461538461538461"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Highly rated",
+                                                                "extraction_cohort":  "quality",
+                                                                "game_count":  "722",
+                                                                "popscore_covered_games":  "703",
+                                                                "median_custom_interest_score":  "0.00012823663558760002",
+                                                                "median_custom_interest_percentile":  "0.920934858279463",
+                                                                "median_total_rating_count":  "113.0",
+                                                                "median_total_rating":  "83.40382827994577",
+                                                                "popscore_coverage_rate":  "0.9736842105263158"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Lower rated",
+                                                                "extraction_cohort":  "lower_rated",
+                                                                "game_count":  "147",
+                                                                "popscore_covered_games":  "125",
+                                                                "median_custom_interest_score":  "4.45017315426e-05",
+                                                                "median_custom_interest_percentile":  "0.7576330183988066",
+                                                                "median_total_rating_count":  "39.0",
+                                                                "median_total_rating":  "53.85399971578229",
+                                                                "popscore_coverage_rate":  "0.8503401360544217"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Mixed / average",
+                                                                "extraction_cohort":  "comparison",
+                                                                "game_count":  "11",
+                                                                "popscore_covered_games":  "0",
+                                                                "median_custom_interest_score":  "",
+                                                                "median_custom_interest_percentile":  "",
+                                                                "median_total_rating_count":  "33.0",
+                                                                "median_total_rating":  "67.35949785304325",
+                                                                "popscore_coverage_rate":  "0.0"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Mixed / average",
+                                                                "extraction_cohort":  "low_visibility",
+                                                                "game_count":  "2",
+                                                                "popscore_covered_games":  "0",
+                                                                "median_custom_interest_score":  "",
+                                                                "median_custom_interest_percentile":  "",
+                                                                "median_total_rating_count":  "33.5",
+                                                                "median_total_rating":  "65.7000231079983",
+                                                                "popscore_coverage_rate":  "0.0"
+                                                            },
+                                                            {
+                                                                "rating_band":  "Mixed / average",
+                                                                "extraction_cohort":  "popularity",
+                                                                "game_count":  "451",
+                                                                "popscore_covered_games":  "437",
+                                                                "median_custom_interest_score":  "5.14335837832e-05",
+                                                                "median_custom_interest_percentile":  "0.7864743908503232",
+                                                                "median_total_rating_count":  "46.0",
+                                                                "median_total_rating":  "66.8774614165074",
+                                                                "popscore_coverage_rate":  "0.9689578713968958"
+                                                            }
+                                                        ],
+                       "genre_rating_summary":  [
+                                                    {
+                                                        "genre_name":  "Turn-based strategy (TBS)",
+                                                        "game_count":  "157",
+                                                        "median_total_rating":  "79.09372944329809",
+                                                        "mean_total_rating":  "78.03345560745502",
+                                                        "rating_q1":  "74.1232285816829",
+                                                        "rating_q3":  "83.15669825547866",
+                                                        "median_total_rating_count":  "51.0",
+                                                        "high_rated_count":  "69.0",
+                                                        "high_rated_share":  "0.4394904458598726",
+                                                        "rating_iqr":  "9.033469673795764",
+                                                        "comparison_cohort_games":  "1",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "2",
+                                                        "popularity_cohort_games":  "46",
+                                                        "quality_cohort_games":  "108",
+                                                        "hidden_gem_eligible_games":  "107",
+                                                        "hidden_gem_count":  "23",
+                                                        "hidden_gem_share":  "0.21495327102803738",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "5.266555678839704",
+                                                        "odds_ratio_ci_low":  "4.241521497642488",
+                                                        "odds_ratio_ci_high":  "6.539306410149099",
+                                                        "p_value":  "3.807479869533993e-51",
+                                                        "adjusted_p_value":  "1.7514407399856367e-50",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Visual Novel",
+                                                        "game_count":  "84",
+                                                        "median_total_rating":  "78.44521565909349",
+                                                        "mean_total_rating":  "77.46808567239032",
+                                                        "rating_q1":  "71.3796795624216",
+                                                        "rating_q3":  "83.58790091463885",
+                                                        "median_total_rating_count":  "47.0",
+                                                        "high_rated_count":  "35.0",
+                                                        "high_rated_share":  "0.4166666666666667",
+                                                        "rating_iqr":  "12.208221352217251",
+                                                        "comparison_cohort_games":  "0",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "1",
+                                                        "popularity_cohort_games":  "29",
+                                                        "quality_cohort_games":  "54",
+                                                        "hidden_gem_eligible_games":  "52",
+                                                        "hidden_gem_count":  "13",
+                                                        "hidden_gem_share":  "0.25",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "0.6109331028948837",
+                                                        "odds_ratio_ci_low":  "0.4634841994694708",
+                                                        "odds_ratio_ci_high":  "0.805290140721087",
+                                                        "p_value":  "0.0004712713058684553",
+                                                        "adjusted_p_value":  "0.0006774525021859045",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Music",
+                                                        "game_count":  "64",
+                                                        "median_total_rating":  "78.14885235332716",
+                                                        "mean_total_rating":  "76.71477029441736",
+                                                        "rating_q1":  "72.4269837931705",
+                                                        "rating_q3":  "81.78012532806167",
+                                                        "median_total_rating_count":  "39.5",
+                                                        "high_rated_count":  "24.0",
+                                                        "high_rated_share":  "0.375",
+                                                        "rating_iqr":  "9.353141534891165",
+                                                        "comparison_cohort_games":  "0",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "3",
+                                                        "popularity_cohort_games":  "18",
+                                                        "quality_cohort_games":  "43",
+                                                        "hidden_gem_eligible_games":  "42",
+                                                        "hidden_gem_count":  "18",
+                                                        "hidden_gem_share":  "0.42857142857142855",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "1.6286040525676433",
+                                                        "odds_ratio_ci_low":  "1.185069806093918",
+                                                        "odds_ratio_ci_high":  "2.2381391766128163",
+                                                        "p_value":  "0.0026403131366675298",
+                                                        "adjusted_p_value":  "0.0033737334524085102",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Platform",
+                                                        "game_count":  "409",
+                                                        "median_total_rating":  "76.85657817958449",
+                                                        "mean_total_rating":  "76.30816231433147",
+                                                        "rating_q1":  "72.03364026478167",
+                                                        "rating_q3":  "82.0450569123476",
+                                                        "median_total_rating_count":  "65.0",
+                                                        "high_rated_count":  "143.0",
+                                                        "high_rated_share":  "0.34963325183374083",
+                                                        "rating_iqr":  "10.011416647565937",
+                                                        "comparison_cohort_games":  "3",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "14",
+                                                        "popularity_cohort_games":  "149",
+                                                        "quality_cohort_games":  "243",
+                                                        "hidden_gem_eligible_games":  "235",
+                                                        "hidden_gem_count":  "49",
+                                                        "hidden_gem_share":  "0.20851063829787234",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "2.459906783401995",
+                                                        "odds_ratio_ci_low":  "2.127526560954443",
+                                                        "odds_ratio_ci_high":  "2.844214259920924",
+                                                        "p_value":  "5.511767109516131e-34",
+                                                        "adjusted_p_value":  "1.8110091931267288e-33",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Real Time Strategy (RTS)",
+                                                        "game_count":  "75",
+                                                        "median_total_rating":  "76.76012253138985",
+                                                        "mean_total_rating":  "76.35365256885561",
+                                                        "rating_q1":  "73.80469127925974",
+                                                        "rating_q3":  "81.80845517115824",
+                                                        "median_total_rating_count":  "62.0",
+                                                        "high_rated_count":  "24.0",
+                                                        "high_rated_share":  "0.32",
+                                                        "rating_iqr":  "8.003763891898501",
+                                                        "comparison_cohort_games":  "1",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "2",
+                                                        "popularity_cohort_games":  "22",
+                                                        "quality_cohort_games":  "50",
+                                                        "hidden_gem_eligible_games":  "47",
+                                                        "hidden_gem_count":  "6",
+                                                        "hidden_gem_share":  "0.1276595744680851",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "3.728721784960672",
+                                                        "odds_ratio_ci_low":  "2.747287401168193",
+                                                        "odds_ratio_ci_high":  "5.060761441896598",
+                                                        "p_value":  "3.048701631546656e-17",
+                                                        "adjusted_p_value":  "7.791126391730343e-17",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Puzzle",
+                                                        "game_count":  "562",
+                                                        "median_total_rating":  "76.66010920867052",
+                                                        "mean_total_rating":  "76.34614339682766",
+                                                        "rating_q1":  "71.72268900122964",
+                                                        "rating_q3":  "81.13125903283321",
+                                                        "median_total_rating_count":  "59.0",
+                                                        "high_rated_count":  "178.0",
+                                                        "high_rated_share":  "0.3167259786476868",
+                                                        "rating_iqr":  "9.408570031603574",
+                                                        "comparison_cohort_games":  "2",
+                                                        "low_visibility_cohort_games":  "5",
+                                                        "lower_rated_cohort_games":  "16",
+                                                        "popularity_cohort_games":  "204",
+                                                        "quality_cohort_games":  "335",
+                                                        "hidden_gem_eligible_games":  "317",
+                                                        "hidden_gem_count":  "59",
+                                                        "hidden_gem_share":  "0.1861198738170347",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "1.8572385955362767",
+                                                        "odds_ratio_ci_low":  "1.6320191229608592",
+                                                        "odds_ratio_ci_high":  "2.1135384703652687",
+                                                        "p_value":  "6.2133830063593914e-21",
+                                                        "adjusted_p_value":  "1.786347614328325e-20",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Role-playing (RPG)",
+                                                        "game_count":  "765",
+                                                        "median_total_rating":  "76.65450843032517",
+                                                        "mean_total_rating":  "75.75859702619373",
+                                                        "rating_q1":  "70.99435999140147",
+                                                        "rating_q3":  "82.14758458485979",
+                                                        "median_total_rating_count":  "64.0",
+                                                        "high_rated_count":  "275.0",
+                                                        "high_rated_share":  "0.35947712418300654",
+                                                        "rating_iqr":  "11.153224593458319",
+                                                        "comparison_cohort_games":  "3",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "35",
+                                                        "popularity_cohort_games":  "293",
+                                                        "quality_cohort_games":  "434",
+                                                        "hidden_gem_eligible_games":  "425",
+                                                        "hidden_gem_count":  "67",
+                                                        "hidden_gem_share":  "0.15764705882352942",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "2.936110892821529",
+                                                        "odds_ratio_ci_low":  "2.6054373913337354",
+                                                        "odds_ratio_ci_high":  "3.3087523820836227",
+                                                        "p_value":  "7.416015006038871e-70",
+                                                        "adjusted_p_value":  "5.685611504629802e-69",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    },
+                                                    {
+                                                        "genre_name":  "Tactical",
+                                                        "game_count":  "149",
+                                                        "median_total_rating":  "76.65450843032517",
+                                                        "mean_total_rating":  "75.52860264773453",
+                                                        "rating_q1":  "71.01201807255494",
+                                                        "rating_q3":  "81.33140249937948",
+                                                        "median_total_rating_count":  "68.0",
+                                                        "high_rated_count":  "55.0",
+                                                        "high_rated_share":  "0.3691275167785235",
+                                                        "rating_iqr":  "10.319384426824541",
+                                                        "comparison_cohort_games":  "1",
+                                                        "low_visibility_cohort_games":  "0",
+                                                        "lower_rated_cohort_games":  "9",
+                                                        "popularity_cohort_games":  "55",
+                                                        "quality_cohort_games":  "84",
+                                                        "hidden_gem_eligible_games":  "82",
+                                                        "hidden_gem_count":  "14",
+                                                        "hidden_gem_share":  "0.17073170731707318",
+                                                        "low_sample_flag":  "False",
+                                                        "estimand":  "quality-cohort enrichment vs residual comparison cohort",
+                                                        "odds_ratio":  "6.736409145597802",
+                                                        "odds_ratio_ci_low":  "5.252644444861223",
+                                                        "odds_ratio_ci_high":  "8.639307048716994",
+                                                        "p_value":  "4.8756317121052685e-51",
+                                                        "adjusted_p_value":  "1.8689921563070196e-50",
+                                                        "fdr_significant":  "True",
+                                                        "model_status":  "ok"
+                                                    }
+                                                ],
+                       "platform_family_rating_summary":  [
+                                                              {
+                                                                  "platform_family":  "Nintendo",
+                                                                  "game_count":  "1213",
+                                                                  "median_total_rating":  "76.57211387052925",
+                                                                  "mean_total_rating":  "75.98385425292956",
+                                                                  "rating_q1":  "71.441766459934",
+                                                                  "rating_q3":  "81.50040084837741",
+                                                                  "median_total_rating_count":  "59.0",
+                                                                  "high_rated_count":  "392.0",
+                                                                  "high_rated_share":  "0.3231657048639736",
+                                                                  "rating_iqr":  "10.058634388443409",
+                                                                  "comparison_cohort_games":  "4",
+                                                                  "low_visibility_cohort_games":  "2",
+                                                                  "lower_rated_cohort_games":  "40",
+                                                                  "popularity_cohort_games":  "454",
+                                                                  "quality_cohort_games":  "713",
+                                                                  "hidden_gem_eligible_games":  "694",
+                                                                  "hidden_gem_count":  "129",
+                                                                  "hidden_gem_share":  "0.18587896253602307",
+                                                                  "low_sample_flag":  "False"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Linux",
+                                                                  "game_count":  "1029",
+                                                                  "median_total_rating":  "75.91104047898115",
+                                                                  "mean_total_rating":  "74.94695689172897",
+                                                                  "rating_q1":  "70.6724453602404",
+                                                                  "rating_q3":  "80.5902940278352",
+                                                                  "median_total_rating_count":  "63.0",
+                                                                  "high_rated_count":  "285.0",
+                                                                  "high_rated_share":  "0.27696793002915454",
+                                                                  "rating_iqr":  "9.917848667594797",
+                                                                  "comparison_cohort_games":  "4",
+                                                                  "low_visibility_cohort_games":  "5",
+                                                                  "lower_rated_cohort_games":  "50",
+                                                                  "popularity_cohort_games":  "409",
+                                                                  "quality_cohort_games":  "561",
+                                                                  "hidden_gem_eligible_games":  "541",
+                                                                  "hidden_gem_count":  "71",
+                                                                  "hidden_gem_share":  "0.13123844731977818",
+                                                                  "low_sample_flag":  "False"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "PlayStation",
+                                                                  "game_count":  "1814",
+                                                                  "median_total_rating":  "75.65818259337468",
+                                                                  "mean_total_rating":  "74.99122020784199",
+                                                                  "rating_q1":  "70.5237217643642",
+                                                                  "rating_q3":  "80.87136495454116",
+                                                                  "median_total_rating_count":  "70.0",
+                                                                  "high_rated_count":  "519.0",
+                                                                  "high_rated_share":  "0.2861080485115766",
+                                                                  "rating_iqr":  "10.347643190176967",
+                                                                  "comparison_cohort_games":  "7",
+                                                                  "low_visibility_cohort_games":  "2",
+                                                                  "lower_rated_cohort_games":  "92",
+                                                                  "popularity_cohort_games":  "745",
+                                                                  "quality_cohort_games":  "968",
+                                                                  "hidden_gem_eligible_games":  "937",
+                                                                  "hidden_gem_count":  "134",
+                                                                  "hidden_gem_share":  "0.14300960512273211",
+                                                                  "low_sample_flag":  "False"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Xbox",
+                                                                  "game_count":  "1644",
+                                                                  "median_total_rating":  "75.60491787305799",
+                                                                  "mean_total_rating":  "74.85363760204616",
+                                                                  "rating_q1":  "70.4767160746166",
+                                                                  "rating_q3":  "80.77837548835296",
+                                                                  "median_total_rating_count":  "73.0",
+                                                                  "high_rated_count":  "463.0",
+                                                                  "high_rated_share":  "0.2816301703163017",
+                                                                  "rating_iqr":  "10.30165941373636",
+                                                                  "comparison_cohort_games":  "6",
+                                                                  "low_visibility_cohort_games":  "1",
+                                                                  "lower_rated_cohort_games":  "89",
+                                                                  "popularity_cohort_games":  "677",
+                                                                  "quality_cohort_games":  "871",
+                                                                  "hidden_gem_eligible_games":  "847",
+                                                                  "hidden_gem_count":  "113",
+                                                                  "hidden_gem_share":  "0.1334120425029516",
+                                                                  "low_sample_flag":  "False"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Other / Unknown",
+                                                                  "game_count":  "2315",
+                                                                  "median_total_rating":  "75.59779116418005",
+                                                                  "mean_total_rating":  "74.6578637794276",
+                                                                  "rating_q1":  "70.21729966483704",
+                                                                  "rating_q3":  "80.74131807893367",
+                                                                  "median_total_rating_count":  "61.0",
+                                                                  "high_rated_count":  "650.0",
+                                                                  "high_rated_share":  "0.28077753779697623",
+                                                                  "rating_iqr":  "10.52401841409663",
+                                                                  "comparison_cohort_games":  "12",
+                                                                  "low_visibility_cohort_games":  "7",
+                                                                  "lower_rated_cohort_games":  "132",
+                                                                  "popularity_cohort_games":  "943",
+                                                                  "quality_cohort_games":  "1221",
+                                                                  "hidden_gem_eligible_games":  "1181",
+                                                                  "hidden_gem_count":  "186",
+                                                                  "hidden_gem_share":  "0.15749364944961897",
+                                                                  "low_sample_flag":  "False"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Sega",
+                                                                  "game_count":  "2",
+                                                                  "median_total_rating":  "77.48738800119364",
+                                                                  "mean_total_rating":  "77.48738800119364",
+                                                                  "rating_q1":  "76.36831715429891",
+                                                                  "rating_q3":  "78.60645884808837",
+                                                                  "median_total_rating_count":  "49.0",
+                                                                  "high_rated_count":  "0.0",
+                                                                  "high_rated_share":  "0.0",
+                                                                  "rating_iqr":  "2.2381416937894585",
+                                                                  "comparison_cohort_games":  "0",
+                                                                  "low_visibility_cohort_games":  "0",
+                                                                  "lower_rated_cohort_games":  "0",
+                                                                  "popularity_cohort_games":  "0",
+                                                                  "quality_cohort_games":  "2",
+                                                                  "hidden_gem_eligible_games":  "2",
+                                                                  "hidden_gem_count":  "0",
+                                                                  "hidden_gem_share":  "0.0",
+                                                                  "low_sample_flag":  "True"
+                                                              }
+                                                          ],
+                       "hidden_gems_by_platform_family":  [
+                                                              {
+                                                                  "platform_family":  "Other / Unknown",
+                                                                  "hidden_gem_eligible_games":  "1181",
+                                                                  "hidden_gem_count":  "186",
+                                                                  "hidden_gem_share":  "0.15749364944961897",
+                                                                  "game_count":  "2315"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "PlayStation",
+                                                                  "hidden_gem_eligible_games":  "937",
+                                                                  "hidden_gem_count":  "134",
+                                                                  "hidden_gem_share":  "0.14300960512273211",
+                                                                  "game_count":  "1814"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Nintendo",
+                                                                  "hidden_gem_eligible_games":  "694",
+                                                                  "hidden_gem_count":  "129",
+                                                                  "hidden_gem_share":  "0.18587896253602307",
+                                                                  "game_count":  "1213"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Xbox",
+                                                                  "hidden_gem_eligible_games":  "847",
+                                                                  "hidden_gem_count":  "113",
+                                                                  "hidden_gem_share":  "0.1334120425029516",
+                                                                  "game_count":  "1644"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Linux",
+                                                                  "hidden_gem_eligible_games":  "541",
+                                                                  "hidden_gem_count":  "71",
+                                                                  "hidden_gem_share":  "0.13123844731977818",
+                                                                  "game_count":  "1029"
+                                                              },
+                                                              {
+                                                                  "platform_family":  "Sega",
+                                                                  "hidden_gem_eligible_games":  "2",
+                                                                  "hidden_gem_count":  "0",
+                                                                  "hidden_gem_share":  "0.0",
+                                                                  "game_count":  "2"
+                                                              }
+                                                          ],
+                       "dataset_snapshot":  [
+                                                {
+                                                    "metric":  "sqlite_integrity",
+                                                    "value":  "ok",
+                                                    "expected":  "ok",
+                                                    "passes_expected_check":  "True"
+                                                },
+                                                {
+                                                    "metric":  "foreign_key_failures",
+                                                    "value":  "0",
+                                                    "expected":  "0",
+                                                    "passes_expected_check":  "True"
+                                                },
+                                                {
+                                                    "metric":  "total_games",
+                                                    "value":  "47835",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                },
+                                                {
+                                                    "metric":  "games_with_total_rating",
+                                                    "value":  "14009",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                },
+                                                {
+                                                    "metric":  "games_with_total_rating_count",
+                                                    "value":  "14009",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                },
+                                                {
+                                                    "metric":  "rating_reliable_games",
+                                                    "value":  "2639",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                },
+                                                {
+                                                    "metric":  "high_rated_reliable_games",
+                                                    "value":  "775",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                },
+                                                {
+                                                    "metric":  "release_years",
+                                                    "value":  "15",
+                                                    "expected":  "15",
+                                                    "passes_expected_check":  "True"
+                                                },
+                                                {
+                                                    "metric":  "years_with_selected_games",
+                                                    "value":  "15",
+                                                    "expected":  "15",
+                                                    "passes_expected_check":  "True"
+                                                },
+                                                {
+                                                    "metric":  "games_missing_cohort",
+                                                    "value":  "0",
+                                                    "expected":  "0",
+                                                    "passes_expected_check":  "True"
+                                                },
+                                                {
+                                                    "metric":  "popscore_covered_games",
+                                                    "value":  "10056",
+                                                    "expected":  "informational",
+                                                    "passes_expected_check":  ""
+                                                }
+                                            ]
+                   }
+}

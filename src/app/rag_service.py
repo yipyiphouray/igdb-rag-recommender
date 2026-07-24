@@ -66,7 +66,7 @@ def rag_ready(backend: str | None = None) -> bool:
     return False
 
 
-@lru_cache(maxsize=2)
+@lru_cache(maxsize=1)
 def _get_rag_agent_for_backend(backend: str):
     if backend == "lightweight":
         from src.lightweight_rag_engine import LightweightRAGAgent

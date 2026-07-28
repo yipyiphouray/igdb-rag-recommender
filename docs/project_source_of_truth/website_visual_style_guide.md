@@ -284,7 +284,7 @@ Use status indicators for:
 - active modules;
 - pending modules;
 - offline or unavailable functionality;
-- future model/RAG integrations.
+- current recommendation and RAG integrations.
 
 Current status color logic:
 
@@ -292,7 +292,7 @@ Current status color logic:
 - pending: orange `#FF3E00`;
 - offline/error: red.
 
-Do not hide future modules if they are important to the product story. Mark them clearly as pending.
+Do not label active modules as pending. Mark only genuinely incomplete future modules as planned or unavailable.
 
 ## 10. Image and Asset Rules
 
@@ -421,14 +421,14 @@ Purpose:
 - help users understand the project, dataset, methodology, RAG role, hidden-gem logic, and recommendation system;
 - guide users toward `Recommend Me_` when they want strong personalized recommendations;
 - answer curated project/recommendation-methodology questions with grounded context;
-- show caveats when RAG artifacts, ratings, or metadata are incomplete;
-- keep free-text input as a secondary custom-question option rather than the main experience.
+- show caveats when ratings, metadata, project facts, or runtime dependencies are incomplete;
+- allow free-text project and catalog questions while keeping the Guide scoped to the website context.
 
 Style:
 
 - conversational terminal or guide interface;
-- clear distinction between user question, retrieved context, and final answer;
-- visible limitations and source/context indicators.
+- clear distinction between user question and Guide answer;
+- visible limitations without exposing internal source documents, file paths, or retrieval metadata.
 - curated topic buttons for project overview, data explanation, recommendation explanation, RAG explanation, hidden-gem explanation, and `Recommend Me_` guidance;
 - optional custom question input with helper text that scopes the user toward project/methodology/recommendation-logic questions;
 - compact context panel showing the active topic and any interpreted signals;

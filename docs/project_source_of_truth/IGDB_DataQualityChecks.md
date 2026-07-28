@@ -2,14 +2,14 @@
 
 ## Purpose
 
-This document defines executable data quality checks for the IGDB relational SQLite database used in the **IGDB Game Discovery & RAG Recommendation System**.
+This document defines executable data quality checks for the IGDB relational SQLite database used in the **IGDB Game Discovery and Project-Grounded Recommendation System**.
 
 The goal is to verify that the database is:
 
 * Structurally valid
 * Referentially consistent
 * Free of duplicate primary keys and duplicate bridge relationships
-* Safe for analytics, modeling, recommendation, dashboarding, and RAG grounding
+* Safe for analytics, similarity-based recommendations, dashboarding, and project-grounded guide answers
 * Aligned with the ERD and business rules
 
 Database file:

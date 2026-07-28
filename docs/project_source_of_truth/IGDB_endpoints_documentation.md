@@ -1,6 +1,6 @@
-# IGDB API Endpoints — Categorized Summary and Alphabetical Reference
+# IGDB API Endpoints - Categorized Summary and Alphabetical Reference
 
-## Part 1 — Endpoint Categories by Relevance
+## Part 1 - Endpoint Categories by Relevance
 
 ### 1. Core Game Catalog
 
@@ -20,7 +20,7 @@ These endpoints describe the main game object and basic game-level metadata.
 
 ### 2. Game Classification, Vibe, and Discovery
 
-These endpoints describe what kind of game it is, how it feels, and how it plays. These are very important for recommendation logic and RAG.
+These endpoints describe what kind of game it is, how it feels, and how it plays. These are very important for recommendation logic, hidden-gem analysis, and project-grounded guide answers.
 
 | Endpoint              |   Relevance | Quick Description                                                                                                           |
 | --------------------- | ----------: | --------------------------------------------------------------------------------------------------------------------------- |
@@ -314,7 +314,7 @@ These are mostly irrelevant for a student analytics/recommendation project.
 
 ## Part 3 — Best Groups to Prioritize for the Project
 
-For the IGDB Game Discovery & RAG Recommendation System, the most important groups are:
+For the IGDB Game Discovery and Project-Grounded Recommendation System, the most important groups are:
 
 1. **Core Game Catalog**
 2. **Game Classification, Vibe, and Discovery**

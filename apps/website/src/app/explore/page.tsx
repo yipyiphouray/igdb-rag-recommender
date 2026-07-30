@@ -228,7 +228,6 @@ export default async function ExplorePage({
               href={buildExploreHref(searchParams, {
                 page: String(Math.max(catalog.page - 1, 1)),
               })}
-              scroll={false}
               aria-disabled={catalog.page <= 1}
               className={`border border-white px-5 py-3 font-black uppercase ${
                 catalog.page <= 1
@@ -250,7 +249,6 @@ export default async function ExplorePage({
                 <Link
                   key={item}
                   href={buildExploreHref(searchParams, { page: String(item) })}
-                  scroll={false}
                   aria-current={item === catalog.page ? "page" : undefined}
                   className={`min-w-12 border border-white px-4 py-3 text-center font-black ${
                     item === catalog.page
@@ -266,7 +264,6 @@ export default async function ExplorePage({
               href={buildExploreHref(searchParams, {
                 page: String(Math.min(catalog.page + 1, catalog.total_pages)),
               })}
-              scroll={false}
               aria-disabled={catalog.page >= catalog.total_pages}
               className={`border border-white px-5 py-3 font-black uppercase ${
                 catalog.page >= catalog.total_pages

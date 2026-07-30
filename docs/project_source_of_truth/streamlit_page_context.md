@@ -101,8 +101,7 @@ Current content:
   - Recommendations;
   - Insights;
   - Methodology;
-  - Chatbot;
-  - Predictive / Similarity Scoring.
+  - Chatbot.
 - Page details appear on hover.
 - Panels are arranged in a 3-column menu grid.
 
@@ -583,70 +582,7 @@ Known limitations:
 
 ---
 
-## 8. Predictive / Similarity Scoring
-
-File:
-
-```text
-apps/streamlit/pages/7_Predictive_Model.py
-```
-
-Purpose:
-
-Provides the internal Streamlit shell for reviewing similarity-scoring outputs when needed.
-
-Primary audience:
-
-- Developers reviewing recommendation-scoring artifacts.
-- Evaluators comparing the internal prototype against the final website implementation.
-
-Optional internal artifacts:
-
-```text
-data/analytics/predictive/similarity_config.json
-data/analytics/predictive/game_similarity_profiles.parquet
-data/analytics/predictive/similarity_neighbors.parquet
-data/analytics/predictive/persona_similarity_results.parquet
-data/analytics/predictive/similarity_evaluation.json
-```
-
-Service-layer dependency:
-
-```text
-src/app/predictive_service.py
-```
-
-Current content:
-
-- Predictive/similarity artifact status.
-- Similarity configuration display if available.
-- Similarity results preview if available.
-- Optional artifact list for internal validation.
-
-Current status:
-
-```text
-Internal workbench page; final user-facing flow lives in the website Recommend Me page.
-```
-
-Required final behavior:
-
-- Show similarity objective.
-- Show profile fields used for scoring.
-- Show cosine similarity method.
-- Show top-k relevance results.
-- Show persona/manual evaluation results.
-- Show limitations.
-- Attach similarity outputs only to existing catalog games.
-
-Known limitations:
-
-- This page is not the primary final-product recommendation UI.
-- This page should remain non-blocking even if optional internal artifacts are unavailable.
-
----
-
-## 9. Methodology
+## 8. Methodology
 
 File:
 
@@ -730,7 +666,6 @@ src/app/filters.py
 src/app/formatting.py
 src/app/hidden_gem_service.py
 src/app/recommendation_service.py
-src/app/predictive_service.py
 src/app/rag_service.py
 src/app/validation.py
 ```
@@ -779,7 +714,6 @@ Hidden Gems:          UI V3 simplified discovery modes
 Recommendations:      UI V3 minimal wizard with personas
 Chatbot:              Internal workbench page; final chatbot lives on website /guide
 Insights:             UI V3 descriptive/diagnostic split
-Predictive/Similarity: Internal placeholder/workbench; final recommendation flow lives on website /recommendations
 Methodology:          UI V2 continuous trust page
 ```
 

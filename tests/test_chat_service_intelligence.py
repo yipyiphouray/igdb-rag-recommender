@@ -67,7 +67,8 @@ class ChatServiceIntelligenceTests(unittest.TestCase):
         self.assertEqual(response["route_mode"], "dataset_size")
         self.assertEqual(response["mode"], "project_fact_dataset_total_games")
         self.assertIn("47,835 games", response["answer"])
-        self.assertIn("Source artifact", " ".join(response["caveats"]))
+        self.assertIn("structured metric", " ".join(response["caveats"]))
+        self.assertEqual(response["sources"], [])
         self.assert_valid_chat_response(response)
 
     def test_dataset_year_range_route_uses_project_fact_artifact(self):
@@ -220,7 +221,7 @@ class ChatServiceIntelligenceTests(unittest.TestCase):
         self.assertEqual(response["route_mode"], "custom_question")
         self.assertEqual(response["status"], "success")
         self.assertIn(response["mode"], {"scoped_rag_extractive_fallback", "scoped_rag_llm_project_guide"})
-        self.assertGreaterEqual(len(response["sources"]), 1)
+        self.assertEqual(response["sources"], [])
         self.assert_valid_chat_response(response)
 
     def test_llm_tool_planner_routes_catalog_count_to_catalog_tool(self):
@@ -389,7 +390,7 @@ class ChatServiceIntelligenceTests(unittest.TestCase):
 
         self.assertEqual(response["route_source"], "llm_tool_planner")
         self.assertEqual(response["mode"], "project_tool_recommendation_input_helper")
-        self.assertIn("Use Recommend Me_", response["answer"])
+        self.assertIn("I use Recommend Me_", response["answer"])
         self.assertEqual(response["next_actions"][0]["href"], "/recommendations")
         self.assertEqual(response["interpreted_preferences"]["tool"], "recommendation_input_helper")
         self.assert_valid_chat_response(response)

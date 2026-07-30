@@ -7,7 +7,6 @@
 **Release years:** 2010–2024  
 **Games per year:** 1,000  
 **Primary notebook:** [`01_descriptive_analytics_exploration.ipynb`](../../notebooks/01_descriptive_analytics_exploration.ipynb)  
-**Analysis plan:** [`descriptive_analytics_pillar_plan.md`](../descriptive_analytics_pillar_plan.md)  
 **Descriptive outputs:** [`data/analytics/descriptive/`](../../data/analytics/descriptive/)
 
 ---

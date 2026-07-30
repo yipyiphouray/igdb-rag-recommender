@@ -28,7 +28,6 @@ def artifact_audit() -> dict[str, bool]:
         "descriptive_dir_exists": config.DESCRIPTIVE_DIR.exists(),
         "diagnostic_dir_exists": config.DIAGNOSTIC_DIR.exists(),
         "hidden_gem_candidates_exists": (config.DIAGNOSTIC_DIR / "hidden_gem_candidates.csv").exists(),
-        "predictive_dir_exists": config.PREDICTIVE_DIR.exists(),
         "rag_dir_exists": config.RAG_DIR.exists(),
         "app_catalog_exists": config.APP_CATALOG_PATH.exists() or config.APP_CATALOG_CSV_PATH.exists(),
         "app_hidden_gems_exists": config.APP_HIDDEN_GEMS_PATH.exists() or config.APP_HIDDEN_GEMS_CSV_PATH.exists(),

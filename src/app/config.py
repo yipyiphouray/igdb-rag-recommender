@@ -7,7 +7,6 @@ DATABASE_PATH = DATA_DIR / "database" / "igdb_games.db"
 
 DESCRIPTIVE_DIR = DATA_DIR / "analytics" / "descriptive"
 DIAGNOSTIC_DIR = DATA_DIR / "analytics" / "diagnostic"
-PREDICTIVE_DIR = DATA_DIR / "analytics" / "predictive"
 
 APP_DATA_DIR = DATA_DIR / "app"
 RECOMMENDATIONS_DIR = DATA_DIR / "recommendations"

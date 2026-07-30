@@ -1,14 +1,20 @@
-# IGDB Game Discovery and Hybrid RAG Recommender
+# QUEST ACCEPTED: IGDB Game Discovery Website
 
-An end-to-end game discovery system built from IGDB catalog data. The project combines descriptive analytics, diagnostic analytics, hidden-gem discovery, metadata-based cosine similarity recommendations, and a scoped RAG/LLM project guide inside a custom website.
+An end-to-end game discovery website built from IGDB catalog data. The project combines descriptive analytics, diagnostic analytics, hidden-gem discovery, metadata-based cosine similarity recommendations, and a scoped RAG/LLM project guide inside a custom Next.js website.
 
-The final product direction is the Next.js website. Streamlit remains available as an internal prototype and analytics workbench.
+The final user-facing product is:
+
+```text
+Next.js website in apps/website + FastAPI backend in api
+```
+
+Streamlit remains available only as an internal prototype and analytics workbench.
 
 ## Project Story
 
 Game discovery is difficult because popularity, quality, visibility, and personal taste do not always point to the same games. Popular games are easy to find, but lower-visibility games with strong reception can be missed. This project builds a curated game catalog from IGDB data and turns it into a practical discovery interface.
 
-The website is designed to answer four user needs:
+The website is designed to answer five user needs:
 
 - Browse the game catalog with useful filters.
 - Understand broad catalog patterns through analytics.
@@ -23,7 +29,7 @@ The system does not claim to represent the full IGDB market. It uses a curated a
 Frontend:
 
 ```text
-https://igdb-rag-recommender.vercel.app/
+https://quest-accepted-game-recommender.vercel.app/
 ```
 
 Backend:
@@ -42,7 +48,7 @@ https://igdb-rag-recommender.onrender.com/docs
 
 | Area | Website page | Purpose |
 |---|---|---|
-| Home | `/home` | Introduces the project and routes users to the main tools. |
+| Home | `/` | Introduces the project and routes users to the main tools. |
 | Explore Games | `/explore` | Search and filter the app-ready game catalog. |
 | Game Details | `/explore/[game_id]` | Inspect individual catalog records. |
 | Recommend Me | `/recommendations` | Generate cosine-similarity recommendations from structured user preferences. |
@@ -66,7 +72,6 @@ Community_Project/
 |   `-- analytics/        Generated analysis outputs
 |-- docs/
 |   |-- project_source_of_truth/
-|   |-- plan/
 |   `-- report/
 |-- notebooks/            Descriptive and diagnostic analysis notebooks
 |-- src/                  Shared Python logic and data pipelines
@@ -112,13 +117,15 @@ data/app/app_insights_dashboard.json
 data/app/app_methodology_metrics.json
 ```
 
-Ask the Guide can also use lightweight retrieval artifacts when enabled:
+The optional lightweight game-retrieval artifacts are retained for internal retrieval evaluation and historical RAG experiments:
 
 ```text
 data/rag/lightweight/game_embeddings.npy
 data/rag/lightweight/game_ids.json
 data/rag/lightweight/manifest.json
 ```
+
+They are not required for the main Explore, Recommend Me, Hidden Gems, Insights, or Methodology pages.
 
 Large raw IGDB endpoint dumps are intentionally excluded from the final GitHub story. The retained extraction manifest is:
 
@@ -176,6 +183,8 @@ Install website dependencies:
 cd apps/website
 npm install
 ```
+
+If `node_modules/` was removed during cleanup, run `npm install` again before starting the website.
 
 ## Run Locally
 
@@ -272,7 +281,7 @@ Use `2500` for Render free tier. Lower it to `1000` if `POST /recommendations` r
 
 Ask the Guide is not meant to replace Recommend Me. Its purpose is to explain the project, dataset, methodology, analytics findings, hidden-gem definition, recommendation logic, RAG design, and website navigation.
 
-The Guide retrieves project context first and uses Gemini when `GEMINI_API_KEY` is configured. It is scoped so it does not reveal internal file names, paths, source documents, or implementation metadata to website users.
+The Guide uses structured backend tools for exact facts, retrieves project context for broader methodology questions, and uses Gemini when `GEMINI_API_KEY` is configured. It is scoped so it does not reveal internal file names, paths, source documents, or implementation metadata to website users.
 
 ## Validation
 
@@ -318,7 +327,6 @@ docs/report/usability_testing_protocol.md
 docs/project_source_of_truth/ask_the_guide_current_state.md
 docs/project_source_of_truth/ask_the_guide_knowledge_base.md
 docs/project_source_of_truth/website_visual_style_guide.md
-docs/plan/final_product_website_plan.md
 ```
 
 ## Deployment Notes
@@ -342,22 +350,31 @@ Output: Next.js default
 Set the backend CORS origin to the Vercel URL:
 
 ```text
-FRONTEND_ORIGIN=https://your-vercel-site.vercel.app
+FRONTEND_ORIGIN=https://quest-accepted-game-recommender.vercel.app
 ```
 
 Set the frontend API base URL:
 
 ```text
-NEXT_PUBLIC_API_BASE_URL=https://your-render-backend.onrender.com
+NEXT_PUBLIC_API_BASE_URL=https://igdb-rag-recommender.onrender.com
 ```
 
 ## Reproducibility Notes
 
-- `.env`, local databases, `.next/`, `node_modules/`, `__pycache__/`, and raw endpoint dumps should not be committed.
+- `.env`, local databases, `.next/`, `node_modules/`, `__pycache__/`, TypeScript build info, and raw endpoint dumps should not be committed.
 - The final app should be reproducible from tracked source code plus the app-ready artifacts in `data/app/`.
 - The local SQLite database is intentionally excluded because it is large and can be regenerated.
 - Raw IGDB extraction can be rerun with valid credentials.
 - App-ready artifacts should be regenerated after any major data refresh.
+
+## Cleanup Notes
+
+The repo intentionally excludes obsolete supervised-modeling outputs, local build caches, raw endpoint dumps, and generated dependency folders. The current recommendation system is the metadata cosine-similarity recommender in:
+
+```text
+src/app/metadata_cosine_recommendation.py
+api/app/services/recommendation_service.py
+```
 
 ## Limitations
 

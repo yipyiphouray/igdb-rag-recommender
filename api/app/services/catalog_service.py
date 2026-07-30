@@ -7,7 +7,7 @@ from typing import Any
 import pandas as pd
 
 from src.app.data_loader import load_app_catalog, load_filter_options as load_app_filter_options
-from src.app.filters import apply_catalog_filters, sort_catalog
+from src.app.filters import apply_catalog_filters
 from src.app.formatting import compact_text, split_list
 
 
@@ -19,6 +19,39 @@ SORT_OPTIONS = {
     "newest_release": "Newest release",
     "lowest_visibility": "Lowest visibility among reliable high-rated games",
 }
+
+SORT_COLUMNS = {
+    "Highest rating": ("total_rating", False),
+    "Most rating evidence": ("total_rating_count", False),
+    "Highest visibility": ("custom_interest_percentile", False),
+    "Newest release": ("release_year", False),
+    "Lowest visibility among reliable high-rated games": ("custom_interest_percentile", True),
+    "Best recommendation score": ("recommendation_score", False),
+    "name": ("name", True),
+}
+
+CATALOG_LIST_COLUMNS = [
+    "game_id",
+    "name",
+    "slug",
+    "release_year",
+    "cover_url",
+    "screenshot_url",
+    "summary",
+    "total_rating",
+    "total_rating_count",
+    "custom_interest_score",
+    "custom_interest_percentile",
+    "extraction_cohort",
+    "platforms_list",
+    "genres_list",
+    "themes_list",
+    "game_modes_list",
+    "player_perspectives_list",
+    "normal_playtime_hours",
+    "hidden_gem_balanced_flag",
+    "rag_ready_flag",
+]
 
 
 def load_catalog() -> pd.DataFrame:
@@ -81,6 +114,46 @@ def _row_value(row: pd.Series | dict[str, Any], key: str, default: Any = None) -
     if isinstance(row, pd.Series):
         return row.get(key, default)
     return row.get(key, default)
+
+
+def _page_sorted_catalog(
+    catalog: pd.DataFrame,
+    *,
+    sort: str,
+    start: int,
+    end: int,
+) -> pd.DataFrame:
+    if catalog.empty:
+        return catalog
+
+    sort_label = SORT_OPTIONS.get(sort, sort)
+    column, ascending = SORT_COLUMNS.get(sort_label, ("name", True))
+    if column not in catalog.columns:
+        column, ascending = "name", True
+
+    sort_values = catalog[column]
+    non_null_count = int(sort_values.notna().sum())
+
+    if pd.api.types.is_numeric_dtype(sort_values) and end <= non_null_count:
+        page_candidates = (
+            sort_values.nsmallest(end)
+            if ascending
+            else sort_values.nlargest(end)
+        )
+        ordered_index = page_candidates.sort_values(
+            ascending=ascending,
+            na_position="last",
+            kind="mergesort",
+        ).index[start:end]
+    else:
+        ordered_index = sort_values.sort_values(
+            ascending=ascending,
+            na_position="last",
+            kind="mergesort",
+        ).index[start:end]
+
+    columns = [column for column in CATALOG_LIST_COLUMNS if column in catalog.columns]
+    return catalog.loc[ordered_index, columns]
 
 
 def serialize_game(row: pd.Series | dict[str, Any], *, detail: bool = False) -> dict[str, Any]:
@@ -166,14 +239,14 @@ def list_games(
         hidden_gems_only=hidden_gems_only,
     )
 
-    sorted_games = sort_catalog(filtered, SORT_OPTIONS.get(sort, sort))
-    total_items = int(len(sorted_games))
+    total_items = int(len(filtered))
     total_pages = max(math.ceil(total_items / page_size), 1)
     safe_page = min(max(page, 1), total_pages)
     start = (safe_page - 1) * page_size
     end = start + page_size
 
-    items = [serialize_game(row) for _, row in sorted_games.iloc[start:end].iterrows()]
+    page_games = _page_sorted_catalog(filtered, sort=sort, start=start, end=end)
+    items = [serialize_game(row) for _, row in page_games.iterrows()]
 
     return {
         "items": items,

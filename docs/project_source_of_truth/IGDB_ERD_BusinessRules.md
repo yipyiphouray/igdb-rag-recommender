@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This document defines the business rules for the IGDB relational SQLite database used in the **IGDB Game Discovery & RAG Recommendation System**.
+This document defines the business rules for the IGDB relational SQLite database used in the **IGDB Game Discovery and Project-Grounded Recommendation System**.
 
-Business rules explain how the database should behave, how records should be interpreted, and how the data should be used for analytics, modeling, recommendations, and RAG outputs.
+Business rules explain how the database should behave, how records should be interpreted, and how the data should be used for analytics, similarity-based recommendations, and RAG-grounded project/catalog explanation.
 
 File location:
 
@@ -27,7 +27,7 @@ docs/IGDB_relational_ERD.md
 
 ## BR-001 — Database Purpose
 
-The database exists to support game discovery, analytics, recommendation, and RAG-based explanation using IGDB metadata.
+The database exists to support game discovery, analytics, recommendation, and project-grounded explanation using IGDB metadata.
 
 The database should support:
 

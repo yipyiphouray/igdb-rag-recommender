@@ -1,18 +1,22 @@
 # Hybrid Retrieval Methodology
 
-Last updated: July 24, 2026
+Last updated: July 28, 2026
 
-This document describes the active retrieval methodology for game-discovery retrieval and recommendation support.
+This document describes the retained hybrid retrieval methodology for catalog-backed game-discovery retrieval. It is no longer the primary runtime path for the final website recommendation page.
 
 ## 1. Current Status
 
-Status: Active.
+Status: Retained as an internal retrieval/evaluation stack.
 
-The project still uses hybrid retrieval.
+The final website currently separates the recommendation and chatbot responsibilities:
 
-The current default backend is lightweight semantic retrieval plus BM25 lexical retrieval.
+- `Recommend Me_` uses the metadata cosine-similarity recommendation service.
+- `Ask the Guide_` uses project-context retrieval, structured project/catalog tools, and an LLM phrasing layer.
+- Lightweight hybrid game retrieval remains available for internal testing, Streamlit workbench behavior, and retrieval-quality evaluation.
 
-The Chroma backend still exists in code as an optional backend, but it is not the default deployment path.
+The current default hybrid retrieval backend remains lightweight semantic retrieval plus BM25 lexical retrieval when this retained stack is used.
+
+The Chroma backend still exists in code as an optional backend, but it is not the default deployment path and is not required for the final website.
 
 Current default:
 
@@ -34,7 +38,20 @@ Optional Chroma backend files:
 - `src/rag_engine.py`
 - `data/vector_store/`
 
-## 2. Purpose
+## 2. Current Product Boundary
+
+This document should not be read as the source of truth for `Recommend Me_`.
+
+Current final product boundary:
+
+| Layer | Current final product role |
+|---|---|
+| `Recommend Me_` | Metadata cosine-similarity recommendation from structured preferences. |
+| `Ask the Guide_` | Scoped project/catalog/methodology Q&A with tool routing and project-context retrieval. |
+| Lightweight hybrid retrieval | Internal/development retrieval stack and optional evaluation path. |
+| Chroma retrieval | Optional local comparison backend only. |
+
+## 3. Purpose
 
 Hybrid retrieval exists to combine two useful signals:
 
@@ -47,7 +64,7 @@ BM25 lexical retrieval helps with exact terms such as title tokens, platform nam
 
 The goal is not to let the LLM invent recommendations. The retrieval engine must rank catalog-backed games from project artifacts.
 
-## 3. Default Lightweight Retrieval Architecture
+## 4. Default Lightweight Retrieval Architecture
 
 The lightweight backend uses local NumPy embeddings and BM25.
 
@@ -67,7 +84,7 @@ User query
 
 The lightweight backend avoids Chroma as a runtime dependency. This is better for free-hosting deployment because it uses small local artifacts and a simpler dependency footprint.
 
-## 4. Embedding Text Profile
+## 5. Embedding Text Profile
 
 The embedding text should not include only title, summary, and genre.
 
@@ -92,7 +109,7 @@ The active embedding profile should include high-signal fields before long descr
 
 Reason: structured metadata improves retrieval for natural-language game discovery queries.
 
-## 5. Lexical BM25 Layer
+## 6. Lexical BM25 Layer
 
 BM25 runs over catalog text fields.
 
@@ -110,7 +127,7 @@ If the `rank_bm25` package is unavailable, the project uses the in-repo `SimpleB
 
 Status: BM25 fallback is intentional. It protects local and free-hosted environments from optional dependency failures.
 
-## 6. Fusion Logic
+## 7. Fusion Logic
 
 The default lightweight backend uses:
 
@@ -137,7 +154,7 @@ LEXICAL_WEIGHT = 0.1
 
 That Chroma weighting is retained only for the optional Chroma backend.
 
-## 7. Seed Game Logic
+## 8. Seed Game Logic
 
 When a user names a reference game, such as:
 
@@ -154,9 +171,9 @@ Seed behavior:
 - exclude the seed game from final results;
 - return alternatives instead of repeating the game the user already named.
 
-This behavior supports recommendation quality without turning the chatbot into a free-form recommender.
+This behavior supports retrieval-quality testing and possible future recommendation integration. In the current final website, ranked recommendations should still be routed through `Recommend Me_`.
 
-## 8. Metadata Filters and Relaxation
+## 9. Metadata Filters and Relaxation
 
 The engine applies metadata constraints when available.
 
@@ -173,7 +190,7 @@ If strict filtering collapses to zero candidates, the lightweight backend relaxe
 
 Reason: returning some catalog-backed candidates is usually better than failing from over-restrictive filters.
 
-## 9. Data Source
+## 10. Data Source
 
 The authoritative runtime catalog is:
 
@@ -181,11 +198,11 @@ The authoritative runtime catalog is:
 data/app/app_game_catalog.parquet
 ```
 
-The retrieval layer does not depend on SQLite joins during online recommendation retrieval.
+The retained retrieval layer does not depend on SQLite joins during online retrieval.
 
-SQLite can still exist for the broader data engineering and relational database part of the project. It is not the online retrieval source for the current recommendation/RAG path.
+SQLite remains important for the broader data engineering and relational database part of the project. It is not the online source for the current final website recommendation path.
 
-## 10. Build and Validation Commands
+## 11. Build and Validation Commands
 
 Default lightweight backend:
 
@@ -205,9 +222,9 @@ python -m src.evaluate_rag_retrieval --backend chroma
 
 Operational rule: rebuild and validate retrieval artifacts after changing the embedding text profile, catalog schema, or ranking logic.
 
-## 11. Deployment Position
+## 12. Deployment Position
 
-For free-hosted deployment, prefer the lightweight backend.
+For free-hosted deployment, prefer the lightweight backend if this retained retrieval stack is enabled.
 
 Reason:
 
@@ -217,7 +234,7 @@ Reason:
 - local NumPy files are easier to ship or mount;
 - fewer deployment failure points.
 
-The Chroma backend is retained as an optional development and comparison path.
+The Chroma backend is retained as an optional development and comparison path. The final website should not depend on Chroma for deployment.
 
 ## 12. Current Limitations
 

@@ -1,14 +1,20 @@
 # Technical Journey: Hybrid Search System
 
-Last updated: July 24, 2026
+Last updated: July 28, 2026
 
 This document records the technical migration path for the project retrieval stack.
 
 ## 1. Current Status
 
-Status: Active, revised.
+Status: Retained, revised.
 
-The project still uses hybrid search.
+The project still retains hybrid search for internal retrieval evaluation and optional game-discovery retrieval. It is not the primary runtime path for the final website `Recommend Me_` page.
+
+Current final product boundary:
+
+- `Recommend Me_` uses metadata-based cosine similarity from structured user preferences.
+- `Ask the Guide_` uses tool routing, project/catalog facts, project-context retrieval, and an LLM phrasing layer.
+- The lightweight hybrid search stack remains available as a development/evaluation path.
 
 The current default backend is now:
 
@@ -31,9 +37,9 @@ That direction worked locally, but it created deployment risk:
 
 The project moved to a lightweight retrieval backend to reduce deployment complexity while keeping the core retrieval logic.
 
-## 3. Current Runtime Architecture
+## 3. Retained Runtime Architecture
 
-Current default runtime:
+Current retained hybrid retrieval runtime:
 
 ```text
 data/app/app_game_catalog.parquet
@@ -44,7 +50,7 @@ data/app/app_game_catalog.parquet
 -> src/app/rag_service.py
 ```
 
-The API service uses `src/app/rag_service.py` to select the backend.
+The shared RAG service uses `src/app/rag_service.py` to select the backend when this retained retrieval stack is called.
 
 Default backend:
 
@@ -93,7 +99,7 @@ The project moved the default backend to NumPy embeddings plus BM25.
 
 Benefit: simpler free-hosted deployment path while preserving hybrid retrieval.
 
-## 5. Current Hybrid Retrieval Behavior
+## 5. Retained Hybrid Retrieval Behavior
 
 The active lightweight backend performs:
 
@@ -190,13 +196,14 @@ Validation should check:
 
 ## 10. Current Product Boundary
 
-The hybrid retrieval stack supports catalog-backed recommendation and game-discovery retrieval.
+The hybrid retrieval stack supports catalog-backed game-discovery retrieval as an internal/development capability.
 
 It is not the same thing as `Ask the Guide_` project-document retrieval.
 
 Current distinction:
 
-- `Recommend Me_` and game retrieval use catalog embeddings and hybrid search.
+- `Recommend Me_` uses metadata cosine-similarity scoring from structured preferences.
+- Retained game retrieval can use catalog embeddings and hybrid search when explicitly called.
 - `Ask the Guide_` uses project-document retrieval, structured tools, and an LLM for grounded project answers.
 
 This separation is intentional.

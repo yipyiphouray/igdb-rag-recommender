@@ -1,8 +1,16 @@
 # Streamlit Page Context
 
-Last updated: 2026-07-10
+Last updated: 2026-07-28
 
-This document describes the current Streamlit MVP pages for the IGDB Game Discovery & RAG Recommendation System. It is intended to help teammates, evaluators, and future development sessions understand what each page does, what data it uses, and what still needs integration.
+This document describes the retained Streamlit MVP and internal analytics workbench. It is no longer the final user-facing product source of truth.
+
+Current product boundary:
+
+- Final user-facing product: Next.js website in `apps/website`.
+- Final backend API: FastAPI in `api`.
+- Retained internal prototype/workbench: Streamlit in `apps/streamlit`.
+
+Use this document only when maintaining or running the Streamlit workbench. Use the website source-of-truth documents for final product behavior, presentation, and deployment.
 
 Main app entry point:
 
@@ -45,9 +53,9 @@ Important caveats:
 
 ---
 
-## Current UI Direction
+## Current Streamlit UI Direction
 
-The current app has completed the third UI polish pass.
+The Streamlit app completed an earlier UI polish pass and remains useful for internal review. The final visual direction is now defined by the custom website and `website_visual_style_guide.md`.
 
 The user-facing discovery pages are intentionally cleaner and less technical:
 
@@ -435,8 +443,8 @@ Trust rules:
 Known limitations:
 
 - The scoring formula is intentionally simple for MVP clarity.
-- Game mode, perspective, multiplayer, and natural-language preference scoring can be added later.
-- This page should eventually integrate teammate similarity/RAG signals when those artifacts are ready.
+- This Streamlit page is retained as an internal workbench mirror.
+- The final user-facing recommendation experience now lives in the website Recommend Me page and FastAPI recommendation endpoint.
 
 ---
 
@@ -450,20 +458,20 @@ apps/streamlit/pages/5_Chatbot.py
 
 Purpose:
 
-Provides the Streamlit workbench shell for RAG-based natural-language game discovery through the shared RAG service.
+Provides the Streamlit workbench shell for testing guide-style project and catalog Q&A behavior through the shared backend service.
 
 Primary audience:
 
-- Users who will eventually ask for recommendations in natural language.
-- Teammates integrating RAG and vector retrieval.
+- Developers validating backend guide behavior.
+- Evaluators reviewing fallback behavior in the internal prototype.
 
 Expected data/artifacts:
 
 ```text
 data/app/app_game_catalog.parquet
-data/vector_store/
-src/rag_engine.py
-src/app/rag_service.py
+docs/project_source_of_truth/ask_the_guide_knowledge_base.md
+src/app/project_context_retrieval.py
+api/
 ```
 
 Service-layer dependency:
@@ -474,10 +482,10 @@ src/app/rag_service.py
 
 Current content:
 
-- RAG integration status.
+- Guide integration status.
 - Example prompt text box.
-- Safe fallback response when retrieval artifacts are missing.
-- Expected active artifact list.
+- Safe fallback response when backend guide behavior is unavailable.
+- Expected active context and service checks.
 
 Current status:
 
@@ -487,17 +495,17 @@ Shared-service RAG page with graceful fallback behavior.
 
 Required final behavior:
 
-- Recommend only database-backed retrieved games.
-- Do not invent game metadata.
-- Explain recommendations using retrieved context.
-- Disclose missing data when relevant.
-- Ask users to broaden or clarify when no strong match exists.
+- Keep answers scoped to the project and catalog.
+- Use structured backend tools for exact catalog facts where possible.
+- Route ranked game recommendations to the dedicated Recommend Me flow.
+- Avoid exposing internal source documents, file paths, retrieval metadata, or implementation artifacts.
+- Give direct, factual answers when context is available and a scoped fallback when it is not.
 
 Known limitations:
 
 - The page is still visually simple compared with the final website `/guide` experience.
-- The page depends on local RAG dependencies and vector-store artifacts being available.
-- The page remains non-blocking so Explore, Hidden Gems, Insights, Methodology, and Recommendations can work even when RAG is unavailable.
+- The page depends on local backend and project-context artifacts being available.
+- The page remains non-blocking so Explore, Hidden Gems, Insights, Methodology, and Recommendations can work even when the guide service is unavailable.
 
 ---
 
@@ -585,14 +593,14 @@ apps/streamlit/pages/7_Predictive_Model.py
 
 Purpose:
 
-Provides the app shell for teammate similarity-scoring integration.
+Provides the internal Streamlit shell for reviewing similarity-scoring outputs when needed.
 
 Primary audience:
 
-- Teammate building the predictive/similarity pillar.
-- Evaluators reviewing similarity scoring and relevance results once available.
+- Developers reviewing recommendation-scoring artifacts.
+- Evaluators comparing the internal prototype against the final website implementation.
 
-Expected future artifacts:
+Optional internal artifacts:
 
 ```text
 data/analytics/predictive/similarity_config.json
@@ -613,12 +621,12 @@ Current content:
 - Predictive/similarity artifact status.
 - Similarity configuration display if available.
 - Similarity results preview if available.
-- Expected teammate artifact list.
+- Optional artifact list for internal validation.
 
 Current status:
 
 ```text
-Placeholder / integration-contract page.
+Internal workbench page; final user-facing flow lives in the website Recommend Me page.
 ```
 
 Required final behavior:
@@ -633,8 +641,8 @@ Required final behavior:
 
 Known limitations:
 
-- Predictive/similarity artifacts are not currently integrated.
-- This page should remain non-blocking until teammate outputs are ready.
+- This page is not the primary final-product recommendation UI.
+- This page should remain non-blocking even if optional internal artifacts are unavailable.
 
 ---
 
@@ -762,25 +770,22 @@ tests/test_app_artifact_schema.py
 
 ---
 
-## 11. Current Implementation Status Summary
+## 11. Current Streamlit Implementation Status Summary
 
 ```text
 Home:                 UI V3 cyberpunk 3-column menu
 Explore Games:        UI V3 with Grid/Detailed views
 Hidden Gems:          UI V3 simplified discovery modes
 Recommendations:      UI V3 minimal wizard with personas
-Chatbot:              Placeholder / teammate integration pending
+Chatbot:              Internal workbench page; final chatbot lives on website /guide
 Insights:             UI V3 descriptive/diagnostic split
-Predictive/Similarity: Placeholder / teammate integration pending
+Predictive/Similarity: Internal placeholder/workbench; final recommendation flow lives on website /recommendations
 Methodology:          UI V2 continuous trust page
 ```
 
-Recommended next improvements:
+Recommended next improvements, if Streamlit is maintained:
 
-1. Run a manual Streamlit QA pass for the UI polish branch.
-2. Fix any visual spacing/card issues found during browser testing.
-3. Add better result pagination or "load more" behavior.
-4. Add a game detail page or modal-style detail view if time allows.
-5. Integrate teammate similarity artifacts when ready.
-6. Integrate teammate RAG/vector-store artifacts when ready.
-7. Prepare the final Streamlit demo flow for evaluators.
+1. Keep Streamlit non-blocking when optional RAG or similarity artifacts are unavailable.
+2. Avoid adding new final-product-only logic to Streamlit unless it is also shared through `src/app`.
+3. Use Streamlit for internal sanity checks, not as the final demo target.
+4. Keep Streamlit documentation clearly separate from deployed website documentation.

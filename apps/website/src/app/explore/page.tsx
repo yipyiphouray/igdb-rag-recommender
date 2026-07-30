@@ -155,7 +155,7 @@ export default async function ExplorePage({
   }
 
   const releaseYears = options?.release_years ?? [];
-  const platforms = (options?.platforms ?? []).slice(0, 36);
+  const platforms = options?.platforms ?? [];
   const genres = options?.genres ?? [];
   const themes = (options?.themes ?? []).slice(0, 28);
   const currentView = firstValue(searchParams.view) === "list" ? "list" : "grid";

@@ -12,6 +12,7 @@ from src.app import config
 
 
 PROJECT_CONTEXT_SOURCES: tuple[Path, ...] = (
+    config.ROOT_DIR / "docs" / "project_source_of_truth" / "final_product_current_state.md",
     config.ROOT_DIR / "docs" / "project_source_of_truth" / "ask_the_guide_knowledge_base.md",
     config.ROOT_DIR / "docs" / "project_source_of_truth" / "ask_the_guide_current_state.md",
     config.ROOT_DIR / "docs" / "project_source_of_truth" / "IGDB_ERD_BusinessRules.md",

@@ -4,7 +4,7 @@ This data dictionary follows the standard from https://datamanagement.hms.harvar
 
 ## Purpose
 
-This data dictionary documents the structure, content, variable definitions, allowed values, units, and transformation notes for the IGDB relational SQLite database used in the **IGDB Game Discovery & RAG Recommendation System**.
+This data dictionary documents the structure, content, variable definitions, allowed values, units, and transformation notes for the IGDB relational SQLite database used in the **IGDB Game Discovery and Project-Grounded Recommendation System**.
 
 Database file:
 
@@ -12,7 +12,7 @@ Database file:
 data/database/igdb_games.db
 ```
 
-The database is centered on the `games` table and supports descriptive analytics, diagnostic analytics, similarity-based predictive scoring, prescriptive recommendation logic, and RAG-based game discovery.
+The database is centered on the `games` table and supports descriptive analytics, diagnostic analytics, similarity-based recommendation scoring, prescriptive recommendation logic, and RAG-grounded project/catalog explanation.
 
 ---
 

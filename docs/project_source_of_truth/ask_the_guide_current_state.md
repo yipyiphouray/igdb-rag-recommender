@@ -1,6 +1,6 @@
 # Ask the Guide Page Current State
 
-Last updated: July 23, 2026
+Last updated: July 28, 2026
 
 This document explains the current state of the website chatbot page, called **Ask the Guide_**. It is intended as a handoff document for future improvements without needing to reverse-engineer the implementation from scratch.
 
@@ -22,7 +22,9 @@ The page allows users to type natural questions, but the assistant is intentiona
 
 The page should not behave like a general ChatGPT replacement. If the user asks unrelated questions, the backend returns a scoped refusal and redirects the user toward supported project topics.
 
-The Guide voice should be completely analytical, precise, and devoid of human empathy, warmth, or casual pleasantries. It should treat the user as the Subject, use short declarative sentences, avoid friendly assistant wording, and prefer operational labels such as `Assessment:`, `Evidence:`, `Constraint:`, and `Directive:` when useful.
+The Guide voice should be direct, factual, scoped, and first-person. It should feel like a project-aware guide inside the website, not a generic assistant and not a robotic report generator. It should avoid casual filler, avoid fake uncertainty, and answer with clear project-grounded statements.
+
+The Guide should not expose internal source documents, file paths, retrieval metadata, storage formats, or implementation artifacts to website users. If users ask what sources or files it uses, the Guide should answer that it strictly uses the context available within the website.
 
 ## 2. Current Purpose
 
@@ -32,7 +34,7 @@ The current purpose of Ask the Guide_ is:
 - Retrieve relevant project context before generating a response.
 - Use structured project facts for exact metrics such as dataset size, year range, rating coverage, and RAG index size.
 - Use a free external LLM only to phrase grounded answers.
-- Show source/context badges so users can see what the answer was based on.
+- Hide internal source names, document paths, retrieval metadata, and storage formats from users.
 - Route actual ranked recommendations to Recommend Me_.
 
 Ask the Guide_ is the project explanation layer. Recommend Me_ remains the main recommendation engine.
@@ -62,12 +64,11 @@ The page shows:
 - a typed question box;
 - starter prompt cards;
 - a scrollable transcript;
-- source/context badges under grounded answers;
 - optional next-action buttons;
 - a Recommend Me_ callout;
 - a scope disclaimer.
 
-When no message has been sent, the transcript shows:
+When no message has been sent, the transcript shows a terminal idle state similar to:
 
 ```text
 terminal idle_
@@ -285,16 +286,9 @@ If `GEMINI_API_KEY` is missing or the provider fails, the chatbot still returns 
 
 ## 13. Response Shape
 
-The backend returns the existing `ChatResponse` fields plus additional fields for grounded answers:
+The backend returns the existing `ChatResponse` fields plus operational fields for status, prompts, caveats, next actions, route mode, provider, and model.
 
 ```ts
-sources: {
-  title: string;
-  path: string;
-  section?: string | null;
-  score?: number | null;
-}[];
-
 next_actions: {
   label: string;
   href: string;
@@ -304,12 +298,12 @@ llm_provider?: string | null;
 llm_model?: string | null;
 ```
 
+The backend response shape still contains a `sources` field for schema compatibility, but the service intentionally returns it as an empty list. The website should not show internal source names or file paths to users.
+
 The frontend renders:
 
 - the Guide answer;
 - status;
-- mode/provider/model badges when available;
-- source/context badges;
 - caveats;
 - follow-up prompt buttons;
 - next-action links.
@@ -365,8 +359,8 @@ Known limitations:
 - The project-document retriever is lexical, not semantic.
 - Exact metric quality depends on the structured project artifacts being current.
 - The chatbot should still avoid producing ranked recommendations directly.
-- Source badges show retrieved context labels, not full citations.
+- Internal source labels and file paths are intentionally not exposed in the user-facing answer.
 
 ## 18. Practical Summary
 
-Ask the Guide_ is now a scoped RAG + free-LLM project guide. It accepts typed project/game questions, retrieves relevant project context, uses structured fact artifacts for exact metrics, calls Gemini when configured, falls back safely when no LLM key is available, and routes ranked recommendation needs to Recommend Me_.
+Ask the Guide_ is now a scoped RAG + free-LLM project guide. It accepts typed project and catalog questions, retrieves relevant project context, uses structured fact artifacts for exact metrics, calls Gemini when configured, falls back safely when no LLM key is available, avoids exposing internal files or retrieval metadata, and routes ranked recommendation needs to Recommend Me_.

@@ -7,7 +7,6 @@
 **Release years:** 2010–2024  
 **Games per year:** 1,000  
 **Primary notebook:** [`02_diagnostic_analytics_exploration.ipynb`](../../notebooks/02_diagnostic_analytics_exploration.ipynb)  
-**Analysis plan:** [`diagnostic_analytics_pillar_plan.md`](../diagnostic_analytics_pillar_plan.md)  
 **Diagnostic outputs:** [`data/analytics/diagnostic/`](../../data/analytics/diagnostic/)
 
 ---

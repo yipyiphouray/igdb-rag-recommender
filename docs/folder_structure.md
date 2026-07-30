@@ -1,8 +1,8 @@
 # Folder Structure Description
 
-Last updated: 2026-07-24
+Last updated: 2026-07-30
 
-This file describes the active folder layout for the IGDB Game Discovery and Hybrid RAG Recommender project.
+This file describes the active folder layout for the QUEST ACCEPTED IGDB Game Discovery website.
 
 ```text
 Community_Project/
@@ -10,7 +10,6 @@ Community_Project/
 |-- apps/
 |   |-- streamlit/
 |   `-- website/
-|-- archive/
 |-- assets/
 |-- data/
 |   |-- analytics/
@@ -18,12 +17,9 @@ Community_Project/
 |   |   |-- diagnostic/
 |   |   `-- plots/
 |   |-- app/
-|   |-- predictive/
 |   |-- rag/
 |   `-- raw/
 |-- docs/
-|   |-- plan/
-|   |   `-- UI_Improvement_Plans/
 |   |-- project_source_of_truth/
 |   `-- report/
 |-- notebooks/
@@ -51,12 +47,6 @@ Streamlit MVP and internal analytics workbench.
 
 Next.js final-product website frontend. Generated folders such as `.next/` and `node_modules/` should remain ignored by Git.
 
-## `archive/`
-
-Older reference material that should be preserved for history but should not guide active implementation decisions.
-
-Local-only UI iteration drafts can live under `archive/ui_iteration_plans/`. That folder is ignored by Git so the final repository stays focused on current implementation and final documentation.
-
 ## `assets/`
 
 Shared visual assets such as screenshots, diagrams, logos, and style references.
@@ -77,25 +67,13 @@ App-ready Parquet and JSON artifacts used by Streamlit, FastAPI, and the website
 
 Notebook-exported descriptive, diagnostic, and plot artifacts. Most CSV outputs are treated as generated analysis outputs. The deployed Insights page consumes the consolidated `data/app/app_insights_dashboard.json` artifact instead of reading many CSV files directly.
 
-### `data/predictive/`
-
-Predictive/recommendation-related feature outputs and modeling artifacts when needed.
-
 ### `data/rag/`
 
-RAG/retrieval artifacts. Generated Chroma/vector-store folders should remain ignored. Lightweight deployment-aware retrieval artifacts live under `data/rag/lightweight/` when needed.
+Optional RAG/retrieval artifacts retained for internal evaluation and historical retrieval experiments. Generated Chroma/vector-store folders should remain ignored. The final website does not require these artifacts for Explore, Recommend Me, Hidden Gems, Insights, or Methodology.
 
 ## `docs/`
 
-Project documentation, planning notes, source-of-truth docs, reports, and the session log.
-
-### `docs/plan/`
-
-Forward-looking implementation plans, pillar plans, website plans, and final consolidated UI improvement plans. Old version-by-version UI drafts should not stay here.
-
-### `docs/plan/UI_Improvement_Plans/`
-
-One consolidated design summary per major website page. This keeps the final product story readable while preserving page-level design decisions.
+Project documentation, source-of-truth docs, and report-ready findings.
 
 ### `docs/project_source_of_truth/`
 
@@ -123,7 +101,7 @@ Reusable Python source code.
 
 ### `src/app/`
 
-Shared app logic used by Streamlit and the FastAPI backend, including data loading, filtering, hidden-gem logic, recommendation logic, RAG helpers, and UI helper functions for Streamlit.
+Shared app logic used by Streamlit and the FastAPI backend, including data loading, filtering, hidden-gem logic, metadata cosine recommendations, project-context retrieval, chatbot helpers, and UI helper functions for Streamlit.
 
 ### `src/pipeline/`
 

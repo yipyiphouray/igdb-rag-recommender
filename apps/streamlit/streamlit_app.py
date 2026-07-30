@@ -44,12 +44,6 @@ MENU_ITEMS = [
         "pages/5_Chatbot.py",
         "Open shell",
     ),
-    (
-        "Predictive Model",
-        "Placeholder page for teammate model outputs and interpretation.",
-        "pages/7_Predictive_Model.py",
-        "Open model shell",
-    ),
 ]
 
 

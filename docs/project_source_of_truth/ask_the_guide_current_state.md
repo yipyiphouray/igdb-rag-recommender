@@ -20,7 +20,7 @@ The page allows users to type natural questions, but the assistant is intentiona
 - RAG and retrieval;
 - game-discovery questions that can be grounded in project context.
 
-The page should not behave like a general ChatGPT replacement. If the user asks unrelated questions, the backend returns a scoped refusal and redirects the user toward supported project topics.
+The page should not behave like a general-purpose assistant. If the user asks unrelated questions, the backend returns a scoped refusal and redirects the user toward supported project topics.
 
 The Guide voice should be direct, factual, scoped, and first-person. It should feel like a project-aware guide inside the website, not a generic assistant and not a robotic report generator. It should avoid casual filler, avoid fake uncertainty, and answer with clear project-grounded statements.
 

@@ -10,7 +10,6 @@ PAGE_URLS = {
     "pages/4_Recommendations.py": "/Recommendations",
     "pages/5_Chatbot.py": "/Chatbot",
     "pages/6_Insights.py": "/Insights",
-    "pages/7_Predictive_Model.py": "/Predictive_Model",
     "pages/8_Methodology.py": "/Methodology",
 }
 
